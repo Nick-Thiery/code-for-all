@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"><style>
+@keyframes cfaRise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes cfaBreathe{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+@keyframes cfaPop{0%{opacity:0;transform:scale(.3)}60%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+@keyframes cfaRing{0%{opacity:.9;transform:scale(.7)}100%{opacity:0;transform:scale(2.3)}}
+@keyframes cfaSlide{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+textarea::placeholder{color:var(--muted);opacity:1}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style></helmet>
+<section aria-label="Practice" style="font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-size:19px;line-height:1.6;color:var(--text);display:flex;flex-direction:column;gap:20px;text-align:left">
+
+<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:20px;overflow:hidden">
+  <div style="background:var(--tint);padding:var(--pad);display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <svg width="18" height="20" viewBox="0 0 24 26" aria-hidden="true"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg>
+      <span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.6;font-weight:700;font-size:16px;line-height:1;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)">Practice</span>
+    </div>
+    <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:600;font-size:var(--task);line-height:1.3;color:var(--text);text-wrap:pretty">Write a prompt telling Claude Code to build your own one-page personal website.</h3>
+    <button type="button" onClick="{{ toggleHint }}" aria-expanded="{{ hint }}" style="align-self:flex-start;min-height:44px;padding:0;background:none;border:0;font-family:inherit;font-size:17px;font-weight:700;color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:4px">{{ hintLabel }}</button>
+    <sc-if value="{{ hint }}" hint-placeholder-val="{{ false }}"><p style="margin:-6px 0 0;font-size:19px;color:var(--text)">Think about what it should look like and what should be on it.</p></sc-if>
+  </div>
+
+  <div style="padding:var(--pad);display:flex;flex-direction:column;gap:12px">
+    <label for="{{ taId }}" style="font-weight:700;font-size:18px">Your prompt</label>
+    <textarea id="{{ taId }}" ref="{{ taRef }}" value="{{ text }}" onChange="{{ onText }}" maxLength="1200" readOnly="{{ busy }}" rows="6" placeholder="Write your prompt here..." aria-describedby="{{ descIds }}" style="width:100%;box-sizing:border-box;min-height:180px;resize:vertical;padding:16px;border:2px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-family:'Atkinson Hyperlegible Mono',ui-monospace,monospace;font-size:17px;line-height:1.6"></textarea>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;font-size:16px;line-height:1.5">
+      <span id="{{ msgId }}" aria-live="polite" style="color:var(--accent);font-weight:700;flex:1 1 220px">{{ limitMsg }}</span>
+      <sc-if value="{{ near }}" hint-placeholder-val="{{ false }}"><span id="{{ countId }}" style="margin-left:auto;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums">{{ counterText }}</span></sc-if>
+      <sc-if value="{{ notNear }}" hint-placeholder-val="{{ true }}"><span id="{{ countId }}" style="margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums">{{ counterText }}</span></sc-if>
+    </div>
+    <p style="margin:6px 0 0;font-size:16px;line-height:1.5;color:var(--muted)">Your feedback is written by AI. Don't include personal details like your address or phone number.</p>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px">
+      <sc-if value="{{ canSubmit }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ submit }}" style="min-height:52px;padding:0 28px;border:0;border-radius:12px;background:var(--accent);color:var(--on-accent);font-family:inherit;font-weight:700;font-size:19px;cursor:pointer" style-hover="filter:brightness(1.15)">Get feedback</button></sc-if>
+      <sc-if value="{{ cannotSubmit }}" hint-placeholder-val="{{ true }}"><button type="button" disabled="{{ true }}" style="min-height:52px;padding:0 28px;border:2px dashed var(--border);border-radius:12px;background:var(--dis-bg);color:var(--dis-text);font-family:inherit;font-weight:700;font-size:19px;cursor:not-allowed">Get feedback</button></sc-if>
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}"><span style="font-size:16px;color:var(--muted)">Write something first, then ask for feedback.</span></sc-if>
+    </div>
+  </div>
+</div>
+
+<sc-if value="{{ showLoading }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:var(--pad);display:flex;align-items:center;gap:18px;animation:cfaRise 300ms ease both">
+  <div aria-hidden="true" style="display:flex;gap:6px;flex:none">
+    <svg width="18" height="20" viewBox="0 0 24 26" style="animation:cfaBreathe 1.4s ease-in-out infinite"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg>
+    <svg width="18" height="20" viewBox="0 0 24 26" style="animation:cfaBreathe 1.4s ease-in-out .2s infinite"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg>
+    <svg width="18" height="20" viewBox="0 0 24 26" style="animation:cfaBreathe 1.4s ease-in-out .4s infinite"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg>
+  </div>
+  <div>
+    <p style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:600;font-size:22px;line-height:1.3">Reading your prompt...</p>
+    <p style="margin:2px 0 0;font-size:16px;line-height:1.5;color:var(--muted)">This usually takes a few seconds.</p>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showNotice }}" hint-placeholder-val="{{ false }}">
+<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:var(--pad);display:flex;align-items:flex-start;gap:16px;animation:cfaRise 360ms ease both">
+  <svg width="28" height="30" viewBox="0 0 24 26" aria-hidden="true" style="flex:none;margin-top:2px"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--deco);stroke-width:2;stroke-linejoin:round"></polygon></svg>
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+    <h3 ref="{{ headRef }}" tabIndex="-1" style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:600;font-size:22px;line-height:1.3;text-wrap:pretty">{{ notice.title }}</h3>
+    <p style="margin:0">{{ notice.body }}</p>
+    <sc-if value="{{ notice.note }}"><p style="margin:0;font-size:16px;line-height:1.5;color:var(--muted)">{{ notice.note }}</p></sc-if>
+    <sc-if value="{{ notice.btn }}"><div style="margin-top:10px"><button type="button" onClick="{{ notice.action }}" style="min-height:48px;padding:0 22px;border:2px solid var(--accent);border-radius:12px;background:transparent;color:var(--accent);font-family:inherit;font-weight:700;font-size:18px;cursor:pointer" style-hover="background:var(--tint)">{{ notice.btn }}</button></div></sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showResult }}" hint-placeholder-val="{{ false }}">
+<article aria-labelledby="{{ headId }}" style="background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:var(--pad);display:flex;flex-direction:column;gap:24px">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <p style="margin:0;font-size:15px;font-weight:700;letter-spacing:.04em;color:var(--muted)">Feedback on your prompt</p>
+      <sc-if value="{{ allNailed }}"><span aria-hidden="true" style="display:flex;gap:3px">
+        <svg width="13" height="14" viewBox="0 0 24 26" style="animation:cfaPop 500ms 700ms both"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg>
+        <svg width="13" height="14" viewBox="0 0 24 26" style="animation:cfaPop 500ms 820ms both"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg>
+        <svg width="13" height="14" viewBox="0 0 24 26" style="animation:cfaPop 500ms 940ms both"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg>
+      </span></sc-if>
+    </div>
+    <h3 id="{{ headId }}" ref="{{ headRef }}" tabIndex="-1" style="margin:0;outline-offset:6px;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--head);line-height:1.25;text-wrap:pretty;animation:cfaRise 400ms ease both">{{ headline }}</h3>
+  </header>
+
+  <sc-if value="{{ showProgress }}" hint-placeholder-val="{{ false }}">
+  <div style="background:var(--tint);border-radius:14px;padding:16px 20px;display:flex;flex-direction:column;gap:6px;animation:cfaRise 400ms 100ms ease both">
+    <p style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:16px;color:var(--text)">Since your last try</p>
+    <sc-for list="{{ progress }}" as="p" hint-placeholder-count="1">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;min-height:40px">
+        <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">{{ p.sr }}</span>
+        <strong aria-hidden="true">{{ p.name }}:</strong>
+        <span aria-hidden="true" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted)">
+          <span style="display:flex;gap:3px"><sc-for list="{{ p.fromPips }}" as="x"><sc-if value="{{ x.on }}"><svg width="16" height="18" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--muted);stroke:var(--muted);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if><sc-if value="{{ x.off }}"><svg width="16" height="18" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--pip);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if></sc-for></span>
+          {{ p.from }}
+        </span>
+        <span aria-hidden="true" style="font-weight:700;color:var(--accent);animation:cfaSlide 400ms 350ms ease both">→</span>
+        <span aria-hidden="true" style="display:inline-flex;align-items:center;gap:8px;animation:cfaSlide 400ms 500ms ease both">
+          <span style="display:flex;gap:3px"><sc-for list="{{ p.toPips }}" as="x"><sc-if value="{{ x.on }}"><svg width="22" height="24" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent);stroke:var(--accent);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if><sc-if value="{{ x.isNew }}"><span style="position:relative;display:block;width:22px;height:24px"><svg width="22" height="24" viewBox="0 0 24 26" style="position:absolute;inset:0;animation:cfaRing 1s 900ms ease-out both"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--deco);stroke-width:2"></polygon></svg><svg width="22" height="24" viewBox="0 0 24 26" style="position:absolute;inset:0;animation:cfaPop 550ms 750ms cubic-bezier(.3,1.4,.5,1) both"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent);stroke:var(--accent);stroke-width:2;stroke-linejoin:round"></polygon></svg></span></sc-if><sc-if value="{{ x.off }}"><svg width="22" height="24" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--pip);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if></sc-for></span>
+          <strong style="font-size:20px">{{ p.to }}</strong>
+        </span>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isA }}" hint-placeholder-val="{{ true }}">
+  <div role="list" aria-label="Your scores" style="display:flex;flex-direction:column;border-top:1px solid var(--border)">
+    <sc-for list="{{ scores }}" as="s" hint-placeholder-count="3">
+      <div role="listitem" style="display:flex;flex-wrap:wrap;align-items:center;gap:0 16px;padding:10px 0;border-bottom:1px solid var(--border);animation:cfaRise 420ms cubic-bezier(.2,.7,.2,1) both;animation-delay:{{ s.delay }}">
+        <button type="button" onClick="{{ s.toggle }}" aria-expanded="{{ s.open }}" style="flex:1 1 140px;display:flex;align-items:center;gap:10px;min-height:44px;padding:0;background:none;border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:19px;line-height:1.3;color:var(--text);text-align:left">
+          {{ s.name }}
+          <span aria-hidden="true" style="flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--muted);display:grid;place-items:center;font-size:13px;line-height:1;color:var(--muted)">?</span>
+        </button>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span aria-hidden="true" style="display:flex;gap:4px"><sc-for list="{{ s.pips }}" as="x"><sc-if value="{{ x.on }}"><svg width="22" height="24" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent);stroke:var(--accent);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if><sc-if value="{{ x.off }}"><svg width="22" height="24" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--pip);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if></sc-for></span>
+          <span style="min-width:7.2em;font-weight:700;font-size:19px">{{ s.word }}</span>
+        </div>
+        <sc-if value="{{ s.open }}"><p style="flex-basis:100%;margin:0 0 6px;font-size:17px;line-height:1.5;color:var(--muted)">{{ s.meaning }}</p></sc-if>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isB }}" hint-placeholder-val="{{ false }}">
+  <div role="list" aria-label="Your scores" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px">
+    <sc-for list="{{ scores }}" as="s" hint-placeholder-count="3">
+      <div role="listitem" style="border:1.5px solid var(--border);border-radius:14px;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px;animation:cfaRise 420ms cubic-bezier(.2,.7,.2,1) both;animation-delay:{{ s.delay }}">
+        <button type="button" onClick="{{ s.toggle }}" aria-expanded="{{ s.open }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;padding:0;background:none;border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:18px;color:var(--text);text-align:left">
+          {{ s.name }}
+          <span aria-hidden="true" style="flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--muted);display:grid;place-items:center;font-size:13px;line-height:1;color:var(--muted)">?</span>
+        </button>
+        <div aria-hidden="true" style="display:grid;grid-template-columns:1fr 1fr;gap:4px"><sc-for list="{{ s.pips }}" as="x"><sc-if value="{{ x.on }}"><span style="display:block;height:10px;border-radius:5px;background:var(--accent)"></span></sc-if><sc-if value="{{ x.off }}"><span style="display:block;height:10px;border-radius:5px;background:var(--track)"></span></sc-if></sc-for></div>
+        <span style="font-weight:700;font-size:19px">{{ s.word }}</span>
+        <sc-if value="{{ s.open }}"><p style="margin:0;font-size:16px;line-height:1.5;color:var(--muted)">{{ s.meaning }}</p></sc-if>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isC }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div role="list" aria-label="Your scores" style="display:flex;flex-wrap:wrap;gap:10px">
+      <sc-for list="{{ scores }}" as="s" hint-placeholder-count="3">
+        <div role="listitem" style="animation:cfaRise 420ms cubic-bezier(.2,.7,.2,1) both;animation-delay:{{ s.delay }}">
+          <button type="button" onClick="{{ s.toggle }}" aria-expanded="{{ s.open }}" style="min-height:48px;display:flex;align-items:center;gap:10px;padding:6px 18px 6px 12px;border:1.5px solid var(--border);border-radius:999px;background:var(--surface);font-family:inherit;font-size:18px;color:var(--text);cursor:pointer" style-hover="border-color:var(--accent)">
+            <sc-if value="{{ s.hexEmpty }}"><svg width="20" height="22" viewBox="0 0 24 26" aria-hidden="true"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--pip);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if>
+            <sc-if value="{{ s.hexHalf }}"><svg width="20" height="22" viewBox="0 0 24 26" aria-hidden="true"><polygon points="1.5,13 22.5,13 22.5,18.5 12,24.5 1.5,18.5" style="fill:var(--accent)"></polygon><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if>
+            <sc-if value="{{ s.hexFull }}"><svg width="20" height="22" viewBox="0 0 24 26" aria-hidden="true"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent);stroke:var(--accent);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if>
+            <span>{{ s.name }}</span>
+            <span aria-hidden="true" style="color:var(--muted)">·</span>
+            <strong>{{ s.word }}</strong>
+          </button>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin:0;font-size:15px;line-height:1.5;color:var(--muted)">Tap a skill to see what it means.</p>
+    <sc-for list="{{ scores }}" as="s" hint-placeholder-count="0"><sc-if value="{{ s.open }}"><p style="margin:0;font-size:17px;line-height:1.5"><strong>{{ s.name }}:</strong> {{ s.meaning }}</p></sc-if></sc-for>
+  </div>
+  </sc-if>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h4 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px;line-height:1.3">{{ fixTitle }}</h4>
+
+    <sc-if value="{{ fixAQuote }}" hint-placeholder-val="{{ true }}">
+    <div style="border:1.5px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px">
+        <span style="font-size:15px;font-weight:700;letter-spacing:.03em;color:var(--muted)">From your prompt</span>
+        <mark style="background:var(--tint);color:var(--text);font-family:'Atkinson Hyperlegible Mono',ui-monospace,monospace;font-size:18px;line-height:1.5;padding:4px 10px;border-radius:8px">“{{ fix.quote }}”</mark>
+      </div>
+      <p style="margin:0"><strong>Why:</strong> {{ fix.why }}</p>
+      <p style="margin:0"><strong>Try:</strong> {{ fix.try }}</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ fixMissing }}" hint-placeholder-val="{{ false }}">
+    <div style="border:1.5px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:15px;font-weight:700;letter-spacing:.03em;color:var(--muted)">Something to add:</span>
+      <div style="border:2px dashed var(--deco);border-radius:10px;padding:10px 14px;display:flex;gap:10px;align-items:flex-start">
+        <span aria-hidden="true" style="font-weight:700;font-size:22px;line-height:1.3;color:var(--accent)">+</span>
+        <span>{{ fix.add }}</span>
+      </div>
+      <p style="margin:0"><strong>Why:</strong> {{ fix.why }}</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ fixStretch }}" hint-placeholder-val="{{ false }}">
+    <div style="background:var(--tint);border-radius:14px;padding:18px 20px;display:flex;gap:12px;align-items:flex-start">
+      <svg width="20" height="22" viewBox="0 0 24 26" aria-hidden="true" style="flex:none;margin-top:4px"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linejoin:round"></polygon></svg>
+      <p style="margin:0">{{ fix.text }}</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ fixBQuote }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:14px 14px 0 0;padding:16px 18px;font-family:'Atkinson Hyperlegible Mono',ui-monospace,monospace;font-size:17px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere"><span style="color:var(--muted)">{{ split.before }}</span><mark style="background:var(--tint);color:var(--text);border-bottom:3px solid var(--accent);padding:2px 4px;border-radius:4px 4px 0 0;font-weight:700">{{ split.quote }}</mark><span style="color:var(--muted)">{{ split.after }}</span></div>
+      <div style="border:1.5px solid var(--border);border-top:0;border-radius:0 0 14px 14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:15px;font-weight:700;letter-spacing:.03em;color:var(--muted)">About the highlighted words</span>
+        <p style="margin:0"><strong>Why:</strong> {{ fix.why }}</p>
+        <p style="margin:0"><strong>Try:</strong> {{ fix.try }}</p>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ fixCQuote }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+        <div style="border:1.5px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:8px">
+          <span style="font-size:15px;font-weight:700;letter-spacing:.03em;color:var(--muted)">You wrote</span>
+          <mark style="background:var(--tint);color:var(--text);font-family:'Atkinson Hyperlegible Mono',ui-monospace,monospace;font-size:18px;padding:4px 10px;border-radius:8px">“{{ fix.quote }}”</mark>
+        </div>
+        <div style="background:var(--tint);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:15px;font-weight:700;letter-spacing:.03em;color:var(--text)">Instead, try →</span>
+          <span style="font-weight:700">{{ fix.try }}</span>
+        </div>
+      </div>
+      <p style="margin:0"><strong>Why:</strong> {{ fix.why }}</p>
+    </div>
+    </sc-if>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px">
+      <div>
+        <h4 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px;line-height:1.3">{{ rewriteLabel }}</h4>
+        <p style="margin:2px 0 0;font-size:16px;line-height:1.5;color:var(--muted)">New parts are underlined.</p>
+      </div>
+      <button type="button" onClick="{{ copy }}" style="min-height:44px;min-width:96px;padding:0 18px;border:2px solid var(--accent);border-radius:12px;background:transparent;color:var(--accent);font-family:inherit;font-weight:700;font-size:17px;cursor:pointer" style-hover="background:var(--tint)">{{ copyLabel }}</button>
+    </div>
+    <span aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">{{ copyAnnounce }}</span>
+    <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;font-family:'Atkinson Hyperlegible Mono',ui-monospace,monospace;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere"><sc-for list="{{ rewrite }}" as="r" hint-placeholder-count="0"><sc-if value="{{ r.add }}"><mark style="background:var(--tint);color:var(--text);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:4px;padding:1px 2px;border-radius:3px">{{ r.t }}</mark></sc-if><sc-if value="{{ r.plain }}"><span>{{ r.t }}</span></sc-if></sc-for></div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;border-top:1px solid var(--border);padding-top:20px">
+    <button type="button" onClick="{{ tryAgain }}" style="min-height:52px;padding:0 28px;border:0;border-radius:12px;background:var(--accent);color:var(--on-accent);font-family:inherit;font-weight:700;font-size:19px;cursor:pointer" style-hover="filter:brightness(1.15)">Try again</button>
+    <span style="font-size:16px;line-height:1.5;color:var(--muted)">Your prompt stays in the box above, ready to edit.</span>
+  </div>
+</article>
+</sc-if>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:1200},&quot;view&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;empty&quot;,&quot;near&quot;,&quot;loading&quot;,&quot;weak&quot;,&quot;middling&quot;,&quot;strong&quot;,&quot;offtopic&quot;,&quot;error&quot;,&quot;hourly&quot;,&quot;daily&quot;],&quot;default&quot;:&quot;empty&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dir&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],&quot;default&quot;:&quot;a&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const MAX = 1200, NEAR = 1000;
+const WEAK = "make me a website about me make it nice";
+const MID = "Build a one-page website with my name Aisyah at the top, a section about my cat Mochi, and a section about badminton. Use purple and white.";
+const ADD = "I'm a beginner, so please make it a single HTML file I can open by double-clicking.";
+const STRONG = MID + " " + ADD;
+const OFF = "what's the best phone to buy under $300";
+const LONG = "Build a one-page personal website for me. My name is Aisyah and I'm 14. Put my name at the top in big, friendly letters, with a short line under it that says I like cats, badminton and drawing. Then add a section about my cat Mochi. She is grey and white, very lazy, and sleeps on my school bag every morning. Add space for three photos of her in a row. After that, add a section about badminton. I play with my cousins every Saturday at the community centre near my block, and I want to show my favourite players and a few tips I learned. Then add a small section with my drawings, like a gallery with four boxes. Use purple and white, with rounded corners and a calm, clean feel, a bit like a notebook. The font should be easy to read. At the bottom, put a friendly message that says thanks for visiting. I'm a beginner, so please make it a single HTML file I can open by double-clicking. Please explain each part of the code in simple words so I can change the colours and text later by myself. Also make sure it looks good on a phone, because my friends will mostly open it after school.";
+const SKILLS = [
+  { name: "Specificity", meaning: "Did you say exactly what you want?" },
+  { name: "Context", meaning: "Did you tell it what it needs to know about your situation?" },
+  { name: "Scope", meaning: "Did you ask for the right amount at once?" }
+];
+const WORDS = ["Not yet", "Getting there", "Nailed it"];
+const RESULTS = {
+  weak: { scores: [0, 1, 1], headline: "You've got the idea. Now let's show it what's in your head.",
+    fix: { kind: "quote", quote: "make it nice", why: "The AI can't see what you're imagining, so it will guess, and its guess won't look like you.", try: "Name a color, a feeling, or a website you like the look of." },
+    rewrite: [{ t: "Make me a one-page website about me. " }, { t: "Use dark blue and white with a calm, clean feel. Put my name at the top in big letters.", add: true }],
+    label: "Your prompt, improved" },
+  middling: { scores: [2, 1, 2], headline: "Really clear. One small addition makes this work first try.",
+    fix: { kind: "missing", add: "Tell it you're a beginner and want one file you can open by double-clicking.", why: "Otherwise it may set up tools you don't have installed." },
+    rewrite: [{ t: MID + " " }, { t: ADD, add: true }], label: "Your prompt, improved" },
+  strong: { scores: [2, 2, 2], headline: "This is a prompt a professional would write.",
+    fix: { kind: "stretch", text: "Ask it to make the page look good on a phone too." },
+    rewrite: [{ t: STRONG + " " }, { t: "Make sure it looks good on a phone too.", add: true }], label: "Your prompt, with the challenge added" }
+};
+const INIT = {
+  empty: { text: "", status: "idle" },
+  near: { text: LONG, status: "idle" },
+  loading: { text: MID, status: "loading" },
+  weak: { text: WEAK, status: "result", key: "weak" },
+  middling: { text: MID, status: "result", key: "middling" },
+  strong: { text: STRONG, status: "result", key: "strong", prev: [2, 1, 2] },
+  offtopic: { text: OFF, status: "offtopic" },
+  error: { text: MID, status: "error" },
+  hourly: { text: STRONG, status: "hourly" },
+  daily: { text: MID, status: "daily" }
+};
+const pips = (v) => [{ on: v >= 1, off: v < 1 }, { on: v >= 2, off: v < 2 }];
+
+class Component extends DCLogic {
+  uid = "pb" + Math.random().toString(36).slice(2, 8);
+  taRef = React.createRef();
+  headRef = React.createRef();
+  state = this.init(this.props.view);
+
+  init(k) {
+    const s = INIT[k] || INIT.empty;
+    return { text: s.text, submitted: s.text, status: s.status, key: s.key || null, prev: s.prev || null,
+      last: s.key ? RESULTS[s.key].scores : null, open: [false, false, false], hint: false, copied: false };
+  }
+  componentDidMount() { this._view = this.props.view; this._status = this.state.status; }
+  componentDidUpdate() {
+    if (this._view !== this.props.view) { this._view = this.props.view; this.setState(this.init(this.props.view)); return; }
+    const was = this._status; this._status = this.state.status;
+    if (was === "loading" && this.state.status !== "loading" && this.headRef.current) this.headRef.current.focus();
+  }
+  componentWillUnmount() { clearTimeout(this.t); clearTimeout(this.ct); }
+
+  submit = () => {
+    const text = this.state.text;
+    if (!text.trim()) return;
+    this.setState({ status: "loading", open: [false, false, false], copied: false });
+    clearTimeout(this.t);
+    this.t = setTimeout(() => this.finish(text), 2800);
+  };
+  finish(text) {
+    const t = text.toLowerCase();
+    if (!/(web|site|page|html)/.test(t)) { this.setState({ status: "offtopic", submitted: text }); return; }
+    const key = /beginner|double-click|html file/.test(t) ? "strong" : text.length < 90 ? "weak" : "middling";
+    this.setState(s => ({ status: "result", key, prev: s.last, last: RESULTS[key].scores, submitted: text }));
+  }
+  tryAgain = () => {
+    const ta = this.taRef.current;
+    if (!ta) return;
+    ta.focus();
+    const n = ta.value.length;
+    ta.setSelectionRange(n, n);
+  };
+  copy = () => {
+    const R = RESULTS[this.state.key];
+    if (!R) return;
+    const txt = R.rewrite.map(r => r.t).join("").trim();
+    try { navigator.clipboard && navigator.clipboard.writeText(txt).catch(() => {}); } catch (e) {}
+    this.setState({ copied: true });
+    clearTimeout(this.ct);
+    this.ct = setTimeout(() => this.setState({ copied: false }), 2000);
+  };
+  toggle(i) { this.setState(s => { const o = [...s.open]; o[i] = !o[i]; return { open: o }; }); }
+
+  renderVals() {
+    const st = this.state, dir = this.props.dir || "a", u = this.uid;
+    const len = st.text.length;
+    const busy = st.status === "loading";
+    const locked = st.status === "hourly" || st.status === "daily";
+    const canSubmit = st.text.trim().length > 0 && !busy && !locked;
+    const near = len >= NEAR;
+    const R = st.status === "result" ? RESULTS[st.key] : null;
+    const scores = R ? R.scores.map((v, i) => ({
+      name: SKILLS[i].name, meaning: SKILLS[i].meaning, word: WORDS[v], open: st.open[i],
+      toggle: () => this.toggle(i), delay: (150 + i * 100) + "ms", pips: pips(v),
+      hexEmpty: v === 0, hexHalf: v === 1, hexFull: v === 2 })) : [];
+    const progress = R && st.prev ? R.scores.map((v, i) => ({ v, i, p: st.prev[i] })).filter(x => x.v > x.p).map(x => ({
+      name: SKILLS[x.i].name, from: WORDS[x.p], to: WORDS[x.v],
+      sr: `${SKILLS[x.i].name} went from ${WORDS[x.p]} to ${WORDS[x.v]}.`,
+      fromPips: pips(x.p),
+      toPips: [0, 1].map(k => { const on = x.v > k, was = x.p > k; return { on: on && was, isNew: on && !was, off: !on }; })
+    })) : [];
+    const fix = R ? R.fix : {};
+    const isQuote = fix.kind === "quote";
+    const prompt = st.submitted || st.text;
+    let split = { before: prompt, quote: "", after: "" };
+    if (isQuote) {
+      const ix = prompt.toLowerCase().indexOf(fix.quote);
+      if (ix >= 0) split = { before: prompt.slice(0, ix), quote: prompt.slice(ix, ix + fix.quote.length), after: prompt.slice(ix + fix.quote.length) };
+    }
+    const N = {
+      offtopic: { title: "This doesn't look like a prompt for this task.", body: "Want to have another go?", note: "Your prompt should tell Claude Code what to build: a one-page website about you.", btn: "Have another go", action: this.tryAgain },
+      error: { title: "That didn't work on our end, not yours.", body: "Try again in a moment.", note: "Your prompt is safe in the box above.", btn: "Try again", action: this.submit },
+      hourly: { title: "You've practiced a lot this hour.", body: "Take a short break and come back in a bit.", note: "Your prompt will still be here when you're back.", btn: "", action: null },
+      daily: { title: "We've hit today's practice limit for everyone.", body: "Come back tomorrow. The lesson itself still works.", note: "", btn: "", action: null }
+    };
+    return {
+      taId: u + "-ta", msgId: u + "-msg", countId: u + "-count", headId: u + "-head", descIds: `${u}-count ${u}-msg`,
+      taRef: this.taRef, headRef: this.headRef,
+      text: st.text, onText: e => this.setState({ text: e.target.value.slice(0, MAX) }),
+      busy, hint: st.hint, hintLabel: st.hint ? "Hide hint" : "Need a hint?",
+      toggleHint: () => this.setState(s => ({ hint: !s.hint })),
+      counterText: `${len.toLocaleString("en-US")} / 1,200`, near, notNear: !near,
+      limitMsg: len >= MAX ? "That's the limit. Try trimming a sentence or two." : near ? "Getting close to the limit. Shorter prompts often work better." : "",
+      canSubmit, cannotSubmit: !canSubmit, isEmpty: !st.text.trim() && st.status === "idle", submit: this.submit,
+      showLoading: busy, showNotice: !!N[st.status], notice: N[st.status] || {},
+      showResult: !!R, headline: R ? R.headline : "", allNailed: !!R && R.scores.every(v => v === 2),
+      showProgress: progress.length > 0, progress, scores,
+      isA: dir === "a", isB: dir === "b", isC: dir === "c",
+      fix, split, fixTitle: fix.kind === "stretch" ? "Want a challenge?" : "One thing to try",
+      fixAQuote: isQuote && dir === "a", fixBQuote: isQuote && dir === "b", fixCQuote: isQuote && dir === "c",
+      fixMissing: fix.kind === "missing", fixStretch: fix.kind === "stretch",
+      rewriteLabel: R ? R.label : "", rewrite: R ? R.rewrite.map(r => ({ t: r.t, add: !!r.add, plain: !r.add })) : [],
+      copy: this.copy, copyLabel: st.copied ? "✓ Copied" : "Copy", copyAnnounce: st.copied ? "Copied to clipboard" : "",
+      tryAgain: this.tryAgain
+    };
+  }
+}
+</script>
+</body>
+</html>

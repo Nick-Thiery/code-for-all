@@ -1,0 +1,12 @@
+# About this part. Lessons are the .mdx files next to this one.
+title: Your first build
+summary: Learn how AI tools work, then use one to build your own website.
+
+# Optional. The Part complete page, at /part-1/complete.
+completeHeading: You built a real website.
+completeText: You directed an AI agent, read code, fixed problems, and shipped something real.
+shareTitle: Show someone your site
+shareText: Open it and show a friend or someone at home. Explaining how you made it is the best way to remember it.
+
+# Optional. Shown under "Part 2: Coming soon" until content/part-2/ exists.
+nextTeaser: Bigger builds and new tools. We're writing it now.

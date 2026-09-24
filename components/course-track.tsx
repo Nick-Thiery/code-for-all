@@ -1,78 +1,195 @@
 "use client";
 
 import Link from "next/link";
-import type { CSSProperties } from "react";
-import { formatCount, formatMinutes } from "@/lib/format";
+import { HandsOnChip, PracticeChip } from "@/components/chip";
+import { Hex } from "@/components/hex";
+import { formatAbout, formatCount } from "@/lib/format";
+import { type Outline, type OutlineLesson, allLessons, partHref, resumeTarget } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
 
-export type TrackLesson = {
-  slug: string;
-  title: string;
-  summary: string;
-  duration: number;
-  requiresAccount: boolean;
+type Props = {
+  outline: Outline;
+  part: number;
+  /** Show the "Coming soon" card for the next part under this one. */
+  showUpcoming?: boolean;
 };
 
-export function CourseTrack({ lessons }: { lessons: TrackLesson[] }) {
+export function CourseTrack({ outline, part: partNumber, showUpcoming = false }: Props) {
+  const part = outline.parts.find((p) => p.number === partNumber);
   const { completed, ready } = useCompletedLessons();
-  const doneCount = lessons.filter((lesson) => completed.has(lesson.slug)).length;
-  const nextSlug = ready ? lessons.find((lesson) => !completed.has(lesson.slug))?.slug : undefined;
-  const totalMinutes = lessons.reduce((sum, lesson) => sum + lesson.duration, 0);
+  if (!part) return null;
+
+  // Before progress loads (and with no JavaScript) this renders as a new
+  // visitor sees it.
+  const done = ready ? completed : new Set<string>();
+  const everything = allLessons(outline);
+  const startedCourse = everything.some((lesson) => done.has(lesson.id));
+  const nextId = startedCourse ? resumeTarget(outline, done)?.id : everything[0]?.id;
+
+  const doneCount = part.lessons.filter((lesson) => done.has(lesson.id)).length;
+  const totalMinutes = part.lessons.reduce((sum, lesson) => sum + lesson.duration, 0);
 
   return (
-    <>
-      <p className="text-muted">
-        {formatCount(lessons.length, "lesson")}, about {formatMinutes(totalMinutes)} in all.{" "}
-        <span aria-live="polite">
-          {ready && doneCount > 0 && (doneCount === lessons.length ? "You've finished all of them." : `You've finished ${doneCount}.`)}
-        </span>
-      </p>
+    <div className="flex flex-wrap items-start gap-x-14 gap-y-6">
+      <div className="flex max-w-[380px] flex-[1_1_260px] flex-col gap-2.5">
+        <h2 id={`part-${part.number}`} className="t-h2 m-0 scroll-mt-6">
+          Part {part.number}: {part.title}
+        </h2>
+        <p className="m-0">{part.summary}</p>
+        <p className="t-meta m-0 text-muted">
+          {formatCount(part.lessons.length, "lesson")} · {formatAbout(totalMinutes)} in total
+        </p>
+        {doneCount > 0 && (
+          <div className="mt-2.5 flex flex-col gap-2">
+            <span className="font-bold">
+              {doneCount} of {part.lessons.length} lessons done
+            </span>
+            <span aria-hidden="true" className="flex gap-1">
+              {part.lessons.map((lesson) => (
+                <span
+                  key={lesson.id}
+                  className={`h-2 flex-1 rounded ${done.has(lesson.id) ? "bg-accent" : "bg-track"}`}
+                />
+              ))}
+            </span>
+          </div>
+        )}
+      </div>
 
-      <ol className="track mt-10 sm:mt-12">
-        {lessons.map((lesson, index) => {
-          const done = completed.has(lesson.slug);
-          const isNext = lesson.slug === nextSlug;
-          return (
-            <li
-              key={lesson.slug}
-              className="track-item"
-              data-state={done ? "done" : isNext ? "next" : "todo"}
-              style={{ "--i": index } as CSSProperties}
-            >
-              <span className="track-stop display" aria-hidden="true">
-                {done ? <CheckIcon /> : index + 1}
-              </span>
-
-              <div>
-                <h2 className="flex min-h-[var(--stop)] items-center">
-                  <Link href={`/lessons/${lesson.slug}`} className="track-link display text-[1.375rem] leading-tight sm:text-2xl">
-                    {lesson.title}
-                  </Link>
-                </h2>
-                <p className="mt-1 text-muted">{lesson.summary}</p>
-                <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-base text-muted">
-                  <span>{lesson.duration} min</span>
-                  {lesson.requiresAccount && <span>Account needed</span>}
-                  {done && <span className="sr-only">Finished</span>}
-                  {isNext && (
-                    <span className="rounded-full bg-accent px-2.5 py-0.5 text-sm font-bold text-on-accent">
-                      {doneCount === 0 ? "Start here" : "Up next"}
-                    </span>
+      <div className="min-w-0 flex-[999_1_420px]">
+        <ol className="m-0 list-none p-0">
+          {part.lessons.map((lesson, index) => {
+            const isDone = done.has(lesson.id);
+            const isNext = lesson.id === nextId;
+            const previousDone = index > 0 && done.has(part.lessons[index - 1].id);
+            const isLast = index === part.lessons.length - 1;
+            return (
+              <li key={lesson.id} className="relative grid grid-cols-[44px_minmax(0,1fr)] gap-x-3.5">
+                <div aria-hidden="true" className="relative flex justify-center">
+                  {index > 0 && (
+                    <span className={`absolute top-0 left-[21px] h-3.5 w-0.5 ${previousDone ? "bg-accent" : "bg-border"}`} />
                   )}
-                </p>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-    </>
+                  {!isLast && (
+                    <span className={`absolute top-[58px] bottom-0 left-[21px] w-0.5 ${isDone ? "bg-accent" : "bg-border"}`} />
+                  )}
+                  <TrackHex number={lesson.number} state={isDone ? "done" : isNext ? "next" : "todo"} />
+                </div>
+                <div className="min-w-0 pt-1 pb-2">
+                  {isNext ? (
+                    <UpNextCard lesson={lesson} startedCourse={startedCourse} />
+                  ) : (
+                    // The whole row opens the lesson (the title link stretches over
+                    // it), while the hands-on chip stays its own link on top.
+                    <div className="relative flex min-h-16 flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-[14px] px-3.5 py-2.5 text-fg hover:bg-surface2 has-[.row-link:focus-visible]:outline-3 has-[.row-link:focus-visible]:outline-offset-3 has-[.row-link:focus-visible]:outline-accent">
+                      <span className="flex min-w-0 flex-col gap-1">
+                        <Link
+                          href={lesson.href}
+                          className="row-link display text-[21px] leading-[1.3] font-semibold text-fg no-underline after:absolute after:inset-0 after:rounded-[14px] hover:text-fg focus-visible:outline-none"
+                        >
+                          <span className="sr-only">
+                            Lesson {lesson.number}, {isDone ? "done" : "not started"}:{" "}
+                          </span>
+                          {lesson.title}
+                        </Link>
+                        <LessonMeta lesson={lesson} />
+                      </span>
+                      {isDone && (
+                        <span aria-hidden="true" className="text-[16px] font-bold text-accent">
+                          ✓ Done
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+
+        {showUpcoming && (
+          <div className="mt-6 grid grid-cols-[44px_minmax(0,1fr)] gap-x-3.5">
+            <div aria-hidden="true" className="flex justify-center pt-4">
+              <Hex width={40} height={44} shape="fill-none stroke-pip stroke-[1.5] [stroke-dasharray:3_2.5]" />
+            </div>
+            <Link
+              href={partHref(outline.upcoming.number)}
+              className="flex flex-col gap-1.5 rounded-2xl border-2 border-dashed border-border px-5 py-[18px] text-fg no-underline hover:border-accent hover:text-fg"
+            >
+              <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                <span className="display text-[22px] leading-[1.25] font-[650]">
+                  Part {outline.upcoming.number}: Coming soon
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-surface2 px-2.5 py-0.5 text-[15px] font-bold text-muted">
+                  <svg width="12" height="14" viewBox="0 0 14 16" aria-hidden="true">
+                    <rect x="1.5" y="7" width="11" height="8" rx="2" className="fill-current" />
+                    <path d="M4 7V5a3 3 0 0 1 6 0v2" className="fill-none stroke-current stroke-[1.8]" />
+                  </svg>
+                  Not open yet
+                </span>
+              </span>
+              <span className="text-muted">{outline.upcoming.teaser}</span>
+              <span className="font-bold text-accent underline underline-offset-4">See what&apos;s coming →</span>
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
-function CheckIcon() {
+function UpNextCard({ lesson, startedCourse }: { lesson: OutlineLesson; startedCourse: boolean }) {
   return (
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 12.5l4.5 4.5L19 7.5" />
-    </svg>
+    <div className="flex flex-col gap-1.5 rounded-2xl bg-tint px-[18px] pt-4 pb-[18px]">
+      <span className="eyebrow">{startedCourse ? "Up next" : "Start here"}</span>
+      <span className="display text-[24px] leading-[1.25] font-[650]">{lesson.title}</span>
+      <LessonMeta lesson={lesson} />
+      <Link href={lesson.href} className="btn btn-primary mt-2 min-h-12 self-start px-[22px] text-[18px]">
+        {startedCourse ? "Continue" : `Start lesson ${lesson.number}`} <span aria-hidden="true">→</span>
+      </Link>
+    </div>
+  );
+}
+
+function LessonMeta({ lesson }: { lesson: OutlineLesson }) {
+  return (
+    <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[16px] leading-[1.4] text-muted">
+      <span>{lesson.duration} min</span>
+      {lesson.requiresAccount && <HandsOnChip lessonId={lesson.id} className="relative z-10" />}
+      {lesson.hasPractice && <PracticeChip />}
+    </span>
+  );
+}
+
+// accent fill = done · tint + accent ring = current · gray outline = not
+// started. The number stays in every state; done adds a check badge.
+function TrackHex({ number, state }: { number: number; state: "done" | "next" | "todo" }) {
+  const shape = {
+    done: "fill-accent stroke-accent stroke-[1.5]",
+    next: "fill-tint stroke-accent stroke-2",
+    todo: "fill-surface stroke-pip stroke-[1.5]",
+  }[state];
+  const color = { done: "text-on-accent", next: "text-accent", todo: "text-muted" }[state];
+
+  return (
+    <span className="relative mt-3.5 block h-11 w-10">
+      <Hex width={40} height={44} shape={shape} className="block" />
+      <span
+        className={`absolute inset-0 grid place-items-center font-sans text-[17px] leading-none font-bold tabular-nums ${color}`}
+      >
+        {number}
+      </span>
+      {state === "done" && (
+        <svg width="18" height="18" viewBox="0 0 18 18" className="absolute -right-1.5 -bottom-1">
+          <circle cx="9" cy="9" r="8" className="fill-bg stroke-accent stroke-[1.5]" />
+          <path
+            d="M5.3 9.2l2.4 2.4 5-5.1"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="stroke-accent stroke-2"
+          />
+        </svg>
+      )}
+    </span>
   );
 }

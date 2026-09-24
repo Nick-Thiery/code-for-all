@@ -1,6 +1,7 @@
 import { useMemo, useSyncExternalStore } from "react";
 
-// Completion lives in this browser only: a JSON array of lesson slugs.
+// Completion lives in this browser only: a JSON array of lesson ids
+// ("part-1/sample-lesson"). See lib/outline.ts.
 const STORAGE_KEY = "cfa:completed-lessons";
 const CHANGE_EVENT = "cfa:progress-change";
 
@@ -44,10 +45,10 @@ export function useCompletedLessons() {
   return { completed, ready: raw !== null };
 }
 
-export function setLessonComplete(slug: string, done: boolean) {
+export function setLessonComplete(id: string, done: boolean) {
   const completed = parse(readRaw());
-  if (done) completed.add(slug);
-  else completed.delete(slug);
+  if (done) completed.add(id);
+  else completed.delete(id);
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed]));
   } catch {

@@ -1,97 +1,144 @@
 @import "tailwindcss";
 
 /*
-  Colour tokens. There is one accent, highlighter yellow, and it always
-  means "marked": links, finished lessons, the primary button, selected text.
-  Light mode uses it as a fill behind ink; dark mode can also use it as a line.
+  Design tokens.
+
+  The first block is pasted verbatim from the spec sheet in
+  design/Code for All Website.dc.html (section 9, "Drop-in CSS"). It is the
+  single source of colour and size tokens. Don't edit it here without
+  changing the design file too.
+*/
+
+/* ---- Spec sheet: drop-in CSS (verbatim) ---- */
+:root {
+  --bg:#FFFFFF; --surface:#FFFFFF; --surface2:#F4F6F8; --text:#15202B; --muted:#4A5563;
+  --border:#D2D8DF; --pip:#9AA4AF; --track:#DDE3E9; --accent:#00487E; --on-accent:#FFFFFF;
+  --deco:#47B3FF; --tint:#E6F4FF; --dis-bg:#E8EBEE; --dis-text:#5E6773;
+  --c-tag:#00487E; --c-attr:#6A3D9A; --c-str:#146C43; --c-com:#5E6773; --term-bg:#15202B; --term-border:#15202B;
+  --gut:16px; --pad:18px; --hero:40px; --h1:34px; --h2:26px; --h3:21px; --lead:19px; --hy:32px; --sec:64px;
+}
+[data-theme="dark"] {
+  --bg:#0E1116; --surface:#141920; --surface2:#1B212A; --text:#E7EBF0; --muted:#A9B3BF;
+  --border:#2E3743; --pip:#5F6B78; --track:#2A333E; --accent:#47B3FF; --on-accent:#0E1116;
+  --tint:#0B2A45; --dis-bg:#232A33; --dis-text:#8E98A4;
+  --c-tag:#47B3FF; --c-attr:#C9A7FF; --c-str:#7ED9A6; --c-com:#97A1AD; --term-bg:#06080B; --term-border:#2E3743;
+}
+@media (min-width:600px) {
+  :root { --gut:24px; --h1:40px; }
+}
+@media (min-width:960px) {
+  :root { --gut:40px; --pad:28px; --hero:64px; --h1:46px; --h2:32px; --h3:24px; --lead:21px; --hy:64px; --sec:96px; }
+}
+/* Theme: set data-theme on html from localStorage, else prefers-color-scheme, before first paint */
+/* ---- End of spec sheet CSS ---- */
+
+/*
+  Additions. Values the design uses that the drop-in CSS leaves out. Each
+  one is taken from the design file, as noted.
 */
 :root {
-  --paper: #f3f4ef;
-  --surface: #e6e8df;
-  --ink: #1b2030;
-  --ink-muted: #565c6c;
-  --rule: #cdd0c4;
-  --accent: #ffd23f;
-  --on-accent: #1b2030;
-  /* The strongest mark on the page: focus rings, the "up next" stop. */
-  --emphasis: #1b2030;
-  /* How much of a link's text the highlighter covers when at rest. */
-  --link-band: 0.42em;
+  /* Practice card task and feedback headline sizes. Every frame in the
+     design sets these (24/21 and 26/23), but the drop-in CSS omits them. */
+  --task: 21px;
+  --head: 23px;
+  /* Terminal block text. The spec's colour table says "Text #F2F5F8, '$'
+     and label #A9B3BF, same in both themes"; CommandBlock also uses #2E3743
+     for its divider and button hover. */
+  --term-text: #F2F5F8;
+  --term-muted: #A9B3BF;
+  --term-rule: #2E3743;
+  /* Text on a --deco fill: the </> in the Part complete honeycomb. Same in
+     both themes because --deco is. */
+  --on-deco: #0E1116;
   color-scheme: light;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #1a1f2e;
-    --surface: #252c3e;
-    --ink: #ecede6;
-    --ink-muted: #a5aaba;
-    --rule: #363e54;
-    --on-accent: #1a1f2e;
-    --emphasis: #ffd23f;
-    --link-band: 0.13em;
-    color-scheme: dark;
-  }
-}
-
-/* Same values as above, for when someone picks dark with the toggle. */
-:root[data-theme="dark"] {
-  --paper: #1a1f2e;
-  --surface: #252c3e;
-  --ink: #ecede6;
-  --ink-muted: #a5aaba;
-  --rule: #363e54;
-  --on-accent: #1a1f2e;
-  --emphasis: #ffd23f;
-  --link-band: 0.13em;
+[data-theme="dark"] {
   color-scheme: dark;
 }
-
-/* `dark:` follows the toggle when set, the system setting otherwise. */
-@custom-variant dark {
-  &:where([data-theme="dark"], [data-theme="dark"] *) {
-    @slot;
-  }
-  @media (prefers-color-scheme: dark) {
-    &:where(:root:not([data-theme="light"]) *) {
-      @slot;
-    }
-  }
+@media (min-width: 960px) {
+  :root { --task: 24px; --head: 26px; }
 }
 
+/* Only the tokens above exist as Tailwind colours: no palette to reach for. */
 @theme inline {
-  --color-paper: var(--paper);
+  --color-*: initial;
+  --color-bg: var(--bg);
   --color-surface: var(--surface);
-  --color-ink: var(--ink);
-  --color-muted: var(--ink-muted);
-  --color-rule: var(--rule);
+  --color-surface2: var(--surface2);
+  --color-fg: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-pip: var(--pip);
+  --color-track: var(--track);
   --color-accent: var(--accent);
   --color-on-accent: var(--on-accent);
-  --color-emphasis: var(--emphasis);
-  --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
+  --color-deco: var(--deco);
+  --color-on-deco: var(--on-deco);
+  --color-tint: var(--tint);
+  --color-dis-bg: var(--dis-bg);
+  --color-dis-text: var(--dis-text);
+  --color-c-tag: var(--c-tag);
+  --color-c-attr: var(--c-attr);
+  --color-c-str: var(--c-str);
+  --color-c-com: var(--c-com);
+  --color-term-bg: var(--term-bg);
+  --color-term-border: var(--term-border);
+  --color-term-text: var(--term-text);
+  --color-term-muted: var(--term-muted);
+  --color-term-rule: var(--term-rule);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans: var(--font-atkinson), system-ui, sans-serif;
+  --font-mono: var(--font-atkinson-mono), ui-monospace, monospace;
+  --font-display: var(--font-recursive), system-ui, sans-serif;
+
+  /* The spec's breakpoints: mobile < 600 ≤ tablet < 960 ≤ desktop. */
+  --breakpoint-*: initial;
+  --breakpoint-tablet: 600px;
+  --breakpoint-desktop: 960px;
 }
+
+/* `dark:` follows data-theme, which the head script always sets. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @layer base {
   html {
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--bg);
+    color: var(--text);
   }
 
   body {
     font-family: var(--font-sans);
-    font-size: 1.125rem;
-    line-height: 1.65;
+    font-size: 19px;
+    line-height: 1.6;
+  }
+
+  /* Links are underlined unless they're clearly a control (nav, buttons,
+     cards), so colour is never the only signal. */
+  a {
+    color: var(--accent);
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    color: var(--text);
   }
 
   ::selection {
-    background: var(--accent);
-    color: var(--on-accent);
+    background: var(--tint);
+    color: var(--text);
   }
 
   :focus-visible {
-    outline: 3px solid var(--emphasis);
+    outline: 3px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 4px;
+  }
+
+  textarea::placeholder {
+    color: var(--muted);
+    opacity: 1;
   }
 
   h1,
@@ -107,261 +154,329 @@
 }
 
 @layer components {
-  /* Headings, the wordmark, stop numbers. */
+  /* Recursive, casual axis halfway up. Weight is set per use. */
   .display {
-    font-family: var(--font-recursive), ui-sans-serif, system-ui, sans-serif;
-    font-variation-settings: "CASL" 0.55;
-    font-weight: 780;
-    letter-spacing: -0.012em;
+    font-family: var(--font-display);
+    font-variation-settings: "CASL" 0.5;
   }
 
-  /* Highlighter links. At rest the band sits low; on hover it fills. */
-  .link,
-  .lesson-body a,
-  .track-link {
-    background-image: linear-gradient(var(--accent), var(--accent));
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    background-size: 100% var(--link-band);
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-    transition:
-      background-size 160ms ease-out,
-      color 160ms ease-out;
-  }
-
-  .link:hover,
-  .lesson-body a:hover {
-    background-size: 100% 100%;
-    color: var(--on-accent);
-  }
-
-  /* The lesson body: everything that comes out of an MDX file. */
-  .lesson-body {
-    font-size: 1.1875rem;
-    line-height: 1.7;
-  }
-
-  .lesson-body > * + * {
-    margin-top: 1.1em;
-  }
-
-  .lesson-body h2,
-  .lesson-body h3 {
-    font-family: var(--font-recursive), ui-sans-serif, system-ui, sans-serif;
-    font-variation-settings: "CASL" 0.55;
-    font-weight: 760;
+  /* Type scale (spec sheet, desktop / mobile via the size tokens). */
+  .t-hero {
+    font-family: var(--font-display);
+    font-variation-settings: "CASL" 0.5;
+    font-weight: 750;
+    font-size: var(--hero);
+    line-height: 1.04;
     letter-spacing: -0.01em;
   }
-
-  .lesson-body h2 {
-    margin-top: 2.2em;
-    font-size: 1.5em;
+  .t-h1 {
+    font-family: var(--font-display);
+    font-variation-settings: "CASL" 0.5;
+    font-weight: 700;
+    font-size: var(--h1);
+    line-height: 1.12;
+  }
+  .t-h2 {
+    font-family: var(--font-display);
+    font-variation-settings: "CASL" 0.5;
+    font-weight: 650;
+    font-size: var(--h2);
     line-height: 1.2;
   }
-
-  .lesson-body h3 {
-    margin-top: 1.8em;
-    font-size: 1.2em;
-    line-height: 1.3;
+  .t-h3 {
+    font-family: var(--font-display);
+    font-variation-settings: "CASL" 0.5;
+    font-weight: 650;
+    font-size: var(--h3);
+    line-height: 1.25;
+  }
+  .t-lead {
+    font-size: var(--lead);
+    line-height: 1.5;
+  }
+  .t-meta {
+    font-size: 16px;
+    line-height: 1.5;
   }
 
-  .lesson-body h2 + *,
-  .lesson-body h3 + * {
-    margin-top: 0.6em;
-  }
-
-  .lesson-body ul {
-    list-style: disc;
-    padding-left: 1.25em;
-  }
-
-  .lesson-body ol {
-    list-style: decimal;
-    padding-left: 1.4em;
-  }
-
-  .lesson-body li + li,
-  .lesson-body li > ul,
-  .lesson-body li > ol {
-    margin-top: 0.35em;
-  }
-
-  .lesson-body li::marker {
-    color: var(--ink-muted);
-  }
-
-  .lesson-body strong {
+  /* Eyebrow and callout label: Recursive 700 · 15 · caps · +0.06em · CASL 0.6 */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-variation-settings: "CASL" 0.6;
     font-weight: 700;
+    font-size: 15px;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
   }
 
-  .lesson-body blockquote {
-    border-left: 0.3rem solid var(--accent);
-    padding-left: 1em;
+  /* Overline (spec name): Atkinson Next 700 · 15 · +0.04em. Not called
+     .overline, which is Tailwind's text-decoration utility. */
+  .kicker {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--muted);
   }
 
-  .lesson-body code {
-    font-family: var(--font-mono);
-    font-size: 0.86em;
-    background: var(--surface);
-    border-radius: 0.3em;
-    padding: 0.1em 0.3em;
+  /* Buttons. Hero 56/20 · primary 52/19 · secondary 52/18 · small 44/16. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    font-family: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
   }
-
-  .lesson-body pre {
-    background: var(--surface);
-    border-radius: 0.6rem;
-    padding: 1em 1.2em;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    font-family: var(--font-mono);
-    font-size: 0.85em;
-    line-height: 1.6;
-  }
-
-  .lesson-body pre code {
-    background: none;
-    padding: 0;
-    font-size: inherit;
-  }
-
-  .lesson-body hr {
+  .btn-primary,
+  .btn-hero {
+    min-height: 52px;
+    padding: 0 28px;
     border: 0;
-    border-top: 2px solid var(--rule);
-    margin-block: 2.5em;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: 19px;
+  }
+  .btn-hero {
+    min-height: 56px;
+    padding: 12px 28px;
+    font-size: 20px;
+    line-height: 1.3;
+    text-align: center;
+  }
+  .btn-primary:hover,
+  .btn-hero:hover {
+    color: var(--on-accent);
+    filter: brightness(1.15);
+  }
+  .btn-secondary {
+    min-height: 52px;
+    padding: 0 24px;
+    border: 2px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    font-size: 18px;
+  }
+  .btn-small {
+    min-height: 44px;
+    padding: 0 18px;
+    border: 2px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    font-size: 16px;
+  }
+  .btn-secondary:hover,
+  .btn-small:hover {
+    background: var(--tint);
+    color: var(--accent);
+  }
+  /* Disabled: dashed, never just faded. */
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    border: 2px dashed var(--border);
+    background: var(--dis-bg);
+    color: var(--dis-text);
+    filter: none;
+    cursor: not-allowed;
   }
 
-  .lesson-body img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 0.6rem;
-  }
-
-  .lesson-body table {
-    display: block;
-    overflow-x: auto;
-    border-collapse: collapse;
-    font-size: 0.9em;
-  }
-
-  .lesson-body th,
-  .lesson-body td {
-    text-align: left;
-    padding: 0.5em 1em 0.5em 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .lesson-body th {
+  /* A text link with a 44px hit area. */
+  .text-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
     font-weight: 700;
-    border-bottom-width: 2px;
+    text-underline-offset: 4px;
+  }
+
+  /* Chips */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+  .chip-practice {
+    border-color: var(--deco);
+    color: var(--text);
+  }
+  .chip-label {
+    align-self: flex-start;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--tint);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.6;
+    color: var(--accent);
   }
 
   /*
-    The course track. Each stop draws the line down to the next one. A
-    finished lesson also gets a highlighter band over that line, so the
-    path you've covered reads as marked.
+    Lesson body: everything that comes out of an MDX file.
+    Reading flow: 24 between blocks · +24 above H2 · +8 above H3.
   */
-  .track {
-    --stop: 2.75rem;
+  .prose > * {
+    margin: 0;
+  }
+  .prose > * + * {
+    margin-top: 24px;
+  }
+  .prose > h2 {
+    margin-top: 48px;
+  }
+  .prose > h3 {
+    margin-top: 32px;
+    font-family: var(--font-display);
+    font-variation-settings: "CASL" 0.5;
+    font-weight: 700;
+    font-size: var(--h3);
+    line-height: 1.3;
+  }
+  .prose > h2 {
+    font-family: var(--font-display);
+    font-variation-settings: "CASL" 0.5;
+    font-weight: 650;
+    font-size: var(--h2);
+    line-height: 1.2;
+  }
+  /* A hands-on chip sits right above its section heading. */
+  .prose > .hands-on {
+    margin-top: 48px;
+  }
+  .prose > .hands-on + h2 {
+    margin-top: 10px;
+  }
+  /* Figures get a little extra room. */
+  .prose > figure {
+    margin-block: 8px;
+  }
+  .prose > * + figure {
+    margin-top: 32px;
+  }
+  .prose > figure + * {
+    margin-top: 32px;
   }
 
-  .track-item {
+  .prose strong {
+    font-weight: 700;
+  }
+
+  /* Bullets: 14×15 sky hexagons. */
+  .prose ul {
+    list-style: none;
+    padding: 0;
+  }
+  .prose ul > li {
     position: relative;
-    display: grid;
-    grid-template-columns: var(--stop) minmax(0, 1fr);
-    column-gap: 1.25rem;
-    padding-bottom: 2.25rem;
+    padding-left: 26px;
   }
-
-  .track-item:last-child {
-    padding-bottom: 0;
-  }
-
-  .track-item:not(:last-child)::before,
-  .track-item[data-state="done"]:not(:last-child)::after {
+  .prose ul > li::before {
     content: "";
     position: absolute;
-    top: calc(var(--stop) / 2);
-    bottom: calc(var(--stop) / -2);
+    left: 0;
+    top: 0.5em;
+    width: 14px;
+    height: 15px;
+    background: var(--deco);
+    clip-path: polygon(50% 5.8%, 93.75% 28.8%, 93.75% 71.2%, 50% 94.2%, 6.25% 71.2%, 6.25% 28.8%);
+  }
+  .prose ol {
+    padding-left: 1.4em;
+    list-style: decimal;
+  }
+  .prose ol > li::marker {
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .prose li + li,
+  .prose li > ul,
+  .prose li > ol {
+    margin-top: 8px;
   }
 
-  .track-item:not(:last-child)::before {
-    left: calc(var(--stop) / 2 - 1px);
-    width: 2px;
-    background: var(--rule);
+  .prose blockquote {
+    border-left: 4px solid var(--border);
+    padding-left: 18px;
+    color: var(--muted);
   }
 
-  .track-item[data-state="done"]:not(:last-child)::after {
-    left: calc(var(--stop) / 2 - 0.3125rem);
-    width: 0.625rem;
-    border-radius: 999px;
-    background: var(--accent);
-    transform-origin: top;
-    animation: highlight-path 520ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
-    animation-delay: calc(var(--i, 0) * 90ms);
+  .prose :where(p, li, td, th, h2, h3, blockquote) > code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--surface2);
+    border-radius: 4px;
+    padding: 0.1em 0.3em;
   }
 
-  .track-stop {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    width: var(--stop);
-    height: var(--stop);
-    border: 2px solid var(--ink-muted);
-    border-radius: 999px;
-    background: var(--paper);
-    color: var(--ink-muted);
-    font-size: 1.125rem;
-    line-height: 1;
+  .prose hr {
+    border: 0;
+    border-top: 1px solid var(--border);
   }
 
-  .track-item[data-state="next"] .track-stop {
-    border-width: 3px;
-    border-color: var(--emphasis);
-    color: var(--ink);
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 14px;
   }
 
-  .track-item[data-state="done"] .track-stop {
-    border-color: var(--emphasis);
-    background: var(--accent);
-    color: var(--on-accent);
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 17px;
   }
-
-  /* Track titles stay clean until you point at the row. */
-  .track-link {
-    background-size: 100% 0;
+  .prose th,
+  .prose td {
+    text-align: left;
+    padding: 8px 16px 8px 0;
+    border-bottom: 1px solid var(--border);
   }
-
-  /* Makes the whole row clickable, not just the title. */
-  .track-link::after {
-    content: "";
-    position: absolute;
-    inset: 0 0 1rem 0;
-  }
-
-  .track-item:hover .track-link,
-  .track-link:focus-visible {
-    background-size: 100% 100%;
-    color: var(--on-accent);
+  .prose th {
+    font-weight: 700;
   }
 }
 
-@keyframes highlight-path {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
+/* Motion (spec sheet). Every animation uses `both`, so with motion off
+   each element simply shows its final state. */
+@keyframes cfaRise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cfaBreathe {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+@keyframes cfaPop {
+  0% { opacity: 0; transform: scale(0.3); }
+  60% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes cfaRing {
+  0% { opacity: 0.9; transform: scale(0.7); }
+  100% { opacity: 0; transform: scale(2.3); }
+}
+@keyframes cfaSlide {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cfaDraw {
+  from { stroke-dashoffset: 16; }
+  to { stroke-dashoffset: 0; }
 }
 
-@media (min-width: 40rem) {
-  .lesson-body {
-    font-size: 1.25rem;
-  }
-}
-
+/* Reduced motion: all animation off; final states shown. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -369,12 +484,8 @@
     animation: none !important;
     transition: none !important;
   }
-}
-
-/* Windows high contrast drops background images, so bring underlines back. */
-@media (forced-colors: active) {
-  .link,
-  .lesson-body a {
-    text-decoration: underline;
+  /* A ripple's final state is gone, not frozen mid-way. */
+  .ripple {
+    display: none;
   }
 }

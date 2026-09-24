@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"><style>body{margin:0}a{color:var(--accent)}a:hover{color:var(--text)}:focus-visible{outline:3px solid var(--accent);outline-offset:3px}</style></helmet>
+<div style="background:var(--bg);color:var(--text);font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-size:19px;line-height:1.6">
+  <dc-import name="SiteHeader" mobile="{{ mobile }}" dark="{{ dark }}" hint-size="100%,68px"></dc-import>
+  <main style="padding:0 var(--gut)">
+    <article style="max-width:720px;margin:0 auto;padding:var(--hy) 0 var(--sec);display:flex;flex-direction:column;gap:22px">
+      <div aria-hidden="true" style="position:relative;height:150px;display:flex;align-items:flex-end;gap:10px;padding:0 6px;border-bottom:4px solid var(--border);overflow:hidden;margin-bottom:16px">
+        <span style="flex:0 0 58px;height:92px;border-top:5px solid var(--deco);background:repeating-linear-gradient(to bottom,var(--tint) 0 9px,var(--bg) 9px 12px)"></span>
+        <span style="flex:0 0 70px;height:134px;border-top:5px solid var(--deco);background:repeating-linear-gradient(to bottom,var(--tint) 0 9px,var(--bg) 9px 12px)"></span>
+        <span style="flex:0 0 48px;height:74px;border-top:5px solid var(--deco);background:repeating-linear-gradient(to bottom,var(--tint) 0 9px,var(--bg) 9px 12px)"></span>
+        <span style="flex:0 0 80px;height:146px;border-top:5px solid var(--deco);background:repeating-linear-gradient(to bottom,var(--tint) 0 9px,var(--bg) 9px 12px)"></span>
+        <span style="flex:0 0 62px;height:108px;border-top:5px solid var(--deco);background:repeating-linear-gradient(to bottom,var(--tint) 0 9px,var(--bg) 9px 12px)"></span>
+        <span style="flex:0 0 54px;height:86px;border-top:5px solid var(--deco);background:repeating-linear-gradient(to bottom,var(--tint) 0 9px,var(--bg) 9px 12px)"></span>
+        <span style="flex:0 0 76px;height:124px;border-top:5px solid var(--deco);background:repeating-linear-gradient(to bottom,var(--tint) 0 9px,var(--bg) 9px 12px)"></span>
+        <span style="flex:0 0 58px;height:98px;border-top:5px solid var(--deco);background:repeating-linear-gradient(to bottom,var(--tint) 0 9px,var(--bg) 9px 12px)"></span>
+        <span style="position:absolute;left:18%;bottom:6px;width:190px;height:30px;box-sizing:border-box;border-radius:14px 14px 4px 4px;background:var(--accent);display:flex;gap:6px;padding:7px 14px"><span style="flex:1;border-radius:3px;background:var(--tint)"></span><span style="flex:1;border-radius:3px;background:var(--tint)"></span><span style="flex:1;border-radius:3px;background:var(--tint)"></span><span style="flex:1;border-radius:3px;background:var(--tint)"></span><span style="flex:1;border-radius:3px;background:var(--tint)"></span></span>
+      </div>
+      <span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.6;font-weight:700;font-size:15px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)">About</span>
+      <h1 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:var(--h1);line-height:1.12;text-wrap:balance">Made by students in Singapore</h1>
+      <p style="margin:0;text-wrap:pretty">Code for All is a free course that teaches 13 to 16 year olds to build things with AI tools. It's made by students in Code for All, a service club at Singapore American School.</p>
+      <p style="margin:0;text-wrap:pretty">We think anyone who's curious should get to try this, on whatever device they have, with no sign-up and no cost. So we wrote the lessons we'd want to learn from: short, practical, and ending with something you actually built.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px">
+        <a href="#" style="min-height:52px;display:inline-flex;align-items:center;padding:0 26px;box-sizing:border-box;border-radius:12px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:19px;text-decoration:none" style-hover="filter:brightness(1.15)">Start the course</a>
+        <a href="#" style="min-height:52px;display:inline-flex;align-items:center;padding:0 24px;box-sizing:border-box;border:2px solid var(--accent);border-radius:12px;color:var(--accent);font-weight:700;font-size:18px;text-decoration:none" style-hover="background:var(--tint)">Run a session</a>
+      </div>
+    </article>
+  </main>
+  <dc-import name="SiteFooter" hint-size="100%,100px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:800},&quot;mobile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}"></script>
+</body>
+</html>

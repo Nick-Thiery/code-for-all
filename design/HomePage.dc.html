@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"><style>body{margin:0}a{color:var(--accent)}a:hover{color:var(--text)}:focus-visible{outline:3px solid var(--accent);outline-offset:3px}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}</style></helmet>
+<div style="background:var(--bg);color:var(--text);font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-size:19px;line-height:1.6">
+  <dc-import name="SiteHeader" mobile="{{ mobile }}" dark="{{ dark }}" active="course" hint-size="100%,68px"></dc-import>
+  <main>
+    <section style="padding:0 var(--gut)">
+      <div style="max-width:1120px;margin:0 auto;padding:var(--hy) 0;display:flex;flex-wrap:wrap;align-items:center;gap:40px 56px">
+        <div style="flex:1 1 420px;max-width:600px;display:flex;flex-direction:column;gap:20px">
+          <span style="display:flex;align-items:center;gap:8px"><svg width="16" height="18" viewBox="0 0 24 26" aria-hidden="true"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg><span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.6;font-weight:700;font-size:15px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)">{{ eyebrow }}</span></span>
+          <h1 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:750;font-size:var(--hero);line-height:1.04;letter-spacing:-.01em;text-wrap:balance">Build real things with AI.</h1>
+          <sc-if value="{{ isNew }}" hint-placeholder-val="{{ true }}"><p style="margin:0;font-size:var(--lead);line-height:1.5;text-wrap:pretty">No experience needed. Learn how AI tools work, then use one to build your own website by the end of Part 1.</p></sc-if>
+          <sc-if value="{{ isRet }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:var(--lead);line-height:1.5;text-wrap:pretty">You've done 3 of 7 lessons in Part 1. The next one takes about 6 minutes.</p></sc-if>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:4px">
+            <a href="#" style="min-height:56px;min-width:min(100%,280px);max-width:100%;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 28px;border-radius:12px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:20px;line-height:1.3;text-align:center;text-decoration:none" style-hover="filter:brightness(1.15)">{{ cta }} <span aria-hidden="true">→</span></a>
+            <p style="margin:0;font-size:16px;line-height:1.5;color:var(--muted)">Free. No sign-up. Your progress saves on this device.</p>
+          </div>
+        </div>
+        <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+        <div aria-hidden="true" style="flex:1 1 380px;max-width:470px;background:var(--tint);border-radius:24px;padding:28px;display:flex;flex-direction:column">
+          <div style="width:84%;box-sizing:border-box;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--muted)">You write</span>
+            <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:14px;line-height:1.55">Build a one-page website with my name at the top and a section about my cat, Mochi. Use dark blue and white.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:12px 0 12px 22px;font-size:14px;font-weight:700;color:var(--accent)"><svg width="12" height="13" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg>Claude Code builds it</div>
+          <div style="align-self:flex-end;width:86%;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;border-bottom:1px solid var(--border);background:var(--surface2)"><span style="width:8px;height:8px;border-radius:50%;background:var(--pip)"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--pip)"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--pip)"></span><span style="margin-left:8px;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:12px;line-height:1.6;color:var(--muted);background:var(--surface);padding:0 10px;border-radius:999px">aisyah.html</span></div>
+            <div style="padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px">
+              <span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:28px;line-height:1.1;color:var(--accent)">Hi, I'm Aisyah</span>
+              <span style="font-size:14px;line-height:1.4;color:var(--muted)">I like cats, badminton and drawing.</span>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">
+                <div style="border-radius:10px;background:var(--tint);padding:10px;display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:700;line-height:1.2">Meet Mochi</span><span style="height:52px;border-radius:6px;background:repeating-linear-gradient(135deg,var(--surface) 0 6px,var(--tint) 6px 12px)"></span></div>
+                <div style="border-radius:10px;background:var(--tint);padding:10px;display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:700;line-height:1.2">Badminton</span><span style="height:52px;border-radius:6px;background:repeating-linear-gradient(135deg,var(--surface) 0 6px,var(--tint) 6px 12px)"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+    </section>
+
+    <section aria-label="Course" style="padding:0 var(--gut)">
+      <div style="max-width:1120px;margin:0 auto;padding:var(--hy) 0 var(--sec);border-top:1px solid var(--border)">
+        <dc-import name="CourseTrack" done="{{ done }}" hint-size="100%,900px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-labelledby="how" style="padding:0 var(--gut);background:var(--surface2)">
+      <div style="max-width:1120px;margin:0 auto;padding:var(--sec) 0;display:flex;flex-direction:column;gap:32px">
+        <h2 id="how" style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h2);line-height:1.2">How it works</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:32px 28px">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div aria-hidden="true" style="height:150px;border-radius:16px;background:var(--surface);border:1.5px solid var(--border);display:grid;place-items:center">
+              <div style="width:70%;display:flex;flex-direction:column;gap:7px">
+                <span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:14px;line-height:1.2">How a language model works</span>
+                <span style="height:6px;border-radius:3px;background:var(--track)"></span><span style="height:6px;width:86%;border-radius:3px;background:var(--track)"></span><span style="height:6px;width:94%;border-radius:3px;background:var(--track)"></span>
+                <span style="align-self:flex-start;background:var(--tint);border-radius:6px;padding:3px 8px;font-size:11px;line-height:1.2;font-weight:700;letter-spacing:.06em;color:var(--accent)">TIP</span>
+              </div>
+            </div>
+            <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h3);line-height:1.25">Read a short lesson</h3>
+            <p style="margin:0;text-wrap:pretty">Each one takes 6 to 15 minutes, in plain English.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div aria-hidden="true" style="height:150px;border-radius:16px;background:var(--surface);border:1.5px solid var(--border);display:grid;place-items:center">
+              <div style="width:72%;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.2;font-weight:700">
+                <span style="display:flex;align-items:center;justify-content:space-between;gap:8px">Specificity<span style="display:flex;gap:3px"><svg width="15" height="16" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent)"></polygon></svg><svg width="15" height="16" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent)"></polygon></svg></span></span>
+                <span style="display:flex;align-items:center;justify-content:space-between;gap:8px">Context<span style="display:flex;gap:3px"><svg width="15" height="16" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent)"></polygon></svg><svg width="15" height="16" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--pip);stroke-width:2"></polygon></svg></span></span>
+                <span style="display:flex;align-items:center;justify-content:space-between;gap:8px">Scope<span style="display:flex;gap:3px"><svg width="15" height="16" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent)"></polygon></svg><svg width="15" height="16" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent)"></polygon></svg></span></span>
+              </div>
+            </div>
+            <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h3);line-height:1.25">Practice with instant feedback</h3>
+            <p style="margin:0;text-wrap:pretty">Write a prompt and get kind, specific tips from AI. Try as many times as you like.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div aria-hidden="true" style="height:150px;border-radius:16px;background:var(--surface);border:1.5px solid var(--border);display:grid;place-items:center">
+              <div style="width:72%;border:1.5px solid var(--border);border-radius:10px;overflow:hidden">
+                <div style="display:flex;gap:4px;padding:6px 8px;background:var(--surface2);border-bottom:1px solid var(--border)"><span style="width:6px;height:6px;border-radius:50%;background:var(--pip)"></span><span style="width:6px;height:6px;border-radius:50%;background:var(--pip)"></span><span style="width:6px;height:6px;border-radius:50%;background:var(--pip)"></span></div>
+                <div style="padding:10px 12px;display:flex;flex-direction:column;gap:6px"><span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:18px;line-height:1.1;color:var(--accent)">Hi, I'm Aisyah</span><span style="height:5px;width:70%;border-radius:3px;background:var(--track)"></span><span style="height:26px;border-radius:5px;background:var(--tint)"></span></div>
+              </div>
+            </div>
+            <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h3);line-height:1.25">Build something real</h3>
+            <p style="margin:0;text-wrap:pretty">Use an AI agent to build your own website, step by step.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:var(--sec) var(--gut)">
+      <div style="max-width:1120px;margin:0 auto;box-sizing:border-box;border:1.5px solid var(--border);border-radius:20px;padding:var(--pad);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px">
+        <div style="flex:1 1 360px;display:flex;flex-direction:column;gap:4px">
+          <h2 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h3);line-height:1.25">Teacher, volunteer or club leader?</h2>
+          <p style="margin:0;text-wrap:pretty">Run Code for All with your own group. The slides, script and handouts are free.</p>
+        </div>
+        <a href="#" style="min-height:52px;display:inline-flex;align-items:center;gap:8px;padding:0 24px;box-sizing:border-box;border:2px solid var(--accent);border-radius:12px;color:var(--accent);font-weight:700;font-size:18px;text-decoration:none" style-hover="background:var(--tint)">Get the session kit <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+  <dc-import name="SiteFooter" hint-size="100%,100px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;mobile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;returning&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const r = !!this.props.returning, m = !!this.props.mobile;
+    return { mobile: m, desktop: !m, dark: !!this.props.dark, isNew: !r, isRet: r, done: r ? 3 : 0,
+      eyebrow: r ? "Welcome back" : "A free course for beginners",
+      cta: r ? "Continue: Using AI safely and honestly" : "Start lesson 1" };
+  }
+}
+</script>
+</body>
+</html>

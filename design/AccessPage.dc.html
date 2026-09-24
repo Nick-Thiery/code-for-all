@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"><style>body{margin:0}a{color:var(--accent)}a:hover{color:var(--text)}:focus-visible{outline:3px solid var(--accent);outline-offset:3px}</style></helmet>
+<div style="background:var(--bg);color:var(--text);font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-size:19px;line-height:1.6">
+  <dc-import name="SiteHeader" mobile="{{ mobile }}" dark="{{ dark }}" resume="Lesson 5, Getting set up" hint-size="100%,116px"></dc-import>
+  <main style="padding:0 var(--gut)">
+    <article style="max-width:720px;margin:0 auto;padding:var(--hy) 0 var(--sec);display:flex;flex-direction:column;gap:24px">
+      <header style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.6;font-weight:700;font-size:15px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)">Hands-on lessons</span>
+        <h1 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:var(--h1);line-height:1.12;text-wrap:balance">Getting a Claude account</h1>
+        <p style="margin:0;font-size:var(--lead);line-height:1.5;text-wrap:pretty">Two lessons have a hands-on part that needs a Claude account. Everything else on Code for All works without one.</p>
+      </header>
+      <section style="border:1.5px solid var(--border);border-radius:20px;padding:var(--pad);display:flex;flex-direction:column;gap:14px">
+        <h2 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h3);line-height:1.25">Works without an account</h2>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px">
+          <li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="24" viewBox="0 0 24 26" aria-hidden="true" style="flex:none;margin-top:3px"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent)"></polygon><path d="M7.6 13.3l3 3 5.8-6.3" style="fill:none;stroke:var(--on-accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"></path></svg><span>Reading every lesson, including the hands-on ones</span></li>
+          <li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="24" viewBox="0 0 24 26" aria-hidden="true" style="flex:none;margin-top:3px"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent)"></polygon><path d="M7.6 13.3l3 3 5.8-6.3" style="fill:none;stroke:var(--on-accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"></path></svg><span>Practice with AI feedback</span></li>
+          <li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="24" viewBox="0 0 24 26" aria-hidden="true" style="flex:none;margin-top:3px"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent)"></polygon><path d="M7.6 13.3l3 3 5.8-6.3" style="fill:none;stroke:var(--on-accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"></path></svg><span>Saving your progress on this device</span></li>
+        </ul>
+      </section>
+      <h2 style="margin:24px 0 0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h2);line-height:1.2">What's a Claude account?</h2>
+      <p style="margin:0;text-wrap:pretty">Claude is an AI made by a company called Anthropic. An account lets you use Claude Code, the AI agent you'll build your website with.</p>
+      <h2 style="margin:24px 0 0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h2);line-height:1.2">Why do some lessons need one?</h2>
+      <p style="margin:0;text-wrap:pretty">In Lessons 5 and 7, Claude Code runs on your own laptop and does real work for you. It needs an account behind it to do that.</p>
+      <h2 style="margin:24px 0 0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h2);line-height:1.2">How do I get one?</h2>
+      <p style="margin:0;text-wrap:pretty">Accounts come through a Code for All session, or through a teacher or group that runs one. They set it up for you, so you don't need to sign up for anything on your own.</p>
+      <dc-import name="Callout" kind="tip" body="Know a teacher, club leader or youth worker who might run a session? Send them to the Run a session page. Everything they need is there, free." hint-size="100%,140px"></dc-import>
+      <h2 style="margin:24px 0 0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h2);line-height:1.2">No account yet?</h2>
+      <p style="margin:0;text-wrap:pretty">That's okay. Read the hands-on parts anyway so you know every step. When you get access, you'll be ready to go.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px">
+        <a href="#" style="min-height:52px;display:inline-flex;align-items:center;gap:8px;padding:0 26px;box-sizing:border-box;border-radius:12px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:19px;text-decoration:none" style-hover="filter:brightness(1.15)"><span aria-hidden="true">←</span> Back to Lesson 5</a>
+        <a href="#" style="min-height:52px;display:inline-flex;align-items:center;padding:0 24px;box-sizing:border-box;border:2px solid var(--accent);border-radius:12px;color:var(--accent);font-weight:700;font-size:18px;text-decoration:none" style-hover="background:var(--tint)">Go to the course</a>
+      </div>
+    </article>
+  </main>
+  <dc-import name="SiteFooter" hint-size="100%,100px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;mobile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}"></script>
+</body>
+</html>

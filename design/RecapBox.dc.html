@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<section aria-label="Lesson recap" style="background:var(--tint);border-radius:20px;padding:var(--pad);display:flex;flex-direction:column;gap:18px;color:var(--text);font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-size:19px;line-height:1.6">
+  <h2 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:var(--h3);line-height:1.25">What you learned</h2>
+  <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ points }}" as="pt" hint-placeholder-count="3"><li style="display:flex;gap:12px;align-items:flex-start"><svg width="14" height="15" viewBox="0 0 24 26" aria-hidden="true" style="flex:none;margin-top:8px"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg><span>{{ pt }}</span></li></sc-for>
+  </ul>
+  <button type="button" role="checkbox" aria-checked="{{ checked }}" onClick="{{ toggle }}" style="display:flex;align-items:center;gap:16px;width:100%;min-height:68px;box-sizing:border-box;padding:12px 18px;border:1.5px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);font-family:inherit;text-align:left;cursor:pointer" style-hover="border-color:var(--accent)">
+    <span aria-hidden="true" style="position:relative;flex:none;width:32px;height:35px">
+      <sc-if value="{{ unchecked }}" hint-placeholder-val="{{ true }}"><svg width="32" height="35" viewBox="0 0 24 26" style="position:absolute;inset:0"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--surface);stroke:var(--accent);stroke-width:2;stroke-linejoin:round"></polygon></svg></sc-if>
+      <sc-if value="{{ checked }}" hint-placeholder-val="{{ false }}">
+        <svg width="32" height="35" viewBox="0 0 24 26" style="position:absolute;inset:0;overflow:visible;animation:cfaRing 900ms 150ms ease-out both"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--deco);stroke-width:2"></polygon></svg>
+        <svg width="32" height="35" viewBox="0 0 24 26" style="position:absolute;inset:0;animation:cfaPop 450ms cubic-bezier(.3,1.4,.5,1) both"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--accent);stroke:var(--accent);stroke-width:2;stroke-linejoin:round"></polygon><path d="M7.5 13.2l3.2 3.2 5.8-6.4" style="fill:none;stroke:var(--on-accent);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:16;animation:cfaDraw 350ms 200ms ease-out both"></path></svg>
+      </sc-if>
+    </span>
+    <span style="display:flex;flex-direction:column;gap:2px">
+      <span style="font-weight:700;font-size:19px;line-height:1.35">I've finished this lesson</span>
+      <sc-if value="{{ checked }}" hint-placeholder-val="{{ false }}"><span style="font-size:16px;line-height:1.5;color:var(--muted);animation:cfaRise 300ms 250ms ease both">{{ savedLine }}</span></sc-if>
+    </span>
+  </button>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:340},&quot;checked&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;next&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Chatbots vs. agents&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;points&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(checked: boolean) =&gt; void&quot;}}">
+const DEF = ["A language model predicts the next small piece of text, over and over.", "It learned patterns from lots of text, so it can sound sure and still be wrong.", "Clear, specific words give it better things to predict from."];
+class Component extends DCLogic {
+  state = { checked: !!this.props.checked };
+  toggle = () => {
+    const c = !this.state.checked;
+    this.setState({ checked: c });
+    if (this.props.onChange) this.props.onChange(c);
+  };
+  renderVals() {
+    const c = this.state.checked, next = this.props.next;
+    return { points: this.props.points || DEF, checked: c, unchecked: !c, toggle: this.toggle,
+      savedLine: next ? `Saved on this device. Up next: ${next}.` : "Saved on this device." };
+  }
+}
+</script>
+</body>
+</html>

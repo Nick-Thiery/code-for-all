@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"><style>body{margin:0}a{color:var(--accent)}a:hover{color:var(--text)}:focus-visible{outline:3px solid var(--accent);outline-offset:3px}@keyframes cfaPop{0%{opacity:0;transform:scale(.3)}60%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}@keyframes cfaRing{0%{opacity:.9;transform:scale(.7)}100%{opacity:0;transform:scale(2.3)}}@keyframes cfaRise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}</style></helmet>
+<div style="background:var(--bg);color:var(--text);font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-size:19px;line-height:1.6">
+  <dc-import name="SiteHeader" mobile="{{ mobile }}" dark="{{ dark }}" active="course" hint-size="100%,68px"></dc-import>
+  <main style="padding:0 var(--gut)">
+    <div style="max-width:760px;margin:0 auto;padding:var(--hy) 0 var(--sec);display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center">
+      <svg width="200" height="190" viewBox="-80 -76 160 152" aria-hidden="true" style="overflow:visible">
+        <polygon points="0,-26 22.5,-13 22.5,13 0,26 -22.5,13 -22.5,-13" style="fill:none;stroke:var(--deco);stroke-width:3;transform-box:fill-box;transform-origin:center;animation:cfaRing 1.3s 1.2s ease-out both"></polygon>
+        <g style="transform-box:fill-box;transform-origin:center;animation:cfaPop 500ms cubic-bezier(.3,1.4,.5,1) 200ms both"><polygon points="-25,-69.3 -2.5,-56.3 -2.5,-30.3 -25,-17.3 -47.5,-30.3 -47.5,-56.3" style="fill:var(--accent)"></polygon><text x="-25" y="-37.3" text-anchor="middle" style="font:700 16px 'Atkinson Hyperlegible Next',sans-serif;fill:var(--on-accent)">1</text></g>
+        <g style="transform-box:fill-box;transform-origin:center;animation:cfaPop 500ms cubic-bezier(.3,1.4,.5,1) 300ms both"><polygon points="25,-69.3 47.5,-56.3 47.5,-30.3 25,-17.3 2.5,-30.3 2.5,-56.3" style="fill:var(--accent)"></polygon><text x="25" y="-37.3" text-anchor="middle" style="font:700 16px 'Atkinson Hyperlegible Next',sans-serif;fill:var(--on-accent)">2</text></g>
+        <g style="transform-box:fill-box;transform-origin:center;animation:cfaPop 500ms cubic-bezier(.3,1.4,.5,1) 400ms both"><polygon points="50,-26 72.5,-13 72.5,13 50,26 27.5,13 27.5,-13" style="fill:var(--accent)"></polygon><text x="50" y="6" text-anchor="middle" style="font:700 16px 'Atkinson Hyperlegible Next',sans-serif;fill:var(--on-accent)">3</text></g>
+        <g style="transform-box:fill-box;transform-origin:center;animation:cfaPop 500ms cubic-bezier(.3,1.4,.5,1) 500ms both"><polygon points="25,17.3 47.5,30.3 47.5,56.3 25,69.3 2.5,56.3 2.5,30.3" style="fill:var(--accent)"></polygon><text x="25" y="49.3" text-anchor="middle" style="font:700 16px 'Atkinson Hyperlegible Next',sans-serif;fill:var(--on-accent)">4</text></g>
+        <g style="transform-box:fill-box;transform-origin:center;animation:cfaPop 500ms cubic-bezier(.3,1.4,.5,1) 600ms both"><polygon points="-25,17.3 -2.5,30.3 -2.5,56.3 -25,69.3 -47.5,56.3 -47.5,30.3" style="fill:var(--accent)"></polygon><text x="-25" y="49.3" text-anchor="middle" style="font:700 16px 'Atkinson Hyperlegible Next',sans-serif;fill:var(--on-accent)">5</text></g>
+        <g style="transform-box:fill-box;transform-origin:center;animation:cfaPop 500ms cubic-bezier(.3,1.4,.5,1) 700ms both"><polygon points="-50,-26 -27.5,-13 -27.5,13 -50,26 -72.5,13 -72.5,-13" style="fill:var(--accent)"></polygon><text x="-50" y="6" text-anchor="middle" style="font:700 16px 'Atkinson Hyperlegible Next',sans-serif;fill:var(--on-accent)">6</text></g>
+        <g style="transform-box:fill-box;transform-origin:center;animation:cfaPop 600ms cubic-bezier(.3,1.4,.5,1) 950ms both"><polygon points="0,-26 22.5,-13 22.5,13 0,26 -22.5,13 -22.5,-13" style="fill:var(--deco)"></polygon><text x="0" y="5.5" text-anchor="middle" style="font:700 15px 'Atkinson Hyperlegible Mono',monospace;fill:#0E1116">&lt;/&gt;</text></g>
+      </svg>
+      <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">All 7 lessons in Part 1 are done.</span>
+      <span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.6;font-weight:700;font-size:15px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)">Part 1 complete</span>
+      <h1 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:750;font-size:var(--hero);line-height:1.05;letter-spacing:-.01em;text-wrap:balance">You built a real website.</h1>
+      <p style="margin:0;max-width:30em;font-size:var(--lead);line-height:1.5;text-wrap:pretty">You directed an AI agent, read code, fixed problems, and shipped something real.</p>
+      <div style="width:100%;margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px;text-align:left">
+        <div style="border:1.5px solid var(--border);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:6px">
+          <h2 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:22px;line-height:1.25">Show someone your site</h2>
+          <p style="margin:0;text-wrap:pretty">Open it and show a friend or someone at home. Explaining how you made it is the best way to remember it.</p>
+        </div>
+        <div style="background:var(--tint);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:6px">
+          <h2 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:22px;line-height:1.25">Part 2 is on the way</h2>
+          <p style="margin:0;text-wrap:pretty">Bigger builds are coming. Your progress stays saved on this device.</p>
+          <a href="#" style="align-self:flex-start;min-height:44px;display:inline-flex;align-items:center;font-weight:700;text-underline-offset:4px">See what's coming →</a>
+        </div>
+      </div>
+      <a href="#" style="min-height:44px;display:inline-flex;align-items:center;font-weight:700;text-underline-offset:4px">Back to the course</a>
+    </div>
+  </main>
+  <dc-import name="SiteFooter" hint-size="100%,100px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;mobile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}"></script>
+</body>
+</html>

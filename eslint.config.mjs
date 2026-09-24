@@ -18,6 +18,8 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      // Exported from Claude Design as a reference; not part of the app.
+      "design/**",
     ],
   },
 ];

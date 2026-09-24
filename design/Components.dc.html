@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"><style>body{margin:0}a{color:var(--accent)}a:hover{color:var(--text)}:focus-visible{outline:3px solid var(--accent);outline-offset:3px}@keyframes cfaRise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}@keyframes cfaPop{0%{opacity:0;transform:scale(.3)}60%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}@keyframes cfaRing{0%{opacity:.9;transform:scale(.7)}100%{opacity:0;transform:scale(2.3)}}@keyframes cfaDraw{from{stroke-dashoffset:16}to{stroke-dashoffset:0}}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}</style></helmet>
+<div style="background:var(--bg);color:var(--text);font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-size:19px;line-height:1.6;padding:40px;display:flex;flex-direction:column;gap:52px">
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Buttons</p>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px">
+      <a href="#" style="min-height:56px;display:inline-flex;align-items:center;gap:10px;padding:0 28px;border-radius:12px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:20px;text-decoration:none">Start lesson 1 <span aria-hidden="true">→</span></a>
+      <a href="#" style="min-height:52px;display:inline-flex;align-items:center;padding:0 28px;border-radius:12px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:19px;text-decoration:none">Get feedback</a>
+      <a href="#" style="min-height:52px;display:inline-flex;align-items:center;padding:0 24px;box-sizing:border-box;border:2px solid var(--accent);border-radius:12px;color:var(--accent);font-weight:700;font-size:18px;text-decoration:none">Get the session kit</a>
+      <a href="#" style="min-height:44px;display:inline-flex;align-items:center;padding:0 18px;box-sizing:border-box;border:2px solid var(--accent);border-radius:12px;color:var(--accent);font-weight:700;font-size:16px;text-decoration:none">Open</a>
+      <a href="#" style="min-height:44px;display:inline-flex;align-items:center;font-weight:700;text-underline-offset:4px">How to get access →</a>
+      <button type="button" disabled="{{ true }}" style="min-height:52px;padding:0 28px;border:2px dashed var(--border);border-radius:12px;background:var(--dis-bg);color:var(--dis-text);font-family:inherit;font-weight:700;font-size:19px;cursor:not-allowed">Disabled</button>
+    </div>
+    <p style="margin:0;font-size:15px;line-height:1.5;color:var(--muted)">Hero 56 / 20px · Primary 52 / 19px · Secondary 52 / 18px, 2px border · Small 44 / 16px · Text link 44 tall hit area · Disabled: dashed, never just faded</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Chips and labels</p>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px">
+      <span style="display:flex;align-items:center;gap:8px"><svg width="16" height="18" viewBox="0 0 24 26" aria-hidden="true"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg><span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.6;font-weight:700;font-size:15px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)">Eyebrow label</span></span>
+      <span style="display:inline-flex;align-items:center;padding:3px 10px;border:1.5px solid var(--border);border-radius:999px;font-size:15px;line-height:1.4;color:var(--muted)">Hands-on: needs a Claude account</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border:1.5px solid var(--deco);border-radius:999px;font-size:15px;line-height:1.4"><svg width="10" height="11" viewBox="0 0 24 26" aria-hidden="true"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:var(--deco)"></polygon></svg>Includes practice</span>
+      <span style="font-size:14px;font-weight:700;line-height:1.6;color:var(--accent);background:var(--tint);padding:0 10px;border-radius:999px">PDF</span>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Header · default, with resume bar · lesson mode · mobile</p>
+    <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;--gut:20px"><dc-import name="SiteHeader" dark="{{ dark }}" active="course" resume="Lesson 4, Using AI safely and honestly" hint-size="100%,116px"></dc-import></div>
+    <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;--gut:20px"><dc-import name="SiteHeader" dark="{{ dark }}" active="course" lesson="{{ true }}" current="2" done="1" hint-size="100%,68px"></dc-import></div>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+      <div style="width:360px;border:1px solid var(--border);border-radius:10px;overflow:hidden;--gut:16px"><dc-import name="SiteHeader" dark="{{ dark }}" mobile="{{ true }}" active="run" hint-size="100%,68px"></dc-import></div>
+      <div style="width:360px;border:1px solid var(--border);border-radius:10px;overflow:hidden;--gut:16px"><dc-import name="SiteHeader" dark="{{ dark }}" mobile="{{ true }}" active="course" lesson="{{ true }}" current="2" done="2" hint-size="100%,108px"></dc-import></div>
+    </div>
+    <p style="margin:0;font-size:15px;line-height:1.5;color:var(--muted)">Lesson pips: filled = done · tinted with thick ring = this lesson · gray outline = not started. Always paired with “Lesson 2 of 7”.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Footer</p>
+    <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;--gut:20px"><dc-import name="SiteFooter" hint-size="100%,100px"></dc-import></div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Course track · done · up next · not started · needs account · includes practice · locked part</p>
+    <dc-import name="CourseTrack" done="3" hint-size="100%,900px"></dc-import>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:720px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Callouts · tip · heads up · try it</p>
+    <dc-import name="Callout" kind="tip" body="If an answer isn't what you wanted, ask again in a different way." hint-size="100%,120px"></dc-import>
+    <dc-import name="Callout" kind="headsup" body="A model can sound very sure and still be wrong. For anything important, double-check." hint-size="100%,120px"></dc-import>
+    <dc-import name="Callout" kind="tryit" body="Type “I am going to” on your phone keyboard and tap the middle suggestion five times." hint-size="100%,120px"></dc-import>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:720px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Key term · inline (tapped open) · block</p>
+    <p style="margin:0">The part doing the writing is called the <span style="font-weight:700;text-decoration:underline dotted var(--accent);text-decoration-thickness:2px;text-underline-offset:5px">model</span>. <span style="background:var(--tint);padding:2px 8px;border-radius:6px"><strong>Model:</strong> the trained AI system that generates the text.</span></p>
+    <dc-import name="KeyTerm" term="Model" def="The trained AI system that generates the text." hint-size="100%,130px"></dc-import>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:720px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Code block · command block</p>
+    <dc-import name="CodeBlock" hint-size="100%,210px"></dc-import>
+    <dc-import name="CommandBlock" command="claude --version" hint-size="100%,130px"></dc-import>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:720px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Needs-an-account notice · screenshot slot</p>
+    <div role="note" style="background:var(--tint);border-radius:16px;padding:18px 22px;display:flex;gap:16px;align-items:flex-start">
+      <svg width="26" height="28" viewBox="0 0 24 26" aria-hidden="true" style="flex:none;margin-top:3px"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linejoin:round"></polygon><text x="12" y="17.8" text-anchor="middle" style="font:700 12px 'Atkinson Hyperlegible Next',sans-serif;fill:var(--accent)">i</text></svg>
+      <div style="display:flex;flex-direction:column;gap:2px"><p style="margin:0;font-weight:700">This lesson has a hands-on part that needs a Claude account.</p><p style="margin:0">You can read the whole lesson without one.</p><a href="#" style="align-self:flex-start;min-height:44px;display:inline-flex;align-items:center;font-weight:700;text-underline-offset:4px">How to get access →</a></div>
+    </div>
+    <figure style="margin:0;display:flex;flex-direction:column;gap:12px">
+      <div style="aspect-ratio:16/7;border-radius:14px;border:1.5px solid var(--border);background:repeating-linear-gradient(135deg,var(--surface2) 0 12px,var(--bg) 12px 24px);display:grid;place-items:center"><span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:15px;color:var(--muted);background:var(--bg);padding:6px 12px;border-radius:8px">screenshot · what goes here</span></div>
+      <figcaption style="font-size:16px;line-height:1.5;color:var(--muted)">Caption, 16px, muted.</figcaption>
+    </figure>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:720px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Stuck? · closed · open</p>
+    <dc-import name="StuckBlock" hint-size="100%,64px"></dc-import>
+    <dc-import name="StuckBlock" open="{{ true }}" hint-size="100%,320px"></dc-import>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:720px;--pad:28px;--h3:24px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Recap box · unchecked · checked</p>
+    <dc-import name="RecapBox" next="Chatbots vs. agents" hint-size="100%,330px"></dc-import>
+    <dc-import name="RecapBox" checked="{{ true }}" next="Chatbots vs. agents" hint-size="100%,350px"></dc-import>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:720px">
+    <p style="margin:0;padding-bottom:8px;border-bottom:1px solid var(--border);font:700 13px/1.2 'Atkinson Hyperlegible Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Prev / next · standard · last lesson of a part</p>
+    <dc-import name="PrevNext" prev-title="What is AI, really?" prev-num="1" next-title="Chatbots vs. agents" next-num="3" hint-size="100%,96px"></dc-import>
+    <dc-import name="PrevNext" prev-title="Talking to an agent" prev-num="6" last="{{ true }}" hint-size="100%,96px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:1200},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}"></script>
+</body>
+</html>

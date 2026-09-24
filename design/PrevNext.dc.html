@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<nav aria-label="Lessons" style="display:flex;flex-wrap:wrap;flex-direction:row-reverse;gap:16px;font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;line-height:1.4">
+  <sc-if value="{{ notLast }}" hint-placeholder-val="{{ true }}"><a href="#" style="flex:1.4 1 280px;min-height:96px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-radius:16px;background:var(--accent);color:var(--on-accent);text-decoration:none" style-hover="filter:brightness(1.15)">
+    <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:15px;font-weight:700;letter-spacing:.03em">Next · Lesson {{ nextNum }}</span><span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:22px;line-height:1.25">{{ nextTitle }}</span></span>
+    <span aria-hidden="true" style="font-size:26px;font-weight:700">→</span>
+  </a></sc-if>
+  <sc-if value="{{ last }}" hint-placeholder-val="{{ false }}"><a href="#" style="flex:1.4 1 280px;min-height:96px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-radius:16px;background:var(--accent);color:var(--on-accent);text-decoration:none" style-hover="filter:brightness(1.15)">
+    <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:15px;font-weight:700;letter-spacing:.03em">You've finished Part 1</span><span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:22px;line-height:1.25">See what you built</span></span>
+    <span aria-hidden="true" style="font-size:26px;font-weight:700">→</span>
+  </a></sc-if>
+  <sc-if value="{{ hasPrev }}" hint-placeholder-val="{{ true }}"><a href="#" style="flex:1 1 240px;min-height:96px;box-sizing:border-box;display:flex;align-items:center;gap:16px;padding:18px 22px;border-radius:16px;border:1.5px solid var(--border);color:var(--text);text-decoration:none" style-hover="background:var(--surface2)">
+    <span aria-hidden="true" style="font-size:22px;color:var(--muted)">←</span>
+    <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:15px;font-weight:700;color:var(--muted)">Previous · Lesson {{ prevNum }}</span><span style="font-weight:700;font-size:19px;line-height:1.3">{{ prevTitle }}</span></span>
+  </a></sc-if>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:120},&quot;prevTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;What is AI, really?&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;prevNum&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;1&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;nextTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Chatbots vs. agents&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;nextNum&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;3&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;last&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    return { last: !!p.last, notLast: !p.last, hasPrev: !!p.prevTitle };
+  }
+}
+</script>
+</body>
+</html>

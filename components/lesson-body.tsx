@@ -13,7 +13,7 @@ export async function LessonBody({ lesson }: { lesson: Lesson }) {
     // line numbers match what the author sees in their editor.
     const { default: Content } = await evaluate(lesson.source, {
       ...runtime,
-      remarkPlugins: [remarkFrontmatter, remarkGfm],
+      remarkPlugins: [remarkFrontmatter, remarkGfm, remarkCodeMeta],
     });
     // Called directly rather than rendered as <Content />, so that mistakes
     // only found at render time (a stray {word}, a misspelt component) throw
@@ -30,7 +30,23 @@ export async function LessonBody({ lesson }: { lesson: Lesson }) {
     );
   }
 
-  return <div className="lesson-body">{body}</div>;
+  return <div className="prose">{body}</div>;
+}
+
+type CodeNode = { type: string; meta?: string | null; data?: Record<string, unknown>; children?: CodeNode[] };
+
+// Passes whatever follows the language on a fenced block (```html title="index.html")
+// through to the <code> element as data-meta, for the code block's caption.
+function remarkCodeMeta() {
+  return (tree: CodeNode) => {
+    const visit = (node: CodeNode) => {
+      if (node.type === "code" && node.meta) {
+        node.data = { ...node.data, hProperties: { "data-meta": node.meta } };
+      }
+      node.children?.forEach(visit);
+    };
+    visit(tree);
+  };
 }
 
 const componentNames = Object.keys(mdxComponents).filter((name) => /^[A-Z]/.test(name));

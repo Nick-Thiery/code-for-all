@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><meta name="design_doc_mode" content="canvas"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"><style>body{margin:0;background:#E7EAED;font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;color:#15202B}a{color:#00487E}a:hover{color:#15202B}</style></helmet>
+
+<section id="intro" style="padding:48px 44px 40px;border-bottom:1px solid rgba(0,0,0,.08)">
+  <div style="max-width:1100px;display:flex;flex-direction:column;gap:16px">
+    <img src="assets/cfa-logo.png" alt="Code for All" style="height:44px;width:auto;align-self:flex-start;mix-blend-mode:multiply">
+    <h1 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:40px;line-height:1.1">Code for All: the whole site</h1>
+    <p style="margin:0;font-size:17px;line-height:1.6;color:#3C4652;max-width:62em">Every page is built around the Direction A practice card, which is used unchanged. All frames are live: the track, the “model” key term, Stuck, Copy, the recap checkbox and the practice card all work. The same components render every frame, so each maps to one Next.js component.</p>
+    <nav style="display:flex;flex-wrap:wrap;gap:8px;font-size:14px">
+      <a href="#s1" style="padding:6px 12px;background:#fff;border-radius:999px;text-decoration:none;font-weight:700">1 Sitemap</a><a href="#s2" style="padding:6px 12px;background:#fff;border-radius:999px;text-decoration:none;font-weight:700">2 Lesson</a><a href="#s3" style="padding:6px 12px;background:#fff;border-radius:999px;text-decoration:none;font-weight:700">3 Home</a><a href="#s4" style="padding:6px 12px;background:#fff;border-radius:999px;text-decoration:none;font-weight:700">4 Needs-account lesson</a><a href="#s5" style="padding:6px 12px;background:#fff;border-radius:999px;text-decoration:none;font-weight:700">5 Part complete</a><a href="#s6" style="padding:6px 12px;background:#fff;border-radius:999px;text-decoration:none;font-weight:700">6 Run a session</a><a href="#s7" style="padding:6px 12px;background:#fff;border-radius:999px;text-decoration:none;font-weight:700">7 Small pages</a><a href="#s8" style="padding:6px 12px;background:#fff;border-radius:999px;text-decoration:none;font-weight:700">8 Components</a><a href="#s9" style="padding:6px 12px;background:#fff;border-radius:999px;text-decoration:none;font-weight:700">9 Spec</a>
+    </nav>
+  </div>
+</section>
+
+<section id="s1" style="padding:40px 44px;border-bottom:1px solid rgba(0,0,0,.08)">
+  <h2 style="margin:0 0 20px;font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif">1 · Sitemap and navigation model</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+    <div style="flex:none;width:1180px;background:#fff;border-radius:12px;padding:32px;box-sizing:border-box;display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;padding:12px 18px;border:1.5px dashed #D2D8DF;border-radius:12px;font-size:14px;line-height:1.5;color:#4A5563">
+        <strong style="color:#15202B">On every page</strong>
+        <span>Header: Logo → / · Course → / · Run a session → /run-it · Light/dark</span>
+        <span>Footer: About · Run a session · Contact</span>
+      </div>
+      <div style="display:flex;align-items:stretch">
+        <div style="flex:0 0 220px;border:2px solid #00487E;border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px;color:#4A5563">/</span>
+          <span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:20px;line-height:1.2">Home is the course</span>
+          <span style="font-size:14px;line-height:1.5;color:#4A5563">Hero with Start/Continue, the Part 1 track, how it works, session teaser</span>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 12px;font-size:24px;font-weight:700;color:#00487E">→</div>
+        <div style="flex:1;border:1.5px solid #D2D8DF;border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px;color:#4A5563">/part-1/&lt;lesson-slug&gt; · one template</span>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <span style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:#4A5563"><svg width="30" height="33" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:#00487E"></polygon><text x="12" y="16.8" text-anchor="middle" style="font:700 10px sans-serif;fill:#fff">1</text></svg></span>
+            <span style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:#4A5563"><svg width="30" height="33" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:#00487E"></polygon><text x="12" y="16.8" text-anchor="middle" style="font:700 10px sans-serif;fill:#fff">2</text></svg></span>
+            <span style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:#4A5563"><svg width="30" height="33" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:#00487E"></polygon><text x="12" y="16.8" text-anchor="middle" style="font:700 10px sans-serif;fill:#fff">3</text></svg></span>
+            <span style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:#4A5563"><svg width="30" height="33" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:#00487E"></polygon><text x="12" y="16.8" text-anchor="middle" style="font:700 10px sans-serif;fill:#fff">4</text></svg></span>
+            <span style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:#4A5563"><svg width="30" height="33" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:#00487E"></polygon><text x="12" y="16.8" text-anchor="middle" style="font:700 10px sans-serif;fill:#fff">5</text></svg>acct</span>
+            <span style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:#4A5563"><svg width="30" height="33" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:#00487E"></polygon><text x="12" y="16.8" text-anchor="middle" style="font:700 10px sans-serif;fill:#fff">6</text></svg>practice</span>
+            <span style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:#4A5563"><svg width="30" height="33" viewBox="0 0 24 26"><polygon points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5" style="fill:#00487E"></polygon><text x="12" y="16.8" text-anchor="middle" style="font:700 10px sans-serif;fill:#fff">7</text></svg>acct</span>
+          </div>
+          <span style="font-size:14px;line-height:1.5;color:#4A5563">Prev/next between lessons. Lessons 5 and 7 link to /access.</span>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 12px;font-size:24px;font-weight:700;color:#00487E">→</div>
+        <div style="flex:0 0 180px;border:1.5px solid #D2D8DF;border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px;color:#4A5563">/part-1/complete</span>
+          <span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:18px;line-height:1.25">Part complete</span>
+          <span style="font-size:14px;line-height:1.5;color:#4A5563">From Lesson 7's “next”</span>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 12px;font-size:24px;font-weight:700;color:#9AA4AF">→</div>
+        <div style="flex:0 0 180px;border:2px dashed #D2D8DF;border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px;color:#4A5563">/part-2</span>
+          <span style="font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:18px;line-height:1.25">Coming soon</span>
+          <span style="font-size:14px;line-height:1.5;color:#4A5563">Template for any unreleased part or lesson</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+        <div style="border:1.5px solid #D2D8DF;border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:2px"><span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px;color:#4A5563">/access</span><span style="font-weight:700">Getting a Claude account</span><span style="font-size:14px;line-height:1.5;color:#4A5563">From Lessons 5 and 7, and /run-it</span></div>
+        <div style="border:1.5px solid #D2D8DF;border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:2px"><span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px;color:#4A5563">/run-it</span><span style="font-weight:700">Run a session</span><span style="font-size:14px;line-height:1.5;color:#4A5563">For adults. Kit, timeline, access, contact</span></div>
+        <div style="border:1.5px solid #D2D8DF;border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:2px"><span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px;color:#4A5563">/about</span><span style="font-weight:700">About</span><span style="font-size:14px;line-height:1.5;color:#4A5563">Footer only</span></div>
+        <div style="border:1.5px solid #D2D8DF;border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:2px"><span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px;color:#4A5563">404</span><span style="font-weight:700">Not found</span><span style="font-size:14px;line-height:1.5;color:#4A5563">Back to the course + resume bar</span></div>
+      </div>
+    </div>
+    <div style="flex:1 1 380px;max-width:520px;background:#fff;border-radius:12px;padding:28px 32px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:1.6;color:#3C4652">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px;color:#15202B">Navigation model</h3>
+      <p style="margin:0"><strong style="color:#15202B">One change to your URLs:</strong> lessons sit under their Part (/part-1/how-a-language-model-works), and so does the complete page (/part-1/complete). Every URL shows where you are, slugs only need to be unique within a Part, and Part 2+ slot in with no restructuring. /lessons/&lt;slug&gt; can redirect.</p>
+      <p style="margin:0"><strong style="color:#15202B">Header:</strong> logo and Course both go home, where the track lives. Mobile keeps both links visible: only the logo shrinks to its hexagon.</p>
+      <p style="margin:0"><strong style="color:#15202B">In a lesson:</strong> the header adds “Lesson 2 of 7” with seven hex pips. It's inline on desktop and a slim second row on mobile. The Part name at the top of each lesson links back to the track.</p>
+      <p style="margin:0"><strong style="color:#15202B">Between lessons:</strong> prev/next at the end, with next filled and larger. The last lesson's next goes to Part complete.</p>
+      <p style="margin:0"><strong style="color:#15202B">One click to continue:</strong> on home, the hero button becomes “Continue: &lt;lesson&gt;”. On every other non-lesson page, returning learners get a slim resume bar under the header. Progress lives in localStorage, and there are no accounts.</p>
+      <p style="margin:0"><strong style="color:#15202B">Nothing is locked inside a released Part.</strong> Only unreleased Parts are.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s2" style="padding:40px 44px;border-bottom:1px solid rgba(0,0,0,.08)">
+  <h2 style="margin:0 0 6px;font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif">2 · Lesson template: Lesson 2, “How a language model works”</h2>
+  <p style="margin:0 0 20px;font-size:14px;color:#4A5563">Every content component in reading order. The practice card is shown in its weak-result state. Tick the recap box to watch the header pip fill.</p>
+  <div style="display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;gap:28px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">DESKTOP 1280 · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="LessonPage" hint-size="100%,6000px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE 360 · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="LessonPage" mobile="{{ true }}" hint-size="100%,9000px"></dc-import></div></div>
+    </div>
+    <div style="display:flex;gap:28px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">DESKTOP 1280 · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="LessonPage" dark="{{ true }}" hint-size="100%,6000px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE 360 · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="LessonPage" mobile="{{ true }}" dark="{{ true }}" hint-size="100%,9000px"></dc-import></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="s3" style="padding:40px 44px;border-bottom:1px solid rgba(0,0,0,.08)">
+  <h2 style="margin:0 0 6px;font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif">3 · Home: new visitor and returning learner</h2>
+  <p style="margin:0 0 20px;font-size:14px;color:#4A5563">The hero stays short so the track starts above the fold on a 1280×800 laptop. On mobile, the build preview is dropped so Lesson 1 shows up sooner.</p>
+  <div style="display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;gap:28px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">NEW VISITOR · DESKTOP · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="HomePage" hint-size="100%,2600px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">NEW VISITOR · MOBILE · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="HomePage" mobile="{{ true }}" hint-size="100%,3600px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">NEW VISITOR · MOBILE · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="HomePage" mobile="{{ true }}" dark="{{ true }}" hint-size="100%,3600px"></dc-import></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">NEW VISITOR · DESKTOP · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="HomePage" dark="{{ true }}" hint-size="100%,2600px"></dc-import></div></div>
+    <div style="display:flex;gap:28px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">RETURNING (1–3 DONE) · DESKTOP · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="HomePage" returning="{{ true }}" hint-size="100%,2600px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">RETURNING · MOBILE · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="HomePage" mobile="{{ true }}" returning="{{ true }}" hint-size="100%,3600px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">RETURNING · MOBILE · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="HomePage" mobile="{{ true }}" returning="{{ true }}" dark="{{ true }}" hint-size="100%,3600px"></dc-import></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">RETURNING · DESKTOP · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="HomePage" returning="{{ true }}" dark="{{ true }}" hint-size="100%,2600px"></dc-import></div></div>
+  </div>
+</section>
+
+<section id="s4" style="padding:40px 44px;border-bottom:1px solid rgba(0,0,0,.08)">
+  <h2 style="margin:0 0 6px;font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif">4 · Needs-an-account variant: Lesson 5, “Getting set up” (top of lesson)</h2>
+  <p style="margin:0 0 20px;font-size:14px;color:#4A5563">The notice sits under the summary: an “i” hexagon instead of a lock, and a link to /access. Each hands-on section gets the same chip used on the track.</p>
+  <div style="display:flex;gap:28px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">DESKTOP · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="LessonPage" variant="account" hint-size="100%,1200px"></dc-import></div></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="LessonPage" variant="account" mobile="{{ true }}" dark="{{ true }}" hint-size="100%,1500px"></dc-import></div></div>
+  </div>
+</section>
+
+<section id="s5" style="padding:40px 44px;border-bottom:1px solid rgba(0,0,0,.08)">
+  <h2 style="margin:0 0 6px;font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif">5 · Part complete</h2>
+  <p style="margin:0 0 20px;font-size:14px;color:#4A5563">The celebration: seven lesson hexagons pop in, 100ms apart, and settle into a honeycomb around the logo's &lt;/&gt;, followed by one soft ripple. With reduced motion on, the honeycomb is just there.</p>
+  <div style="display:flex;gap:28px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">DESKTOP · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="PartComplete" hint-size="100%,1000px"></dc-import></div></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="PartComplete" mobile="{{ true }}" dark="{{ true }}" hint-size="100%,1300px"></dc-import></div></div>
+  </div>
+</section>
+
+<section id="s6" style="padding:40px 44px;border-bottom:1px solid rgba(0,0,0,.08)">
+  <h2 style="margin:0 0 6px;font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif">6 · Run a session</h2>
+  <p style="margin:0 0 20px;font-size:14px;color:#4A5563">Calmer than the learner pages: no hero visual, and more reference-style layout.</p>
+  <div style="display:flex;gap:28px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">DESKTOP · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="RunSession" hint-size="100%,2200px"></dc-import></div></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="RunSession" mobile="{{ true }}" dark="{{ true }}" hint-size="100%,3800px"></dc-import></div></div>
+  </div>
+</section>
+
+<section id="s7" style="padding:40px 44px;border-bottom:1px solid rgba(0,0,0,.08)">
+  <h2 style="margin:0 0 6px;font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif">7 · Access, 404, Coming soon, About</h2>
+  <p style="margin:0 0 20px;font-size:14px;color:#4A5563">Access and 404 show the resume bar, as a returning learner would see it. Local flavour stays light: an MRT line on the 404 and HDB blocks on About.</p>
+  <div style="display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;gap:28px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">/ACCESS · DESKTOP · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="AccessPage" hint-size="100%,1800px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="AccessPage" mobile="{{ true }}" dark="{{ true }}" hint-size="100%,2600px"></dc-import></div></div>
+    </div>
+    <div style="display:flex;gap:28px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">404 · DESKTOP · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="NotFound" hint-size="100%,760px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="NotFound" mobile="{{ true }}" dark="{{ true }}" hint-size="100%,900px"></dc-import></div></div>
+    </div>
+    <div style="display:flex;gap:28px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">COMING SOON · DESKTOP · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="ComingSoon" hint-size="100%,800px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="ComingSoon" mobile="{{ true }}" dark="{{ true }}" hint-size="100%,1000px"></dc-import></div></div>
+    </div>
+    <div style="display:flex;gap:28px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">ABOUT · DESKTOP · LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:1280px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="AboutPage" hint-size="100%,900px"></dc-import></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:18px;--task:21px;--head:23px;--gut:16px;--hero:40px;--h1:34px;--h2:26px;--h3:21px;--lead:19px;--hy:32px;--sec:64px;width:360px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="AboutPage" mobile="{{ true }}" dark="{{ true }}" hint-size="100%,1200px"></dc-import></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="s8" style="padding:40px 44px;border-bottom:1px solid rgba(0,0,0,.08)">
+  <h2 style="margin:0 0 20px;font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif">8 · Component sheet</h2>
+  <div style="display:flex;gap:28px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">LIGHT</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--c-tag:#00487E;--c-attr:#6A3D9A;--c-str:#146C43;--c-com:#5E6773;--term-bg:#15202B;--term-border:#15202B;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:960px;background:var(--bg);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)"><dc-import name="Components" hint-size="100%,5200px"></dc-import></div></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">DARK</span><div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--c-tag:#47B3FF;--c-attr:#C9A7FF;--c-str:#7ED9A6;--c-com:#97A1AD;--term-bg:#06080B;--term-border:#2E3743;--pad:28px;--task:24px;--head:26px;--gut:40px;--hero:64px;--h1:46px;--h2:32px;--h3:24px;--lead:21px;--hy:64px;--sec:96px;width:960px;background:var(--bg);border-radius:8px;overflow:hidden"><dc-import name="Components" dark="{{ true }}" hint-size="100%,5200px"></dc-import></div></div>
+  </div>
+</section>
+
+<section id="s9" style="padding:40px 44px 64px">
+  <h2 style="margin:0 0 20px;font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif">9 · Spec sheet</h2>
+  <div style="background:#fff;border-radius:12px;padding:36px 40px;max-width:1240px;box-sizing:border-box;display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:40px 48px;font-size:14px;line-height:1.55;color:#15202B">
+
+    <div style="grid-column:1/-1;display:flex;flex-direction:column;gap:12px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Color tokens</h3>
+      <div style="display:grid;grid-template-columns:150px 150px 150px minmax(0,1fr);gap:0;border-top:1px solid #D2D8DF">
+        <span style="padding:8px 0;font-weight:700;border-bottom:1px solid #D2D8DF">Token</span><span style="padding:8px 0;font-weight:700;border-bottom:1px solid #D2D8DF">Light</span><span style="padding:8px 0;font-weight:700;border-bottom:1px solid #D2D8DF">Dark</span><span style="padding:8px 0;font-weight:700;border-bottom:1px solid #D2D8DF">Use</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--accent</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#00487E"></i>#00487E</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#47B3FF"></i>#47B3FF</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Buttons, links, labels, done markers, pips, progress, focus rings. 9.4:1 on white / 8.3:1 on dark bg</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--on-accent</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#FFFFFF;border:1px solid #D2D8DF"></i>#FFFFFF</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#0E1116"></i>#0E1116</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Text and icons on accent fills</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--deco</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#47B3FF"></i>#47B3FF</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#47B3FF"></i>#47B3FF</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Eyebrow hexes, bullets, dashed Try-it border, roofs, ripples, practice chip border. Never text or meaning in light mode</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--tint</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#E6F4FF"></i>#E6F4FF</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#0B2A45"></i>#0B2A45</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Up-next card, tip, notice, recap, resume bar, active nav, highlights</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--bg</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#FFFFFF;border:1px solid #D2D8DF"></i>#FFFFFF</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#0E1116"></i>#0E1116</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Page</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--surface</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#FFFFFF;border:1px solid #D2D8DF"></i>#FFFFFF</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#141920"></i>#141920</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Cards, inputs, chips</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--surface2</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#F4F6F8"></i>#F4F6F8</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#1B212A"></i>#1B212A</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Code, diagram, heads up, How it works band, hovers</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--text</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#15202B"></i>#15202B</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#E7EBF0"></i>#E7EBF0</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Body and headings. 16.5:1 / 15.7:1</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--muted</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#4A5563"></i>#4A5563</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#A9B3BF"></i>#A9B3BF</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Meta, captions, helper text, footer. 7.6:1 / 8.9:1</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--border</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#D2D8DF"></i>#D2D8DF</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#2E3743"></i>#2E3743</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Card borders, dividers, track line (not done)</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--pip / --track</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">#9AA4AF / #DDE3E9</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">#5F6B78 / #2A333E</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Empty hexes, dashed outlines / bar tracks. Always paired with words</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--dis-bg / --dis-text</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">#E8EBEE / #5E6773</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">#232A33 / #8E98A4</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Disabled buttons (plus dashed border)</span>
+        <span style="padding:7px 0;border-bottom:1px solid #EEF1F4;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--c-tag / attr / str / com</span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:4px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#00487E"></i><i style="width:14px;height:14px;border-radius:3px;background:#6A3D9A"></i><i style="width:14px;height:14px;border-radius:3px;background:#146C43"></i><i style="width:14px;height:14px;border-radius:3px;background:#5E6773"></i></span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4;display:flex;gap:4px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:#47B3FF"></i><i style="width:14px;height:14px;border-radius:3px;background:#C9A7FF"></i><i style="width:14px;height:14px;border-radius:3px;background:#7ED9A6"></i><i style="width:14px;height:14px;border-radius:3px;background:#97A1AD"></i></span><span style="padding:7px 0;border-bottom:1px solid #EEF1F4">Syntax colours on --surface2. Light: #00487E #6A3D9A #146C43 #5E6773. Dark: #47B3FF #C9A7FF #7ED9A6 #97A1AD. All ≥5.4:1, no red or orange</span>
+        <span style="padding:7px 0;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">--term-bg</span><span style="padding:7px 0">#15202B</span><span style="padding:7px 0">#06080B + #2E3743 border</span><span style="padding:7px 0">Terminal block. Text #F2F5F8, “$” and label #A9B3BF, same in both themes</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Type scale (desktop / mobile)</h3>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+        <span style="color:#4A5563">Hero</span><span>Recursive 750 · 64 / 40 · lh 1.04 · −0.01em · CASL 0.5</span>
+        <span style="color:#4A5563">H1 page title</span><span>Recursive 700 · 46 / 34 · lh 1.12</span>
+        <span style="color:#4A5563">H2</span><span>Recursive 650 · 32 / 26 · lh 1.2 · 48px above in lessons</span>
+        <span style="color:#4A5563">H3, card titles</span><span>Recursive 650–700 · 24 / 21 · lh 1.25–1.3</span>
+        <span style="color:#4A5563">Track title</span><span>Recursive 600 · 21 · up-next 650 · 24</span>
+        <span style="color:#4A5563">Eyebrow, callout label</span><span>Recursive 700 · 15 · caps · +0.06em · CASL 0.6</span>
+        <span style="color:#4A5563">Lead</span><span>Atkinson Next 400 · 21 / 19 · lh 1.5</span>
+        <span style="color:#4A5563">Body</span><span>Atkinson Next 400 · 19 · lh 1.6 (both)</span>
+        <span style="color:#4A5563">Meta, caption, footer</span><span>Atkinson Next 400 · 16 · lh 1.5</span>
+        <span style="color:#4A5563">Overline</span><span>Atkinson Next 700 · 15 · +0.03–0.04em</span>
+        <span style="color:#4A5563">Nav, small button</span><span>Atkinson Next 700 · 16</span>
+        <span style="color:#4A5563">Buttons</span><span>700 · hero 20 · primary 19 · secondary 18</span>
+        <span style="color:#4A5563">Code</span><span>Atkinson Hyperlegible Mono 400 · 16 · lh 1.8</span>
+        <span style="color:#4A5563">Command</span><span>Atkinson Hyperlegible Mono 400 · 18 · lh 1.5</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Spacing, radii, sizes</h3>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+        <span style="color:#4A5563">Scale</span><span>4 · 8 · 12 · 16 · 20 · 24 · 28 · 32 · 40 · 48 · 64 · 72 · 96</span>
+        <span style="color:#4A5563">Reading flow</span><span>24 between blocks · +24 above H2 · +8 above H3</span>
+        <span style="color:#4A5563">Card padding</span><span>28 desktop · 18 mobile (--pad)</span>
+        <span style="color:#4A5563">Page top</span><span>64 / 32 (--hy) · section spacing 96 / 64 (--sec)</span>
+        <span style="color:#4A5563">Radii</span><span>4 marks · 8 quote/placeholder label · 10 nav · 12 buttons, inputs, code · 14 callouts, key term, stuck · 16 up-next, prev/next, notice · 20 cards, recap · 24 hero panel · 999 chips</span>
+        <span style="color:#4A5563">Borders</span><span>1.5 cards · 2 secondary buttons, dashed · 1 dividers</span>
+        <span style="color:#4A5563">Targets</span><span>44 minimum · nav 44 · primary 52 · hero 56 · track rows 64 · recap check 68</span>
+        <span style="color:#4A5563">Hexagon</span><span>Pointy-top, viewBox 24×26 · track 40×44 · header pips 14×15 (current 19×21) · bullets 14×15</span>
+        <span style="color:#4A5563">Hex meaning</span><span>accent fill = done · tint + accent ring = current · gray outline = not started · dashed = not released · sky = decoration only</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Breakpoints and layout</h3>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+        <span style="color:#4A5563">&lt; 600</span><span>Mobile. Gutter 16. Hexagon-only logo, no toggle label. Lesson pips on a second row. Hero visual hidden. Everything stacks.</span>
+        <span style="color:#4A5563">600–959</span><span>Tablet. Gutter 24. Mobile header pattern, full logo. Track stays one column. Mobile type scale except H1 40.</span>
+        <span style="color:#4A5563">≥ 960</span><span>Desktop. Gutter 40. Pips inline in the header. Two-column hero and track.</span>
+        <span style="color:#4A5563">Widths</span><span>Header 1200 max · home and run-it content 1120 · reading column 720 · centred pages 640–760</span>
+        <span style="color:#4A5563">Header</span><span>68 tall · lesson row +40 on mobile · resume bar 48 · not sticky</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Motion</h3>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+        <span style="color:#4A5563">Recap check</span><span>Hex pop 450ms cubic-bezier(.3,1.4,.5,1) · check draws 350ms at 200ms · sky ripple 900ms at 150ms · “Saved” line rises at 250ms · header pip pops</span>
+        <span style="color:#4A5563">Part complete</span><span>6 hexes pop 500ms, 200–700ms · centre at 950ms · ripple 1.3s at 1.2s</span>
+        <span style="color:#4A5563">Hover</span><span>Primary: brightness 1.15 · secondary: tint fill · rows: surface2</span>
+        <span style="color:#4A5563">Copy</span><span>“✓ Copied” for 2000ms, announced politely</span>
+        <span style="color:#4A5563">Reduced motion</span><span>All animation off; final states shown</span>
+      </div>
+    </div>
+
+    <div style="grid-column:1/-1;display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Drop-in CSS (Next.js globals.css)</h3>
+      <div style="background:#15202B;color:#F2F5F8;border-radius:12px;padding:20px 24px;font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px;line-height:1.7;white-space:pre;overflow-x:auto">:root {
+  --bg:#FFFFFF; --surface:#FFFFFF; --surface2:#F4F6F8; --text:#15202B; --muted:#4A5563;
+  --border:#D2D8DF; --pip:#9AA4AF; --track:#DDE3E9; --accent:#00487E; --on-accent:#FFFFFF;
+  --deco:#47B3FF; --tint:#E6F4FF; --dis-bg:#E8EBEE; --dis-text:#5E6773;
+  --c-tag:#00487E; --c-attr:#6A3D9A; --c-str:#146C43; --c-com:#5E6773; --term-bg:#15202B; --term-border:#15202B;
+  --gut:16px; --pad:18px; --hero:40px; --h1:34px; --h2:26px; --h3:21px; --lead:19px; --hy:32px; --sec:64px;
+}
+[data-theme="dark"] {
+  --bg:#0E1116; --surface:#141920; --surface2:#1B212A; --text:#E7EBF0; --muted:#A9B3BF;
+  --border:#2E3743; --pip:#5F6B78; --track:#2A333E; --accent:#47B3FF; --on-accent:#0E1116;
+  --tint:#0B2A45; --dis-bg:#232A33; --dis-text:#8E98A4;
+  --c-tag:#47B3FF; --c-attr:#C9A7FF; --c-str:#7ED9A6; --c-com:#97A1AD; --term-bg:#06080B; --term-border:#2E3743;
+}
+@media (min-width:600px) {
+  :root { --gut:24px; --h1:40px; }
+}
+@media (min-width:960px) {
+  :root { --gut:40px; --pad:28px; --hero:64px; --h1:46px; --h2:32px; --h3:24px; --lead:21px; --hy:64px; --sec:96px; }
+}
+/* Theme: set data-theme on html from localStorage, else prefers-color-scheme, before first paint */</div>
+    </div>
+  </div>
+</section>
+</x-dc>
+</body>
+</html>

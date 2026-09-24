@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { isPracticeSubmission } from "@/lib/practice";
+import { MOCK_NAMES, isMockName, mockGrade } from "@/lib/practice-mock";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -16,10 +17,17 @@ export async function POST(request: Request) {
     );
   }
 
-  // Stub: a hardcoded response. Real grading goes here.
-  return NextResponse.json({
-    taskId: body.taskId,
-    status: "ungraded",
-    feedback: "Grading isn't set up yet. This is a placeholder response from app/api/practice/route.ts.",
-  });
+  // ?mock=<name> forces one of the fixture answers. See lib/practice-mock.ts.
+  const mock = new URL(request.url).searchParams.get("mock");
+  if (mock !== null && !isMockName(mock)) {
+    return NextResponse.json(
+      { error: `Unknown mock "${mock}". Use one of: ${MOCK_NAMES.join(", ")}.` },
+      { status: 400 },
+    );
+  }
+
+  // Mock grading for now. Real grading goes here, answering with the same
+  // PracticeResponse shape (lib/practice.ts).
+  const { status, body: answer } = mockGrade(body, mock);
+  return NextResponse.json(answer, { status });
 }

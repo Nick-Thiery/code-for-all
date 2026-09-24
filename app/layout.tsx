@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Atkinson_Hyperlegible_Next, Recursive } from "next/font/google";
-import Link from "next/link";
+import { Atkinson_Hyperlegible_Mono, Atkinson_Hyperlegible_Next, Recursive } from "next/font/google";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getOutline } from "@/lib/lessons";
 import { site } from "@/lib/site";
 import { themeScript } from "@/lib/theme";
 import "./globals.css";
@@ -13,7 +14,15 @@ const atkinson = Atkinson_Hyperlegible_Next({
   style: ["normal", "italic"],
   // next/font has no fallback metrics for this family yet and warns on every compile.
   adjustFontFallback: false,
-  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
+  fallback: ["system-ui", "sans-serif"],
+});
+
+// Prompts, code and commands.
+const atkinsonMono = Atkinson_Hyperlegible_Mono({
+  variable: "--font-atkinson-mono",
+  subsets: ["latin"],
+  adjustFontFallback: false,
+  fallback: ["ui-monospace", "monospace"],
 });
 
 // Headings: Recursive with its "casual" axis turned halfway up.
@@ -28,32 +37,32 @@ export const metadata: Metadata = {
   description: site.description,
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  // Titles and order of every lesson (no lesson text), for the header's
+  // lesson progress and the continue bar.
+  const outline = await getOutline();
+
   return (
-    <html lang="en" suppressHydrationWarning className={`${atkinson.variable} ${recursive.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${atkinson.variable} ${atkinsonMono.variable} ${recursive.variable}`}
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="antialiased">
+      <body className="flex min-h-dvh flex-col bg-bg text-fg antialiased">
         <a
           href="#main"
-          className="sr-only rounded-full bg-accent px-4 py-2 font-bold text-on-accent focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-10"
+          className="sr-only rounded-xl bg-accent px-4 py-2 font-bold text-on-accent focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-10"
         >
           Skip to content
         </a>
-        <div className="mx-auto flex min-h-dvh max-w-[46rem] flex-col px-5 sm:px-8">
-          <SiteHeader />
-          <main id="main" className="flex-1 pt-6 pb-24 sm:pt-10">
-            {children}
-          </main>
-          <footer className="border-t-2 border-rule py-8 text-base text-muted">
-            Running a session?{" "}
-            <Link href="/run-it" className="link text-ink">
-              Facilitator materials
-            </Link>{" "}
-            are on the Run it page.
-          </footer>
-        </div>
+        <SiteHeader outline={outline} />
+        <main id="main" className="flex-1">
+          {children}
+        </main>
+        <SiteFooter />
       </body>
     </html>
   );

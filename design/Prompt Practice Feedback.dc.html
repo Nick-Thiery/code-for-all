@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><meta name="design_doc_mode" content="canvas"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"><style>body{margin:0;background:#E7EAED;font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;color:#15202B}a{color:#00487E}a:hover{color:#002F54}.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}.dv-tname{font:700 15px/1.2 'Atkinson Hyperlegible Next',sans-serif;color:#1a1a1a}.dv-opts{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 14px/1.4 'Atkinson Hyperlegible Next',sans-serif;color:rgba(0,0,0,.65);max-width:1100px}.dv-opt:target .dv-oid{background:#00487E;color:#fff}.dv-next{margin:22px 0 0;font:13px/1.5 'Atkinson Hyperlegible Next',sans-serif;color:rgba(0,0,0,.55)}</style></helmet>
+
+<section class="dv-turn" id="t0" style="padding-top:48px">
+  <div style="display:flex;flex-direction:column;gap:14px;max-width:880px">
+    <img src="uploads/cfa.png" alt="Code for All" style="height:44px;width:auto;align-self:flex-start;mix-blend-mode:multiply">
+    <h1 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:36px;line-height:1.15">Prompt practice: feedback block</h1>
+    <p style="margin:0;font-size:17px;line-height:1.6;color:#3C4652">Three directions, all shown with the weak attempt. Then <a href="#1a" class="dv-oid">1a</a> across all 10 states in light and dark, a live version inside a lesson page, and the spec. Every block here works: type, submit, reveal skill meanings, copy, try again.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 28px;font-size:15px;line-height:1.55;color:#3C4652">
+      <p style="margin:0"><strong style="color:#15202B">Assumption:</strong> only the logo came through, not the lesson screenshot. The surroundings (neutral grays, card borders, 20px radius) are my read of the tokens. Send the screenshot and I'll match it.</p>
+      <p style="margin:0"><strong style="color:#15202B">The hexagon</strong> is a score pip: empty, one filled or two filled. Pips are always paired with words, so color is never the only signal.</p>
+      <p style="margin:0"><strong style="color:#15202B">Retrying</strong> is framed as editing: the prompt never leaves the box, and the rewrite underlines only what changed, so it reads as their prompt made better.</p>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Three directions · weak attempt · desktop 720 + mobile 360</span></div>
+  <div class="dv-opts" style="flex-direction:column;gap:56px">
+
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a><span><strong style="color:#15202B">Hex pips + quote panel (recommended).</strong> Scores are a quiet list: skill name, two hexagon pips, the word. The fix pulls their exact words into a highlight, then Why and Try. Calm, scannable, and the pips give the retry moment something to fill.</span></div>
+      <div style="display:flex;gap:28px;align-items:flex-start">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">DESKTOP · 720 COLUMN</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="weak" dir="a" hint-size="100%,1400px"></dc-import></div></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · 360</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:18px;--task:21px;--head:23px;width:328px;padding:16px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="weak" dir="a" hint-size="100%,1800px"></dc-import></div></div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a><span><strong style="color:#15202B">Tracks + annotated prompt.</strong> Each skill gets its own tile with a two-step track. The fix sits on top of their whole prompt with the weak phrase marked in place, so they see exactly where to edit. More spatial, a little heavier on mobile.</span></div>
+      <div style="display:flex;gap:28px;align-items:flex-start">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">DESKTOP · 720 COLUMN</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="weak" dir="b" hint-size="100%,1400px"></dc-import></div></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · 360</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:18px;--task:21px;--head:23px;width:328px;padding:16px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="weak" dir="b" hint-size="100%,1800px"></dc-import></div></div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a><span><strong style="color:#15202B">Chips + before/after.</strong> Scores shrink to three tappable chips with one hexagon each (empty, half, full). The fix is a side-by-side swap: what you wrote, what to try. Most compact; the fix does most of the work.</span></div>
+      <div style="display:flex;gap:28px;align-items:flex-start">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">DESKTOP · 720 COLUMN</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="weak" dir="c" hint-size="100%,1400px"></dc-import></div></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 11px ui-monospace,monospace;color:rgba(0,0,0,.5)">MOBILE · 360</span><div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:18px;--task:21px;--head:23px;width:328px;padding:16px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="weak" dir="c" hint-size="100%,1800px"></dc-import></div></div>
+      </div>
+    </div>
+  </div>
+  <p class="dv-next">Try next: "use the before/after fix from <a class="dv-oid" href="#1c">1c</a> inside <a class="dv-oid" href="#1a">1a</a>" · "show <a class="dv-oid" href="#1b">1b</a> in all states" · "make the pips bigger"</p>
+</section>
+
+<section class="dv-turn" id="t2">
+  <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">All 10 states for <a class="dv-oid" href="#1a">1a</a> · light and dark</span></div>
+  <div style="display:flex;flex-direction:column;gap:48px">
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">1 · Empty.</strong> Button is pale, dashed and unclickable, with a plain note beside it.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="empty" hint-size="100%,600px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="empty" hint-size="100%,600px"></dc-import></div>
+      </div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">2 · Near the limit.</strong> Counter turns accent and bold, with a calm tip. At 1,200 the box stops accepting text.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="near" hint-size="100%,600px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="near" hint-size="100%,600px"></dc-import></div>
+      </div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">3 · Loading.</strong> Three hexagons breathe in turn; announced as a status. Prompt stays visible, read-only.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="loading" hint-size="100%,700px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="loading" hint-size="100%,700px"></dc-import></div>
+      </div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">4 · Weak result.</strong> Quote form of the fix.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="weak" hint-size="100%,1400px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="weak" hint-size="100%,1400px"></dc-import></div>
+      </div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">5 · Middling result.</strong> Missing form: a dashed "+" slot instead of a quote, since there's nothing to point at.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="middling" hint-size="100%,1400px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="middling" hint-size="100%,1400px"></dc-import></div>
+      </div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">6 · Strong, second try.</strong> "Since your last try" band: the new pip pops in with a sky-blue ripple, then three small hexes light up by the label. Fix becomes a stretch idea.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="strong" hint-size="100%,1500px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="strong" hint-size="100%,1500px"></dc-import></div>
+      </div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">7 · Off-topic.</strong> Neutral hexagon, one nudge back to the task, button returns focus to the box.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="offtopic" hint-size="100%,800px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="offtopic" hint-size="100%,800px"></dc-import></div>
+      </div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">8 · Something went wrong.</strong> Blame is placed on us in the first line; their prompt is reassured as safe.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="error" hint-size="100%,800px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="error" hint-size="100%,800px"></dc-import></div>
+      </div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">9 · Hourly limit.</strong> Button disabled; no countdown, nothing that feels like a penalty.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="hourly" hint-size="100%,800px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="hourly" hint-size="100%,800px"></dc-import></div>
+      </div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px"><p style="margin:0;font-size:15px;color:#3C4652"><strong style="color:#15202B">10 · Daily limit.</strong> "For everyone" makes it clear it isn't about them.</p>
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="daily" hint-size="100%,800px"></dc-import></div>
+        <div style="--bg:#0E1116;--surface:#141920;--surface2:#1B212A;--text:#E7EBF0;--muted:#A9B3BF;--border:#2E3743;--pip:#5F6B78;--track:#2A333E;--accent:#47B3FF;--on-accent:#0E1116;--deco:#47B3FF;--tint:#0B2A45;--dis-bg:#232A33;--dis-text:#8E98A4;--pad:28px;--task:24px;--head:26px;width:720px;padding:24px;background:var(--bg);border-radius:10px;flex:none"><dc-import name="PracticeBlock" view="daily" hint-size="100%,800px"></dc-import></div>
+      </div></div>
+  </div>
+  <p class="dv-next">Try next: "show the states at mobile width" · "soften the off-topic copy" · "try a bigger celebration on state 6"</p>
+</section>
+
+<section class="dv-turn" id="t3">
+  <div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Live in a lesson page · <a class="dv-oid" href="#1a">1a</a></span></div>
+  <p style="margin:0 0 16px;font-size:15px;color:#3C4652;max-width:760px">Write a short prompt for the weak result, a longer one for middling, then add "I'm a beginner" and resubmit to see the progress moment.</p>
+  <div style="--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F4F6F8;--text:#15202B;--muted:#4A5563;--border:#D2D8DF;--pip:#9AA4AF;--track:#DDE3E9;--accent:#00487E;--on-accent:#FFFFFF;--deco:#47B3FF;--tint:#E6F4FF;--dis-bg:#E8EBEE;--dis-text:#5E6773;--pad:28px;--task:24px;--head:26px;width:1100px;background:var(--bg);border-radius:10px;overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--border)">
+      <img src="uploads/cfa.png" alt="Code for All" style="height:36px;width:auto">
+      <span style="font-size:16px;color:var(--muted)">Lesson 3 of 8</span>
+    </div>
+    <div style="max-width:720px;margin:0 auto;padding:48px 0 64px;display:flex;flex-direction:column;gap:20px;font-size:19px;line-height:1.6;color:var(--text)">
+      <h1 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:650;font-size:38px;line-height:1.15">Telling AI what you want</h1>
+      <p style="margin:0">An AI coding tool only knows what you tell it. If you say "make it nice", it has to guess what nice means to you, and it usually guesses wrong.</p>
+      <p style="margin:0">Good prompts do three things. They say exactly what you want, they explain your situation, and they ask for a sensible amount at once.</p>
+      <p style="margin:0 0 12px">Have a go below. You can try as many times as you like.</p>
+      <dc-import name="PracticeBlock" view="empty" hint-size="100%,600px"></dc-import>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="t4">
+  <div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">Spec sheet · <a class="dv-oid" href="#1a">1a</a></span></div>
+  <div style="background:#FFFFFF;border-radius:10px;padding:36px 40px;max-width:1100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px 48px;font-size:15px;line-height:1.55;color:#15202B">
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Spacing and layout</h3>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+        <span style="color:#4A5563">Block</span><span>Column, 20px gap between task card and feedback card</span>
+        <span style="color:#4A5563">Card padding</span><span>28px desktop · 18px at ≤480px (mobile margin 16px outside)</span>
+        <span style="color:#4A5563">Task band</span><span>Same padding as card; 10px internal gap</span>
+        <span style="color:#4A5563">Input area</span><span>12px gap; privacy line 6px extra above</span>
+        <span style="color:#4A5563">Textarea</span><span>min-height 180px, padding 16px, border 2px</span>
+        <span style="color:#4A5563">Feedback card</span><span>24px gap between sections</span>
+        <span style="color:#4A5563">Score row</span><span>≥64px tall, 10px vertical padding, 1px dividers; 16px gap name→pips</span>
+        <span style="color:#4A5563">Pips</span><span>Pointy-top hexagon 22×24, 4px apart, 2px stroke</span>
+        <span style="color:#4A5563">Fix panel</span><span>Padding 18/20, 12px gap</span>
+        <span style="color:#4A5563">Progress band</span><span>Padding 16/20, 6px gap</span>
+        <span style="color:#4A5563">Rewrite block</span><span>Padding 16/18</span>
+        <span style="color:#4A5563">Try again row</span><span>1px divider, 20px top padding</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Radii and controls</h3>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+        <span style="color:#4A5563">Cards</span><span>20px, border 1.5px</span>
+        <span style="color:#4A5563">Fix / progress</span><span>14px</span>
+        <span style="color:#4A5563">Buttons, textarea, rewrite</span><span>12px</span>
+        <span style="color:#4A5563">Add slot</span><span>10px, 2px dashed</span>
+        <span style="color:#4A5563">Quote highlight</span><span>8px, padding 4/10</span>
+        <span style="color:#4A5563">Primary button</span><span>52px tall, 0 28px, no border</span>
+        <span style="color:#4A5563">Secondary button</span><span>44–48px tall, 2px accent border, hover fills tint</span>
+        <span style="color:#4A5563">Disabled</span><span>dis-bg fill, dis-text label, 2px dashed border, not-allowed cursor</span>
+        <span style="color:#4A5563">Focus</span><span>3px solid accent outline, 3px offset (6px on headlines)</span>
+        <span style="color:#4A5563">Targets</span><span>Every interactive element ≥44px tall</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Type</h3>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+        <span style="color:#4A5563">"Practice" label</span><span>Recursive 700 · 16/1 · caps +0.06em · CASL 0.6</span>
+        <span style="color:#4A5563">Task</span><span>Recursive 600 · 24/1.3 (21 mobile) · CASL 0.5</span>
+        <span style="color:#4A5563">Feedback headline</span><span>Recursive 650 · 26/1.25 (23 mobile)</span>
+        <span style="color:#4A5563">Loading / notice title</span><span>Recursive 600 · 22/1.3</span>
+        <span style="color:#4A5563">Section titles</span><span>Recursive 700 · 20/1.3</span>
+        <span style="color:#4A5563">Body, Why/Try</span><span>Atkinson Hyperlegible Next 400 · 19/1.6</span>
+        <span style="color:#4A5563">Skill + score word</span><span>Atkinson Next 700 · 19/1.3</span>
+        <span style="color:#4A5563">Helper, counter, privacy</span><span>Atkinson Next 400 · 16/1.5</span>
+        <span style="color:#4A5563">Overlines</span><span>Atkinson Next 700 · 15 · +0.04em</span>
+        <span style="color:#4A5563">Prompt, rewrite</span><span>Atkinson Hyperlegible Mono 400 · 17/1.6 (quote 18)</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Color tokens (light / dark)</h3>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">accent</span><span>#00487E / #47B3FF · primary buttons, secondary borders+labels, filled pips, "Practice", hint link, counter near limit, focus rings</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">on-accent</span><span>#FFFFFF / #0E1116 · primary button labels</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">deco</span><span>#47B3FF both · Practice hex, loading hexes, notice hex, add-slot dashes, celebration hexes, improvement ripple. Never text or score info.</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">tint</span><span>#E6F4FF / #0B2A45 · task band, quote highlight, progress band, stretch panel, new parts of rewrite, secondary hover</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">text *</span><span>#15202B / #E7EBF0 · all body and headings</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">muted *</span><span>#4A5563 / #A9B3BF · helpers, overlines, "from" state in progress, "?" glyph</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">surface *</span><span>#FFFFFF / #141920 · cards, textarea</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">surface2 *</span><span>#F4F6F8 / #1B212A · rewrite block</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">border *</span><span>#D2D8DF / #2E3743 · card borders, dividers, textarea</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">pip *</span><span>#9AA4AF / #5F6B78 · empty pip stroke</span>
+        <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-size:13px">dis-bg / dis-text *</span><span>#E8EBEE, #5E6773 / #232A33, #8E98A4 · disabled button</span>
+        <span style="grid-column:1/-1;color:#4A5563">* Neutrals are mine, not from the brief. Swap for the site's grays if they differ.</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Motion</h3>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+        <span style="color:#4A5563">Score rows</span><span>Fade + rise 6px, 420ms cubic-bezier(.2,.7,.2,1), delays 150 / 250 / 350ms</span>
+        <span style="color:#4A5563">Progress</span><span>Arrow slides in at 350ms, new state at 500ms; new pip pops 550ms at 750ms; deco ring expands 1s at 900ms</span>
+        <span style="color:#4A5563">All nailed</span><span>Three 13px deco hexes pop at 700 / 820 / 940ms</span>
+        <span style="color:#4A5563">Loading</span><span>Hexes breathe (opacity .25→1, scale .8→1) 1.4s loop, 200ms offset</span>
+        <span style="color:#4A5563">Copy</span><span>Label "✓ Copied" for 2000ms</span>
+        <span style="color:#4A5563">Reduced motion</span><span>All animation removed; content appears in final state</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-family:Recursive,sans-serif;font-variation-settings:'CASL' 0.5;font-weight:700;font-size:20px">Accessibility</h3>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span>Feedback is an &lt;article&gt; labelled by its headline; focus moves to the headline when a result or notice arrives.</span>
+        <span>Reading order: headline → progress → scores → fix → rewrite → try again.</span>
+        <span>Loading container is role="status" (polite).</span>
+        <span>Skill names are disclosure buttons with aria-expanded; pips are aria-hidden, words carry the score.</span>
+        <span>Progress line has a screen-reader sentence ("Context went from Getting there to Nailed it.").</span>
+        <span>Counter and limit message are linked with aria-describedby; limit message is aria-live. maxlength 1200.</span>
+        <span>Try again focuses the textarea with the caret at the end; text is never cleared.</span>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+</body>
+</html>
