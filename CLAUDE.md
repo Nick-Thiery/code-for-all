@@ -1,0 +1,62 @@
+# Code for All
+
+A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App Router), TypeScript, Tailwind CSS 4 and MDX. No accounts and no database: progress lives in the learner's browser. README.md has the full author guide.
+
+## Commands
+
+- `npm run dev`: dev server at http://localhost:3000
+- `npm run build`: production build. It checks every lesson and stops with a plain-English error naming the file.
+- `npm run lint`: ESLint
+- `npm run typecheck`: TypeScript check (`tsc --noEmit`)
+
+## Content
+
+- `content/course.yml` lists all 10 modules in three phases. A module is released when `content/module-N/` exists with lessons in it; until then it shows as Coming soon.
+- One lesson = one `.mdx` file in `content/module-N/`, served at `/module-N/<slug>`. Frontmatter: `title`, `slug` (matches the file name; not `complete`), `order` (10, 20, 30…), `duration` (minutes), `summary`, `requiresAccount`, optional `recap` list. Quote any YAML value containing ": ".
+- To add one: copy a lesson in the same module, change the frontmatter, write the body in Markdown. No code changes needed.
+- MDX reads `<` and `{` as code: put them in backticks or a code block.
+- Images go in `public/lessons/module-N/`.
+
+## Lesson components (registered in components/mdx-components.tsx)
+
+- `<Callout kind="tip|headsup|tryit">`: asides. `<KeyTerm term="…">` for a defined term; `<Term def="…">word</Term>` inline.
+- ```` ```prompt title="…" ````: a copyable prompt. Use it for every exact prompt from the slides.
+- `<CommandBlock>…</CommandBlock>`: terminal commands only (shows "$", has Copy).
+- ```` ```html title="index.html" ````: code with line numbers and Copy; ```` ```console ```` for error messages.
+- `<HandsOn />` above a hands-on section's heading, in lessons with `requiresAccount: true`, plus the line "This part needs access; see [how hands-on access works](/access)."
+- `<StuckBlock><StuckItem question="…">`: common fixes. Answers must come from the lesson, the slides or /access.
+- `<CheckYourself><Question q="…">answer</Question>`: a short quiz.
+- `<Challenge title="…">`: the module homework, at the end of the module's last lesson.
+- `<PromptPractice taskId="…" hint="…">task</PromptPractice>`: the practice card.
+- `<Figure src alt width height caption />`: an image (width/height = file pixels; tap to enlarge is built in).
+- `<VideoEmbed id="…" title="…" />`: a YouTube video from the slides (youtube-nocookie).
+- `<Placeholder>` for content a human still has to supply; `<Screenshot>` for a screenshot still to be taken.
+
+## Rules for course content (docs/course-map.md)
+
+- The map is the plan; the slides are the source of truth for wording, prompts and homework. Slide PDFs are in `source/slides/`; `docs/launchlab-curriculum-source.md` summarises them.
+- Keep slide order. Copy slide prompts word for word into prompt blocks.
+- Don't invent facts, steps, statistics or UI details. Missing content becomes a `<Placeholder>` saying what's needed.
+- Record every departure from the slides in the map as **[changed]** (with the reason), and every kept teaching addition as **[added]**, under that module's "Changes after review".
+- British spelling throughout, including slide text and prompts. Button and menu names stay as the product shows them (Customize, Authorize).
+- Never tell learners to create their own Claude account (18+). Hands-on access comes through a Code for All session; see app/access/page.tsx. No tutor names without their permission.
+
+## Design
+
+- All colours and sizes are tokens at the top of `app/globals.css`, pasted from the spec sheet in `design/Code for All Website.dc.html`. Use them as Tailwind classes (`bg-tint`, `text-accent`) or `var(--accent)`. Tailwind's default palette is switched off. Never hardcode a colour.
+- Dark mode is `[data-theme="dark"]`, set before first paint by the script in `lib/theme.ts`.
+
+## Practice grading
+
+- `POST /api/practice` (`app/api/practice/route.ts`) always uses the mock grader in `lib/practice-mock.ts`. There's no real grading and no API key yet. Response shapes are in `lib/practice.ts`.
+- Each `taskId` needs a mock in `TASKS` in `lib/practice-mock.ts`.
+- Force a state by adding `?mock=<name>` to a lesson URL: empty, near, loading, weak, middling, strong, offtopic, error, hourly or daily.
+
+## Privacy
+
+- Never log, store or send learner prompt text anywhere except the practice request itself. localStorage holds only lesson progress (`cfa:completed-lessons`) and the theme (`cfa:theme`).
+- No personal data in images: no emails, account IDs, API keys, faces, full names, usernames or avatars. Crop it out or use a `<Placeholder>` saying why.
+
+## Git
+
+- Work on a branch and open a pull request. Never commit to `main` directly.

@@ -21,6 +21,7 @@ Other commands:
 npm run build      # production build; fails if any lesson has a mistake
 npm run start      # serve the production build (run build first)
 npm run lint       # check the code
+npm run typecheck  # check the TypeScript types
 ```
 
 ## Add a lesson
