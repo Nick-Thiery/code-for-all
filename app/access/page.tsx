@@ -68,7 +68,9 @@ export default async function AccessPage({ searchParams }: Props) {
         <h2 className="t-h2 mt-6 mb-0">How do I get access?</h2>
         <p className="m-0">
           Through a Code for All session, or through a teacher or group that runs one. They set everything up, so you
-          don&apos;t need to sign up for anything yourself.
+          don&apos;t need to sign up for Lovable or Claude yourself. A few later lessons use GitHub, Vercel and
+          Supabase, where you sign in with a GitHub account: do those steps in a session, with your teacher&apos;s
+          go-ahead.
         </p>
         <Callout kind="tip">
           <p>

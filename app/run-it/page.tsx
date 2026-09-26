@@ -115,7 +115,7 @@ export default function RunItPage() {
           <h2 className="t-h3 m-0">Accounts for the hands-on lessons</h2>
           <p className="m-0">
             Lessons 5 and 7 need a Claude account. Please don&apos;t ask learners to sign up on their own. Your school,
-            club or program should provide and manage the accounts, so no learner has to hand over personal details.
+            club or programme should provide and manage the accounts, so no learner has to hand over personal details.
           </p>
           <Link href="/access" className="text-link">
             How we explain this to learners →

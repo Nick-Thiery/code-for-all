@@ -46,8 +46,10 @@ Connect the repo to **Vercel** at the **start** of the process, not the end. Thi
 On a team, conflicts happen by themselves. On your own, you have to make one.
 
 1. Change the page title on two of your branches, on purpose, to two different titles. For example, use the two titles from [lesson 5](/module-7/merge-conflicts): Wordle by Team 3 on one branch, Team 3 Wordle on the other.
-2. Merge both branches with pull requests. Two branches changed the same line, so you'll hit a merge conflict.
+2. Merge both branches with pull requests. Two branches changed the same line, so you'll hit a merge conflict. The first pull request merges as normal. The conflict shows up on the second one, because main now has the other title.
 3. Fix it the way lesson 5 shows: keep the version you want or combine both, delete the `<<<`, `===` and `>>>` marker lines, then commit again.
+
+<Placeholder>Where solo learners should see and fix this conflict: on the pull request page on GitHub, or on their computer with Claude Code. The slides don't say, so this needs a short, checked step from the team.</Placeholder>
 
 Or use the escape hatch. Paste the entire block of code into Claude Code, then say:
 
@@ -68,7 +70,7 @@ Don't hesitate to ask AI if you have a question or are getting stuck. In a Code 
 
 <StuckBlock>
   <StuckItem question="GitHub, Vercel or Claude Code asks me to sign up or log in.">
-    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access).
+    Access to Claude Code is set up through a Code for All session or a teacher running one, so you don't sign up for it yourself. GitHub and Vercel: you sign in with a GitHub account, so do those steps in a session, with your teacher's go-ahead. See [how hands-on access works](/access).
   </StuckItem>
   <StuckItem question="I hit a merge conflict.">
     Good: that's part of the task. [Lesson 5](/module-7/merge-conflicts) shows how to fix it, and its escape hatch prompt hands it to Claude Code.

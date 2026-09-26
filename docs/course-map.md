@@ -19,6 +19,9 @@ Companion file: `curriculum-source.md` (everything the slides say, module by mod
 6. **Fix only what's unsafe or wrong.** Changes from the slides are marked **[changed]** with the reason. There are only a few.
 7. **Hands-on lessons are flagged.** A lesson needing a Lovable, Claude, GitHub, Vercel or Supabase account shows "Hands-on: needs access". The reading part always works without one.
 
+8. **Additions are recorded.** Teaching text that isn't on the slides but helps (a plain-English gloss, a connecting line, safety advice, Stuck answers taken from the lesson) is marked **[added]** below. Anything stated as fact must come from the slides, this map, or an official page that was checked.
+9. **British spelling throughout**, including slide text and prompt blocks (organise, colour, analyse, optimisation). Button and menu names stay exactly as the product shows them (Customize, Authorize).
+
 Component names below match the site: KeyTerm, Tip, HeadsUp, TryIt, Stuck, PromptPractice, command block, Recap. Two new ones are needed: **CheckYourself** (short quiz, answers revealed on click) and **Challenge** (the module homework).
 
 ---
@@ -55,6 +58,15 @@ Then walk through the strong prompt one part at a time, one line each on what th
 
 **Challenge (slide homework):** Watch "Get Started With Lovable". *Link needed.*
 
+**Changes after review (26 Sep 2026):**
+
+- [changed] 1.4: the strong prompt's "Output required" list is numbered 1 to 5 (slide 10's 4 to 8 is a numbering slip).
+- [changed] 1.2: stats are given as approximate ("about 19,300 visitors"), and the analytics aren't said to be Snapiq's, because the cropped image doesn't show the site's name. The Google Ads crop does show the campaign name "Snapiq website".
+- [changed] Slide images: slides 7 and 8 are cropped to leave out customer emails, an ad-account email and account IDs. Slide 5 is cropped to leave out profile photos. Slide 12's example site (a tutor's full name) is a Placeholder. The slide 13 homework video is embedded in the Challenge.
+- [added] 1.4 "describe yourself through hobbies and what you've made, not personal details", and the 1.6 safety HeadsUp (child safety).
+- [added] 1.3 link to lovable.dev (Lovable's homepage).
+- [added] 1.3 and 1.6 Stuck answers ("you don't need to sign up for Lovable yourself", from the access page); 1.2 connecting line introducing the analytics image.
+
 ---
 
 ## Module 2: Applying Lovable
@@ -80,6 +92,13 @@ Source: LaunchLab 2
 **2.5 Gallery.** **[solo version]** Slides: post your link in #socials and browse everyone's builds. Website: put your first draft and refined version side by side, write down three things that changed, and show both to someone.
 
 **Challenge (slide homework):** Build a Lovable site that predicts or forecasts something: a stock direction tool, a weather predictor, etc. Pick something real, pull data from somewhere if you can, and show your reasoning for the prediction logic. You can use Claude to refine your prompt. **[solo version]** Remove "DM your HW website to Yibo, Rishabh, or Nirvan".
+
+**Changes after review (26 Sep 2026):**
+
+- [changed] 2.2: the slide 3 video (a 20-minute countdown timer for the live class) is left out.
+- [changed] 2.3: the heading "Example prompt to Claude" is removed so the label isn't repeated; the prompt block keeps it.
+- [added] 2.1 opening line and "What happens next" list; 2.2 plain-English glosses of the slide steps, link to the Module 1 strong prompt, one-line reflection on the first draft; 2.3 "replace Original prompt here" instruction and the "What each part does" breakdown; 2.4 glosses of the two checks and a Tip to screenshot the first draft before refining (so the 2.5 comparison is possible); 2.5 intro and reflection lines, Challenge access line.
+- [added] Stuck answers in 2.2 to 2.4, taken from the lessons and the access page (the Claude one keeps the 18+ reason from the 2.3 note).
 
 ---
 
@@ -110,6 +129,14 @@ Source: LaunchLab 3
 
 **Challenge (slide homework):** Build a Chrome extension with Claude Code. It must install in your browser and work. Bonus points if it solves a problem you genuinely have.
 
+**Changes after review (26 Sep 2026):**
+
+- [changed] 3.1 and 3.3: the VS Code extension follows the current official docs (code.claude.com/docs/en/vs-code, checked 26 Sep 2026). The extension bundles its own copy of Claude Code for its chat panel; the terminal version is only needed to type `claude` in VS Code's terminal. The slide says the extension requires the command-line version.
+- [changed] 3.3: install steps come from the official desktop quickstart and setup pages (the slide only links to them).
+- [changed] Slide 5 (Claude Design) and its video are moved to 5.1: Module 3 has no lesson for them.
+- [changed] British spelling in slide text: "reorganise" (3.2 Key idea), "tab organiser" (3.5).
+- [added] 3.1 Agent KeyTerm (from Module 5's wording), glosses for terminal, VS Code and autocomplete, link back to vibe coding; 3.2 glosses for refactoring, packages and session; 3.3 "a new, empty folder is fine", "ask in your Code for All session" (for the slide's "reach out to your tutors"), Stuck answers from the official troubleshooting page and the access page; 3.4 founders gloss and a closing line linking to the homework; 3.5 Chrome extension gloss and a TryIt (write one sentence on what your extension will do).
+
 ---
 
 ## Module 4: Claude Skills + Claude in Excel
@@ -135,6 +162,14 @@ Source: LaunchLab 4
 **4.5 Download the Claude extension.** Claude in Chrome video and download link *(links needed)*.
 
 **Challenge (slide homework):** Experiment with Claude in Excel and build a Claude skill. **[solo version]** Remove "DM your skill to Yibo, Rishabh, or Nirvan on Slack".
+
+**Changes after review (26 Sep 2026):**
+
+- [changed] 4.3: the invented "upload a ZIP file" claim and its Stuck answer are removed; step 3 follows slide 4 ("Upload your SKILL.md file"). Steps 1 and 2 follow the slide 5 screenshot (Customize > Skills; + > Create skill > Upload a skill), where slide 4's text says Settings and Add Skill. The live-app check of all four steps is still to do.
+- [changed] 4.4: the activity is explaining 90 days of real Singapore weather data, hosted at public/lessons/module-4/singapore-weather.csv (daily, 28 June to 25 September 2026, from the Open-Meteo historical weather API, CC BY 4.0, credited on the page). This replaces the class's stock decision on Slack data and this map's earlier company-numbers version. The slide 8 screenshots of Claude answering about a company's model stay as illustrations of the feature.
+- [changed] Module 4 Challenge: use Claude in Excel to find and explain what the weather data shows, in your own words, and build a Claude skill (slide homework, DM removed).
+- [changed] British spelling in slide text: Standardised, analyse, Summarise ("Customize" kept as a menu name).
+- [added] 4.1 "write your answers in your notes" and "not working yet? go back to the Module 3 challenge"; 4.2 a plain-English line under each slide point, skill KeyTerm, context window gloss; 4.3 HeadsUp that Claude's menus change often (from this map's 4.3 reason), descriptions read from the slide 5 screenshot; 4.4 glosses (formulas, anomalies, business rules), a gloss of the slide 8 question, the four TryIt steps and an example prompt in our own words; 4.5 intro line.
 
 ---
 
@@ -166,6 +201,15 @@ Source: LaunchLab 5 (the best-written deck; stays almost word for word)
 
 **Challenge (slide homework):** Finish your website. Optional: build a tool that automates something annoying in your school life (school portal grade alerts, study plan from a test schedule, free classroom finder). **[solo version]** Remove the DM instruction; keep "publish with tiiny.host or screen-record it working on localhost."
 
+**Changes after review (26 Sep 2026):**
+
+- [changed] 5.1: gets the Claude Design video from Module 3's slide 5. The slide image isn't used (a low-resolution video thumbnail showing a sample name).
+- [changed] 5.2: the old Share-menu screenshot is removed; a Placeholder asks for a new screenshot of the Hand off to Claude Code dialog. "In the top right" is dropped until the live app is checked. The Share menu stays only as a Stuck fallback.
+- [changed] 5.5: the invented Tip "Claude can't see your screen" is removed (also from the bug-report mock's feedback). The console error is shown in a copyable console block.
+- [changed] 5.6: "answer these out loud" becomes "answer these", to match the quiz's "answer in your head first".
+- [changed] 5.1: a Tip claiming Module 1's prompting advice carries over to Claude Design is removed.
+- [added] 5.1 "front end" gloss and video lead-in; 5.2 opening line ("Claude Design makes your site look right. Claude Code makes it work."); 5.3 "A chatbot tells you what to change. An agent makes the change."; 5.4 "Don't skip step 4" and a caption noting the pictured prompt is shorter; 5.5 the practice scenario (a sign-up button that does nothing and one console error), which the bug-report task needs; 5.6 the open-ended answer to question 4; 5.7 localhost gloss ("your own computer, running your website") and access line for tiiny.host.
+
 ---
 
 ## Module 6: Introduction to GitHub and Vercel
@@ -183,7 +227,7 @@ Source: LaunchLab 6
 
 **6.1** Store, Share, Collaborate as on the slide. KeyTerm: repository. *Image needed: "How It Works" and "How a Repository Looks".*
 
-**6.2** The six terms grouped as on the slide (grab an existing project: fork; save and upload: clone, commit, push; combine work: pull request, merge), each as a KeyTerm. **CheckYourself**: match each term to its meaning. (The slide homework says to review these terms; "VERY IMPORTANT!")
+**6.2** The six terms grouped as on the slide (grab an existing project: fork, clone; save and upload: commit, push; combine work: pull request, merge), each as a KeyTerm. **CheckYourself**: match each term to its meaning. (The slide homework says to review these terms; "VERY IMPORTANT!")
 
 **6.3** The slide's two-column comparison as is.
 
@@ -194,6 +238,15 @@ Source: LaunchLab 6
 **6.6** The three slide steps, including "sign up using your GitHub account, not email", and the "From now on, you never upload anything again" box.
 
 **Challenge (slide homework):** Find an open source project on GitHub that interests you. Fork it and deploy it to Vercel. Review today's key terms.
+
+**Changes after review (26 Sep 2026):**
+
+- [changed] 6.5: repos are Private (the slide says keep it Public), because learners are under 18. Step 1, the HeadsUp and the recap all say so.
+- [changed] 6.5 and 6.6: signing in to GitHub and Vercel (with a GitHub account) is done in a session, with the teacher's go-ahead, matching the access page.
+- [changed] 6.5: the Task slide's text opens the lesson, and the "Using Lovable instead?" box sits before step 1 (with its own access line).
+- [changed] 6.3: small grammar fixes to the slide text.
+- [changed] 6.1: the slide 5 repository screenshot (a tutor's username, photo and private repos) isn't used; a screenshot slot asks for one from a neutral account.
+- [added] 6.1 glosses (codebase, repo, history) and the "How it works" lead-in; 6.2 "locally" gloss, "a commit on its own isn't on GitHub yet", six scenario CheckYourself questions; 6.3 branch gloss (from Module 7's slide) and a closing line; 6.4 the tiiny.host comparison line; 6.5 "a public repo can be seen by anyone"; 6.6 open source gloss ("a project whose code is shared publicly for others to use") and a Challenge reminder about secrets.
 
 ---
 
@@ -224,6 +277,12 @@ Source: LaunchLab 7
 
 **Challenge (slide homework):** Finish your Wordle. Then write a one-line idea for your final project. **[solo version]** Remove the DMs; the idea goes into your own notes and carries into Module 9.
 
+**Changes after review (26 Sep 2026):**
+
+- [changed] 7.5: adds slide 7's editor screenshot of a real conflict (another project, with a branch called develop) under "What it looks like". The marker-order bullets apply to the Wordle example only.
+- [changed] 7.4: "It's that easy." sits inside the callout with the rest of the slide sentence.
+- [added] 7.4 a line saying "step two" means this whole lesson; 7.5 the lead-in to the conflict example, the worked fix ("those five lines become one") and the CheckYourself answers; 7.3 a pointer from the GitHub track to the Claude Code push prompt; 7.6 "the conflict shows up on the second pull request"; sign-in Stuck answers matched to the access page.
+
 ---
 
 ## Module 8: Authentication and APIs
@@ -249,6 +308,12 @@ Source: LaunchLab 8
 **8.5** Supabase sign-up (from 8.1), then the eight setup steps and the login prompt copyable, and the "This will add" list. **[changed]** Add a HeadsUp: turning off "Confirm Email" is fine for practice but not for a real app, and use a test email.
 
 **Challenge (slide homework):** Work on your final project. **[changed]** Self-paced learners haven't reached Module 9 yet, so this becomes: build a very simple site with working sign-up, log-in and log-out using Supabase (the Blueprint version), then carry on to Module 9. *Confirm with the team.*
+
+**Changes after review (26 Sep 2026):**
+
+- [changed] 8.3: "fork the team wordle project" becomes "Open your Wordle project, or any project": learners own their Wordle on this site, and GitHub can't fork your own repo into your account. Slide typos fixed ("update your site", "Singapore"); the URL is joined onto one line.
+- [changed] 8.5: the Supabase sign-up (with GitHub) is done in a session, with the teacher's go-ahead, matching the access page. "Ask your tutor" becomes "In a Code for All session, ask your tutor".
+- [added] 8.1 opening and closing lines; 8.2 API KeyTerm (from slides 2 and 3), "the API is the messenger" gloss, "DB is short for database", diagram caption; 8.3 Stuck answers from the slide note and the access page; 8.4 Authentication KeyTerm (from slides 2 and 6) and two more CheckYourself questions answered from the lesson; 8.5 "keep the key and ID handy", the instruction to swap in your own values, and a pointer to the Task 1 project.
 
 ---
 

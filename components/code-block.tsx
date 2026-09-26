@@ -1,5 +1,7 @@
 import { isValidElement, type ReactElement, type ReactNode } from "react";
+import { CopyButton } from "@/components/copy-button";
 import { PromptBlock } from "@/components/prompt-block";
+import { ScrollArea } from "@/components/scroll-area";
 
 type Kind = "tag" | "attr" | "str" | "com" | "plain";
 type Token = { text: string; kind: Kind };
@@ -17,6 +19,8 @@ const LANGUAGE_NAMES: Record<string, string> = {
   python: "Python",
   bash: "Terminal",
   sh: "Terminal",
+  text: "Text",
+  console: "Console",
 };
 
 const kindClass: Record<Kind, string> = {
@@ -46,19 +50,22 @@ export function CodeBlock({ code, language, title }: { code: string; language?: 
 
   return (
     <figure className="m-0 overflow-hidden rounded-xl border-[1.5px] border-border bg-surface2 text-fg">
-      {(title || languageName) && (
-        <figcaption className="flex items-center justify-between gap-3 border-b border-border px-4 py-2 text-[15px] leading-[1.5] text-muted">
-          <span className="font-mono">{title}</span>
-          <span>{languageName}</span>
-        </figcaption>
-      )}
-      <pre className="m-0 overflow-x-auto py-3.5">
-        <code className="grid grid-cols-[auto_1fr] gap-x-4 font-mono text-[16px] leading-[1.8]">
-          {lines.map((line, index) => (
-            <Line key={index} number={index + 1} tokens={line} />
-          ))}
-        </code>
-      </pre>
+      <figcaption className="flex items-center justify-between gap-3 border-b border-border py-1.5 pr-1.5 pl-4 text-[15px] leading-[1.5] text-muted">
+        <span className="font-mono">{title}</span>
+        <span className="flex items-center gap-3">
+          {languageName && languageName !== title && <span>{languageName}</span>}
+          <CopyButton text={code} />
+        </span>
+      </figcaption>
+      <ScrollArea fade="var(--surface2)" className="py-3.5" hintClassName="border-t border-border px-4 py-2 text-muted">
+        <pre className="m-0">
+          <code className="grid grid-cols-[auto_1fr] gap-x-4 font-mono text-[16px] leading-[1.8]">
+            {lines.map((line, index) => (
+              <Line key={index} number={index + 1} tokens={line} />
+            ))}
+          </code>
+        </pre>
+      </ScrollArea>
     </figure>
   );
 }

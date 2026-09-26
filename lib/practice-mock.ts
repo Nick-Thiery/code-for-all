@@ -283,7 +283,7 @@ const BUG_REPORT = (() => {
     results: {
       weak: {
         scores: [0, 1, 0],
-        headline: "Claude can't see your screen. Give it the whole story.",
+        headline: "Good start. Now give Claude the whole story.",
         fix: {
           kind: "quote",
           quote: "broken",

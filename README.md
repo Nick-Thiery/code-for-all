@@ -111,7 +111,7 @@ These work in any lesson without an import. Module 1 uses most of them.
 | `<Callout kind="tip">…</Callout>` | A boxed aside. `kind` is `tip`, `headsup` or `tryit`. |
 | `<KeyTerm term="Token">…</KeyTerm>` | A term and its definition, in a box. |
 | `<Term def="…">model</Term>` | An inline term. Tapping it shows the definition. |
-| ```` ```html title="index.html" ```` | A code block with line numbers. HTML is coloured; other languages are shown plain. |
+| ```` ```html title="index.html" ```` | A code block with line numbers and a Copy button. HTML is coloured; other languages are shown plain. Use ```` ```console ```` for error messages. Long lines scroll sideways, with a hint. |
 | `<CommandBlock>claude --version</CommandBlock>` | A terminal command with a Copy button. |
 | `<HandsOn />` | Put above the heading of a section that needs an account. |
 | `<Screenshot caption="…">what goes here</Screenshot>` | A placeholder for a screenshot you haven't taken yet. |
@@ -120,7 +120,7 @@ These work in any lesson without an import. Module 1 uses most of them.
 | `<PromptPractice taskId="…" hint="…">…</PromptPractice>` | The practice card. See below. |
 | `<CheckYourself><Question q="…">answer</Question></CheckYourself>` | A short quiz. Each answer shows when the learner asks for it. |
 | `<Challenge title="…">…</Challenge>` | The module's homework (from the slides). Goes at the end of the module's last lesson. |
-| `<Figure src="/lessons/module-6/x.jpg" alt="…" width={1600} height={770} caption="…" />` | An image, usually cropped from a slide into `public/lessons/module-N/`. `width` and `height` are the file's size in pixels. |
+| `<Figure src="/lessons/module-6/x.jpg" alt="…" width={1600} height={770} caption="…" />` | An image, usually cropped from a slide into `public/lessons/module-N/`. `width` and `height` are the file's size in pixels. Readers can tap it to see it full size; images narrower than the column show at their own size. |
 | `<VideoEmbed id="hwP7WQkmECE" title="…" />` | A YouTube video from the slides (youtube-nocookie.com, loads when scrolled near), with a plain link underneath. |
 | `<Placeholder>What's missing</Placeholder>` | Marks content that's still needed, like a video link. Find them all with `grep -rn "<Placeholder\|<Screenshot" content`. |
 

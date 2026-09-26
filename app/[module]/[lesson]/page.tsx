@@ -46,8 +46,11 @@ export default async function LessonPage({ params }: Props) {
             </span>
             <span aria-hidden="true">·</span>
             <span>{lesson.duration} min</span>
-            <span aria-hidden="true">·</span>
-            <Link href={moduleTrackHref(mod.number)} className="font-bold">
+            {/* On phones the module link gets its own line, so no dot is left hanging at a line end. */}
+            <span aria-hidden="true" className="hidden tablet:inline">
+              ·
+            </span>
+            <Link href={moduleTrackHref(mod.number)} className="basis-full font-bold tablet:basis-auto">
               Module {mod.number}: {mod.title}
             </Link>
           </p>

@@ -31,8 +31,14 @@ Say main and your branch, alex-keyboard, both changed the Wordle page title. Git
 
 Git shows you both versions: what's on main (top) and what's on your branch (bottom).
 
+In this example:
+
 - The top version sits between `<<<<<<< HEAD` and `=======`. That's main.
 - The bottom version sits between `=======` and `>>>>>>> alex-keyboard`. That's your branch, named on the last line.
+
+Here's a conflict in a real code editor, from a different project:
+
+<Figure src="/lessons/module-7/merge-conflict-in-an-editor.png" alt="A code editor showing index.html from a project called carparts-website_conflict, on main. Inside a navigation list, a line reading <<<<<<< HEAD comes before four links: Home, About Us, Product and Imprint. Then a line of equals signs. Then two links: Returns and FAQ. Then a line reading >>>>>>> develop." width={914} height={484} caption="This conflict is from a different project. The branch being merged in here is called develop, not alex-keyboard." />
 
 ## How to fix it
 
@@ -40,7 +46,7 @@ Git shows you both versions: what's on main (top) and what's on your branch (bot
 2. Delete the `<<<`, `===` and `>>>` marker lines.
 3. Commit again.
 
-For example, to keep main's title, those five lines become one:
+For example, in the Wordle conflict, to keep main's title, those five lines become one:
 
 ```html
 <h1>Wordle by Team 3</h1>

@@ -1,6 +1,6 @@
 # Modules 1 to 8: review report
 
-Produced 26 Sep 2026 by the per-module verifiers (phase 4), plus the flags the writing and media agents raised. Nothing here has been fixed yet. Severity: high = wrong or unsafe content; medium = invented or missing content, or a partly applied map note; low = drift and presentation.
+Produced 26 Sep 2026 by the per-module verifiers (phase 4), plus the flags the writing and media agents raised. **Update, 26 Sep 2026: the fixes have been applied.** What changed, and every kept addition, is recorded in docs/course-map.md under "Changes after review" in each module. Items that need a human are still Placeholders in the lessons. Severity: high = wrong or unsafe content; medium = invented or missing content, or a partly applied map note; low = drift and presentation.
 
 ## Placeholders left
 

@@ -3,22 +3,22 @@ title: Claude in Microsoft Excel
 slug: claude-in-excel
 order: 40
 duration: 8
-summary: Use Claude directly inside Excel to analyse, explain and act on spreadsheet data, then try it on a sample spreadsheet.
+summary: Use Claude directly inside Excel to analyse, explain and act on spreadsheet data, then use it to explain 90 days of real weather data.
 requiresAccount: true
 recap:
   - Claude in Excel works right inside your spreadsheet, with no switching tabs or copy-pasting.
   - "It helps with three things: formula assistance, data analysis, and audit and validation."
-  - Ask it what the numbers say, and it shows which cells it used.
+  - In the example, Claude showed which cells its numbers came from. Check its answers against the cells yourself.
 ---
 
 Claude doesn't only work in a chat window. It can also work inside Microsoft Excel, right next to your spreadsheet.
 
 ## Advanced Data Operations
 
-Use Claude directly inside Excel to analyze, explain, and act on your spreadsheet data — no switching tabs or copy-pasting.
+Use Claude directly inside Excel to analyse, explain, and act on your spreadsheet data — no switching tabs or copy-pasting.
 
 - **Formula Assistance:** Write, fix, and explain complex <Term def="a calculation in a spreadsheet cell, such as adding up a column.">formulas</Term> in plain English
-- **Data Analysis:** Summarize trends, flag <Term def="numbers that don't fit the pattern of the rest.">anomalies</Term>, and interpret results across large datasets
+- **Data Analysis:** Summarise trends, flag <Term def="numbers that don't fit the pattern of the rest.">anomalies</Term>, and interpret results across large datasets
 - **Audit & Validation:** Trace logic errors and verify <Term def="the rules a business's numbers are meant to follow.">business rules</Term> step-by-step
 
 <Figure src="/lessons/module-4/excel-finance-dashboard.jpg" alt="A Finance Summary Dashboard in Excel. Five boxes across the top show Revenue 428,109, Expense 250,498, Profit/Loss 177,611, Max Revenue 3,998 and Max Expense 1,500. Below them are ring charts of revenue and expenses by top 3 category, a line chart of cumulative profit and loss rising month by month, and bars comparing revenue and expense for each department." width={944} height={511} caption="A finance dashboard in Excel: the kind of spreadsheet Claude can analyse and explain." />
@@ -30,7 +30,7 @@ Use Claude directly inside Excel to analyze, explain, and act on your spreadshee
 In this example, someone asked Claude about a company's financial spreadsheet:
 
 ```prompt title="The question in the screenshot"
-hello claude, analyze this sheet and tell me the 5 year cagr net debt change
+hello claude, analyse this sheet and tell me the 5 year cagr net debt change
 ```
 
 In plain English: on average, how much did the company's debt change each year over five years?
@@ -41,7 +41,7 @@ Claude found the two numbers it needed, showed which cells they came from, worke
 
 <HandsOn />
 
-## Try it: what do these numbers say?
+## Try it: what does the weather data show?
 
 This part needs access; see [how hands-on access works](/access). Open Claude using the access your Code for All session gives you.
 
@@ -49,13 +49,26 @@ This part needs access; see [how hands-on access works](/access). Open Claude us
 How to open Claude in Excel. The slides don't include setup steps: where learners get Excel, and how they open Claude inside it with their Code for All access.
 </Placeholder>
 
-<Placeholder>
-The sample spreadsheet: a small dataset about one company, hosted on this site (for example in public/lessons/module-4/), with a download link here. It replaces the class data shared on Slack. It isn't in the slides, and the numbers need a real source.
-</Placeholder>
+Download the data: <a href="/lessons/module-4/singapore-weather.csv" download>singapore-weather.csv</a>
+
+It holds 90 days of daily weather for Singapore, from 28 June to 25 September 2026: the highest, lowest and average temperature, the rainfall, the hours of rain, the highest wind speed and the hours of sunshine for each day.
+
+Weather data: [Open-Meteo.com](https://open-meteo.com/) (CC BY 4.0)
 
 <Callout kind="tryit">
-Open the sample spreadsheet in Excel, open Claude, and ask it to explain what these numbers say about the company.
+Find out what the data shows, and explain it in your own words.
 </Callout>
+
+1. Open singapore-weather.csv in Excel.
+2. Open Claude and ask it to explain what the data shows. For example, ask about trends, the hottest and wettest days, and whether rainy days are cooler.
+3. Check its answer against the cells. If Claude says a day was the wettest, find that date and look at its Rainfall (mm) cell.
+4. Explain what the data shows in your own words, in two or three sentences.
+
+Here's one way to ask. It's only an example, so change it however you like:
+
+```prompt title="Example question"
+Explain what this weather data shows. What are the main trends? Which were the hottest and wettest days? Are rainy days cooler than dry days? Tell me which cells you used for each answer.
+```
 
 <StuckBlock>
   <StuckItem question="Claude asks me to sign up or log in.">
