@@ -1,0 +1,59 @@
+---
+title: "Step 2: connect to Vercel"
+slug: connect-to-vercel
+order: 60
+duration: 8
+summary: Sign in to Vercel with your GitHub account, import your repo and deploy it to a live public link.
+requiresAccount: true
+recap:
+  - Sign up to Vercel using your GitHub account, not email. That's what lets Vercel see your repos.
+  - New Project → Import Git Repository → pick your repo → Deploy.
+  - From now on, every push to GitHub updates your live site automatically.
+---
+
+Your project is on GitHub. Now connect it to Vercel, which turns it into a live website.
+
+<HandsOn />
+
+## 1. Sign in with GitHub
+
+Go to [vercel.com](https://vercel.com) and sign up using your **GitHub account**, not email. This is what lets Vercel see your repos.
+
+This part needs access; see [how hands-on access works](/access).
+
+## 2. Import your repo
+
+On your dashboard, click **New Project** → **Import Git Repository** → pick the repo you pushed in [Step 1](/module-6/get-your-code-into-github). Authorize Vercel when GitHub asks.
+
+## 3. Deploy
+
+Vercel auto-detects your setup. Click **Deploy**, wait a few seconds, and you get a **live public link**.
+
+<Callout kind="tip">
+**From now on, you never upload anything again.** Every time you push to GitHub, Vercel rebuilds and updates your live site automatically. And every pull request gets its own preview link, so your team can see changes before merging.
+</Callout>
+
+That's the task done: your latest project is on GitHub, and it's live on Vercel.
+
+<StuckBlock>
+  <StuckItem question="Vercel or GitHub asks me to sign up or log in.">
+    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access).
+  </StuckItem>
+  <StuckItem question="Vercel can't see my repos.">
+    Sign up using your GitHub account, not email: that's what lets Vercel see your repos. Then authorize Vercel when GitHub asks.
+  </StuckItem>
+  <StuckItem question="My repo isn't in the list.">
+    Check that you pushed it in [Step 1](/module-6/get-your-code-into-github): refresh your repo page on GitHub and your files should be there.
+  </StuckItem>
+  <StuckItem question="I changed my project. Do I upload it again?">
+    No. From now on, you never upload anything again. Push to GitHub, and Vercel rebuilds and updates your live site automatically.
+  </StuckItem>
+</StuckBlock>
+
+<Challenge title="Fork an open source project and send it to Vercel">
+1. Find an <Term def="a project whose code is public, so anyone can see, use and learn from it.">open source</Term> project on GitHub that interests you.
+2. Fork it and send it to Vercel. Your fork is a repo on your GitHub account, so you import it just like you did in step 2 above.
+3. Also review the new terms from this module: fork, clone, commit, push, pull request and merge. [Key terms](/module-6/key-terms) has them all. VERY IMPORTANT!
+
+The heads-up from [Step 1](/module-6/get-your-code-into-github) still applies: never put passwords, API keys or personal details in a public repo.
+</Challenge>

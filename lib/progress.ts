@@ -1,7 +1,7 @@
 import { useMemo, useSyncExternalStore } from "react";
 
 // Completion lives in this browser only: a JSON array of lesson ids
-// ("part-1/sample-lesson"). See lib/outline.ts.
+// ("module-1/meet-lovable"). See lib/outline.ts.
 const STORAGE_KEY = "cfa:completed-lessons";
 const CHANGE_EVENT = "cfa:progress-change";
 

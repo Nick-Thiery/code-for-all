@@ -16,8 +16,8 @@ export function SiteHeader({ outline }: { outline: Outline }) {
   const pathname = usePathname();
   const { completed, ready } = useCompletedLessons();
 
-  const lesson = outline.parts.flatMap((part) => part.lessons).find((l) => l.href === pathname);
-  const active = pathname === "/" || pathname.startsWith("/part-") ? "course" : pathname.startsWith("/run-it") ? "run" : null;
+  const lesson = outline.modules.flatMap((module) => module.lessons).find((l) => l.href === pathname);
+  const active = pathname === "/" || pathname.startsWith("/module-") ? "course" : pathname.startsWith("/run-it") ? "run" : null;
 
   // Not on the home page, whose hero has its own Continue button, and not
   // in lessons, where the lesson row already shows where you are.
@@ -31,7 +31,7 @@ export function SiteHeader({ outline }: { outline: Outline }) {
         {lesson && (
           <div className="ml-3 hidden min-h-9 items-center gap-3 border-l border-border pl-5 desktop:flex">
             <span className="font-bold whitespace-nowrap">
-              Part {lesson.part} · Lesson {lesson.number} of {partLength(outline, lesson)}
+              Module {lesson.module} · Lesson {lesson.number} of {moduleLength(outline, lesson)}
             </span>
             <LessonPips outline={outline} lesson={lesson} completed={completed} ready={ready} size="desktop" />
           </div>
@@ -51,7 +51,7 @@ export function SiteHeader({ outline }: { outline: Outline }) {
       {lesson && (
         <div className="flex min-h-10 items-center justify-between gap-3 border-t border-border px-(--gut) desktop:hidden">
           <span className="text-[15px] font-bold">
-            Lesson {lesson.number} of {partLength(outline, lesson)}
+            Lesson {lesson.number} of {moduleLength(outline, lesson)}
           </span>
           <LessonPips outline={outline} lesson={lesson} completed={completed} ready={ready} size="mobile" />
         </div>
@@ -76,8 +76,8 @@ export function SiteHeader({ outline }: { outline: Outline }) {
   );
 }
 
-function partLength(outline: Outline, lesson: OutlineLesson) {
-  return outline.parts.find((part) => part.number === lesson.part)?.lessons.length ?? 0;
+function moduleLength(outline: Outline, lesson: OutlineLesson) {
+  return outline.modules.find((module) => module.number === lesson.module)?.lessons.length ?? 0;
 }
 
 function Logo() {
@@ -140,7 +140,7 @@ function LessonPips({
   ready: boolean;
   size: "desktop" | "mobile";
 }) {
-  const lessons = outline.parts.find((part) => part.number === lesson.part)?.lessons ?? [];
+  const lessons = outline.modules.find((module) => module.number === lesson.module)?.lessons ?? [];
   const small = size === "desktop" ? [14, 15] : [13, 14];
   const big = size === "desktop" ? [19, 21] : [17, 19];
   const justFinished = useJustFinished(completed.has(lesson.id), ready);
@@ -212,7 +212,7 @@ function ThemeToggle() {
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     // The <head> script normally sets the theme before first paint. A 404
-    // from a dynamic route (/part-1/no-such-lesson) is rendered in the
+    // from a dynamic route (/module-1/no-such-lesson) is rendered in the
     // browser instead, and React doesn't run inline scripts it inserts, so
     // apply it here in that case.
     if (!document.documentElement.dataset.theme) {

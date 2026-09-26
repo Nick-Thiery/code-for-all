@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { CourseTrack } from "@/components/course-track";
+import { CourseTrack, UpcomingModule } from "@/components/course-track";
 import { Hex } from "@/components/hex";
 import { HomeHero } from "@/components/home-hero";
 import { getOutline } from "@/lib/lessons";
 
 export default async function HomePage() {
   const outline = await getOutline();
-  const lastPart = outline.parts.at(-1)?.number;
 
   return (
     <>
@@ -19,16 +18,29 @@ export default async function HomePage() {
 
       <section aria-label="Course" className="px-(--gut)">
         <div className="mx-auto flex max-w-[1120px] flex-col gap-(--sec) border-t border-border pt-(--hy) pb-(--sec)">
-          {outline.parts.length > 0 ? (
-            outline.parts.map((part) => (
-              <CourseTrack key={part.number} outline={outline} part={part.number} showUpcoming={part.number === lastPart} />
-            ))
-          ) : (
-            <p className="m-0 rounded-2xl bg-surface2 p-(--pad)">
-              No lessons yet. Add a <code>content/part-1/</code> folder with a <code>part.yml</code> and an{" "}
-              <code>.mdx</code> file, and it will show up here.
-            </p>
-          )}
+          {outline.phases.map((phase) => (
+            <section key={phase.number} aria-labelledby={`phase-${phase.number}`} className="flex flex-col gap-10">
+              <header className="flex flex-col gap-1.5">
+                <span className="eyebrow">Phase {phase.number}</span>
+                <h2 id={`phase-${phase.number}`} className="t-h1 m-0 scroll-mt-6">
+                  {phase.title}
+                </h2>
+                <p className="t-meta m-0 text-muted">{moduleRange(phase.modules.map((m) => m.number))}</p>
+              </header>
+              {phase.modules.map((mod) =>
+                mod.released ? <CourseTrack key={mod.number} outline={outline} module={mod.number} /> : null,
+              )}
+              {phase.modules.some((mod) => !mod.released) && (
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] gap-4">
+                  {phase.modules
+                    .filter((mod) => !mod.released)
+                    .map((mod) => (
+                      <UpcomingModule key={mod.number} number={mod.number} title={mod.title} summary={mod.summary} />
+                    ))}
+                </div>
+              )}
+            </section>
+          ))}
         </div>
       </section>
 
@@ -38,7 +50,7 @@ export default async function HomePage() {
             How it works
           </h2>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-x-7 gap-y-8">
-            <HowStep title="Read a short lesson" text="Each one takes 6 to 15 minutes, in plain English.">
+            <HowStep title="Read a short lesson" text="Each one takes 3 to 15 minutes, in plain English.">
               <div className="flex w-[70%] flex-col gap-[7px]">
                 <span className="display text-[14px] leading-[1.2] font-bold">How a language model works</span>
                 <span className="h-1.5 rounded-[3px] bg-track" />
@@ -139,6 +151,13 @@ function BuildPreview() {
       </div>
     </div>
   );
+}
+
+/** [1, 2, 3, 4, 5] -> "Modules 1 to 5", [9, 10] -> "Modules 9 and 10" */
+function moduleRange(numbers: number[]) {
+  if (numbers.length === 1) return `Module ${numbers[0]}`;
+  if (numbers.length === 2) return `Modules ${numbers[0]} and ${numbers[1]}`;
+  return `Modules ${numbers[0]} to ${numbers.at(-1)}`;
 }
 
 function HowStep({ title, text, children }: { title: string; text: string; children: React.ReactNode }) {

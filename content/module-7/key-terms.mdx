@@ -1,0 +1,52 @@
+---
+title: Key terms
+slug: key-terms
+order: 10
+duration: 6
+summary: "Four words for working on one project together: branch, main, switch and merge conflict."
+requiresAccount: false
+recap:
+  - "Branch: your own parallel copy of the code, inside the same repo. Main is the default, \"real\" branch that Vercel puts live."
+  - "Switch: jump from one branch to another. Your files change to match the branch you're on."
+  - "Merge conflict: two branches changed the same line, and Git needs a human to pick which version wins. Totally normal."
+---
+
+In [Module 6](/module-6) you put your code on GitHub and Vercel. This module is about working on one project with other people, without overwriting each other's work.
+
+This module talks about teammates. Working on your own? You'll be your own team in the [task at the end](/module-7/recreate-wordle).
+
+The four terms come in three groups. Think of each branch as a lane.
+
+## Your own lane
+
+<KeyTerm term="Branch">
+Your own parallel copy of the code, inside the same repo. You can change anything without touching anyone else's work.
+</KeyTerm>
+
+<KeyTerm term="Main">
+The default/"real" branch that Vercel puts live.
+</KeyTerm>
+
+## Moving between lanes
+
+<KeyTerm term="Switch">
+Jump from one branch to another. Your files instantly change to match the branch you're on. Older tutorials call this checkout. Same thing.
+</KeyTerm>
+
+## Joining lanes back together
+
+<KeyTerm term="Merge conflict">
+Two branches changed the same line, and Git needs a human to pick which version wins. Totally normal: you didn't break anything.
+</KeyTerm>
+
+You'll see what a merge conflict looks like, and how to fix one, in [lesson 5](/module-7/merge-conflicts).
+
+## How branching works
+
+<Figure src="/lessons/module-7/how-branching-works.png" alt="Diagram. A dark line labelled main runs from left to right, with commits as dots along it. At branch off, a blue line labelled alex-keyboard (your branch) splits upwards from main and has two blue dots on it: your commits. Meanwhile, main keeps moving: there's another commit on the main line. Then the blue line comes back down to main where the pull request merges it back, and main carries on." width={1600} height={479} />
+
+**Main never sees your work until the merge.** Your branch splits off, collects commits, and returns through a <Term def="a way to propose your changes and ask teammates to review them before they join main. You met it in Module 6.">pull request</Term>.
+
+1. You **branch off** from main. Here, your branch is called alex-keyboard.
+2. You make **your commits** on your branch. Meanwhile, **main keeps moving**.
+3. A **pull request merges it back** into main.

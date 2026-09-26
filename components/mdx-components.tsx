@@ -1,14 +1,19 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import { Callout } from "@/components/callout";
+import { Challenge } from "@/components/challenge";
+import { CheckYourself, Question } from "@/components/check-yourself";
 import { HandsOn } from "@/components/chip";
 import { MdxPre } from "@/components/code-block";
 import { CommandBlock } from "@/components/command-block";
+import { Figure } from "@/components/figure";
 import { KeyTerm } from "@/components/key-term";
+import { Placeholder } from "@/components/placeholder";
 import { PromptPractice } from "@/components/prompt-practice";
 import { Screenshot } from "@/components/screenshot";
 import { StuckBlock, StuckItem } from "@/components/stuck-block";
 import { Term } from "@/components/term";
+import { VideoEmbed } from "@/components/video-embed";
 
 // Everything here can be used in any lesson without an import.
 export const mdxComponents: MDXComponents = {
@@ -18,12 +23,18 @@ export const mdxComponents: MDXComponents = {
   // Fenced code blocks.
   pre: MdxPre,
   Callout,
+  Challenge,
+  CheckYourself,
   CommandBlock,
+  Figure,
   HandsOn,
   KeyTerm,
+  Placeholder,
   PromptPractice,
+  Question,
   Screenshot,
   StuckBlock,
   StuckItem,
   Term,
+  VideoEmbed,
 };

@@ -1,0 +1,34 @@
+---
+title: What Claude Code actually does
+slug: what-claude-code-actually-does
+order: 30
+duration: 6
+summary: Claude Code is an agent, not a chatbot. It works on the files on your computer, on its own.
+requiresAccount: false
+recap:
+  - Claude Code is an agent, not a chatbot. It works directly on the files on your computer.
+  - It splits your design into index.html, styles.css and script.js, and works on its own.
+  - Errors are normal. If you hit an API limit error, just type "continue".
+---
+
+You met Claude Code in [Module 3](/module-3). Here's what it does with your design once you hand it off.
+
+## An agent, not a chatbot
+
+Claude Code is an **agent**, not a chatbot. Instead of just replying in chat, it works directly on the files on your computer.
+
+A chatbot tells you what to change. An agent makes the change.
+
+## It splits your design into files
+
+It splits your single design into proper, separate files: `index.html`, `styles.css` and `script.js`. You'll see what each one is for in [lesson 6](/module-5/the-three-files).
+
+## It works on its own
+
+It works on its own: running commands, reading files, and deciding what to do next without you guiding each step.
+
+## Errors are normal
+
+Errors are normal and not a sign you broke something. If you hit an API limit error, just type `continue` and it picks up exactly where it left off.
+
+<Figure src="/lessons/module-5/claude-code-api-limit-continue.png" alt="A Claude Code chat. After the prompt 'reconstruct the website fully from the html provided and put it all in the folder', Claude says 'I'll split this single HTML file into a proper website structure: index.html, styles.css, and script.js.' and creates the files. A red API Error box follows, reading 'You're out of extra usage · resets 10:20pm (Asia/Singapore)', and then the message 'continue'." width={686} height={337} caption="Claude Code splitting a design into index.html, styles.css and script.js. When it hits an API limit error, you type continue." />

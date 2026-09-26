@@ -1,4 +1,4 @@
-// The Part complete celebration: one hexagon per lesson pops in, 100ms
+// The Module complete celebration: one hexagon per lesson pops in, 100ms
 // apart, settling into a honeycomb around the logo's </>, then one soft
 // ripple. With reduced motion on, the finished honeycomb is simply there
 // (see the prefers-reduced-motion rules in app/globals.css).

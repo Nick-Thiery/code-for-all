@@ -11,7 +11,7 @@ import {
   type PracticeSubmission,
   type Score,
 } from "@/lib/practice";
-import { MOCK_FIXTURES, isMockName, type MockName } from "@/lib/practice-mock";
+import { isMockName, mockFixture, type MockName } from "@/lib/practice-mock";
 
 type Graded = Extract<PracticeResponse, { status: "graded" }>;
 type Scores = Graded["scores"];
@@ -93,12 +93,13 @@ export function PromptPractice({ taskId, hint, children }: Props) {
   useEffect(() => {
     const mock = new URLSearchParams(window.location.search).get("mock");
     if (!isMockName(mock)) return;
-    const fixture = MOCK_FIXTURES[mock];
+    const fixture = mockFixture(taskId, mock);
+    if (!fixture) return;
     setText(fixture.text);
     if (fixture.previousScores) setLastScores(fixture.previousScores);
     if (fixture.start === "loading") setStatus({ kind: "loading" });
     if (fixture.start === "submit") void submitRef.current(fixture.text, mock, fixture.previousScores ?? null);
-  }, []);
+  }, [taskId]);
 
   async function submit(prompt = text, mock: MockName | null = null, previous = lastScores) {
     if (!prompt.trim()) return;

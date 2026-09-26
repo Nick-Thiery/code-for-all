@@ -1,0 +1,85 @@
+---
+title: "Task: recreate Wordle"
+slug: recreate-wordle
+order: 60
+duration: 15
+summary: Be your own team. Build a Wordle clone on three branches, merge them with pull requests, and hit (and fix) a merge conflict on purpose.
+requiresAccount: true
+recap:
+  - Work on your own branches. Never push straight to main.
+  - Connect the repo to Vercel at the start, so every merged pull request updates the live site.
+  - Changing the same line on two branches on purpose is how you learn to fix a merge conflict.
+---
+
+Time to use everything from this module: recreate Wordle, with branches and pull requests. The original task is for teams of three. Here, you'll be your own team.
+
+<HandsOn />
+
+## Be your own team
+
+This part needs access; see [how hands-on access works](/access).
+
+You're the repo owner and all three teammates. Set up a repo for your Wordle the way you did in [Module 6](/module-6/get-your-code-into-github). Then make three branches, one for each part of the game:
+
+- the board
+- the keyboard
+- the game logic
+
+Make them with either track from [lesson 3](/module-7/make-your-own-branch).
+
+## Build a good clone
+
+You are free to use any tools you like: Claude Design, Claude Code, Lovable. Split the work across your branches: the board on one, the keyboard on another, and the game logic on the third.
+
+## Ship it as you go
+
+Connect the repo to **Vercel** at the **start** of the process, not the end. This way every merged PR updates the live site. [Module 6](/module-6/connect-to-vercel) shows how to connect it.
+
+## Must-have requirements
+
+1. **Work on your own branches.** Never push your work straight to main. The objective of this task is to learn how to collaborate with others while coding, so work the way a team would.
+2. **2+ pushes per branch.** Push each branch to GitHub at least twice. By doing this, you will get a better understanding of how the mechanic works.
+3. **2+ merged pull requests.** Merge at least two pull requests. This will teach you how to merge a PR and how to overcome merge conflicts should they come up.
+
+## Hit a merge conflict on purpose
+
+On a team, conflicts happen by themselves. On your own, you have to make one.
+
+1. Change the page title on two of your branches, on purpose, to two different titles. For example, use the two titles from [lesson 5](/module-7/merge-conflicts): Wordle by Team 3 on one branch, Team 3 Wordle on the other.
+2. Merge both branches with pull requests. Two branches changed the same line, so you'll hit a merge conflict.
+3. Fix it the way lesson 5 shows: keep the version you want or combine both, delete the `<<<`, `===` and `>>>` marker lines, then commit again.
+
+Or use the escape hatch. Paste the entire block of code into Claude Code, then say:
+
+```prompt title="The escape hatch"
+I have a merge conflict in <name of the file>. Please help me resolve it and keep all features working.
+```
+
+<Callout kind="tip">
+**Doing this with friends? Follow the original team rules.**
+
+- Teams of three. The repo owner goes first: add your teammates under **Settings → Collaborators**.
+- One person works on the board, one on the keyboard, and one on the game logic.
+- Everyone works on their own branch, and nobody pushes their work directly to main.
+- Everyone pushes their branch to GitHub at least twice, and the team merges at least two pull requests.
+</Callout>
+
+Don't hesitate to ask AI if you have a question or are getting stuck. In a Code for All session, you can ask a tutor too.
+
+<StuckBlock>
+  <StuckItem question="GitHub, Vercel or Claude Code asks me to sign up or log in.">
+    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access).
+  </StuckItem>
+  <StuckItem question="I hit a merge conflict.">
+    Good: that's part of the task. [Lesson 5](/module-7/merge-conflicts) shows how to fix it, and its escape hatch prompt hands it to Claude Code.
+  </StuckItem>
+  <StuckItem question="My live site doesn't change when I merge.">
+    Connect the repo to Vercel at the start of the process. After that, every merged PR updates the live site. [Module 6](/module-6/connect-to-vercel) shows how to connect it.
+  </StuckItem>
+</StuckBlock>
+
+<Challenge title="Finish your Wordle">
+Finish your Wordle copy. When it's done, look at your repo history, not just the website: your branches and your merged pull requests are part of the work.
+
+Then start thinking of final project ideas. Write a one-line explanation of your idea in your own notes. You'll come back to it in [Module 9](/module-9).
+</Challenge>

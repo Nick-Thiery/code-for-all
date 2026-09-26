@@ -1,0 +1,45 @@
+---
+title: What an API actually is
+slug: what-an-api-is
+order: 20
+duration: 5
+summary: An API is like a door. You knock with a request for information, and it answers with data.
+requiresAccount: false
+recap:
+  - An API is like a door. You knock with a request for information, and it answers with data.
+  - You never see the inside, and you don't have to.
+  - Open the open-meteo link in your browser to see the raw data an API sends back.
+---
+
+Your site only knows its own files. An API is how it borrows data from someone else.
+
+<KeyTerm term="API">
+Something that lets your site borrow data from someone else. You send it a request for information, and it answers with data.
+</KeyTerm>
+
+## Think of it like a door
+
+Think of an API like a door. You knock with a request for information, it answers with data. You never see the inside, and you don't have to.
+
+## Where the API sits
+
+- **End user:** you, on a browser or mobile.
+- **App:** the interface.
+- **API:** the messenger.
+- **Server + DB:** where data lives. (DB is short for database.)
+
+The API is the messenger: it takes the app's request to where the data lives, and brings the response back.
+
+<Figure src="/lessons/module-8/where-the-api-sits.png" alt="Diagram. Four circles in a row, joined by a line. From left to right: End User, Browser / mobile, with a person icon; App, The interface, with a screen icon; API, The messenger, with two arrows pointing opposite ways; and Server + DB, Where data lives, with a database icon. The label request sits on the line between End User and App, and the label response sits on the line between API and Server + DB." width={1600} height={353} caption="Where the API sits: end user, app, API, then server and database, with the request going out and the response coming back." />
+
+## Watch this video
+
+<VideoEmbed id="ByGJQzlzxQg" title="What is an API (in 5 minutes)" />
+
+<Callout kind="tryit">
+**No account needed.** Open [the open-meteo link for Singapore's weather](https://api.open-meteo.com/v1/forecast?latitude=1.29&longitude=103.85&current=temperature_2m) in your browser.
+
+What you see is the raw data Singapore's weather comes back as. You knocked with a request, and the door answered with data.
+</Callout>
+
+In [Task 1](/module-8/put-live-data-on-your-page), you'll ask Claude to fetch this same link and show the temperature on your page.

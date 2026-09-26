@@ -4,14 +4,15 @@ import matter from "gray-matter";
 import { cache } from "react";
 import { lessonHref, lessonId, type Outline } from "@/lib/outline";
 
-// Each part is a folder: content/part-1, content/part-2, ... Adding a folder
-// releases that part. Lessons are the .mdx files inside it, and part.yml
-// holds the part's own title and copy.
+// content/course.yml lists every module in the course and groups them into
+// phases. Each released module is a folder, content/module-1,
+// content/module-2, ..., holding one .mdx file per lesson. Adding a folder
+// releases that module.
 const CONTENT_DIR = path.join(process.cwd(), "content");
-const PART_FOLDER = /^part-(\d+)$/;
-const PART_FILE = "part.yml";
+const COURSE_FILE = "course.yml";
+const MODULE_FOLDER = /^module-(\d+)$/;
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-// These URLs belong to the part itself: /part-1/complete.
+// These URLs belong to the module itself: /module-1/complete.
 const RESERVED_SLUGS = ["complete"];
 
 export type LessonMeta = {
@@ -28,10 +29,10 @@ export type LessonMeta = {
 };
 
 export type Lesson = LessonMeta & {
-  /** "part-1/sample-lesson": unique across the course. */
+  /** "module-1/meet-lovable": unique across the course. */
   id: string;
-  part: number;
-  /** Position within its part, from 1. */
+  module: number;
+  /** Position within its module, from 1. */
   number: number;
   href: string;
   /** True if the lesson uses <PromptPractice>. */
@@ -42,93 +43,147 @@ export type Lesson = LessonMeta & {
   source: string;
 };
 
-export type PartMeta = {
-  title: string;
-  summary: string;
-  /** Part complete page. */
-  completeHeading: string;
-  completeText: string;
-  shareTitle: string;
-  shareText: string;
-  /** Shown under "Part N+1: Coming soon" while this is the latest part. */
-  nextTeaser: string;
-};
+/** One module from course.yml. */
+export type PlannedModule = { number: number; title: string; summary: string; phase: number };
 
-export type Part = PartMeta & {
-  number: number;
-  file: string;
-  lessons: Lesson[];
-};
+export type Phase = { number: number; title: string; modules: PlannedModule[] };
+
+export type Module = PlannedModule & { lessons: Lesson[] };
 
 export type LessonWithNeighbours = {
   lesson: Lesson;
-  part: Part;
+  module: Module;
   previous: Lesson | null;
   next: Lesson | null;
 };
 
-/** Every released part, in order, each with its lessons sorted by `order`. */
-export const getParts = cache(async (): Promise<Part[]> => {
+/** The course plan from content/course.yml: every module, released or not. */
+export const getPhases = cache(async (): Promise<Phase[]> => {
+  const file = `content/${COURSE_FILE}`;
+  let source: string;
+  try {
+    source = await fs.readFile(path.join(CONTENT_DIR, COURSE_FILE), "utf8");
+  } catch {
+    throw new Error(`${file} is missing. It lists every module in the course; see the README.`);
+  }
+
+  let data: Record<string, unknown>;
+  try {
+    // course.yml is plain YAML: the same format as a lesson's frontmatter.
+    data = matter(`---\n${source}\n---\n`).data;
+  } catch (error) {
+    throw contentError(file, [
+      `It couldn't be read: ${error instanceof Error ? error.message : String(error)}`,
+      `If a value contains a colon, wrap it in quotes, like: title: "Claude: the basics"`,
+    ]);
+  }
+
+  const problems: string[] = [];
+  const phases: Phase[] = [];
+  const seen = new Set<number>();
+
+  if (!Array.isArray(data.phases) || data.phases.length === 0) {
+    throw contentError(file, [`"phases" should be a list of phases, each with a "title" and a list of "modules".`]);
+  }
+
+  data.phases.forEach((rawPhase: unknown, p) => {
+    const phase = (rawPhase ?? {}) as Record<string, unknown>;
+    const title = typeof phase.title === "string" && phase.title.trim() ? phase.title.trim() : "";
+    if (!title) problems.push(`Phase ${p + 1} needs a "title".`);
+    const modules: PlannedModule[] = [];
+    if (!Array.isArray(phase.modules)) {
+      problems.push(`Phase ${p + 1} ("${title}") needs a list of "modules".`);
+    } else {
+      phase.modules.forEach((rawModule: unknown, m) => {
+        const mod = (rawModule ?? {}) as Record<string, unknown>;
+        const where = `Phase ${p + 1}, module ${m + 1}`;
+        const number = mod.number;
+        if (typeof number !== "number" || !Number.isInteger(number) || number < 1) {
+          problems.push(`${where}: "number" should be a whole number, like: number: 3`);
+          return;
+        }
+        if (seen.has(number)) problems.push(`Module ${number} is listed twice.`);
+        seen.add(number);
+        const text = (key: string) => (typeof mod[key] === "string" && (mod[key] as string).trim()) || "";
+        if (!text("title")) problems.push(`Module ${number} needs a "title".`);
+        if (!text("summary")) problems.push(`Module ${number} needs a "summary": one short line on what it's about.`);
+        modules.push({ number, title: text("title"), summary: text("summary"), phase: p + 1 });
+      });
+    }
+    phases.push({ number: p + 1, title, modules });
+  });
+
+  if (problems.length > 0) throw contentError(file, problems);
+  return phases;
+});
+
+/** Every released module, in order, each with its lessons sorted by `order`. */
+export const getModules = cache(async (): Promise<Module[]> => {
   const names = await fs.readdir(CONTENT_DIR);
 
-  const stray = names.find((name) => name === "lessons");
+  const stray = names.find((name) => name === "lessons" || /^part-\d+$/.test(name));
   if (stray) {
     throw new Error(
-      `content/lessons/ is from before lessons were grouped into parts. Move its files into content/part-1/.`,
+      `content/${stray}/ is from before lessons were grouped into modules. Move its files into content/module-1/ (or whichever module they belong to).`,
     );
   }
 
+  const planned = (await getPhases()).flatMap((phase) => phase.modules);
   const numbers = names
-    .map((name) => PART_FOLDER.exec(name))
+    .map((name) => MODULE_FOLDER.exec(name))
     .filter((match) => match !== null)
     .map((match) => Number(match[1]))
     .sort((a, b) => a - b);
 
-  numbers.forEach((number, index) => {
-    if (number !== index + 1) {
-      throw new Error(
-        `Found content/part-${number}/ but no content/part-${index + 1}/. Parts are numbered from 1 with no gaps.`,
-      );
-    }
-  });
-
-  return Promise.all(numbers.map(readPart));
+  const modules = await Promise.all(
+    numbers.map(async (number) => {
+      const plan = planned.find((module) => module.number === number);
+      if (!plan) {
+        throw new Error(
+          `Found content/module-${number}/ but module ${number} isn't in content/course.yml. Add it to a phase there.`,
+        );
+      }
+      return { ...plan, lessons: await readLessons(number) };
+    }),
+  );
+  // A folder with no lessons yet doesn't count as released.
+  return modules.filter((module) => module.lessons.length > 0);
 });
 
-export async function getPart(number: number): Promise<Part | null> {
-  const parts = await getParts();
-  return parts.find((part) => part.number === number) ?? null;
+export async function getModule(number: number): Promise<Module | null> {
+  const modules = await getModules();
+  return modules.find((module) => module.number === number) ?? null;
 }
 
 export async function getLessonWithNeighbours(
-  partNumber: number,
+  moduleNumber: number,
   slug: string,
 ): Promise<LessonWithNeighbours | null> {
-  const part = await getPart(partNumber);
-  if (!part) return null;
-  const index = part.lessons.findIndex((lesson) => lesson.slug === slug);
+  const mod = await getModule(moduleNumber);
+  if (!mod) return null;
+  const index = mod.lessons.findIndex((lesson) => lesson.slug === slug);
   if (index === -1) return null;
 
   return {
-    lesson: part.lessons[index],
-    part,
-    previous: part.lessons[index - 1] ?? null,
-    next: part.lessons[index + 1] ?? null,
+    lesson: mod.lessons[index],
+    module: mod,
+    previous: mod.lessons[index - 1] ?? null,
+    next: mod.lessons[index + 1] ?? null,
   };
 }
 
 /** Everything the browser needs to know about the course, and nothing more. */
 export const getOutline = cache(async (): Promise<Outline> => {
-  const parts = await getParts();
-  const latest = parts.at(-1);
+  const [phases, modules] = await Promise.all([getPhases(), getModules()]);
+  const released = new Set(modules.map((module) => module.number));
   return {
-    parts: parts.map((part) => ({
-      number: part.number,
-      title: part.title,
-      summary: part.summary,
-      lessons: part.lessons.map((lesson) => ({
+    modules: modules.map((module) => ({
+      number: module.number,
+      title: module.title,
+      summary: module.summary,
+      lessons: module.lessons.map((lesson) => ({
         id: lesson.id,
-        part: lesson.part,
+        module: lesson.module,
         number: lesson.number,
         slug: lesson.slug,
         title: lesson.title,
@@ -138,23 +193,34 @@ export const getOutline = cache(async (): Promise<Outline> => {
         href: lesson.href,
       })),
     })),
-    upcoming: {
-      number: parts.length + 1,
-      teaser: latest?.nextTeaser ?? "We're writing it now.",
-    },
+    phases: phases.map((phase) => ({
+      number: phase.number,
+      title: phase.title,
+      modules: phase.modules.map(({ number, title, summary }) => ({
+        number,
+        title,
+        summary,
+        released: released.has(number),
+      })),
+    })),
   };
 });
 
-/** "part-2" -> 2, anything else -> null. */
-export function parsePartParam(param: string): number | null {
-  const match = PART_FOLDER.exec(param);
+/** A module from the course plan, released or not. */
+export async function getPlannedModule(number: number): Promise<PlannedModule | null> {
+  const phases = await getPhases();
+  return phases.flatMap((phase) => phase.modules).find((module) => module.number === number) ?? null;
+}
+
+/** "module-2" -> 2, anything else -> null. */
+export function parseModuleParam(param: string): number | null {
+  const match = MODULE_FOLDER.exec(param);
   return match ? Number(match[1]) : null;
 }
 
-async function readPart(number: number): Promise<Part> {
-  const folder = `part-${number}`;
-  const dir = path.join(CONTENT_DIR, folder);
-  const names = await fs.readdir(dir);
+async function readLessons(number: number): Promise<Lesson[]> {
+  const folder = `module-${number}`;
+  const names = await fs.readdir(path.join(CONTENT_DIR, folder));
 
   const misnamed = names.find((name) => name.endsWith(".md"));
   if (misnamed) {
@@ -163,8 +229,6 @@ async function readPart(number: number): Promise<Part> {
     );
   }
 
-  const meta = await readPartMeta(folder, names.includes(PART_FILE));
-
   const lessons = await Promise.all(
     names.filter((name) => name.endsWith(".mdx")).map((name) => readLesson(folder, name)),
   );
@@ -172,57 +236,13 @@ async function readPart(number: number): Promise<Part> {
   assertUnique(lessons, "order");
   lessons.sort((a, b) => a.order - b.order);
 
-  return {
-    ...meta,
-    number,
-    file: `content/${folder}/${PART_FILE}`,
-    lessons: lessons.map((lesson, index) => ({
-      ...lesson,
-      id: lessonId(number, lesson.slug),
-      part: number,
-      number: index + 1,
-      href: lessonHref(number, lesson.slug),
-    })),
-  };
-}
-
-async function readPartMeta(folder: string, exists: boolean): Promise<PartMeta> {
-  const file = `content/${folder}/${PART_FILE}`;
-  if (!exists) {
-    throw new Error(
-      `${file} is missing. Every part needs one, with at least:\n  title: What this part is called\n  summary: One sentence on what learners do in it.`,
-    );
-  }
-
-  const source = await fs.readFile(path.join(CONTENT_DIR, folder, PART_FILE), "utf8");
-  let data: Record<string, unknown>;
-  try {
-    // part.yml is plain YAML: the same format as a lesson's frontmatter.
-    data = matter(`---\n${source}\n---\n`).data;
-  } catch (error) {
-    throw lessonError(file, [
-      `It couldn't be read: ${error instanceof Error ? error.message : String(error)}`,
-      `If a value contains a colon, wrap it in quotes, like: title: "Part 1: the basics"`,
-    ]);
-  }
-
-  const problems: string[] = [];
-  const { text, optionalText } = fieldReaders(data, problems);
-  const title = text("title", "Your first build");
-  const summary = text("summary", "One sentence on what learners do in this part.");
-  const meta: PartMeta = {
-    title,
-    summary,
-    completeHeading: optionalText("completeHeading") ?? `You finished ${folder.replace("part-", "Part ")}.`,
-    completeText: optionalText("completeText") ?? summary,
-    shareTitle: optionalText("shareTitle") ?? "Show someone what you made",
-    shareText:
-      optionalText("shareText") ??
-      "Show a friend or someone at home. Explaining how you made it is the best way to remember it.",
-    nextTeaser: optionalText("nextTeaser") ?? "We're writing it now.",
-  };
-  if (problems.length > 0) throw lessonError(file, problems);
-  return meta;
+  return lessons.map((lesson, index) => ({
+    ...lesson,
+    id: lessonId(number, lesson.slug),
+    module: number,
+    number: index + 1,
+    href: lessonHref(number, lesson.slug),
+  }));
 }
 
 type LessonFile = LessonMeta & { hasPractice: boolean; file: string; source: string };
@@ -235,7 +255,7 @@ async function readLesson(folder: string, name: string): Promise<LessonFile> {
   try {
     data = matter(source).data;
   } catch (error) {
-    throw lessonError(file, [
+    throw contentError(file, [
       `The frontmatter (the part between the --- lines) couldn't be read: ${error instanceof Error ? error.message : String(error)}`,
       `If a value contains a colon, wrap it in quotes, like: title: "Prompts: the basics"`,
     ]);
@@ -249,7 +269,9 @@ async function readLesson(folder: string, name: string): Promise<LessonFile> {
   };
 }
 
-function fieldReaders(data: Record<string, unknown>, problems: string[]) {
+function parseFrontmatter(data: Record<string, unknown>, file: string): LessonMeta {
+  const problems: string[] = [];
+
   function missing(key: string, example: string) {
     const nearMiss = Object.keys(data).find(
       (k) => k !== key && k.toLowerCase() === key.toLowerCase(),
@@ -269,14 +291,6 @@ function fieldReaders(data: Record<string, unknown>, problems: string[]) {
     return "";
   }
 
-  function optionalText(key: string): string | undefined {
-    const value = data[key];
-    if (value === undefined) return undefined;
-    if (typeof value === "string" && value.trim() !== "") return value.trim();
-    problems.push(`"${key}" should be some text, or leave the line out.`);
-    return undefined;
-  }
-
   function number(key: string, example: string, hint: string): number {
     const value = data[key];
     if (typeof value === "number" && Number.isFinite(value)) return value;
@@ -284,13 +298,6 @@ function fieldReaders(data: Record<string, unknown>, problems: string[]) {
     else problems.push(`"${key}" ${hint}, like: ${key}: ${example}. You wrote: ${JSON.stringify(value)}`);
     return 0;
   }
-
-  return { missing, text, optionalText, number };
-}
-
-function parseFrontmatter(data: Record<string, unknown>, file: string): LessonMeta {
-  const problems: string[] = [];
-  const { missing, text, number } = fieldReaders(data, problems);
 
   const title = text("title", "Your lesson title");
   const summary = text("summary", "One sentence on what this lesson covers.");
@@ -301,7 +308,7 @@ function parseFrontmatter(data: Record<string, unknown>, file: string): LessonMe
       `"slug" can only use lowercase letters, numbers and single dashes, like: prompt-basics. You wrote: "${slug}"`,
     );
   } else if (RESERVED_SLUGS.includes(slug)) {
-    problems.push(`"slug" can't be "${slug}": that address is used by the part itself. Pick another.`);
+    problems.push(`"slug" can't be "${slug}": that address is used by the module itself. Pick another.`);
   }
 
   const order = number("order", "30", "must be a plain number");
@@ -321,7 +328,7 @@ function parseFrontmatter(data: Record<string, unknown>, file: string): LessonMe
     problems.push(`"recap" should be a list of short points, each on its own line starting with "  - ".`);
   }
 
-  if (problems.length > 0) throw lessonError(file, problems);
+  if (problems.length > 0) throw contentError(file, problems);
   return { title, slug, order, duration, summary, requiresAccount, recap };
 }
 
@@ -331,13 +338,13 @@ function assertUnique(lessons: LessonFile[], key: "slug" | "order") {
     const other = seen.get(lesson[key]);
     if (other) {
       throw new Error(
-        `${other} and ${lesson.file} both have ${key}: ${lesson[key]}. Every lesson in a part needs its own ${key}.`,
+        `${other} and ${lesson.file} both have ${key}: ${lesson[key]}. Every lesson in a module needs its own ${key}.`,
       );
     }
     seen.set(lesson[key], lesson.file);
   }
 }
 
-function lessonError(file: string, problems: string[]) {
+function contentError(file: string, problems: string[]) {
   return new Error(`There's a problem with ${file}:\n${problems.map((p) => `  - ${p}`).join("\n")}`);
 }

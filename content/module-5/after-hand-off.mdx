@@ -1,0 +1,53 @@
+---
+title: What to do after hand off
+slug: after-hand-off
+order: 40
+duration: 8
+summary: After the handoff, Claude Code waits for you. Tell it to build, watch it work, then make it actually work.
+requiresAccount: true
+recap:
+  - Claude Code won't build on its own. You type an instruction first.
+  - Tell it to build, then watch it work. Hit an error? Just type continue.
+  - "Then make it actually work: a sign-up form should really save what people type."
+---
+
+Your design is in Claude Code. Once it starts, it works on its own ([lesson 3](/module-5/what-claude-code-actually-does)). But it won't start by itself.
+
+<HandsOn />
+
+## After the handoff
+
+This part needs access; see [how hands-on access works](/access).
+
+1. **It waits for you.** It won't build on its own: you type an instruction first.
+2. **Tell it to build.** Example prompt:
+
+   ```prompt title="Tell it to build"
+   Reconstruct this design into a working website. Split it into index.html, styles.css and script.js, and make sure it actually runs.
+   ```
+
+3. **Watch it work.** Hit an error? Just type `continue`.
+4. **Make it actually work.**
+
+   ```prompt title="Make it actually work"
+   Make the sign-up form really save what people type.
+   ```
+
+<Figure src="/lessons/module-5/claude-code-created-three-files.png" alt="A Claude Code window with the prompt 'Reconstruct this design into a working website. Split it into separate files and make it run.', then three ticks: Created index.html, Created styles.css and Created script.js, and an empty box reading 'Type / for commands'." width={1044} height={867} caption="Claude Code creating index.html, styles.css and script.js. The prompt in this picture is shorter than the example prompt above." />
+
+Don't skip step 4. A sign-up form can look finished and still do nothing with what people type.
+
+<StuckBlock>
+  <StuckItem question="Claude Code isn't doing anything.">
+    It waits for you. It won't build on its own, so type an instruction first, like the "Tell it to build" prompt above.
+  </StuckItem>
+  <StuckItem question="I hit an API limit error.">
+    Errors are normal and not a sign you broke something. Just type `continue` and it picks up exactly where it left off.
+  </StuckItem>
+  <StuckItem question="Something on my site doesn't work.">
+    That's normal. The next lesson, [When it breaks (and it will)](/module-5/when-it-breaks), shows you what to do.
+  </StuckItem>
+  <StuckItem question="Claude Code asks me to sign up or log in.">
+    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access).
+  </StuckItem>
+</StuckBlock>

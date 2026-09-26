@@ -1,0 +1,75 @@
+---
+title: "Merge conflicts: you will hit one"
+slug: merge-conflicts
+order: 50
+duration: 8
+summary: Why merge conflicts happen, what one looks like, how to fix it, and the escape hatch if you get stuck.
+requiresAccount: false
+recap:
+  - A merge conflict happens when two branches change the same line. Instead of assuming which is correct, Git stops and asks you.
+  - "Git shows you both versions: what's on main (top) and what's on your branch (bottom)."
+  - "To fix it: keep the version you want or combine both, delete the marker lines, then commit again. Or paste the block into Claude Code."
+---
+
+You will hit one. That's normal: a merge conflict doesn't mean you broke anything.
+
+## Why it happens
+
+This tends to happen when two branches change the **same line**. Instead of assuming which is correct, Git stops and asks you.
+
+## What it looks like
+
+Say main and your branch, alex-keyboard, both changed the Wordle page title. Git shows you this:
+
+```html
+<<<<<<< HEAD
+<h1>Wordle by Team 3</h1>
+=======
+<h1>Team 3 Wordle</h1>
+>>>>>>> alex-keyboard
+```
+
+Git shows you both versions: what's on main (top) and what's on your branch (bottom).
+
+- The top version sits between `<<<<<<< HEAD` and `=======`. That's main.
+- The bottom version sits between `=======` and `>>>>>>> alex-keyboard`. That's your branch, named on the last line.
+
+## How to fix it
+
+1. Keep the version you want, or combine both versions of code.
+2. Delete the `<<<`, `===` and `>>>` marker lines.
+3. Commit again.
+
+For example, to keep main's title, those five lines become one:
+
+```html
+<h1>Wordle by Team 3</h1>
+```
+
+## The escape hatch
+
+Paste the entire block of code into Claude Code, then say:
+
+```prompt title="The escape hatch"
+I have a merge conflict in <name of the file>. Please help me resolve it and keep all features working.
+```
+
+Replace `<name of the file>` with the name of the file that has the conflict.
+
+<CheckYourself>
+  <Question q="Look at the Wordle conflict above. Which title is on main, and which is on your branch?">
+    "Wordle by Team 3" is on main: it's the top version, straight after `<<<<<<< HEAD`. "Team 3 Wordle" is on your branch, alex-keyboard: it's the bottom version, just before `>>>>>>> alex-keyboard`.
+  </Question>
+  <Question q="Why does Git stop and ask you, instead of picking a version itself?">
+    Two branches changed the same line. Instead of assuming which is correct, Git stops and asks you.
+  </Question>
+  <Question q="You've kept the version you want. What's left to do?">
+    Delete the `<<<`, `===` and `>>>` marker lines, then commit again.
+  </Question>
+</CheckYourself>
+
+## Watch these two videos
+
+<VideoEmbed id="hwP7WQkmECE" title="Git Explained in 100 Seconds" />
+
+<VideoEmbed id="e9lnsKot_SQ" title="How Git Works: Explained in 4 Minutes" />

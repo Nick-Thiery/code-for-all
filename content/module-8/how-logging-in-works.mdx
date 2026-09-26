@@ -1,0 +1,54 @@
+---
+title: How logging in works
+slug: how-logging-in-works
+order: 40
+duration: 8
+summary: What really happens when you sign up, log in and log out, what a token is, and why logging in is just an API call.
+requiresAccount: false
+recap:
+  - Signing up creates a new row in the user table, with your email and a scrambled version of your password.
+  - Logging in checks your email and password, then hands your browser a token. Logging out throws the token away.
+  - All three actions send a request to another computer and get an answer back. Logging in is just an API call!
+---
+
+Now the first thing your site can't do: it forgets everyone. Fixing it is called authentication. Here's how it works on any website or app.
+
+<KeyTerm term="Authentication">
+What lets your site remember who is here: signing up, logging in and logging out.
+</KeyTerm>
+
+## Sign up
+
+When someone signs up on a website or app, it creates a new row in the user table. This table includes your email and a scrambled version of your password.
+
+## Log in
+
+When you try to log in, it verifies if your email and password match what is registered in the user table. If they match, it will hand your browser a token.
+
+## Log out
+
+Logging out throws your token away. This means the site stops recognising you until you log in again.
+
+## What a token is
+
+<KeyTerm term="Token">
+A token is a temporary sticker that says "this is James". Your browser shows it on every request, so the site doesn't ask for your password on every single click. It expires on its own.
+</KeyTerm>
+
+## Notice what all 3 actions are
+
+Your site is sending a request to another computer and getting an answer back. Logging in is just an API call!
+
+It's the door from [lesson 2](/module-8/what-an-api-is) again: you knock with a request, and it answers.
+
+<CheckYourself>
+  <Question q="What happens to your token when you log out?">
+    Logging out throws your token away. The site stops recognising you until you log in again.
+  </Question>
+  <Question q="Why doesn't the site ask for your password on every single click?">
+    Your browser shows your token on every request, so the site already knows it's you.
+  </Question>
+  <Question q="What do signing up, logging in and logging out have in common?">
+    Each one sends a request to another computer and gets an answer back. They're all API calls.
+  </Question>
+</CheckYourself>

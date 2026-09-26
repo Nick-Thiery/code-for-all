@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { isValidElement, useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * A terminal command with a Copy button.
  * In MDX: <CommandBlock>claude --version</CommandBlock>
  */
-export function CommandBlock({ children }: { children: string }) {
-  const command = String(children).trim();
+export function CommandBlock({ children }: { children: ReactNode }) {
+  // MDX may hand over more than a string: remark-gfm turns a URL inside the
+  // command into a link element. Only the text matters here.
+  const command = textOf(children).trim();
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -42,4 +44,11 @@ export function CommandBlock({ children }: { children: string }) {
       </span>
     </div>
   );
+}
+
+function textOf(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (isValidElement<{ children?: ReactNode }>(node)) return textOf(node.props.children);
+  return "";
 }

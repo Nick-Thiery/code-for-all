@@ -1,0 +1,37 @@
+---
+title: When it breaks (and it will)
+slug: when-it-breaks
+order: 50
+duration: 10
+summary: An error is information, not failure. Four steps to find what broke and tell Claude about it.
+requiresAccount: false
+recap:
+  - An error is information, not failure. It names the file and the line where things went wrong.
+  - Press F12 and click the Console tab. Red text is your actual error.
+  - Give Claude the whole story, then reload and check it yourself.
+---
+
+Your site will break at some point. That's normal. Here's what to do when it does.
+
+1. **Read the red. Don't panic.** An error is information, not failure. It names the file and the line where things went wrong.
+2. **Press F12.** Chrome DevTools opens. Click the Console tab: red text is your actual error. This is the first thing real engineers look at. Now it's the first thing you look at.
+3. **Give Claude the whole story.** Paste the exact error, then say what you clicked and what you expected to happen.
+4. **Reload and check it yourself.** Refresh the page and test the exact thing that broke. If it's still broken, say so and go around again.
+
+<Callout kind="tip">
+Claude can't see your screen. The exact error tells it where to look. What you clicked and what you expected tell it what "fixed" should look like.
+</Callout>
+
+## Practice: the broken sign-up button
+
+In [the last lesson](/module-5/after-hand-off), you asked Claude Code to make the sign-up form really save what people type. Now say you fill in the form, click **Sign up**, and nothing happens. You press F12, click the Console tab and see this in red:
+
+```text title="Console"
+Uncaught TypeError: Cannot read properties of null (reading 'value') at script.js:12
+```
+
+You don't need to know what it means. Step 3 says what to do with it.
+
+<PromptPractice taskId="bug-report" hint="Give Claude the whole story: paste the exact error, then say what you clicked and what you expected to happen.">
+Your sign-up button does nothing when you click it, and the console shows the error above. Write the message you'd send Claude.
+</PromptPractice>

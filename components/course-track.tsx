@@ -4,20 +4,19 @@ import Link from "next/link";
 import { HandsOnChip, PracticeChip } from "@/components/chip";
 import { Hex } from "@/components/hex";
 import { formatAbout, formatCount } from "@/lib/format";
-import { type Outline, type OutlineLesson, allLessons, partHref, resumeTarget } from "@/lib/outline";
+import { type Outline, type OutlineLesson, allLessons, moduleHref, resumeTarget } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
 
 type Props = {
   outline: Outline;
-  part: number;
-  /** Show the "Coming soon" card for the next part under this one. */
-  showUpcoming?: boolean;
+  module: number;
 };
 
-export function CourseTrack({ outline, part: partNumber, showUpcoming = false }: Props) {
-  const part = outline.parts.find((p) => p.number === partNumber);
+/** One released module: its title on the left, its lessons on the track. */
+export function CourseTrack({ outline, module: moduleNumber }: Props) {
+  const mod = outline.modules.find((m) => m.number === moduleNumber);
   const { completed, ready } = useCompletedLessons();
-  if (!part) return null;
+  if (!mod) return null;
 
   // Before progress loads (and with no JavaScript) this renders as a new
   // visitor sees it.
@@ -26,26 +25,27 @@ export function CourseTrack({ outline, part: partNumber, showUpcoming = false }:
   const startedCourse = everything.some((lesson) => done.has(lesson.id));
   const nextId = startedCourse ? resumeTarget(outline, done)?.id : everything[0]?.id;
 
-  const doneCount = part.lessons.filter((lesson) => done.has(lesson.id)).length;
-  const totalMinutes = part.lessons.reduce((sum, lesson) => sum + lesson.duration, 0);
+  const doneCount = mod.lessons.filter((lesson) => done.has(lesson.id)).length;
+  const totalMinutes = mod.lessons.reduce((sum, lesson) => sum + lesson.duration, 0);
 
   return (
     <div className="flex flex-wrap items-start gap-x-14 gap-y-6">
       <div className="flex max-w-[380px] flex-[1_1_260px] flex-col gap-2.5">
-        <h2 id={`part-${part.number}`} className="t-h2 m-0 scroll-mt-6">
-          Part {part.number}: {part.title}
-        </h2>
-        <p className="m-0">{part.summary}</p>
+        <h3 id={`module-${mod.number}`} className="t-h2 m-0 scroll-mt-6">
+          <span className="block text-[0.6em] leading-[1.4] text-muted">Module {mod.number}</span>
+          {mod.title}
+        </h3>
+        <p className="m-0">{mod.summary}</p>
         <p className="t-meta m-0 text-muted">
-          {formatCount(part.lessons.length, "lesson")} · {formatAbout(totalMinutes)} in total
+          {formatCount(mod.lessons.length, "lesson")} · {formatAbout(totalMinutes)} in total
         </p>
         {doneCount > 0 && (
           <div className="mt-2.5 flex flex-col gap-2">
             <span className="font-bold">
-              {doneCount} of {part.lessons.length} lessons done
+              {doneCount} of {mod.lessons.length} lessons done
             </span>
             <span aria-hidden="true" className="flex gap-1">
-              {part.lessons.map((lesson) => (
+              {mod.lessons.map((lesson) => (
                 <span
                   key={lesson.id}
                   className={`h-2 flex-1 rounded ${done.has(lesson.id) ? "bg-accent" : "bg-track"}`}
@@ -58,11 +58,11 @@ export function CourseTrack({ outline, part: partNumber, showUpcoming = false }:
 
       <div className="min-w-0 flex-[999_1_420px]">
         <ol className="m-0 list-none p-0">
-          {part.lessons.map((lesson, index) => {
+          {mod.lessons.map((lesson, index) => {
             const isDone = done.has(lesson.id);
             const isNext = lesson.id === nextId;
-            const previousDone = index > 0 && done.has(part.lessons[index - 1].id);
-            const isLast = index === part.lessons.length - 1;
+            const previousDone = index > 0 && done.has(mod.lessons[index - 1].id);
+            const isLast = index === mod.lessons.length - 1;
             return (
               <li key={lesson.id} className="relative grid grid-cols-[44px_minmax(0,1fr)] gap-x-3.5">
                 <div aria-hidden="true" className="relative flex justify-center">
@@ -105,35 +105,41 @@ export function CourseTrack({ outline, part: partNumber, showUpcoming = false }:
             );
           })}
         </ol>
-
-        {showUpcoming && (
-          <div className="mt-6 grid grid-cols-[44px_minmax(0,1fr)] gap-x-3.5">
-            <div aria-hidden="true" className="flex justify-center pt-4">
-              <Hex width={40} height={44} shape="fill-none stroke-pip stroke-[1.5] [stroke-dasharray:3_2.5]" />
-            </div>
-            <Link
-              href={partHref(outline.upcoming.number)}
-              className="flex flex-col gap-1.5 rounded-2xl border-2 border-dashed border-border px-5 py-[18px] text-fg no-underline hover:border-accent hover:text-fg"
-            >
-              <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                <span className="display text-[22px] leading-[1.25] font-[650]">
-                  Part {outline.upcoming.number}: Coming soon
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-surface2 px-2.5 py-0.5 text-[15px] font-bold text-muted">
-                  <svg width="12" height="14" viewBox="0 0 14 16" aria-hidden="true">
-                    <rect x="1.5" y="7" width="11" height="8" rx="2" className="fill-current" />
-                    <path d="M4 7V5a3 3 0 0 1 6 0v2" className="fill-none stroke-current stroke-[1.8]" />
-                  </svg>
-                  Not open yet
-                </span>
-              </span>
-              <span className="text-muted">{outline.upcoming.teaser}</span>
-              <span className="font-bold text-accent underline underline-offset-4">See what&apos;s coming →</span>
-            </Link>
-          </div>
-        )}
       </div>
     </div>
+  );
+}
+
+/**
+ * A module in the course plan that isn't out yet. Same dashed look as the
+ * design's "Coming soon" card.
+ */
+export function UpcomingModule({ number, title, summary }: { number: number; title: string; summary: string }) {
+  return (
+    <Link
+      href={moduleHref(number)}
+      className="grid grid-cols-[44px_minmax(0,1fr)] gap-x-3.5 rounded-2xl border-2 border-dashed border-border p-4 text-fg no-underline hover:border-accent hover:text-fg"
+    >
+      <span aria-hidden="true" className="flex justify-center pt-0.5">
+        <Hex width={40} height={44} shape="fill-none stroke-pip stroke-[1.5] [stroke-dasharray:3_2.5]" />
+      </span>
+      <span className="flex min-w-0 flex-col gap-1">
+        <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="display text-[21px] leading-[1.3] font-semibold">
+            <span className="text-muted">Module {number}: </span>
+            {title}
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-surface2 px-2.5 py-0.5 text-[15px] font-bold text-muted">
+            <svg width="12" height="14" viewBox="0 0 14 16" aria-hidden="true">
+              <rect x="1.5" y="7" width="11" height="8" rx="2" className="fill-current" />
+              <path d="M4 7V5a3 3 0 0 1 6 0v2" className="fill-none stroke-current stroke-[1.8]" />
+            </svg>
+            Coming soon
+          </span>
+        </span>
+        <span className="t-meta text-muted">{summary}</span>
+      </span>
+    </Link>
   );
 }
 

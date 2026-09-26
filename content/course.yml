@@ -1,0 +1,44 @@
+# The course plan: every module, in its phase, whether it's out yet or not.
+# A module is released when its folder, content/module-N/, exists with
+# lessons in it. Until then it shows on the course page as "Coming soon".
+# Titles and summaries come from docs/course-map.md.
+
+phases:
+  - title: Build with AI
+    modules:
+      - number: 1
+        title: Intro to Lovable
+        summary: Vibe coding, and why the way you ask matters.
+      - number: 2
+        title: Applying Lovable
+        summary: Better prompts, real projects.
+      - number: 3
+        title: Introduction to Claude Code
+        summary: Building on your own computer with an AI agent.
+      - number: 4
+        title: Claude Skills + Claude in Excel
+        summary: Making Claude work your way.
+      - number: 5
+        title: Claude Design
+        summary: Design it, then let Claude Code build it.
+
+  - title: Developer fundamentals
+    modules:
+      - number: 6
+        title: Introduction to GitHub and Vercel
+        summary: Storing, sharing and publishing your code.
+      - number: 7
+        title: GitHub Branching and Collaboration
+        summary: Working on one project without overwriting each other.
+      - number: 8
+        title: Authentication and APIs
+        summary: Live data, and remembering who's there.
+
+  - title: Your final project
+    modules:
+      - number: 9
+        title: Project ideas and drafting
+        summary: The start of your final project.
+      - number: 10
+        title: Publishing + final showcase
+        summary: Ship it and show it.

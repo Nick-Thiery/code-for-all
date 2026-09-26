@@ -2,10 +2,10 @@
 // about every lesson, without any lesson's text. Safe to send to the browser.
 
 export type OutlineLesson = {
-  /** "part-1/sample-lesson". Unique across the course; used for progress. */
+  /** "module-1/meet-lovable". Unique across the course; used for progress. */
   id: string;
-  part: number;
-  /** Position within its part, from 1. */
+  module: number;
+  /** Position within its module, from 1. */
   number: number;
   slug: string;
   title: string;
@@ -16,27 +16,35 @@ export type OutlineLesson = {
   href: string;
 };
 
-export type OutlinePart = {
+/** A module that's out: its folder exists and has lessons. */
+export type OutlineModule = {
   number: number;
   title: string;
   summary: string;
   lessons: OutlineLesson[];
 };
 
-export type Outline = {
-  parts: OutlinePart[];
-  /** The first part that isn't released yet. It shows as "Coming soon". */
-  upcoming: { number: number; teaser: string };
+/** Every module in the course plan, out or not, grouped into phases. */
+export type OutlinePhase = {
+  number: number;
+  title: string;
+  modules: { number: number; title: string; summary: string; released: boolean }[];
 };
 
-export const partHref = (part: number) => `/part-${part}`;
-export const partTrackHref = (part: number) => `/#part-${part}`;
-export const partCompleteHref = (part: number) => `/part-${part}/complete`;
-export const lessonHref = (part: number, slug: string) => `/part-${part}/${slug}`;
-export const lessonId = (part: number, slug: string) => `part-${part}/${slug}`;
+export type Outline = {
+  /** Released modules, in order. */
+  modules: OutlineModule[];
+  phases: OutlinePhase[];
+};
+
+export const moduleHref = (module: number) => `/module-${module}`;
+export const moduleTrackHref = (module: number) => `/#module-${module}`;
+export const moduleCompleteHref = (module: number) => `/module-${module}/complete`;
+export const lessonHref = (module: number, slug: string) => `/module-${module}/${slug}`;
+export const lessonId = (module: number, slug: string) => `module-${module}/${slug}`;
 
 export function allLessons(outline: Outline): OutlineLesson[] {
-  return outline.parts.flatMap((part) => part.lessons);
+  return outline.modules.flatMap((module) => module.lessons);
 }
 
 /**
@@ -50,8 +58,8 @@ export function resumeTarget(outline: Outline, completed: Set<string>): OutlineL
   return lessons.find((lesson) => !completed.has(lesson.id)) ?? null;
 }
 
-/** "Lesson 5, Getting set up", with the part when there's more than one. */
+/** "Lesson 5, Ethical considerations", with the module when there's more than one. */
 export function lessonLabel(outline: Outline, lesson: OutlineLesson) {
-  const part = outline.parts.length > 1 ? `Part ${lesson.part}, ` : "";
-  return `${part}Lesson ${lesson.number}, ${lesson.title}`;
+  const prefix = outline.modules.length > 1 ? `Module ${lesson.module}, ` : "";
+  return `${prefix}Lesson ${lesson.number}, ${lesson.title}`;
 }

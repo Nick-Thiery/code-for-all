@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Hex } from "@/components/hex";
 import { formatCount } from "@/lib/format";
-import { type Outline, allLessons, partCompleteHref, resumeTarget } from "@/lib/outline";
+import { type Outline, allLessons, moduleCompleteHref, resumeTarget } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
 
 // The hero's words and button: "Start lesson 1" for a new visitor,
@@ -14,22 +14,22 @@ export function HomeHero({ outline }: { outline: Outline }) {
   const first = lessons[0];
   const doneAny = ready && lessons.some((lesson) => completed.has(lesson.id));
   const resume = doneAny ? resumeTarget(outline, completed) : null;
-  const lastPart = outline.parts.at(-1);
+  const lastModule = outline.modules.at(-1);
 
   let eyebrow = "A free course for beginners";
-  let lead = "No experience needed. Learn how AI tools work, then use one to build your own website by the end of Part 1.";
+  let lead = "No experience needed. Learn how AI tools work, then use one to build your own website by the end of Module 1.";
   let cta = first ? { href: first.href, label: `Start lesson ${first.number}` } : null;
 
   if (doneAny && resume) {
-    const part = outline.parts.find((p) => p.number === resume.part)!;
-    const doneInPart = part.lessons.filter((lesson) => completed.has(lesson.id)).length;
+    const mod = outline.modules.find((m) => m.number === resume.module)!;
+    const doneInModule = mod.lessons.filter((lesson) => completed.has(lesson.id)).length;
     eyebrow = "Welcome back";
-    lead = `You've done ${doneInPart} of ${formatCount(part.lessons.length, "lesson")} in Part ${part.number}. The next one takes about ${formatCount(resume.duration, "minute")}.`;
+    lead = `You've done ${doneInModule} of ${formatCount(mod.lessons.length, "lesson")} in Module ${mod.number}. The next one takes about ${formatCount(resume.duration, "minute")}.`;
     cta = { href: resume.href, label: `Continue: ${resume.title}` };
-  } else if (doneAny && lastPart) {
+  } else if (doneAny && lastModule) {
     eyebrow = "Welcome back";
-    lead = `You've finished every lesson so far. Part ${outline.upcoming.number} is on the way.`;
-    cta = { href: partCompleteHref(lastPart.number), label: "See what you built" };
+    lead = "You've finished every lesson that's out so far. More modules are on the way.";
+    cta = { href: moduleCompleteHref(lastModule.number), label: "See what's next" };
   }
 
   return (

@@ -1,4 +1,5 @@
 import { isValidElement, type ReactElement, type ReactNode } from "react";
+import { PromptBlock } from "@/components/prompt-block";
 
 type Kind = "tag" | "attr" | "str" | "com" | "plain";
 type Token = { text: string; kind: Kind };
@@ -90,7 +91,10 @@ export function MdxPre({ children }: { children?: ReactNode }) {
   const language = /language-(\S+)/.exec(props.className ?? "")?.[1];
   const title = /title="([^"]*)"/.exec(props["data-meta"] ?? "")?.[1];
   const code = typeof props.children === "string" ? props.children : String(props.children ?? "");
-  return <CodeBlock code={code.replace(/\n$/, "")} language={language} title={title} />;
+  const text = code.replace(/\n$/, "");
+  // ```prompt blocks are prompts to paste into an AI tool, with a Copy button.
+  if (language === "prompt") return <PromptBlock text={text} title={title} />;
+  return <CodeBlock code={text} language={language} title={title} />;
 }
 
 function tokenizeMarkup(source: string): Token[] {

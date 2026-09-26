@@ -5,7 +5,7 @@ import { Hex, HEX_POINTS } from "@/components/hex";
 import { setLessonComplete, useCompletedLessons } from "@/lib/progress";
 
 type Props = {
-  /** The lesson's id, "part-1/sample-lesson". */
+  /** The lesson's id, "module-1/meet-lovable". */
   id: string;
   /** From the lesson's optional `recap` list. */
   points: string[];

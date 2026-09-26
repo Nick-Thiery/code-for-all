@@ -1,0 +1,64 @@
+---
+title: "Step 1: make your own branch"
+slug: make-your-own-branch
+order: 30
+duration: 8
+summary: Make your own branch on GitHub or with Claude Code, build your feature on it, then push it.
+requiresAccount: true
+recap:
+  - "On GitHub: click the branch dropdown (it says main), type a name like alex-keyboard, then click Create branch."
+  - "With Claude Code, the entire process can be done with prompts: branch first, build, then push."
+  - After you push, a yellow Compare & pull request banner appears on the repo page. That's your branch arriving on GitHub.
+---
+
+There are two ways to make your own branch: on GitHub, or with Claude Code. The entire process can actually be done just using Claude Code. Both tracks end with the same check.
+
+<HandsOn />
+
+## The GitHub track
+
+This part needs access; see [how hands-on access works](/access).
+
+1. **Create it on GitHub.** On your team's repo, click the **branch dropdown** (it says **main**), type a name like alex-keyboard, then click **Create branch: alex-keyboard from main**.
+2. **Make your changes.** Write the code needed for your branch feature to work.
+3. **Check it worked.** After you push your branch, a yellow banner appears on the repo page: **Compare & pull request**. That's your branch arriving on GitHub.
+
+<HandsOn />
+
+## The Claude Code track
+
+Paste these prompts into Claude Code. This part needs access; see [how hands-on access works](/access).
+
+### 1. Branch first
+
+```prompt title="Branch first"
+Create a branch called <your branch name> and switch to it.
+```
+
+Replace `<your branch name>` with your own branch name, like alex-keyboard.
+
+### 2. Build
+
+Use Claude Code as normal. Tell it what changes you want it to make, or what feature you want the program to have, and it will create the code.
+
+### 3. Push
+
+```prompt title="Push"
+Commit all the changes in this session to the branch and push it to GitHub.
+```
+
+After you get Claude to push it to GitHub, go to step 3 of the GitHub track: check it worked.
+
+<StuckBlock>
+  <StuckItem question="GitHub or Claude Code asks me to sign up or log in.">
+    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access).
+  </StuckItem>
+  <StuckItem question="Which track should I use?">
+    Either. The entire process can be done just using Claude Code, and both tracks end with the same check: the yellow **Compare & pull request** banner on the repo page.
+  </StuckItem>
+  <StuckItem question="I don't see the Compare & pull request banner.">
+    The banner appears after you push your branch. On the Claude Code track, that's the Push prompt in step 3.
+  </StuckItem>
+</StuckBlock>
+
+Next, you'll turn that banner into a pull request.

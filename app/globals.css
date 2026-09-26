@@ -47,7 +47,7 @@
   --term-text: #F2F5F8;
   --term-muted: #A9B3BF;
   --term-rule: #2E3743;
-  /* Text on a --deco fill: the </> in the Part complete honeycomb. Same in
+  /* Text on a --deco fill: the </> in the Module complete honeycomb. Same in
      both themes because --deco is. */
   --on-deco: #0E1116;
   color-scheme: light;

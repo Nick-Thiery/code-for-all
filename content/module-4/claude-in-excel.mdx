@@ -1,0 +1,64 @@
+---
+title: Claude in Microsoft Excel
+slug: claude-in-excel
+order: 40
+duration: 8
+summary: Use Claude directly inside Excel to analyse, explain and act on spreadsheet data, then try it on a sample spreadsheet.
+requiresAccount: true
+recap:
+  - Claude in Excel works right inside your spreadsheet, with no switching tabs or copy-pasting.
+  - "It helps with three things: formula assistance, data analysis, and audit and validation."
+  - Ask it what the numbers say, and it shows which cells it used.
+---
+
+Claude doesn't only work in a chat window. It can also work inside Microsoft Excel, right next to your spreadsheet.
+
+## Advanced Data Operations
+
+Use Claude directly inside Excel to analyze, explain, and act on your spreadsheet data — no switching tabs or copy-pasting.
+
+- **Formula Assistance:** Write, fix, and explain complex <Term def="a calculation in a spreadsheet cell, such as adding up a column.">formulas</Term> in plain English
+- **Data Analysis:** Summarize trends, flag <Term def="numbers that don't fit the pattern of the rest.">anomalies</Term>, and interpret results across large datasets
+- **Audit & Validation:** Trace logic errors and verify <Term def="the rules a business's numbers are meant to follow.">business rules</Term> step-by-step
+
+<Figure src="/lessons/module-4/excel-finance-dashboard.jpg" alt="A Finance Summary Dashboard in Excel. Five boxes across the top show Revenue 428,109, Expense 250,498, Profit/Loss 177,611, Max Revenue 3,998 and Max Expense 1,500. Below them are ring charts of revenue and expenses by top 3 category, a line chart of cumulative profit and loss rising month by month, and bars comparing revenue and expense for each department." width={944} height={511} caption="A finance dashboard in Excel: the kind of spreadsheet Claude can analyse and explain." />
+
+## What it looks like
+
+<Figure src="/lessons/module-4/claude-in-excel-question.jpg" alt="An Excel spreadsheet holding a financial model for Molson Coors Brewing Company, with rows of cash flow figures for FY2020 to FY2025. The Claude panel on the right shows the question: hello claude, analyze this sheet and tell me the 5 year cagr net debt change. Claude replies that it will find the net debt line in the Model sheet and compute the 5-year CAGR, and is still responding." width={1067} height={556} caption="Claude in Excel. Claude opens in a panel next to the sheet." />
+
+In this example, someone asked Claude about a company's financial spreadsheet:
+
+```prompt title="The question in the screenshot"
+hello claude, analyze this sheet and tell me the 5 year cagr net debt change
+```
+
+In plain English: on average, how much did the company's debt change each year over five years?
+
+<Figure src="/lessons/module-4/claude-in-excel-answer.jpg" alt="The same spreadsheet, with Claude's answer in the side panel. The 5-year CAGR of net debt, FY2020 to FY2025, is minus 6.3%. It lists FY2020 net debt of $7,458.2M and FY2025 net debt of $5,403.0M, each with a blue label naming the cell it came from (Model AT638 and Model BS638), shows the calculation, says net debt has fallen by roughly 6.3% a year over the five years, and asks whether to put the calculation into a cell on the Model or Summary Page." width={973} height={526} caption="Claude finds the numbers it needs and works out the answer. The blue labels show which cells they came from." />
+
+Claude found the two numbers it needed, showed which cells they came from, worked out the answer, and explained what it means for the company.
+
+<HandsOn />
+
+## Try it: what do these numbers say?
+
+This part needs access; see [how hands-on access works](/access). Open Claude using the access your Code for All session gives you.
+
+<Placeholder>
+How to open Claude in Excel. The slides don't include setup steps: where learners get Excel, and how they open Claude inside it with their Code for All access.
+</Placeholder>
+
+<Placeholder>
+The sample spreadsheet: a small dataset about one company, hosted on this site (for example in public/lessons/module-4/), with a download link here. It replaces the class data shared on Slack. It isn't in the slides, and the numbers need a real source.
+</Placeholder>
+
+<Callout kind="tryit">
+Open the sample spreadsheet in Excel, open Claude, and ask it to explain what these numbers say about the company.
+</Callout>
+
+<StuckBlock>
+  <StuckItem question="Claude asks me to sign up or log in.">
+    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access). You can keep reading the lessons without it.
+  </StuckItem>
+</StuckBlock>

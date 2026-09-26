@@ -1,0 +1,344 @@
+# Code for All course map (v1)
+
+How the 10 LaunchLab modules become lessons on the Code for All website.
+
+Companion file: `curriculum-source.md` (everything the slides say, module by module). This file says how that content is split, ordered and adapted. The source file is the content; this file is the plan.
+
+---
+
+## Rules for turning slides into lessons
+
+1. **Follow the slides.** Lesson order matches slide order. Headings, examples, prompts and wording stay close to the slides. Where a slide gives an exact prompt, the lesson uses that exact prompt in a copyable block.
+2. **The slides are the source of truth for homework.** Where the Blueprint or Module Breakdown disagree, use the slide version. Each module ends with a **Challenge** block holding the slide homework.
+3. **One module = one unit on the site.** The site's "Parts" become "Modules" (URL `/module-1/<slug>`). Modules are grouped on the homepage into three phases, taken from the Module Breakdown:
+   - **Build with AI:** Modules 1 to 5
+   - **Developer fundamentals:** Modules 6 to 8
+   - **Your final project:** Modules 9 and 10
+4. **Lessons are short.** Each 90-minute class becomes 4 to 7 lessons of 3 to 15 minutes.
+5. **Only change what can't work on a website.** Group work, breakout rooms, Slack posts, DMs to tutors and live demos get a solo version, marked **[solo version]** below. Everything else stays as taught.
+6. **Fix only what's unsafe or wrong.** Changes from the slides are marked **[changed]** with the reason. There are only a few.
+7. **Hands-on lessons are flagged.** A lesson needing a Lovable, Claude, GitHub, Vercel or Supabase account shows "Hands-on: needs access". The reading part always works without one.
+
+Component names below match the site: KeyTerm, Tip, HeadsUp, TryIt, Stuck, PromptPractice, command block, Recap. Two new ones are needed: **CheckYourself** (short quiz, answers revealed on click) and **Challenge** (the module homework).
+
+---
+
+## Module 1: Intro to Lovable
+*Vibe coding, and why the way you ask matters*
+Source: LaunchLab 1
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 1.1 | how-this-course-works | How this course works | 4 | |
+| 1.2 | what-is-vibe-coding | What is vibe coding? | 6 | |
+| 1.3 | meet-lovable | Meet Lovable | 5 | yes |
+| 1.4 | the-art-of-prompting | The art of prompting | 12 | |
+| 1.5 | ethical-considerations | Ethical considerations | 5 | |
+| 1.6 | build-about-me | Task: design an "About me" website | 10 | yes |
+
+**1.1 How this course works.** Slide "How This Course Works": Hands-On First (short lessons, hands-on activities, homework to apply your learning, "It won't take long and it will be fun!") and Build to Launch (make a product, SEO, market it). Add: you'll need a laptop for hands-on lessons; reading works on a phone. **[solo version]** Replace the Slack join link with how to get help: Stuck blocks in each lesson, and joining a Code for All session.
+
+**1.2 What is vibe coding?** KeyTerm: vibe coding. The three steps exactly as on the slide: 1. Describe, 2. Build, 3. Launch. Then "What can you build?": apps, Chrome extensions, websites, trading algorithms, with Snapiq (snapiq.tools) as the example. Then one short paragraph from the slides on getting users: SEO, Google Ads, social media marketing, word of mouth (full lesson in Module 9). Images needed: Lovable stats and website traffic example.
+
+**1.3 Meet Lovable.** Slide "Lovable": open Lovable and experiment. TryIt: open Lovable and try any one-line idea. Image needed: Lovable screenshot.
+
+**1.4 The art of prompting.** The core lesson of the module. Show the three levels from the slides, word for word:
+- Bad: "Create a website for my course"
+- Better: "Create a modern website for my coding course with a homepage and lessons."
+- Strong: the full Role / Goal / Target audience / Core pages / Design style / Output required / Key features prompt.
+
+Then walk through the strong prompt one part at a time, one line each on what that part does. End with **PromptPractice** task `about-me-prompt`: "Write a prompt for Lovable to build your own About Me website." Grading anchors come from the seven parts of the strong prompt (see Practice tasks below).
+
+**1.5 Ethical considerations.** The three slide points: Input bias, Representative, The amplification loop. **[changed]** "studies prove they actively learn to become more biased" becomes "research suggests people can pick up an AI tool's biases over time", unless the club can cite the study.
+
+**1.6 Task: design an "About me" website.** The slide task. Paste the prompt from 1.4 into Lovable, look at the result, change one part of the prompt, and compare.
+
+**Challenge (slide homework):** Watch "Get Started With Lovable". *Link needed.*
+
+---
+
+## Module 2: Applying Lovable
+*Better prompts, real projects*
+Source: LaunchLab 2
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 2.1 | todays-task | Today's task: pick your build | 3 | |
+| 2.2 | solo-sprint | Solo sprint: build your first draft | 12 | yes |
+| 2.3 | better-prompts-with-ai | Using AI to make better prompts | 8 | yes |
+| 2.4 | using-refined-prompts | Using refined prompts | 8 | yes |
+| 2.5 | gallery | Gallery | 4 | |
+
+**2.1 Today's task.** The three briefs from the slide: Personality Quiz, News Website, Online Store. **[solo version]** Instead of being assigned a group, pick one.
+
+**2.2 Solo sprint.** The three slide steps: draft a detailed prompt describing your site; paste it into Lovable; "Crucial: copy-paste and save your exact prompt text into a safe notes file for later edits" (as a HeadsUp). Remove "contact a class tutor right away" and point to the Stuck block.
+
+**2.3 Using AI to make better prompts.** The three slide steps, with the slide's example request to Claude in a copyable block. **[changed]** Step 2, "Sign in with an account. You can use any email address… the free tier also works," is removed, because Claude accounts are 18+. It becomes "Open Claude using the access your Code for All session gives you." **PromptPractice** task `refine-request`: write the message you'd send Claude asking it to improve your prompt from 2.2.
+
+**2.4 Using refined prompts.** The three slide points: be specific about layout, colours and audience; check the prompt has what you want; paste into Lovable starting with "This is a refined prompt, make the required changes: " (copyable).
+
+**2.5 Gallery.** **[solo version]** Slides: post your link in #socials and browse everyone's builds. Website: put your first draft and refined version side by side, write down three things that changed, and show both to someone.
+
+**Challenge (slide homework):** Build a Lovable site that predicts or forecasts something: a stock direction tool, a weather predictor, etc. Pick something real, pull data from somewhere if you can, and show your reasoning for the prediction logic. You can use Claude to refine your prompt. **[solo version]** Remove "DM your HW website to Yibo, Rishabh, or Nirvan".
+
+---
+
+## Module 3: Introduction to Claude Code
+*Building on your own computer with an AI agent*
+Source: LaunchLab 3
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 3.1 | what-is-claude-code | What is Claude Code? | 6 | |
+| 3.2 | what-it-can-do | What it can do | 8 | |
+| 3.3 | install-claude-code | Task: install Claude Code | 12 | yes |
+| 3.4 | quick-business-lesson | Quick business lesson | 5 | |
+| 3.5 | plan-your-extension | Plan your Chrome extension | 5 | |
+
+**3.1 What is Claude Code?** The slide's "Agentic Coding System" and "For Product Designers" points, plus "Integrated Environments" (terminal, VS Code extension, desktop app). **[changed]** Plainer wording for 13 to 16 year olds (e.g. "It reads your whole project, runs commands and fixes its own mistakes, instead of just suggesting the next line"). Drop the "109K+ active developers" figure; it's unverified and will date. KeyTerm: agent.
+
+**3.2 What it can do.** The slide's three columns, each with its example prompts and "Key idea" line kept exactly:
+- Routines: "Check this folder for errors every hour." / "Run a multi-step process: clean the files, test the code, then generate a report."
+- Refactoring: "Rename this variable everywhere it appears." / "Make this code easier to read while keeping the same functionality."
+- Session context: what commands ran, what errors happened, what files changed, what you were trying to fix.
+
+**3.3 Task: install Claude Code.** The slide instructions are image only, so use the current official steps: the desktop app as the main path, the terminal commands as the other option, then `claude --version` to check. Stuck block with common install errors. *Screenshots needed.*
+
+**3.4 Quick business lesson.** Yibo's journey with Snapiq *(text needed; the slide is image only)*, then the slide text: "It's 30% the idea, 70% the execution", first-time vs second-time founders, "People will rarely steal your idea", "Most ideas are good because they already exist."
+
+**3.5 Plan your Chrome extension.** From the task slide: you're building a Chrome extension. Pick a problem you actually have. Examples from the homework: screenshot tool, tab organizer, YouTube speed controller, word highlighter.
+
+**Challenge (slide homework):** Build a Chrome extension with Claude Code. It must install in your browser and work. Bonus points if it solves a problem you genuinely have.
+
+---
+
+## Module 4: Claude Skills + Claude in Excel
+*Making Claude work your way*
+Source: LaunchLab 4
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 4.1 | homework-review | Review your extension | 4 | |
+| 4.2 | what-are-skills | What are Claude Skills? | 6 | |
+| 4.3 | set-up-a-skill | How to set up a skill | 10 | yes |
+| 4.4 | claude-in-excel | Claude in Microsoft Excel | 8 | yes |
+| 4.5 | claude-in-chrome | Download the Claude extension | 4 | yes |
+
+**4.1 Review your extension.** **[solo version]** The slide's "Active Homework Review" questions become a self-review: Does it install cleanly and run? What problem does it solve? What was the hardest part to get working? If it worked perfectly, what exactly should it do?
+
+**4.2 What are Claude Skills?** The three slide points kept as is: Reusable Instructions, On-Demand Loading, Consistent Standardized Outputs. KeyTerm: skill.
+
+**4.3 How to set up a skill.** The four slide steps: Settings on Claude.ai, Add Skill under Customize, upload your SKILL.md, attach it to a project. Plus a short "Plugins" section *(slide is image only, content needed)*. **[changed]** Menu names must be checked against the current Claude app before publishing, since they change often. *Screenshots needed.*
+
+**4.4 Claude in Microsoft Excel.** The slide's "Advanced Data Operations": Formula Assistance, Data Analysis, Audit & Validation. TryIt with a sample spreadsheet included on the site. **[changed]** The class activity (decide whether a stock is worth buying, using data from Slack) becomes "explain what these numbers say about a company", with the dataset hosted on the site instead of Slack.
+
+**4.5 Download the Claude extension.** Claude in Chrome video and download link *(links needed)*.
+
+**Challenge (slide homework):** Experiment with Claude in Excel and build a Claude skill. **[solo version]** Remove "DM your skill to Yibo, Rishabh, or Nirvan on Slack".
+
+---
+
+## Module 5: Claude Design
+*Design it, then let Claude Code build it*
+Source: LaunchLab 5 (the best-written deck; stays almost word for word)
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 5.1 | design-your-front-end-first | Design your front end first | 5 | yes |
+| 5.2 | export-your-design | Export your design | 5 | yes |
+| 5.3 | what-claude-code-actually-does | What Claude Code actually does | 6 | |
+| 5.4 | after-hand-off | What to do after hand off | 8 | yes |
+| 5.5 | when-it-breaks | When it breaks (and it will) | 10 | |
+| 5.6 | the-three-files | The three files | 6 | |
+| 5.7 | the-whole-workflow | The whole workflow | 6 | yes |
+
+**5.1** Slide text as is. **5.2** Slide text as is, including "Locate this button before you start building". **[changed]** Check the menu path: you found Handoff under Export, the slide says Share. *Screenshot needed.*
+
+**5.3** Four slide points as is: agent not chatbot; splits into index.html, styles.css, script.js; works on its own; errors are normal, type "continue".
+
+**5.4** The four slide steps with both prompts copyable: "Reconstruct this design into a working website. Split it into index.html, styles.css and script.js, and make sure it actually runs." and "Make the sign-up form really save what people type."
+
+**5.5** The four slide steps: Read the red; press F12, open Console; give Claude the whole story; reload and check. **PromptPractice** task `bug-report`: given a broken sign-up button and a console error, write the message you'd send Claude. Anchors: pastes the exact error, says what was clicked, says what was expected.
+
+**5.6** The three file descriptions as on the slide, then **CheckYourself** with the four slide questions: which file for the button text, which to make it orange, which to make it do something, and point at one line you didn't write and explain it.
+
+**5.7** Design, Build, Deploy as on the slide, with the tiiny.host prompt copyable. "Your Turn!" becomes a TryIt.
+
+**Challenge (slide homework):** Finish your website. Optional: build a tool that automates something annoying in your school life (school portal grade alerts, study plan from a test schedule, free classroom finder). **[solo version]** Remove the DM instruction; keep "publish with tiiny.host or screen-record it working on localhost."
+
+---
+
+## Module 6: Introduction to GitHub and Vercel
+*Storing, sharing and publishing your code*
+Source: LaunchLab 6
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 6.1 | what-is-github | What is GitHub? | 5 | |
+| 6.2 | key-terms | Key terms | 8 | |
+| 6.3 | push-vs-pull-request | Push vs pull request | 5 | |
+| 6.4 | intro-to-vercel | Intro to Vercel | 5 | |
+| 6.5 | get-your-code-into-github | Step 1: get your code into GitHub | 10 | yes |
+| 6.6 | connect-to-vercel | Step 2: connect to Vercel | 8 | yes |
+
+**6.1** Store, Share, Collaborate as on the slide. KeyTerm: repository. *Image needed: "How It Works" and "How a Repository Looks".*
+
+**6.2** The six terms grouped as on the slide (grab an existing project: fork; save and upload: clone, commit, push; combine work: pull request, merge), each as a KeyTerm. **CheckYourself**: match each term to its meaning. (The slide homework says to review these terms; "VERY IMPORTANT!")
+
+**6.3** The slide's two-column comparison as is.
+
+**6.4** Connect, Deploy, Preview, and "What's the difference between GitHub and Vercel?" as on the slide, including "This is similar to tiiny.host!"
+
+**6.5** The three slide steps with the Claude Code prompt copyable: "Push this project to Github. Initialise a git repo, commit everything with a clear message, and push it to [paste your repo URL]." Keep the "Using Lovable instead?" box. **[changed]** Add a HeadsUp: never put passwords, API keys or personal details in a public repo. Recommend private repos for under-18s (the slide says "keep it Public").
+
+**6.6** The three slide steps, including "sign up using your GitHub account, not email", and the "From now on, you never upload anything again" box.
+
+**Challenge (slide homework):** Find an open source project on GitHub that interests you. Fork it and deploy it to Vercel. Review today's key terms.
+
+---
+
+## Module 7: GitHub Branching and Collaboration
+*Working on one project without overwriting each other*
+Source: LaunchLab 7
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 7.1 | key-terms | Key terms | 6 | |
+| 7.2 | branch-vs-fork | Branch vs fork | 4 | |
+| 7.3 | make-your-own-branch | Step 1: make your own branch | 8 | yes |
+| 7.4 | pull-request-and-merging | Step 2: pull request and merging | 8 | yes |
+| 7.5 | merge-conflicts | Merge conflicts: you will hit one | 8 | |
+| 7.6 | recreate-wordle | Task: recreate Wordle | 15 | yes |
+
+**7.1** Branch, Main, Switch, Merge conflict, grouped as on the slide ("Your own lane", "Moving between lanes", "Joining lanes back together"). *Image needed: "How Branching Works" diagram.*
+
+**7.2** The slide's two-column comparison, including "You've done this: last week's homework".
+
+**7.3** Both tracks from the slide: GitHub steps, and the Claude Code prompts ("Create a branch called [your branch name] and switch to it." / "Commit all the changes in this session to the branch and push it to GitHub.").
+
+**7.4** The three slide steps, keeping "step two can only be done by you, not Claude."
+
+**7.5** Why it happens, what it looks like (the Wordle `<h1>` conflict example as a code block), how to fix it, and the escape-hatch prompt copyable. **CheckYourself**: shown a conflict, which version is main and which is your branch? Slide videos *(links needed)*.
+
+**7.6** **[solo version]** The slide task is teams of three in breakout rooms. Website version: "Be your own team." Make three branches (board, keyboard, game logic), connect Vercel at the start, and keep the slide's must-haves adjusted for one person: never push straight to main; push each branch at least twice; merge at least two pull requests. Change the page title on two branches on purpose so you hit (and fix) a merge conflict. Add a box: "Doing this with friends? Follow the original team rules": repo owner adds collaborators under Settings → Collaborators; one person each on board, keyboard and logic.
+
+**Challenge (slide homework):** Finish your Wordle. Then write a one-line idea for your final project. **[solo version]** Remove the DMs; the idea goes into your own notes and carries into Module 9.
+
+---
+
+## Module 8: Authentication and APIs
+*Live data, and remembering who's there*
+Source: LaunchLab 8
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 8.1 | what-your-site-cant-do | Two things your site still can't do | 5 | |
+| 8.2 | what-an-api-is | What an API actually is | 5 | |
+| 8.3 | put-live-data-on-your-page | Task 1: put live data on your page | 10 | yes |
+| 8.4 | how-logging-in-works | How logging in works | 8 | |
+| 8.5 | creating-login-with-supabase | Creating login with Supabase | 15 | yes |
+
+**8.1** The two points and "Today you fix both" as on the slide. Supabase sign-up moves to 8.5 so it happens right before it's used.
+
+**8.2** The door analogy. KeyTerm: API. Slide video *(link needed)*. **TryIt, no account needed:** open the open-meteo URL in your browser and see the raw data Singapore's weather comes back as.
+
+**8.3** The three slide steps with the exact open-meteo prompt copyable, plus the slide's note about linking the right repo and pushing.
+
+**8.4** Sign Up, Log In, Log Out, "What a token is" ("a temporary sticker that says 'this is James'") and "Logging in is just an API call!" as on the slide. KeyTerms: token, authentication. **CheckYourself**: what happens to your token when you log out?
+
+**8.5** Supabase sign-up (from 8.1), then the eight setup steps and the login prompt copyable, and the "This will add" list. **[changed]** Add a HeadsUp: turning off "Confirm Email" is fine for practice but not for a real app, and use a test email.
+
+**Challenge (slide homework):** Work on your final project. **[changed]** Self-paced learners haven't reached Module 9 yet, so this becomes: build a very simple site with working sign-up, log-in and log-out using Supabase (the Blueprint version), then carry on to Module 9. *Confirm with the team.*
+
+---
+
+## Module 9: Project ideas and drafting
+*The start of your final project*
+Source: LaunchLab 9
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 9.1 | what-is-dns | What is DNS? | 5 | |
+| 9.2 | domains-and-deployment | Domains and deployment | 6 | |
+| 9.3 | search-engine-optimization | Search engine optimization | 8 | |
+| 9.4 | getting-users | Getting users | 8 | |
+| 9.5 | choosing-your-project | Choosing your project | 6 | |
+| 9.6 | project-requirements | Requirements | 5 | |
+| 9.7 | plan-and-get-to-work | Plan it and get to work | 6 | |
+
+**9.1** "The phonebook of the internet" definition as on the slide. KeyTerm: DNS. Video *(link needed)*.
+
+**9.2** Buying a domain through Lovable or GoDaddy, when .com vs .org or .edu; deployment options. Videos *(links needed)*. HeadsUp: a free Vercel subdomain is fine; buying a domain costs money, so ask a parent first.
+
+**9.3** SEO definition and the four key components (on-page, off-page, technical, content quality) as on the slide. Video *(link needed)*.
+
+**9.4** Google Ads, email automation, affiliate marketing, social media marketing and SMMA, one short section each, as on the slides. Link back to "What can you build" in 1.2 instead of repeating it.
+
+**9.5** "You have a few choices": business-forward product vs social impact product, and "Challenge yourself. Don't pick low hanging fruit". **[solo version]** "Split up into groups of 3" becomes "work alone or with friends". **[changed]** "you may actually use this to start your own business and make money" becomes an optional note, not the main pitch.
+
+**9.6** The six requirements as on the slide. **CheckYourself**: three example ideas; which meet the requirements?
+
+**9.7** Miro board to clarify ideas, then a shared Google Drive with a master doc and task sheets.
+
+**Challenge (slide homework, word for word):** Write your project brief, then build a working prototype that proves the hardest part of your idea works. Don't build the easy stuff yet…
+
+---
+
+## Module 10: Publishing + final showcase
+*Ship it and show it*
+Source: LaunchLab 10 (image-only slides), plus the Blueprint rubric and schedule
+
+| # | Slug | Title | Min | Hands-on |
+|---|---|---|---|---|
+| 10.1 | ship-it | Ship it | 8 | yes |
+| 10.2 | what-a-finished-project-looks-like | What a finished project looks like | 8 | |
+| 10.3 | show-your-work | Show your work | 6 | |
+| 10.4 | next-steps | Next steps | 3 | |
+
+**10.1** Deploy live (Blueprint Week 10). Checklist from rubric criterion 1: live at a working URL, loads on phone and laptop, no broken pages or links.
+
+**10.2** The Blueprint's five final-project criteria as a self-check: it ships; it solves something real; it works end to end; AI-assisted workflow; craft and version control. Worded as questions ("Can you show a prompt that failed and how you fixed it?"), with no points or score bands.
+
+**10.3** **[solo version]** The class pitch becomes: record a 5-minute demo of your project (Blueprint Week 10 length) and show it to someone. *The pitch slides are image only; content needed.*
+
+**10.4** Yibo's closing line from the last slide ("I hope you continue to learn more about AI dev and build something meaningful.") and the Blueprint homework: try to get more users.
+
+**Module 10 needs the most new content**: the deck is almost entirely images.
+
+---
+
+## Practice tasks (PromptPractice)
+
+Each task's grading anchors come straight from the slides.
+
+| Task ID | Lesson | Task | Specificity | Context | Scope |
+|---|---|---|---|---|---|
+| about-me-prompt | 1.4 | Write a Lovable prompt for your own About Me site | Names the pages and features it needs | Says who it's for (Target audience) and the design style | Asks for one site, with a clear output |
+| refine-request | 2.3 | Ask Claude to improve your prompt from 2.2 | Says what the site should include | Says who it's for and how it should look ("clean, not too AI-generated") | Pastes the original prompt and asks for a revision, not a new idea |
+| bug-report | 5.5 | Tell Claude about a broken sign-up button | Pastes the exact error | Says what was clicked | Says what was expected to happen |
+
+Common misses for about-me-prompt come from the slide's bad and better examples: no audience, no pages listed, vague style words like "modern" or "nice".
+
+---
+
+## What's needed from the team
+
+1. **Slides as PDFs.** In each deck: File → Download → PDF. Put all 10 in `source/slides/` in the repo. That gives Claude Code the image-only slides (Lovable stats, diagrams, screenshots) and the video links that didn't come through as text.
+2. **Video links.** Get Started With Lovable; Claude in Chrome; the Module 7 Git videos; the Module 8 API video; the Module 9 DNS, domain, deployment and SEO videos. The PDFs may carry these; if not, send them.
+3. **Snapiq story.** A paragraph from Yibo on his Snapiq journey (Module 3), and his OK to feature it.
+4. **Permission to name tutors.** The slides name Yibo, Rishabh and Nirvan. On a public site, get their OK first or leave names out.
+5. **Module 10 content.** What the pitching, feedback and next-steps slides actually say.
+6. **Approval.** Rishabh is reviewing; every module is marked "Not approved" in the sheet. Build now, but get sign-off before the site goes public.
+7. **Access decision.** How under-18 learners get hands-on access (affects 2.3, all Claude Code lessons, and the Access page).
+
+---
+
+## Build order
+
+One module at a time: write the lessons, check them on the site, commit, then the next module.
+
+1. Restructure the site: Parts become Modules, three phases on the homepage, and the two new components (CheckYourself, Challenge).
+2. Module 1, including the about-me-prompt practice task.
+3. Modules 2 to 5 (Phase 1). Module 5 is nearly word for word from its slides, so it's quick.
+4. Modules 6 to 8.
+5. Modules 9 and 10, once the missing content arrives.

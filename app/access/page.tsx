@@ -27,7 +27,8 @@ export default async function AccessPage({ searchParams }: Props) {
           <span className="eyebrow">Hands-on lessons</span>
           <h1 className="t-h1 m-0">How hands-on access works</h1>
           <p className="t-lead m-0">
-            {handsOn.length === 1 ? "One lesson has" : "A few lessons have"} a hands-on part that uses Claude Code.
+            {handsOn.length === 1 ? "One lesson has" : "Some lessons have"} a hands-on part that uses a tool like Lovable or
+            Claude Code.
             Access for those parts is set up for you through a Code for All session, or by a teacher running one.
             Everything else on Code for All works without it.
           </p>
@@ -51,16 +52,17 @@ export default async function AccessPage({ searchParams }: Props) {
           </ul>
         </section>
 
-        <h2 className="t-h2 mt-6 mb-0">What is Claude Code?</h2>
+        <h2 className="t-h2 mt-6 mb-0">Which tools need access?</h2>
         <p className="m-0">
-          Claude is an AI made by a company called Anthropic. Claude Code is the AI agent you&apos;ll build your
-          website with. It runs on a laptop and does real work for you.
+          The hands-on parts use Lovable, Claude and Claude Code, GitHub, Vercel and Supabase. Each lesson that needs
+          one says so at the top, and each hands-on section is marked &ldquo;Hands-on: needs access&rdquo;.
         </p>
 
         <h2 className="t-h2 mt-6 mb-0">Why do some lessons need access?</h2>
         <p className="m-0">
-          Claude Code needs an account behind it to do real work on your laptop. In a session, that&apos;s taken care
-          of for you, which is why the hands-on parts are done with a session.
+          These tools do real work for you, like building a site or putting it online, and they need an account
+          behind them to do it. In a session, that&apos;s taken care of for you, which is why the hands-on parts are
+          done with a session.
         </p>
 
         <h2 className="t-h2 mt-6 mb-0">How do I get access?</h2>

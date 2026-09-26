@@ -1,0 +1,89 @@
+---
+title: Creating login with Supabase
+slug: creating-login-with-supabase
+order: 50
+duration: 15
+summary: Sign up for Supabase, copy your two values, then paste one prompt into Claude to add sign-up, log-in and log-out to your page.
+requiresAccount: true
+recap:
+  - Sign up for Supabase with GitHub. Your database password is NOT your login password, so save it.
+  - "Copy two values: your Publishable key and your Project ID. Turn off \"Confirm Email\" for practice only."
+  - "The prompt adds three things: one script tag that loads Supabase, one line that connects using your two values, and three buttons: sign up, log in, log out."
+---
+
+Your turn! You've seen [how logging in works](/module-8/how-logging-in-works). Now add it to your own page.
+
+<HandsOn />
+
+## 1. Sign up for Supabase
+
+This part needs access; see [how hands-on access works](/access).
+
+Take 60 seconds:
+
+1. Go to [supabase.com](https://supabase.com) → click **Start your project** → **Continue with GitHub**.
+2. Set up a database password and save it (this is **NOT** your login password).
+3. Pick the recommended region.
+
+## 2. Get your two values
+
+In your Supabase project:
+
+1. Go to **Project Settings**.
+2. Go to **API Keys**.
+3. Copy **Publishable Key**.
+4. Go to **General**.
+5. Copy **Project ID**.
+6. Go to **Authentication**.
+7. Disable **Confirm Email**.
+8. Click **Save changes**.
+
+Keep the Publishable key and the Project ID somewhere handy. They go into the prompt in the next step.
+
+<Callout kind="headsup">
+Turning off **Confirm Email** is fine for practice, but don't do it for a real app. And when you try out your sign-up, use a test email, not your own.
+</Callout>
+
+## 3. Paste this into Claude
+
+"This page" in the prompt means the page of the project you have open.
+
+```prompt title="Paste this into Claude"
+Add email signup, login and logout to this page using Supabase.
+
+Load supabase-js from
+https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
+
+Project URL: https://<your project id>.supabase.co
+Publishable key: <paste yours>
+
+When someone is logged in, show their email and a log out button.
+```
+
+Before you send it, swap `<your project id>` for the Project ID you copied in step 5, and `<paste yours>` for the Publishable key from step 3.
+
+This will add:
+
+1. One **script tag** that loads Supabase.
+2. One line that connects using your two values.
+3. Three buttons: sign up, log in, log out.
+
+Got questions? In a Code for All session, ask your tutor.
+
+<StuckBlock>
+  <StuckItem question="Supabase, GitHub or Claude asks me to sign up or log in.">
+    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access).
+  </StuckItem>
+  <StuckItem question="Supabase asks me for a database password. Is that my login password?">
+    No. Set up a database password and save it. It is NOT your login password.
+  </StuckItem>
+  <StuckItem question="Where do I find my Project ID and Publishable key?">
+    Publishable key: **Project Settings** → **API Keys**. Project ID: **General**. Steps 1 to 5 in "Get your two values" above.
+  </StuckItem>
+</StuckBlock>
+
+<Challenge title="Build a site with working login">
+Build a very simple site with working sign-up, log-in and log-out using Supabase. Use the steps and the prompt from this lesson, and use a test email when you try it out.
+
+Then carry on to [Module 9](/module-9), the start of your final project.
+</Challenge>

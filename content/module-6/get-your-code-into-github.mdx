@@ -1,0 +1,60 @@
+---
+title: "Step 1: get your code into GitHub"
+slug: get-your-code-into-github
+order: 50
+duration: 10
+summary: Make a repo on GitHub, then let Claude Code commit your project and push it there.
+requiresAccount: true
+recap:
+  - Make a repo on github.com, copy its URL, then give Claude Code the prompt to push your project to it.
+  - Using Lovable? Settings → GitHub → Connect does it all for you.
+  - Never put passwords, API keys or personal details in a public repo.
+---
+
+Your task for the rest of this module: **take your latest project from Claude or Lovable and send it to GitHub. Then, transfer it to Vercel.**
+
+This lesson is the GitHub half. [Step 2](/module-6/connect-to-vercel) is the Vercel half.
+
+<Callout kind="tip">
+**Using Lovable instead?** You don't need any of the steps below. Open your project → **Settings** → **GitHub** → **Connect**. Lovable creates the repo, pushes your code automatically, and keeps it in sync from then on. Skip to [Step 2](/module-6/connect-to-vercel).
+</Callout>
+
+<Callout kind="headsup">
+A public repo can be seen by anyone, and so can everything you commit to it. Never put passwords, API keys or personal details (like your address, phone number or school) in a public repo. If you're under 18, we recommend making your repo **Private** instead of Public when you create it in step 1.
+</Callout>
+
+<HandsOn />
+
+## 1. Make a repo
+
+Sign in to [github.com](https://github.com) → click the green **New repository** button. Name it, keep it **Public**, click **Create**.
+
+This part needs access; see [how hands-on access works](/access).
+
+## 2. Let Claude Code push it
+
+Copy your new repo's URL, then paste the prompt below into Claude Code. It runs the git commands for you.
+
+Do this with your latest project open in Claude Code: "this project" in the prompt means the one Claude Code is working on. Swap `<paste your repo URL>` for the URL you copied.
+
+```prompt title="Type this into Claude Code"
+Push this project to Github. Initialise a git repo, commit everything with a clear message, and push it to <paste your repo URL>.
+```
+
+If it asks you to sign in to GitHub, follow its instructions in the terminal.
+
+## 3. Check it worked
+
+Refresh your repo page. Your files should be there. That's your first **commit** and **push**.
+
+<StuckBlock>
+  <StuckItem question="GitHub or Claude Code asks me to sign up or log in.">
+    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access). If Claude Code asks you to sign in to GitHub, follow its instructions in the terminal.
+  </StuckItem>
+  <StuckItem question="I built my project in Lovable, not Claude Code.">
+    You don't need steps 1 to 3. Open your project → **Settings** → **GitHub** → **Connect**, then go to [Step 2](/module-6/connect-to-vercel).
+  </StuckItem>
+  <StuckItem question="My files aren't on my repo page.">
+    Refresh the page. Then check the prompt you pasted: `<paste your repo URL>` needs to be replaced with your new repo's URL.
+  </StuckItem>
+</StuckBlock>
