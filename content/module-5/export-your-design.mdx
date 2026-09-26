@@ -3,11 +3,11 @@ title: Export your design
 slug: export-your-design
 order: 20
 duration: 5
-summary: The Handoff button sends your finished design into Claude Code. Find it before you start building.
+summary: The Handoff button gives you a prompt that brings your design into Claude Code. Find it before you start building.
 requiresAccount: true
 recap:
   - When your design is done, open the Export menu and find "Handoff to Claude Code…".
-  - It sends your design straight into Claude Code, which turns it into a real, working site.
+  - "It gives you a prompt to copy: open Claude Code in your project folder, paste it in, and Claude Code fetches your design."
   - Locate this button before you start building. It's easy to miss in the menu.
 ---
 
@@ -19,12 +19,14 @@ Claude Design makes your site look right. Claude Code makes it work. The handoff
 
 - When your design is done, open the **Export** menu.
 - Find **"Handoff to Claude Code…"** in the export options. This is the bridge that connects the two tools.
-- It sends your finished design straight into Claude Code, which turns it into a real, working site.
+- It gives you a prompt to copy. Open Claude Code in your project folder and paste the prompt in. Claude Code then fetches your design, ready to turn it into a real, working site.
 
 This part needs access; see [how hands-on access works](/access).
 
+<Figure src="/lessons/module-5/handoff-dialog.png" alt="The Hand off to Claude Code window, with Local agent selected, the design file listed, an instructions box and a Copy prompt button" width={1166} height={594} caption="The Hand off to Claude Code window. Copy prompt copies the prompt you paste into Claude Code." />
+
 <Placeholder>
-A new screenshot of Claude Design's "Hand off to Claude Code" dialog, taken in the current app with no personal data showing. Before taking it, check the menu path against the live app: the lesson says the **Export** menu, the slide says the Share menu.
+Check the menu path against the live Claude Design app: this lesson says the **Export** menu, the slide says the Share menu.
 </Placeholder>
 
 <Callout kind="headsup">
@@ -34,6 +36,9 @@ Locate this button *before* you start building. You'll need it, and it's easy to
 <StuckBlock>
   <StuckItem question="I can't find Handoff to Claude Code… in the Export menu.">
     Look in the **Share** menu in the top right. That's where it was when these lessons were first taught.
+  </StuckItem>
+  <StuckItem question="Claude Code says it can't reach the design.">
+    There are two ways to fix it. Connect Claude Code to Claude Design once: run the command Claude Code suggests, then type `/design-login`, then restart Claude Code and paste the prompt again. Or, in the same menu, choose **Project archive** ("Every project file, zipped"; older versions: **Download project as .zip**), put the files in your project folder, and tell Claude Code where they are.
   </StuckItem>
   <StuckItem question="Claude Design asks me to sign up or log in.">
     The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access).

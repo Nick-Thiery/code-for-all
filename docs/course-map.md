@@ -204,7 +204,9 @@ Source: LaunchLab 5 (the best-written deck; stays almost word for word)
 **Changes after review (26 Sep 2026):**
 
 - [changed] 5.1: gets the Claude Design video from Module 3's slide 5. The slide image isn't used (a low-resolution video thumbnail showing a sample name).
-- [changed] 5.2: the old Share-menu screenshot is removed; a Placeholder asks for a new screenshot of the Hand off to Claude Code dialog. "In the top right" is dropped until the live app is checked. The Share menu stays only as a Stuck fallback.
+- [changed] 5.2: the old Share-menu screenshot is replaced with a new screenshot of the Hand off to Claude Code window (handoff-dialog.png). A Placeholder keeps the note to check the menu path in the live app.
+- [changed] 5.2: the slide says the handoff "sends your finished design straight into Claude Code". The current Hand off to Claude Code window (screenshot: public/lessons/module-5/handoff-dialog.png) gives you a prompt to copy instead ("Open Claude Code and paste in this prompt."). The lesson now says: open Claude Code in your project folder, paste the prompt, and Claude Code fetches the design; it keeps the slide's point that the handoff is the bridge between the two tools. 5.4's opening line follows from this.
+- [added] 5.2 Stuck answer "Claude Code says it can't reach the design": connect Claude Code to Claude Design once (the command Claude Code suggests, then /design-login, then restart), or use the menu's **Project archive** option ("Every project file, zipped"; called Download project as .zip on slide 3 and in older versions) and put the files in the project folder. The name follows the live app. "In the top right" is dropped until the live app is checked. The Share menu stays only as a Stuck fallback.
 - [changed] 5.5: the invented Tip "Claude can't see your screen" is removed (also from the bug-report mock's feedback). The console error is shown in a copyable console block.
 - [changed] 5.6: "answer these out loud" becomes "answer these", to match the quiz's "answer in your head first".
 - [changed] 5.1: a Tip claiming Module 1's prompting advice carries over to Claude Design is removed.
@@ -242,6 +244,7 @@ Source: LaunchLab 6
 **Changes after review (26 Sep 2026):**
 
 - [changed] 6.5: repos are Private (the slide says keep it Public), because learners are under 18. Step 1, the HeadsUp and the recap all say so.
+- [added] Module 6 Challenge: a fork of a public project stays public, which is fine because it's someone else's open code; the Private rule is for your own projects.
 - [changed] 6.5 and 6.6: signing in to GitHub and Vercel (with a GitHub account) is done in a session, with the teacher's go-ahead, matching the access page.
 - [changed] 6.5: the Task slide's text opens the lesson, and the "Using Lovable instead?" box sits before step 1 (with its own access line).
 - [changed] 6.3: small grammar fixes to the slide text.
@@ -279,6 +282,7 @@ Source: LaunchLab 7
 
 **Changes after review (26 Sep 2026):**
 
+- [added] 7.6: where the solo conflict appears (GitHub shows "This branch has conflicts that must be resolved" on the second pull request) and two ways to fix it: GitHub's **Resolve conflicts** button for simple conflicts in the browser (steps checked against GitHub's docs, "Resolving a merge conflict on GitHub"), or the slide's escape-hatch prompt in Claude Code.
 - [changed] 7.5: adds slide 7's editor screenshot of a real conflict (another project, with a branch called develop) under "What it looks like". The marker-order bullets apply to the Wordle example only.
 - [changed] 7.4: "It's that easy." sits inside the callout with the rest of the slide sentence.
 - [added] 7.4 a line saying "step two" means this whole lesson; 7.5 the lead-in to the conflict example, the worked fix ("those five lines become one") and the CheckYourself answers; 7.3 a pointer from the GitHub track to the Claude Code push prompt; 7.6 "the conflict shows up on the second pull request"; sign-in Stuck answers matched to the access page.

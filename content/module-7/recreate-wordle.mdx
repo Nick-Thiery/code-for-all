@@ -46,12 +46,23 @@ Connect the repo to **Vercel** at the **start** of the process, not the end. Thi
 On a team, conflicts happen by themselves. On your own, you have to make one.
 
 1. Change the page title on two of your branches, on purpose, to two different titles. For example, use the two titles from [lesson 5](/module-7/merge-conflicts): Wordle by Team 3 on one branch, Team 3 Wordle on the other.
-2. Merge both branches with pull requests. Two branches changed the same line, so you'll hit a merge conflict. The first pull request merges as normal. The conflict shows up on the second one, because main now has the other title.
-3. Fix it the way lesson 5 shows: keep the version you want or combine both, delete the `<<<`, `===` and `>>>` marker lines, then commit again.
+2. Merge both branches with pull requests. The first one merges as normal. When you open the second, GitHub shows "This branch has conflicts that must be resolved", and the **Merge pull request** button stays off until you fix it. Both branches changed the same line, and main now has the other title.
+3. Fix it one of two ways: in your browser on GitHub, or with Claude Code. Either way, you keep the version you want or combine both, and delete the `<<<`, `===` and `>>>` marker lines, the way [lesson 5](/module-7/merge-conflicts) shows.
 
-<Placeholder>Where solo learners should see and fix this conflict: on the pull request page on GitHub, or on their computer with Claude Code. The slides don't say, so this needs a short, checked step from the team.</Placeholder>
+### On GitHub, in your browser
 
-Or use the escape hatch. Paste the entire block of code into Claude Code, then say:
+This works for simple conflicts like this one, where two branches changed the same line.
+
+1. On the pull request, click **Resolve conflicts**.
+2. In the file, keep the version you want or combine both, and delete the marker lines.
+3. Click **Mark as resolved**, then **Commit merge**.
+4. Back on the pull request, click **Merge pull request**.
+
+If **Resolve conflicts** is greyed out, the conflict is too complicated to fix in the browser. Use Claude Code instead.
+
+### With Claude Code
+
+Use the escape hatch. Paste the entire block of code into Claude Code, then say:
 
 ```prompt title="The escape hatch"
 I have a merge conflict in <name of the file>. Please help me resolve it and keep all features working.
