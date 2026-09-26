@@ -16,7 +16,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - To add one: copy a lesson in the same module, change the frontmatter, write the body in Markdown. No code changes needed.
 - MDX reads `<` and `{` as code: put them in backticks or a code block.
 - Images go in `public/lessons/module-N/`.
-- Quizzes: `content/module-N/quiz.yml`, 6 to 8 multiple-choice questions, each with `question`, `options` (3 or 4), `answer` (the exact text of the right option), `explanation` and `lesson` (the slug in that module that teaches it). The build validates them. Shown at `/module-N/quiz` by the `ModuleQuiz` component (components/module-quiz.tsx), after the last lesson. Questions come from that module's lessons only; prefer situations over definitions; no trivia or "all of the above".
+- Quizzes: `content/module-N/quiz.yml`, 6 to 8 multiple-choice questions, each with `question`, `options` (3 or 4), `answer` (the exact text of the right option), `explanation` and `lesson` (the slug in that module that teaches it). The build validates them. Shown at `/module-N/quiz` by the `ModuleQuiz` component (components/module-quiz.tsx), after the last lesson. Each answer moves the tested lesson's mastery level (Khan Academy-style; rules in `lib/mastery.ts`, overview on the course page in components/mastery.tsx): module quizzes go up to Proficient, only Check your skills reaches Mastered. Questions come from that module's lessons only; prefer situations over definitions; no trivia or "all of the above".
 - `content/check-your-skills.yml`: the Check your skills pages (after Modules 5 and 8): a mixed quiz from earlier modules' quiz files (8 spread over Modules 1 to N, or a page's own `draw` list), plus an unscored build checklist from the final-project rubric. Reserved lesson slugs: `complete`, `quiz`, `check-your-skills`.
 
 ## Lesson components (registered in components/mdx-components.tsx)
@@ -73,7 +73,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 ## Privacy
 
-- Never log, store or send learner prompt text anywhere except the practice request itself. localStorage holds only lesson progress (`cfa:completed-lessons`), quiz results (`cfa:quiz-results`: score and lessons to review, never answer text), checklist ticks (`cfa:checklists`) and the theme (`cfa:theme`).
+- Never log, store or send learner prompt text anywhere except the practice request itself. localStorage holds only lesson progress (`cfa:completed-lessons`), quiz results (`cfa:quiz-results`: score and lessons to review, never answer text), mastery levels (`cfa:mastery`: lesson id to level), checklist ticks (`cfa:checklists`) and the theme (`cfa:theme`).
 - No personal data in images: no emails, account IDs, API keys, faces, full names, usernames or avatars. Crop it out or use a `<Placeholder>` saying why.
 
 ## Git

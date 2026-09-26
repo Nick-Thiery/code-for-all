@@ -13,6 +13,8 @@ export type OutlineLesson = {
   duration: number;
   requiresAccount: boolean;
   hasPractice: boolean;
+  /** True if a question in its module's quiz tests it, so it has a mastery level (lib/mastery.ts). */
+  tested: boolean;
   href: string;
 };
 
@@ -62,6 +64,11 @@ export const skillsCheckId = (after: number) => `module-${after}/check-your-skil
 
 export function allLessons(outline: Outline): OutlineLesson[] {
   return outline.modules.flatMap((module) => module.lessons);
+}
+
+/** The lessons with a mastery level: the ones a quiz question tests. */
+export function testedLessons(lessons: readonly OutlineLesson[]): OutlineLesson[] {
+  return lessons.filter((lesson) => lesson.tested);
 }
 
 /**
