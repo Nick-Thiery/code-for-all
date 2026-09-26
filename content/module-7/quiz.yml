@@ -1,0 +1,78 @@
+questions:
+  - question: "You switch from main to your branch, alex-keyboard. What happens to the files in your project?"
+    options:
+      - "Nothing changes until you merge the branch"
+      - "They change to match the alex-keyboard branch"
+      - "Main's files get deleted from the repo"
+      - "They stay the same until you push"
+    answer: "They change to match the alex-keyboard branch"
+    explanation: "When you switch, you jump from one branch to another. Your files instantly change to match the branch you're on."
+    lesson: key-terms
+
+  - question: "You've made three commits on your branch, but your teammate can't see your work on the live site. Why not?"
+    options:
+      - "Your teammate has to switch to your branch first"
+      - "You need to make a few more commits before it shows"
+      - "Vercel only puts forks live, not branches"
+      - "Your branch hasn't been merged into main yet"
+    answer: "Your branch hasn't been merged into main yet"
+    explanation: "Main is the branch Vercel puts live, and main never sees your work until a pull request merges your branch back in."
+    lesson: key-terms
+
+  - question: "You and two friends are building one website together, in a repo you all share. What should each of you use?"
+    options:
+      - "Your own branch in the shared repo"
+      - "Your own fork on your own GitHub account"
+      - "Your own new repo, copied from the shared one"
+    answer: "Your own branch in the shared repo"
+    explanation: "Branches live inside the repo your team shares, so everyone works in their own lane on the same project. Forks are for projects you're not a part of."
+    lesson: branch-vs-fork
+
+  - question: "You've built your feature on your branch with Claude Code, but there's no yellow Compare & pull request banner on the repo page. What have you most likely missed?"
+    options:
+      - "Merging your branch into main"
+      - "Making a fork of the repo first"
+      - "Pushing your branch to GitHub"
+      - "Switching back to main"
+    answer: "Pushing your branch to GitHub"
+    explanation: "The banner appears after you push your branch. Ask Claude Code to commit your changes and push the branch to GitHub, then check again."
+    lesson: make-your-own-branch
+
+  - question: "Your branch is pushed, and you want Claude Code to open, review and merge the pull request for you. What should you do?"
+    options:
+      - "Ask Claude to push your changes straight to main instead"
+      - "Do those steps yourself, and ask Claude to help you review"
+      - "Keep rewording the prompt until Claude opens, reviews and merges it"
+    answer: "Do those steps yourself, and ask Claude to help you review"
+    explanation: "Opening, reviewing and merging the pull request can only be done by you, not Claude. You can still ask Claude to help you review the changes."
+    lesson: pull-request-and-merging
+
+  - question: "You try to merge your branch and Git says there's a merge conflict. What does that mean?"
+    options:
+      - "Two branches changed the same line, so Git asks you"
+      - "You broke the code and have to start your branch again"
+      - "Your branch is too old for Git to merge it any more"
+      - "Git has lost some of your commits along the way"
+    answer: "Two branches changed the same line, so Git asks you"
+    explanation: "Instead of assuming which version is correct, Git stops and asks you to pick. It's normal, and you didn't break anything."
+    lesson: merge-conflicts
+
+  - question: "You're fixing a merge conflict and you've kept the version of the line you want. What's left to do?"
+    options:
+      - "Nothing, as Git removes the marker lines by itself"
+      - "Leave the marker lines in so Git knows what you picked"
+      - "Delete the marker lines, then commit again"
+      - "Delete your branch and make a new one"
+    answer: "Delete the marker lines, then commit again"
+    explanation: "Once you've kept the version you want, delete the <<<, === and >>> marker lines, then commit again."
+    lesson: merge-conflicts
+
+  - question: "You're building Wordle as your own team and want to practise fixing a merge conflict. How do you cause one on purpose?"
+    options:
+      - "Change different files on two branches, then merge both"
+      - "Push the same branch to GitHub twice in a row"
+      - "Push your work straight to main instead of a branch"
+      - "Give the page two different titles on two branches, then merge both"
+    answer: "Give the page two different titles on two branches, then merge both"
+    explanation: "Conflicts happen when two branches change the same line. Once the first pull request merges, main has one title, so the second pull request conflicts."
+    lesson: recreate-wordle

@@ -1,0 +1,461 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useId, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { Hex, HexCheck } from "@/components/hex";
+import { drawMixed, shuffle, type DrawGroup, type QuizLesson, type QuizQuestion } from "@/lib/quiz";
+import { saveQuizResult, useQuizResults } from "@/lib/quiz-results";
+
+type Props = {
+  /** Where the last result is saved: "module-1/quiz". */
+  id: string;
+  /** The card's label, like "Module 1 quiz". */
+  label: string;
+  /** A module quiz asks all of these, in order. */
+  questions: QuizQuestion[];
+  /**
+   * Check your skills: draw questions from `questions` in these groups, fresh
+   * on every attempt (after hydration, so server and browser agree).
+   */
+  draw?: readonly DrawGroup[];
+  /** Heading level for the question number and the summary. */
+  level?: 2 | 3;
+};
+
+type Item = { question: QuizQuestion; options: string[] };
+
+type Run = {
+  items: Item[];
+  index: number;
+  choice: string | null;
+  checked: boolean;
+  /** One entry per checked question: was it right? */
+  right: boolean[];
+  done: boolean;
+  /** Counts restarts, so each attempt gets fresh radio buttons. */
+  attempt: number;
+};
+
+type Focus = "question" | "next" | "summary";
+
+// An attempt in progress survives leaving the page (say, to open a "Review"
+// link) and coming back with the Back button. Memory only: a full reload
+// starts again, which also keeps the first render the same as the server's.
+const inProgress = new Map<string, { run: Run | null; started: boolean }>();
+
+function newRun(questions: QuizQuestion[], shuffled: boolean, attempt: number): Run {
+  return {
+    // The first attempt uses the order the options are written in; Try again shuffles them.
+    items: questions.map((question) => ({
+      question,
+      options: shuffled ? shuffle(question.options) : question.options,
+    })),
+    index: 0,
+    choice: null,
+    checked: false,
+    right: [],
+    done: false,
+    attempt,
+  };
+}
+
+export function ModuleQuiz({ id, label, questions, draw, level = 2 }: Props) {
+  const uid = useId();
+  const Heading = level === 2 ? "h2" : "h3";
+  const mixed = draw !== undefined;
+  const { results, ready } = useQuizResults();
+  const saved = results[id] ?? null;
+
+  const [run, setRun] = useState<Run | null>(
+    () => inProgress.get(id)?.run ?? (mixed ? null : newRun(questions, false, 0)),
+  );
+  // True once the learner has done anything. Until then, a saved result
+  // from an earlier visit is shown instead of question 1.
+  const [started, setStarted] = useState(() => inProgress.get(id)?.started ?? false);
+
+  useEffect(() => {
+    inProgress.set(id, { run, started });
+  }, [id, run, started]);
+
+  // Check your skills with no saved result: pick the questions now.
+  const needsDraw = mixed && ready && !saved && run === null;
+  useEffect(() => {
+    if (needsDraw && draw !== undefined) setRun(newRun(drawMixed(questions, draw), false, 0));
+  }, [needsDraw, questions, draw]);
+
+  // Move focus after the learner acts (never on load), so keyboard and
+  // screen reader users land on what just appeared.
+  const focusNext = useRef<Focus | null>(null);
+  const questionRef = useRef<HTMLHeadingElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+  const summaryRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    const target = focusNext.current;
+    if (!target) return;
+    focusNext.current = null;
+    ({ question: questionRef, next: nextRef, summary: summaryRef })[target].current?.focus();
+  });
+
+  const lessons = useMemo(() => new Map(questions.map((q) => [q.lesson.id, q.lesson])), [questions]);
+  const lessonName = (lesson: QuizLesson) => (mixed ? `Module ${lesson.module}: ${lesson.title}` : lesson.title);
+
+  function tryAgain() {
+    setStarted(true);
+    const next = draw !== undefined ? drawMixed(questions, draw) : questions;
+    setRun(newRun(next, true, (run?.attempt ?? 0) + 1));
+    focusNext.current = "question";
+  }
+
+  function choose(option: string) {
+    if (!run || run.checked) return;
+    setStarted(true);
+    setRun({ ...run, choice: option });
+  }
+
+  function check(event: FormEvent) {
+    event.preventDefault();
+    if (!run || run.checked || run.choice === null) return;
+    const { question } = run.items[run.index];
+    setRun({ ...run, checked: true, right: [...run.right, run.choice === question.answer] });
+    focusNext.current = "next";
+  }
+
+  function next() {
+    if (!run) return;
+    if (run.index + 1 < run.items.length) {
+      setRun({ ...run, index: run.index + 1, choice: null, checked: false });
+      focusNext.current = "question";
+      return;
+    }
+    const review = [
+      ...new Set(run.items.filter((_, i) => !run.right[i]).map((item) => item.question.lesson.id)),
+    ];
+    saveQuizResult(id, {
+      correct: run.right.filter(Boolean).length,
+      total: run.items.length,
+      review,
+      date: new Date().toISOString(),
+    });
+    setRun({ ...run, done: true });
+    focusNext.current = "summary";
+  }
+
+  let body: ReactNode;
+  let pips: ReactNode = null;
+
+  if (ready && saved && !started) {
+    body = (
+      <Summary
+        heading={
+          <Heading ref={summaryRef} tabIndex={-1} className={SUMMARY_HEADING}>
+            Last time, you got {saved.correct} of {saved.total}.
+          </Heading>
+        }
+        note={`Saved on this device on ${formatDate(saved.date)}.`}
+        allRight={saved.correct === saved.total}
+        review={saved.review.flatMap((lessonId) => lessons.get(lessonId) ?? [])}
+        lessonName={lessonName}
+        mixed={mixed}
+        onTryAgain={tryAgain}
+        celebrate={false}
+      />
+    );
+  } else if (!run) {
+    body = (
+      <div role="status" className="flex items-center gap-4">
+        <span aria-hidden="true" className="flex flex-none gap-1.5">
+          {[0, 200, 400].map((delay) => (
+            <Hex
+              key={delay}
+              width={16}
+              height={18}
+              shape="fill-deco"
+              style={{ animation: `cfaBreathe 1.4s ease-in-out ${delay}ms infinite` }}
+            />
+          ))}
+        </span>
+        <p className="m-0">Picking your questions...</p>
+      </div>
+    );
+  } else if (run.done) {
+    const correct = run.right.filter(Boolean).length;
+    const review: QuizLesson[] = [];
+    run.items.forEach((item, i) => {
+      if (!run.right[i] && !review.some((l) => l.id === item.question.lesson.id)) review.push(item.question.lesson);
+    });
+    body = (
+      <Summary
+        heading={
+          <Heading ref={summaryRef} tabIndex={-1} className={SUMMARY_HEADING}>
+            You got {correct} of {run.items.length}.
+          </Heading>
+        }
+        note="Saved on this device."
+        allRight={correct === run.items.length}
+        review={review}
+        lessonName={lessonName}
+        mixed={mixed}
+        onTryAgain={tryAgain}
+        celebrate
+      />
+    );
+  } else {
+    const { question, options } = run.items[run.index];
+    const isLast = run.index + 1 === run.items.length;
+    const wasRight = run.right[run.index];
+    pips = (
+      <span aria-hidden="true" className="flex flex-wrap gap-1">
+        {run.items.map((item, i) => (
+          <Hex
+            key={item.question.id}
+            width={13}
+            height={14}
+            shape={
+              i < run.index || (i === run.index && run.checked)
+                ? "fill-accent stroke-accent stroke-2"
+                : i === run.index
+                  ? "fill-tint stroke-accent stroke-3"
+                  : "fill-none stroke-pip stroke-2"
+            }
+          />
+        ))}
+      </span>
+    );
+    body = (
+      <form key={`${run.attempt}-${run.index}`} onSubmit={check} className="flex flex-col gap-5">
+        <Heading ref={questionRef} tabIndex={-1} className="kicker m-0 self-start outline-offset-4">
+          Question {run.index + 1} of {run.items.length}
+          {mixed && <span className="font-normal"> · from Module {question.module}</span>}
+        </Heading>
+        <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
+          <legend className="display mb-4 p-0 text-(length:--task) leading-[1.3] font-semibold">
+            {question.question}
+          </legend>
+          {options.map((option) => (
+            <Option
+              key={option}
+              name={`${uid}-choice`}
+              option={option}
+              chosen={run.choice === option}
+              checked={run.checked}
+              isAnswer={option === question.answer}
+              onChoose={() => choose(option)}
+            />
+          ))}
+        </fieldset>
+
+        <div aria-live="polite">
+          {run.checked &&
+            (wasRight ? (
+              <div className="flex flex-col gap-2 rounded-[14px] bg-tint px-[18px] py-4" style={{ animation: "cfaRise 300ms ease both" }}>
+                <p className="display m-0 flex items-center gap-2.5 text-[21px] leading-[1.3] font-[650]">
+                  <ResultHex right />
+                  That&apos;s right.
+                </p>
+                <p className="m-0">{question.explanation}</p>
+              </div>
+            ) : (
+              <div
+                className="flex flex-col gap-2 rounded-[14px] border-[1.5px] border-border px-[18px] py-4"
+                style={{ animation: "cfaRise 300ms ease both" }}
+              >
+                <p className="display m-0 flex items-center gap-2.5 text-[21px] leading-[1.3] font-[650]">
+                  <ResultHex right={false} />
+                  Not quite.
+                </p>
+                <p className="m-0">
+                  The answer is: <strong>{question.answer}</strong>
+                </p>
+                <p className="m-0">{question.explanation}</p>
+                <Link href={question.lesson.href} className="text-link">
+                  Review: {lessonName(question.lesson)}
+                </Link>
+              </div>
+            ))}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+          {run.checked ? (
+            <button ref={nextRef} type="button" onClick={next} className="btn btn-primary">
+              {isLast ? "See how you did" : "Next question"} <span aria-hidden="true">→</span>
+            </button>
+          ) : (
+            <>
+              <button type="submit" disabled={run.choice === null} className="btn btn-primary">
+                Check answer
+              </button>
+              {run.choice === null && <span className="t-meta text-muted">Pick an answer, then check it.</span>}
+            </>
+          )}
+        </div>
+      </form>
+    );
+  }
+
+  return (
+    <section
+      aria-labelledby={`${uid}-label`}
+      className="overflow-hidden rounded-[20px] border-[1.5px] border-border bg-surface text-fg"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 bg-tint px-(--pad) py-4">
+        <span className="flex items-center gap-2">
+          <Hex width={18} height={20} shape="fill-none stroke-accent stroke-[2.4]">
+            <text x="12" y="17.4" textAnchor="middle" className="fill-accent font-sans text-[12px] font-bold">
+              ?
+            </text>
+          </Hex>
+          <span id={`${uid}-label`} className="eyebrow leading-none">
+            {label}
+          </span>
+        </span>
+        {pips}
+      </div>
+      <div className="p-(--pad)">{body}</div>
+    </section>
+  );
+}
+
+const SUMMARY_HEADING = "display m-0 self-start text-(length:--head) leading-[1.25] font-[650] outline-offset-[6px]";
+
+function Option({
+  name,
+  option,
+  chosen,
+  checked,
+  isAnswer,
+  onChoose,
+}: {
+  name: string;
+  option: string;
+  chosen: boolean;
+  checked: boolean;
+  isAnswer: boolean;
+  onChoose: () => void;
+}) {
+  const look = !checked
+    ? "cursor-pointer border-border hover:border-accent has-checked:border-accent has-checked:bg-tint"
+    : isAnswer
+      ? "border-accent bg-tint"
+      : chosen
+        ? "border-dashed border-muted"
+        : "border-border text-muted";
+
+  return (
+    <label className={`flex min-h-14 items-center gap-3.5 rounded-[14px] border-[1.5px] px-4 py-3 ${look}`}>
+      <input
+        type="radio"
+        name={name}
+        value={option}
+        checked={chosen}
+        disabled={checked}
+        onChange={onChoose}
+        className="m-0 size-5 flex-none accent-accent"
+      />
+      <span className="flex min-w-0 flex-1 flex-col gap-1">
+        <span className="[overflow-wrap:anywhere]">{option}</span>
+        {checked && isAnswer && (
+          <span className="flex items-center gap-1.5 text-[16px] leading-[1.4] font-bold text-accent">
+            <ResultHex right small />
+            {chosen ? "Your answer: right" : "Right answer"}
+          </span>
+        )}
+        {checked && chosen && !isAnswer && (
+          <span className="flex items-center gap-1.5 text-[16px] leading-[1.4] font-bold text-fg">
+            <ResultHex right={false} small />
+            Your answer
+          </span>
+        )}
+      </span>
+    </label>
+  );
+}
+
+/** Filled hexagon with a tick for right; outlined with a cross for wrong. Words always go with it. */
+function ResultHex({ right, small = false }: { right: boolean; small?: boolean }) {
+  const [w, h] = small ? [16, 18] : [26, 28];
+  return right ? (
+    <Hex width={w} height={h} shape="fill-accent stroke-accent stroke-2" className="flex-none">
+      <HexCheck className="stroke-on-accent stroke-[2.6]" />
+    </Hex>
+  ) : (
+    <Hex width={w} height={h} shape="fill-surface stroke-fg stroke-2" className="flex-none">
+      <path d="M8.6 9.6l6.8 6.8M15.4 9.6l-6.8 6.8" fill="none" strokeLinecap="round" className="stroke-fg stroke-[2.4]" />
+    </Hex>
+  );
+}
+
+function Summary({
+  heading,
+  note,
+  allRight,
+  review,
+  lessonName,
+  mixed,
+  onTryAgain,
+  celebrate,
+}: {
+  heading: ReactNode;
+  note: string;
+  allRight: boolean;
+  review: QuizLesson[];
+  lessonName: (lesson: QuizLesson) => string;
+  mixed: boolean;
+  onTryAgain: () => void;
+  celebrate: boolean;
+}) {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-3">
+          {heading}
+          {allRight && celebrate && (
+            <span aria-hidden="true" className="flex gap-[3px]">
+              {[300, 420, 540].map((delay) => (
+                <Hex key={delay} width={13} height={14} shape="fill-deco" style={{ animation: `cfaPop 500ms ${delay}ms both` }} />
+              ))}
+            </span>
+          )}
+        </div>
+        <p className="t-meta m-0 text-muted">{note}</p>
+      </div>
+
+      {allRight ? (
+        <p className="m-0">You got every question right. Well done.</p>
+      ) : (
+        review.length > 0 && (
+          <div className="flex flex-col gap-1">
+            <p className="m-0 font-bold">
+              Have another look at {review.length === 1 ? "this lesson" : "these lessons"}:
+            </p>
+            <ul className="m-0 flex list-none flex-col p-0">
+              {review.map((lesson) => (
+                <li key={lesson.id} className="flex items-start gap-3">
+                  <Hex width={14} height={15} shape="fill-deco" className="mt-[15px] flex-none" />
+                  <Link href={lesson.href} className="text-link">
+                    {lessonName(lesson)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      )}
+
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 border-t border-border pt-5">
+        <button type="button" onClick={onTryAgain} className="btn btn-secondary">
+          Try again
+        </button>
+        <span className="t-meta text-muted">
+          {mixed ? "You'll get a new mix of questions." : "The answers come in a different order each time."}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function formatDate(iso: string) {
+  const date = new Date(iso);
+  return Number.isNaN(date.getTime())
+    ? "an earlier visit"
+    : date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+}

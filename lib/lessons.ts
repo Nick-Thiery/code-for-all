@@ -2,7 +2,18 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 import { cache } from "react";
-import { lessonHref, lessonId, type Outline } from "@/lib/outline";
+import { contentError } from "@/lib/content-error";
+import {
+  lessonHref,
+  lessonId,
+  quizHref,
+  quizId,
+  skillsCheckHref,
+  skillsCheckId,
+  type Outline,
+} from "@/lib/outline";
+import { drawCount, type QuizQuestion, type SkillsChecks } from "@/lib/quiz";
+import { QUIZ_FILE, readQuiz, readSkillsChecks } from "@/lib/quizzes";
 
 // content/course.yml lists every module in the course and groups them into
 // phases. Each released module is a folder, content/module-1,
@@ -12,8 +23,9 @@ const CONTENT_DIR = path.join(process.cwd(), "content");
 const COURSE_FILE = "course.yml";
 const MODULE_FOLDER = /^module-(\d+)$/;
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-// These URLs belong to the module itself: /module-1/complete.
-const RESERVED_SLUGS = ["complete"];
+// These URLs belong to the module itself: /module-1/complete, /module-1/quiz
+// and /module-5/check-your-skills.
+const RESERVED_SLUGS = ["complete", "quiz", "check-your-skills"];
 
 export type LessonMeta = {
   title: string;
@@ -48,7 +60,11 @@ export type PlannedModule = { number: number; title: string; summary: string; ph
 
 export type Phase = { number: number; title: string; modules: PlannedModule[] };
 
-export type Module = PlannedModule & { lessons: Lesson[] };
+export type Module = PlannedModule & {
+  lessons: Lesson[];
+  /** From content/module-N/quiz.yml. Null when the module has no quiz. */
+  quiz: QuizQuestion[] | null;
+};
 
 export type LessonWithNeighbours = {
   lesson: Lesson;
@@ -143,7 +159,8 @@ export const getModules = cache(async (): Promise<Module[]> => {
           `Found content/module-${number}/ but module ${number} isn't in content/course.yml. Add it to a phase there.`,
         );
       }
-      return { ...plan, lessons: await readLessons(number) };
+      const lessons = await readLessons(number);
+      return { ...plan, lessons, quiz: lessons.length > 0 ? await readQuiz(number, lessons) : null };
     }),
   );
   // A folder with no lessons yet doesn't count as released.
@@ -172,15 +189,48 @@ export async function getLessonWithNeighbours(
   };
 }
 
+/** content/check-your-skills.yml: the Check your skills pages and their checklist. */
+export const getSkillsChecks = cache(async (): Promise<SkillsChecks> => {
+  const planned = (await getPhases()).flatMap((phase) => phase.modules.map((module) => module.number));
+  return readSkillsChecks(planned);
+});
+
+/**
+ * The Check your skills page after module `after`, if there is one and that
+ * module is out, with the quiz questions of every released module up to it.
+ */
+export async function getSkillsCheck(after: number) {
+  const [{ pages, checklist }, modules] = await Promise.all([getSkillsChecks(), getModules()]);
+  const page = pages.find((p) => p.after === after);
+  const mod = modules.find((m) => m.number === after);
+  if (!page || !mod) return null;
+  const questions = modules.filter((m) => m.number <= after).flatMap((m) => m.quiz ?? []);
+  return { ...page, module: mod, checklist, questions };
+}
+
 /** Everything the browser needs to know about the course, and nothing more. */
 export const getOutline = cache(async (): Promise<Outline> => {
-  const [phases, modules] = await Promise.all([getPhases(), getModules()]);
+  const [phases, modules, skills] = await Promise.all([getPhases(), getModules(), getSkillsChecks()]);
   const released = new Set(modules.map((module) => module.number));
+  const skillsPage = (after: number) => skills.pages.find((page) => page.after === after);
   return {
     modules: modules.map((module) => ({
       number: module.number,
       title: module.title,
       summary: module.summary,
+      quiz: module.quiz
+        ? { id: quizId(module.number), href: quizHref(module.number), questions: module.quiz.length }
+        : null,
+      skillsCheck: skillsPage(module.number)
+        ? {
+            id: skillsCheckId(module.number),
+            href: skillsCheckHref(module.number),
+            questions: drawCount(
+              modules.flatMap((m) => m.quiz ?? []),
+              skillsPage(module.number)!.draw,
+            ),
+          }
+        : null,
       lessons: module.lessons.map((lesson) => ({
         id: lesson.id,
         module: lesson.module,
@@ -221,6 +271,11 @@ export function parseModuleParam(param: string): number | null {
 async function readLessons(number: number): Promise<Lesson[]> {
   const folder = `module-${number}`;
   const names = await fs.readdir(path.join(CONTENT_DIR, folder));
+
+  const quizFile = names.find((name) => /^quiz\.ya?ml$/i.test(name) && name !== QUIZ_FILE);
+  if (quizFile) {
+    throw new Error(`content/${folder}/${quizFile} won't be picked up. Rename it to ${QUIZ_FILE}.`);
+  }
 
   const misnamed = names.find((name) => name.endsWith(".md"));
   if (misnamed) {
@@ -343,8 +398,4 @@ function assertUnique(lessons: LessonFile[], key: "slug" | "order") {
     }
     seen.set(lesson[key], lesson.file);
   }
-}
-
-function contentError(file: string, problems: string[]) {
-  return new Error(`There's a problem with ${file}:\n${problems.map((p) => `  - ${p}`).join("\n")}`);
 }

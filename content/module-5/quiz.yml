@@ -1,0 +1,72 @@
+questions:
+  - question: "You open Claude Design to start your website, but you've never written any code. What do you do?"
+    options:
+      - "Learn some HTML first, because Claude Design needs code to start"
+      - "Describe how you want your website to look, in plain words"
+      - "Close it and start in Claude Code, because a website has to be coded first"
+    answer: "Describe how you want your website to look, in plain words"
+    explanation: "Claude Design builds the visual shell of your site from a description, without any code. Making it actually work comes later, in Claude Code."
+    lesson: design-your-front-end-first
+
+  - question: "Your design in Claude Design is done. How do you get it into Claude Code?"
+    options:
+      - "Use Handoff to Claude Code, then paste the prompt it gives you into Claude Code in your project folder"
+      - "Take a screenshot of your design and ask Claude Code to copy what it can see in the picture"
+      - "Retype every heading and button from your design into a new file in your project folder"
+    answer: "Use Handoff to Claude Code, then paste the prompt it gives you into Claude Code in your project folder"
+    explanation: "The handoff is the bridge between the two tools. It gives you a prompt to paste into Claude Code, and Claude Code then fetches your design."
+    lesson: export-your-design
+
+  - question: "Your friend says Claude Code will only tell you what to change, and you'll have to edit the files yourself. What's wrong with that?"
+    options:
+      - "Nothing. Claude Code replies in chat, and you make the changes"
+      - "Claude Code can only change files after you guide it through every step"
+      - "Claude Code is an agent, so it makes the changes to your files itself"
+    answer: "Claude Code is an agent, so it makes the changes to your files itself"
+    explanation: "A chatbot tells you what to change. An agent makes the change: Claude Code works directly on the files on your computer, on its own."
+    lesson: what-claude-code-actually-does
+
+  - question: "You've pasted the handoff prompt and Claude Code has fetched your design. Then nothing else happens. Why?"
+    options:
+      - "It's still building quietly in the background, so wait"
+      - "It's waiting for you to type an instruction, like telling it to build"
+      - "The handoff didn't work, so you need to redo your design"
+    answer: "It's waiting for you to type an instruction, like telling it to build"
+    explanation: "Claude Code won't build on its own after the handoff. You type an instruction first, and then it works on its own."
+    lesson: after-hand-off
+
+  - question: "Claude Code has built your site, and the sign-up form looks finished. What should you do next?"
+    options:
+      - "Launch it straight away, because a form that looks finished already works"
+      - "Go back to Claude Design and ask it to make the form save sign-ups"
+      - "Ask Claude Code to make the form really save what people type"
+    answer: "Ask Claude Code to make the form really save what people type"
+    explanation: "A sign-up form can look finished and still do nothing with what people type. That's why the last step is to make it actually work."
+    lesson: after-hand-off
+
+  - question: "You click Sign up and nothing happens. You press F12 and see red text in the Console. What do you send Claude?"
+    options:
+      - "The exact error, plus what you clicked and what you expected to happen"
+      - "\"My sign-up button is broken, please fix it\", without the error"
+      - "A description of how the page looks, so Claude can picture it"
+    answer: "The exact error, plus what you clicked and what you expected to happen"
+    explanation: "Give Claude the whole story. The red text is your actual error, and it names the file and the line where things went wrong."
+    lesson: when-it-breaks
+
+  - question: "Your site looks great on a laptop, but the text is squashed on a phone. Which file holds how the page looks on different screens?"
+    options:
+      - "index.html"
+      - "script.js"
+      - "styles.css"
+    answer: "styles.css"
+    explanation: "styles.css holds the look: colours, fonts, spacing, and how it changes on a phone versus a laptop. index.html holds the words and script.js holds the behaviour."
+    lesson: the-three-files
+
+  - question: "You want to take your own website through the whole workflow. Which order do you follow?"
+    options:
+      - "Build it in Claude Code, then design it in Claude Design, then launch it"
+      - "Design it in Claude Design, build it in Claude Code, then launch it"
+      - "Launch it on tiiny.host first, then design it and build it"
+    answer: "Design it in Claude Design, build it in Claude Code, then launch it"
+    explanation: "Design, build, deploy. Claude Design makes the look, Claude Code builds the actual files from your design, and localhost or tiiny.host launches it."
+    lesson: the-whole-workflow

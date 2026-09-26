@@ -2,20 +2,26 @@
 
 import Link from "next/link";
 import { HandsOnChip, PracticeChip } from "@/components/chip";
-import { Hex } from "@/components/hex";
+import { Hex, HexCheck } from "@/components/hex";
 import { formatAbout, formatCount } from "@/lib/format";
-import { type Outline, type OutlineLesson, allLessons, moduleHref, resumeTarget } from "@/lib/outline";
+import { type Outline, type OutlineLesson, type OutlineQuiz, allLessons, moduleHref, resumeTarget } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
+import { type QuizResult, useQuizResults } from "@/lib/quiz-results";
 
 type Props = {
   outline: Outline;
   module: number;
 };
 
-/** One released module: its title on the left, its lessons on the track. */
+/**
+ * One released module: its title on the left, its lessons on the track,
+ * then its quiz and any Check your skills page. Quizzes aren't lessons:
+ * they don't count towards progress and are never "up next".
+ */
 export function CourseTrack({ outline, module: moduleNumber }: Props) {
   const mod = outline.modules.find((m) => m.number === moduleNumber);
   const { completed, ready } = useCompletedLessons();
+  const { results } = useQuizResults();
   if (!mod) return null;
 
   // Before progress loads (and with no JavaScript) this renders as a new
@@ -62,7 +68,7 @@ export function CourseTrack({ outline, module: moduleNumber }: Props) {
             const isDone = done.has(lesson.id);
             const isNext = lesson.id === nextId;
             const previousDone = index > 0 && done.has(mod.lessons[index - 1].id);
-            const isLast = index === mod.lessons.length - 1;
+            const isLast = index === mod.lessons.length - 1 && !mod.quiz;
             return (
               <li key={lesson.id} className="relative grid grid-cols-[44px_minmax(0,1fr)] gap-x-3.5">
                 <div aria-hidden="true" className="relative flex justify-center">
@@ -104,9 +110,106 @@ export function CourseTrack({ outline, module: moduleNumber }: Props) {
               </li>
             );
           })}
+          {mod.quiz && (
+            <QuizRow
+              quiz={mod.quiz}
+              module={mod.number}
+              result={results[mod.quiz.id]}
+              previousDone={done.has(mod.lessons.at(-1)?.id ?? "")}
+            />
+          )}
         </ol>
+        {mod.skillsCheck && (
+          <SkillsCheckCard check={mod.skillsCheck} module={mod.number} result={results[mod.skillsCheck.id]} />
+        )}
       </div>
     </div>
+  );
+}
+
+/** The module quiz, after the last lesson. Shows the last result once taken. */
+function QuizRow({
+  quiz,
+  module,
+  result,
+  previousDone,
+}: {
+  quiz: OutlineQuiz;
+  module: number;
+  result: QuizResult | undefined;
+  previousDone: boolean;
+}) {
+  return (
+    <li className="relative grid grid-cols-[44px_minmax(0,1fr)] gap-x-3.5">
+      <div aria-hidden="true" className="relative flex justify-center">
+        <span className={`absolute top-0 left-[21px] h-3.5 w-0.5 ${previousDone ? "bg-accent" : "bg-border"}`} />
+        <span className="relative mt-3.5 block h-11 w-10">
+          <Hex
+            width={40}
+            height={44}
+            shape={result ? "fill-surface stroke-accent stroke-[1.5]" : "fill-surface stroke-pip stroke-[1.5]"}
+            className="block"
+          />
+          <span
+            className={`absolute inset-0 grid place-items-center font-sans text-[19px] leading-none font-bold ${result ? "text-accent" : "text-muted"}`}
+          >
+            ?
+          </span>
+        </span>
+      </div>
+      <div className="min-w-0 pt-1 pb-2">
+        <div className="relative flex min-h-16 flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-[14px] px-3.5 py-2.5 text-fg hover:bg-surface2 has-[.row-link:focus-visible]:outline-3 has-[.row-link:focus-visible]:outline-offset-3 has-[.row-link:focus-visible]:outline-accent">
+          <span className="flex min-w-0 flex-col gap-1">
+            <Link
+              href={quiz.href}
+              className="row-link display text-[21px] leading-[1.3] font-semibold text-fg no-underline after:absolute after:inset-0 after:rounded-[14px] hover:text-fg focus-visible:outline-none"
+            >
+              Module {module} quiz
+            </Link>
+            <QuizMeta quiz={quiz} result={result} />
+          </span>
+        </div>
+      </div>
+    </li>
+  );
+}
+
+/** A Check your skills page, after the module's track. */
+function SkillsCheckCard({ check, module, result }: { check: OutlineQuiz; module: number; result: QuizResult | undefined }) {
+  const range = module === 1 ? "Module 1" : `Modules 1 to ${module}`;
+  return (
+    <Link
+      href={check.href}
+      className="mt-4 grid grid-cols-[44px_minmax(0,1fr)] gap-x-3.5 rounded-2xl border-[1.5px] border-border p-4 text-fg no-underline hover:border-accent hover:text-fg"
+    >
+      <span aria-hidden="true" className="flex justify-center pt-0.5">
+        <Hex width={40} height={44} shape="fill-tint stroke-accent stroke-[1.5]">
+          <HexCheck className="stroke-accent stroke-2" />
+        </Hex>
+      </span>
+      <span className="flex min-w-0 flex-col gap-1">
+        <span className="display text-[21px] leading-[1.3] font-semibold">Check your skills</span>
+        <span className="text-[16px] leading-[1.4] text-muted">
+          {check.questions > 0
+            ? `A mixed quiz on ${range}, and a checklist for your final project`
+            : "A checklist for your final project"}
+        </span>
+        {result && <QuizMeta quiz={check} result={result} hideCount />}
+      </span>
+    </Link>
+  );
+}
+
+function QuizMeta({ quiz, result, hideCount = false }: { quiz: OutlineQuiz; result: QuizResult | undefined; hideCount?: boolean }) {
+  return (
+    <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[16px] leading-[1.4] text-muted">
+      {!hideCount && <span>{formatCount(quiz.questions, "question")}</span>}
+      {result && (
+        <span className="font-bold text-fg">
+          Last try: {result.correct} of {result.total}
+        </span>
+      )}
+    </span>
   );
 }
 

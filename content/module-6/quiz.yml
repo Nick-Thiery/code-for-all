@@ -1,0 +1,78 @@
+questions:
+  - question: "Last week you pushed a change to a file in your project. Now you want to see how the file looked before that change. Does your GitHub repo still have the older version?"
+    options:
+      - "No, a repo only keeps the latest version of each file"
+      - "Yes, a repo keeps the project's history: every version of every file"
+      - "Only if you made the repo public"
+    answer: "Yes, a repo keeps the project's history: every version of every file"
+    explanation: "A repo is the one place where your project's files and their history live. History means every version of every file, not only the latest one."
+    lesson: what-is-github
+
+  - question: "You asked Claude Code to commit your changes. You refresh your repo page on GitHub, but the changes aren't there. Why?"
+    options:
+      - "GitHub waits for a teammate to approve every change before showing it"
+      - "Your commit message wasn't clear enough for GitHub"
+      - "A commit saves on your computer, so you still need to push it"
+      - "You need to clone the repo again first"
+    answer: "A commit saves on your computer, so you still need to push it"
+    explanation: "A commit saves a snapshot locally, NOT on GitHub. You commit, then you push: the push sends your commits up so the online copy is up to date."
+    lesson: key-terms
+
+  - question: "You find an open source project on GitHub. You want your own copy of it on your GitHub account, so you can change it without affecting the original. What do you do?"
+    options:
+      - "Fork it"
+      - "Clone it"
+      - "Merge it"
+      - "Open a pull request"
+    answer: "Fork it"
+    explanation: "Forking makes your own copy of someone else's repo on your GitHub account. Cloning is different: it copies a repo down onto your computer."
+    lesson: key-terms
+
+  - question: "You're building a site with two friends. You want them to check your changes before they go into the main project. What should you do?"
+    options:
+      - "Push, so your friends get asked to approve it"
+      - "Open a pull request, so they can review your changes first"
+      - "Commit, so your changes go onto your friends' computers"
+      - "Fork your own repo and send them the link"
+    answer: "Open a pull request, so they can review your changes first"
+    explanation: "A push goes straight in, with no waiting and no approval. A pull request asks your team to look first: they can comment, suggest edits, and approve or reject the changes."
+    lesson: push-vs-pull-request
+
+  - question: "Your project is on GitHub, and a friend asks for the link to your website. Why isn't there a website yet?"
+    options:
+      - "You need to open a pull request first"
+      - "Your repo is private, so GitHub is hiding the website"
+      - "GitHub only makes a website after your first merge"
+      - "GitHub stores your code; Vercel is what turns it into a website"
+    answer: "GitHub stores your code; Vercel is what turns it into a website"
+    explanation: "GitHub stores your code, but nothing there is a website yet. Vercel reads your repo, builds the site and hosts it at a public link."
+    lesson: intro-to-vercel
+
+  - question: "You're creating a repo on GitHub for your own project. Which should you choose, and why?"
+    options:
+      - "Public, so that Vercel is able to find it and deploy it"
+      - "Public, because you can't push to a private repo"
+      - "Private, because anyone can see a public repo and what's in it"
+    answer: "Private, because anyone can see a public repo and what's in it"
+    explanation: "Make your repo Private when you create it. A public repo can be seen by anyone, and so can everything you commit to it."
+    lesson: get-your-code-into-github
+
+  - question: "You signed up to Vercel with your email address. When you try to import a project, Vercel can't see any of your repos. What went wrong?"
+    options:
+      - "You should have signed up with your GitHub account"
+      - "Your repos need to be public for Vercel to see them"
+      - "You haven't opened a pull request yet"
+      - "You need to zip your files and upload them to Vercel first"
+    answer: "You should have signed up with your GitHub account"
+    explanation: "Signing up with your GitHub account, not email, is what lets Vercel see your repos. Then authorise Vercel when GitHub asks."
+    lesson: connect-to-vercel
+
+  - question: "Your site is live on Vercel. You fix a spelling mistake in your project. How do you get the fix onto your live site?"
+    options:
+      - "Zip your files and upload them to Vercel again"
+      - "Delete the project on Vercel and import your repo again"
+      - "Commit the fix, and Vercel reads it from your computer"
+      - "Push the fix to GitHub, and Vercel updates the site"
+    answer: "Push the fix to GitHub, and Vercel updates the site"
+    explanation: "Once your repo is connected, Vercel grabs the new code every time you push and updates your live site. There's no manual uploading, ever."
+    lesson: intro-to-vercel

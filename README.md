@@ -49,7 +49,7 @@ A lesson is one file. You don't need to touch any code.
    | Field | What to write |
    | --- | --- |
    | `title` | The lesson's name. If it contains a colon, wrap it in quotes: `title: "Prompts: the basics"` |
-   | `slug` | The web address: the lesson will live at `/module-2/<slug>`. Lowercase letters, numbers and dashes only, and not `complete`. Make it match the file name. It only has to be unique within its module. |
+   | `slug` | The web address: the lesson will live at `/module-2/<slug>`. Lowercase letters, numbers and dashes only, and not `complete`, `quiz` or `check-your-skills` (the module uses those). Make it match the file name. It only has to be unique within its module. |
    | `order` | Where the lesson sits in its module. Lower numbers come first. Only the order matters, so count in tens (10, 20, 30). That way you can slot a new lesson in at 15 without renumbering the rest. Every lesson in a module needs its own number. |
    | `duration` | Estimated minutes, as a plain number: `25`, not `25 min`. |
    | `summary` | One sentence. Shown under the lesson title. If it contains a colon, wrap it in quotes. |
@@ -96,6 +96,50 @@ Things that commonly trip people up:
 - **File ends in `.md`.** It has to be `.mdx`.
 - **Colons in the frontmatter.** `summary: Three things: bias, ...` breaks. Wrap the value in quotes.
 - **Two lessons in a module with the same `order` or `slug`.** Each lesson needs its own.
+
+## Add a module quiz
+
+A module's quiz is one file, `content/module-N/quiz.yml`. It appears at `/module-N/quiz`, on the course page as a row after the module's last lesson, and as the "Next" link at the end of that lesson. A module without the file simply has no quiz. The quiz isn't a lesson: it doesn't count towards progress and is never locked.
+
+```yaml
+questions:
+  - question: "You've connected your repo to Vercel and just pushed a change to GitHub. How does your live site get it?"
+    options:
+      - "You upload the new files to Vercel"
+      - "Vercel rebuilds and updates it automatically"
+      - "You delete the project and import it again"
+    answer: "Vercel rebuilds and updates it automatically"
+    explanation: "Once they're connected, every push to GitHub makes Vercel rebuild and update your live site. You never upload anything again."
+    lesson: connect-to-vercel
+```
+
+| Field | What to write |
+| --- | --- |
+| `question` | The question. Situations work better than definitions. Wrap it in double quotes (write `\"` for a quote mark inside). |
+| `options` | 3 or 4 answers, each on its own line starting with `  - `, all different. No "all of the above": the order is shuffled when learners try again. |
+| `answer` | The correct option, copied exactly (capitals and punctuation too). |
+| `explanation` | Why that answer is right, in a sentence or two. Shown after every answer. |
+| `lesson` | The slug of the lesson in this module that teaches it. A wrong answer links there ("Review: ..."). |
+
+Learners answer one question at a time, see the explanation after each, and get a summary at the end ("You got 5 of 7.") with the lessons to look at again. There are no points, grades or pass marks. The first try uses the order you wrote the options in; "Try again" shuffles them, so vary where the correct answer sits. The build checks every quiz file and says what to fix, like it does for lessons.
+
+### Check your skills
+
+`content/check-your-skills.yml` adds a Check your skills page after a module, at `/module-N/check-your-skills`, with a link on the course page and on that module's Module complete page. Each page has a mixed quiz picked from earlier modules' quizzes (a fresh mix each try), then the final-project build checklist, which is unscored. By default the quiz is 8 questions spread over Modules 1 to N; a page's optional `draw` list sets how many come from which modules, for example 5 from `modules: 6-8` and 3 from `modules: 1-5`.
+
+```yaml
+pages:
+  - after: 5
+    intro: "Optional line shown above this page's checklist."
+  - after: 8
+
+checklist:
+  - criterion: It ships
+    items:
+      - "Is your project live at a working URL that anyone can open?"
+```
+
+To add a page, add another `- after: N`. The checklist is shared by every page; each criterion is a heading with its questions as tick-boxes.
 
 ## Modules and phases
 
@@ -153,6 +197,8 @@ content/module-N/               one .mdx file per lesson
 app/page.tsx                    home: hero, the phases and their modules, how it works
 app/[module]/[lesson]/page.tsx  lesson template (/module-1/<slug>)
 app/[module]/complete/page.tsx  Module complete (/module-1/complete)
+app/[module]/quiz/page.tsx      module quiz (/module-1/quiz)
+app/[module]/check-your-skills/page.tsx  Check your skills (/module-5/check-your-skills)
 app/[module]/page.tsx           /module-N: Coming soon for a module that isn't out
 app/run-it/page.tsx           Run a session, for adults
 app/access/page.tsx           how hands-on access works
@@ -163,6 +209,10 @@ components/                   one file per piece of the design (header, footer, 
 lib/lessons.ts                reads, checks and orders modules and lessons
 lib/outline.ts                the course outline the browser gets (no lesson text)
 lib/progress.ts               completion state in localStorage
+lib/quizzes.ts                reads and checks quiz.yml and check-your-skills.yml
+lib/quiz.ts                   quiz types, shuffling and the mixed-quiz draw
+lib/quiz-results.ts           quiz results and checklist ticks in localStorage
+components/module-quiz.tsx    the quiz card (ModuleQuiz)
 lib/practice*.ts              practice types, mock grading and ?mock= fixtures
 lib/site.ts                   site copy, plus the Contact and session kit links (TODO)
 app/globals.css               design tokens, type, buttons, lesson styles
@@ -172,6 +222,7 @@ design/                       the Claude Design export this site is built from
 ## Notes
 
 - **Completion** is stored in the browser's localStorage under `cfa:completed-lessons`, as a list of lesson ids like `module-1/meet-lovable`. It doesn't sync between devices. If you rename a slug or move a lesson to another module, anyone who finished that lesson will see it as unfinished. Returning learners get a "Continue" button on the home page and a "Pick up where you left off" bar on other pages, pointing at their first unfinished lesson.
+- **Quiz results** are stored under `cfa:quiz-results`: for each quiz (`module-1/quiz`, `module-5/check-your-skills`), the last result only (how many right, out of how many, the ids of the lessons to review, and the date). Check your skills ticks are stored under `cfa:checklists`, per page. Neither holds anything the learner typed.
 - **Dark mode** follows the device setting until someone uses the toggle. After that, their choice is remembered in `cfa:theme`.
 - **Design**: the source is `design/Code for All Website.dc.html`, exported from Claude Design; open it in a browser to see every page and the spec sheet. The colour and size tokens at the top of `app/globals.css` are pasted from that spec sheet. Use the tokens (as Tailwind classes like `bg-tint` or `text-accent`, or `var(--accent)`); Tailwind's default colour palette is switched off. Headings are set in Recursive, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.
 - **TODO links**: Contact and the session kit links are empty in `lib/site.ts`. Until they're filled in, those links show as disabled buttons or plain text, with a dashed outline in development.

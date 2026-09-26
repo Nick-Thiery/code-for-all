@@ -1,0 +1,76 @@
+questions:
+  - question: "Your Chrome extension from Module 3 still isn't working, so you go back to Claude Code. What does the self-review say to tell it?"
+    options:
+      - "Just that it's broken, and ask it to fix it"
+      - "Exactly what the extension should do if it worked perfectly"
+      - "Nothing yet: give up on it and ask for a different extension"
+    answer: "Exactly what the extension should do if it worked perfectly"
+    explanation: "Your answer to \"If it worked perfectly, what exactly should it do?\" is exactly what to tell Claude Code. It gives Claude Code a clear goal, so it doesn't have to guess what working means."
+    lesson: homework-review
+
+  - question: "At the start of every new chat, you paste in the same paragraph explaining how you like your revision notes laid out. What would a skill change?"
+    options:
+      - "You'd write those instructions once, and Claude would use them whenever a task needs them"
+      - "Claude would remember every word from all of your past chats instead"
+      - "You'd still paste the paragraph each time, but Claude would read it faster"
+      - "You'd choose the skill from a list at the start of every chat"
+    answer: "You'd write those instructions once, and Claude would use them whenever a task needs them"
+    explanation: "A skill stores your instructions as a file, so you never have to repeat yourself across conversations. Claude finds and loads it when a task needs it."
+    lesson: what-are-skills
+
+  - question: "You've added five skills to Claude. A friend says they'll fill up Claude's context window in every chat. Are they right?"
+    options:
+      - "Yes, every skill is loaded at the start of every chat"
+      - "Yes, so you should delete the skills you aren't using right now"
+      - "No, each skill stays packaged until a task needs it"
+      - "No, because you switch each skill on yourself when you want it"
+    answer: "No, each skill stays packaged until a task needs it"
+    explanation: "Claude works out which skill fits your task and loads only that one. The rest don't take up space until they're needed, which keeps the context window lean."
+    lesson: what-are-skills
+
+  - question: "You're writing a SKILL.md for a skill that lays out your revision notes. What should the file start with?"
+    options:
+      - "Your instructions, with the skill's name on the last line"
+      - "An example of finished notes, and nothing else"
+      - "A line telling Claude to load it in every single chat"
+      - "The skill's name and a description of when to use it"
+    answer: "The skill's name and a description of when to use it"
+    explanation: "A SKILL.md starts with the name and a description that tells Claude what the skill does and when to use it. The instructions come after that."
+    lesson: set-up-a-skill
+
+  - question: "You've uploaded your SKILL.md, but you want it to load automatically when you work on a project. What's the last step?"
+    options:
+      - "Paste the file's text into each new chat"
+      - "Link the skill to the project"
+      - "Make the skill again with Create with Claude"
+    answer: "Link the skill to the project"
+    explanation: "The fourth step is to attach the skill to a project. Once it's linked, it loads automatically."
+    lesson: set-up-a-skill
+
+  - question: "A formula in your spreadsheet gives the wrong total, and you can't work out why. How can Claude in Excel help?"
+    options:
+      - "It can't, because Claude only works with words, not formulas"
+      - "It can only copy your data into a separate chat window"
+      - "It can explain the formula in plain English and help you fix it"
+    answer: "It can explain the formula in plain English and help you fix it"
+    explanation: "Formula assistance is one of the three things Claude in Excel helps with. It can write, fix and explain formulas in plain English, right inside your spreadsheet."
+    lesson: claude-in-excel
+
+  - question: "Claude in Excel tells you the wettest day in the weather data was 14 August. What should you do before you put that in your explanation?"
+    options:
+      - "Nothing, because Claude read the whole sheet so it can't be wrong"
+      - "Find 14 August and check its Rainfall (mm) cell yourself"
+      - "Ask again and use whichever answer comes up twice"
+      - "Copy the data into a normal chat and ask there too"
+    answer: "Find 14 August and check its Rainfall (mm) cell yourself"
+    explanation: "Claude can show which cells its numbers came from, but you should still check its answers against the cells. Looking at the cell yourself is the quickest way to be sure."
+    lesson: claude-in-excel
+
+  - question: "You want to try Claude in Chrome. What's the right way to get it?"
+    options:
+      - "Build it yourself with Claude Code, like your Module 3 extension"
+      - "Download it, then sign up for your own Claude account"
+      - "Download it from the Chrome Web Store and open it with your Code for All access"
+    answer: "Download it from the Chrome Web Store and open it with your Code for All access"
+    explanation: "Claude in Chrome is an extension made by Anthropic, on the Chrome Web Store. You open it with the access your Code for All session gives you, so you don't sign up for anything yourself."
+    lesson: claude-in-chrome
