@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Honeycomb } from "@/components/honeycomb";
-import { getModule, getModules, getPlannedModule, parseModuleParam } from "@/lib/lessons";
-import { moduleHref } from "@/lib/outline";
+import { getModule, getModules, getPlannedModule, getSkillsChecks, parseModuleParam } from "@/lib/lessons";
+import { moduleHref, skillsCheckHref } from "@/lib/outline";
 
 type Props = { params: Promise<{ module: string }> };
 
@@ -26,7 +26,12 @@ export default async function ModuleCompletePage({ params }: Props) {
   const mod = await find(params);
   if (!mod) notFound();
   const nextNumber = mod.number + 1;
-  const [next, planned] = await Promise.all([getModule(nextNumber), getPlannedModule(nextNumber)]);
+  const [next, planned, skills] = await Promise.all([
+    getModule(nextNumber),
+    getPlannedModule(nextNumber),
+    getSkillsChecks(),
+  ]);
+  const hasSkillsCheck = skills.pages.some((page) => page.after === mod.number);
 
   return (
     <div className="px-(--gut)">
@@ -41,6 +46,18 @@ export default async function ModuleCompletePage({ params }: Props) {
             <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Show someone what you made</h2>
             <p className="m-0">Explaining how you made it is the best way to remember it.</p>
           </div>
+          {hasSkillsCheck && (
+            <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-accent p-6">
+              <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Check your skills</h2>
+              <p className="m-0">
+                A mixed quiz on {mod.number === 1 ? "Module 1" : `Modules 1 to ${mod.number}`}, and a checklist for your
+                final project.
+              </p>
+              <Link href={skillsCheckHref(mod.number)} className="text-link">
+                Check your skills →
+              </Link>
+            </div>
+          )}
           {planned && (
             <div className="flex flex-col gap-1.5 rounded-[20px] bg-tint p-6">
               {next ? (

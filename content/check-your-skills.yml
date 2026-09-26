@@ -1,0 +1,43 @@
+# Check your skills pages. Each one sits after a module, at
+# /module-N/check-your-skills, with a mixed quiz drawn from the quiz.yml files
+# of earlier modules, then the build checklist below.
+# To add a page, add a line under "pages". "intro" is optional: a line shown
+# above that page's checklist. "draw" is optional: which modules the questions
+# come from and how many from each (without it, 8 spread over Modules 1 to N).
+#
+# The checklist is the final-project rubric from the LaunchLab Blueprint (see
+# docs/launchlab-curriculum-source.md, "Assessment", and docs/course-map.md,
+# 10.1 and 10.2), worded as questions, with no points. Each criterion is one
+# group. Wrap an item in quotes if it contains a colon.
+
+pages:
+  - after: 5
+    intro: "Some of these, like version control, come later in the course. Tick what's true so far and come back to the rest."
+  - after: 8
+    # 5 questions from this phase (Modules 6 to 8) and 3 from Modules 1 to 5.
+    draw:
+      - modules: 6-8
+        questions: 5
+      - modules: 1-5
+        questions: 3
+
+checklist:
+  - criterion: It ships
+    items:
+      - "Is your project live at a working URL that anyone can open?"
+      - "Does it load properly on a phone and on a laptop?"
+      - "Do all your pages and links work, with none broken?"
+  - criterion: It solves something real
+    items:
+      - "Does it solve something real for someone? Can you say who, and how?"
+  - criterion: It works end to end
+    items:
+      - "Can someone use it from start to finish without it breaking?"
+  - criterion: AI-assisted workflow
+    items:
+      - "Can you explain how you used AI to build it?"
+      - "Can you show a prompt that failed and how you fixed it?"
+  - criterion: Craft and version control
+    items:
+      - "Have you taken care over the details, so it looks and works the way you meant?"
+      - "Is your code saved in version control, like a GitHub repository?"

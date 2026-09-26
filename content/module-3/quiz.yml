@@ -1,0 +1,74 @@
+questions:
+  - question: "A friend says Claude Code is just autocomplete: it guesses the next line while you type. What's the biggest thing they've missed?"
+    options:
+      - "It only works on the one file you have open, not the rest of your project"
+      - "It reads your whole project, runs commands and fixes its own mistakes"
+      - "It can suggest code, but you have to run every command yourself"
+    answer: "It reads your whole project, runs commands and fixes its own mistakes"
+    explanation: "Claude Code is an agent. Instead of just suggesting the next line, it works through your whole project, runs commands and tries again when something fails."
+    lesson: what-is-claude-code
+
+  - question: "You've installed the Claude Code extension for VS Code and want to use its chat panel. Do you need to install the terminal version too?"
+    options:
+      - "No, unless you want to type claude in VS Code's built-in terminal"
+      - "Yes, the chat panel won't work until the terminal version is installed"
+      - "Yes, and you need to install the desktop app as well"
+    answer: "No, unless you want to type claude in VS Code's built-in terminal"
+    explanation: "The extension comes with its own copy of Claude Code for its chat panel. You only need the terminal version to type claude in VS Code's built-in terminal."
+    lesson: what-is-claude-code
+
+  - question: "Your code works, but it's messy and hard to read. You ask Claude Code to refactor it. What should you expect?"
+    options:
+      - "Tidier code that still does exactly the same thing"
+      - "Tidier code with some new features added"
+      - "A shorter app, with the parts it didn't understand taken out"
+      - "A fresh app that works in a different way"
+    answer: "Tidier code that still does exactly the same thing"
+    explanation: "Refactoring means changing how code is written without changing what it does. Claude Code cleans it up and keeps the same functionality."
+    lesson: what-it-can-do
+
+  - question: "Earlier in your session, Claude Code changed a few files to fix an error. Now you're not sure what it changed. What's the easiest thing to do?"
+    options:
+      - "Start a new session so Claude Code can look at all the files fresh"
+      - "Ask it in plain words what it changed in this session"
+      - "Open every file and compare it line by line yourself"
+    answer: "Ask it in plain words what it changed in this session"
+    explanation: "Claude Code keeps track of the commands, errors and file changes from your session. So it can explain what's been going on, or undo recent changes."
+    lesson: what-it-can-do
+
+  - question: "You've installed the Claude desktop app and opened the Code tab on your project folder. What else do you need to install before you can use Claude Code there?"
+    options:
+      - "The terminal version of Claude Code, using the install command"
+      - "The VS Code extension"
+      - "Nothing: the desktop app includes Claude Code"
+    answer: "Nothing: the desktop app includes Claude Code"
+    explanation: "The desktop app includes Claude Code. When the Code tab is open on your folder, you're ready."
+    lesson: install-claude-code
+
+  - question: "You've just run the install command in your terminal and it has finished. How do you check that it worked?"
+    options:
+      - "Run the install command again: if it finishes without an error, it worked"
+      - "Look for a new Claude icon on your desktop"
+      - "Check your Downloads folder for a Claude file"
+      - "Open a new terminal window and run claude --version"
+    answer: "Open a new terminal window and run claude --version"
+    explanation: "Open a new terminal window and run claude --version. A working installation prints a version number."
+    lesson: install-claude-code
+
+  - question: "You have an idea for a Chrome extension. You want to keep it secret until it's perfect, in case someone steals it. What does the business lesson say?"
+    options:
+      - "Keep it secret, because a great idea is most of what makes it succeed"
+      - "People rarely steal ideas: how well you build it matters more"
+      - "Give up on it if a similar tool already exists"
+    answer: "People rarely steal ideas: how well you build it matters more"
+    explanation: "It's 30% the idea and 70% the execution. People will rarely steal your idea, and most good ideas already exist in some form."
+    lesson: quick-business-lesson
+
+  - question: "You're planning your Chrome extension for the Challenge. Which plan fits the brief best?"
+    options:
+      - "Write a detailed document about a brand-new idea that nobody has ever had"
+      - "Make a website with Lovable that describes the extension you'd build"
+      - "Build a tab organiser for your own messy tabs that installs and works in Chrome"
+    answer: "Build a tab organiser for your own messy tabs that installs and works in Chrome"
+    explanation: "Your extension must actually install in your browser and work. Solving a problem you genuinely have earns bonus points, and an idea that already exists is fine."
+    lesson: plan-your-extension

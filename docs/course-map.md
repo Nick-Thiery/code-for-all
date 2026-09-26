@@ -376,6 +376,13 @@ Source: LaunchLab 10 (image-only slides), plus the Blueprint rubric and schedule
 
 ---
 
+## Quizzes and Check your skills [added]
+
+Not in the slides. Added 26 Sep 2026 so learners can check what they've understood.
+
+- **Module quizzes** (Modules 1 to 8): `content/module-N/quiz.yml`, 8 questions each, drawn only from that module's lessons, each linked to the lesson that teaches it. Mostly situations, not definitions; one clearly correct answer; wrong options are real beginner mistakes. Each quiz was written by one agent and checked by another against its lessons. Shown after the module's last lesson, before Module complete. No locking, points or grades.
+- **Check your skills** (after Module 5 and after Module 8): a mixed quiz of 8 questions, drawn fresh each attempt: after Module 5, spread over Modules 1 to 5; after Module 8, 5 from Modules 6 to 8 and 3 from Modules 1 to 5, plus an unscored build checklist from the final-project rubric in the Blueprint (the source file's "Assessment": it ships; it solves something real; it works end to end; AI-assisted workflow; craft and version control), using 10.1's checklist for "it ships" and 10.2's "Can you show a prompt that failed and how you fixed it?". Minimal wording beyond the rubric: "Can you say who, and how?", "Can you explain how you used AI to build it?", "Have you taken care over the details, so it looks and works the way you meant?", "like a GitHub repository". The page after Module 5 says version control comes later.
+
 ## Practice tasks (PromptPractice)
 
 Each task's grading anchors come straight from the slides.

@@ -1,0 +1,76 @@
+questions:
+  - question: "You've picked the news website. What will you do with it for the rest of this module?"
+    options:
+      - "Build all three sites and keep whichever one looks best"
+      - "Build a draft, improve your prompt with Claude, build again, then compare"
+      - "Ask Claude to build the whole site, then copy it into Lovable"
+    answer: "Build a draft, improve your prompt with Claude, build again, then compare"
+    explanation: "You stick with the one site you picked. You build a first draft in Lovable, ask Claude to help make your prompt better, build again, then compare the two versions."
+    lesson: todays-task
+
+  - question: "Lovable has just built your first draft. What matters most before you move on?"
+    options:
+      - "Save your exact prompt in a notes file"
+      - "Keep asking Lovable for changes until the site looks perfect"
+      - "Delete the draft, as it's only a first try"
+    answer: "Save your exact prompt in a notes file"
+    explanation: "You'll need that exact prompt in the next lesson, when you ask Claude to help you improve it. It's only a first draft, so it doesn't need to be perfect."
+    lesson: solo-sprint
+
+  - question: "You're writing your solo sprint prompt for a personality quiz. Which one leaves Lovable the least to guess?"
+    options:
+      - "Make a personality quiz website that's really fun and looks amazing"
+      - "Make a personality quiz, and you can decide everything else"
+      - "Make a personality quiz for teenagers with a start page, questions and a results page, in bright colours"
+      - "Make a personality quiz"
+    answer: "Make a personality quiz for teenagers with a start page, questions and a results page, in bright colours"
+    explanation: "A strong prompt says who the site is for, which pages it needs and how it should look. The other prompts leave Lovable to guess most of that."
+    lesson: solo-sprint
+
+  - question: "You ask Claude to help with your Lovable prompt, and it gives you an idea for a completely different site. What did you most likely forget?"
+    options:
+      - "To say please and thank you so that Claude takes your request seriously"
+      - "To use the Claude desktop app instead of the website version"
+      - "To make your message to Claude as short as you possibly can"
+      - "To paste your original prompt at the end and ask for a revision"
+    answer: "To paste your original prompt at the end and ask for a revision"
+    explanation: "Claude needs your original prompt to have something to revise. Asking it to revise your prompt, not write a new one, keeps it working on your site."
+    lesson: better-prompts-with-ai
+
+  - question: "Your message to Claude says \"Help me revise my prompt for Lovable. It should look clean.\" and then your original prompt. Compared with the example, what's missing?"
+    options:
+      - "What the site should include and who it's for"
+      - "A request for Claude to build the website itself"
+      - "A limit on how long the revised prompt can be"
+    answer: "What the site should include and who it's for"
+    explanation: "The example message says what the site should include, who it's for and how it should look. Yours only covers how it should look."
+    lesson: better-prompts-with-ai
+
+  - question: "Claude's refined prompt asks for \"a colourful design\", but you want dark blue and white. What should you do before you paste it into Lovable?"
+    options:
+      - "Paste it as it is, because Claude knows best"
+      - "Change it to name the colours you actually want"
+      - "Add \"dark blue and white\" at the end, but leave \"a colourful design\" in"
+      - "Throw it away and use your first prompt again"
+    answer: "Change it to name the colours you actually want"
+    explanation: "Be specific about layout, colours and audience. It's your site, so change the prompt to say exactly what you mean, and take out anything you don't want."
+    lesson: using-refined-prompts
+
+  - question: "You're about to paste Claude's refined prompt into Lovable. What goes in front of it?"
+    options:
+      - "Your original prompt from the solo sprint"
+      - "The whole message you sent to Claude"
+      - "A line telling Lovable it's a refined prompt to make changes from"
+      - "Nothing, just the refined prompt on its own"
+    answer: "A line telling Lovable it's a refined prompt to make changes from"
+    explanation: "You add one line before the refined prompt that tells Lovable it's a refined prompt and to make the required changes. Then the refined prompt follows straight after."
+    lesson: using-refined-prompts
+
+  - question: "In the gallery, you see your refined site now has a proper checkout page. What's the most useful thing to ask yourself?"
+    options:
+      - "Did that come from something I added to the prompt?"
+      - "Should I delete my first draft now it's out of date?"
+      - "Did Lovable just get lucky this time round?"
+    answer: "Did that come from something I added to the prompt?"
+    explanation: "Spotting which changes came from something you added to the prompt is how you learn what a better prompt does."
+    lesson: gallery

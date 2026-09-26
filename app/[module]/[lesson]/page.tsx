@@ -3,10 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AccountNotice } from "@/components/account-notice";
 import { LessonBody } from "@/components/lesson-body";
-import { PrevNext } from "@/components/prev-next";
+import { type NavTarget, PrevNext } from "@/components/prev-next";
 import { RecapBox } from "@/components/recap-box";
 import { getLessonWithNeighbours, getModules, parseModuleParam } from "@/lib/lessons";
-import { moduleTrackHref } from "@/lib/outline";
+import { moduleCompleteHref, moduleTrackHref, quizHref } from "@/lib/outline";
 
 type Props = { params: Promise<{ module: string; lesson: string }> };
 
@@ -36,6 +36,16 @@ export default async function LessonPage({ params }: Props) {
   if (!found) notFound();
   const { lesson, module: mod, previous, next } = found;
 
+  // After the module's last lesson comes its quiz, if it has one, then Module complete.
+  const nextTarget: NavTarget = next
+    ? { label: `Next · Lesson ${next.number}`, title: next.title, href: next.href, lesson: true }
+    : mod.quiz
+      ? { label: `Next · Module ${mod.number} quiz`, title: "Check what you learned", href: quizHref(mod.number) }
+      : { label: `You've finished Module ${mod.number}`, title: "See what's next", href: moduleCompleteHref(mod.number) };
+  const previousTarget: NavTarget | null = previous
+    ? { label: `Previous · Lesson ${previous.number}`, title: previous.title, href: previous.href, lesson: true }
+    : null;
+
   return (
     <div className="px-(--gut)">
       <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-(--sec)">
@@ -63,8 +73,13 @@ export default async function LessonPage({ params }: Props) {
         <LessonBody lesson={lesson} />
 
         <div className="mt-6 flex flex-col gap-6">
-          <RecapBox id={lesson.id} points={lesson.recap} fallback={lesson.summary} next={next?.title} />
-          <PrevNext module={mod.number} previous={previous} next={next} />
+          <RecapBox
+            id={lesson.id}
+            points={lesson.recap}
+            fallback={lesson.summary}
+            next={next ? next.title : mod.quiz ? `Module ${mod.number} quiz` : undefined}
+          />
+          <PrevNext previous={previousTarget} next={nextTarget} />
         </div>
       </article>
     </div>

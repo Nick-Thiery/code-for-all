@@ -1,0 +1,76 @@
+questions:
+  - question: "You're on the bus with only your phone, and you want to get on with the course. What can you do?"
+    options:
+      - "Nothing yet: every part of the course needs a laptop"
+      - "Do the hands-on parts on your phone and skip the reading"
+      - "Read the lessons, and save the hands-on parts for a laptop"
+    answer: "Read the lessons, and save the hands-on parts for a laptop"
+    explanation: "You can read every lesson on a phone. The hands-on parts are the only bit that needs a laptop."
+    lesson: how-this-course-works
+
+  - question: "You've built a website you're proud of, but after a month almost nobody has visited it. What's missing?"
+    options:
+      - "A way to get users, like SEO, ads, social media or word of mouth"
+      - "More pages, because people only visit websites that have lots of them"
+      - "Nothing: if the site is good enough, people will find it on their own"
+    answer: "A way to get users, like SEO, ads, social media or word of mouth"
+    explanation: "Building it isn't enough: a product needs people to use it. SEO, Google Ads, social media and word of mouth are all ways to find them."
+    lesson: what-is-vibe-coding
+
+  - question: "You type a one-sentence idea into Lovable, and it builds something quite different from what you pictured. What's going on?"
+    options:
+      - "Lovable is broken, so you should try the same sentence again tomorrow"
+      - "Your account doesn't have access to Lovable's better features yet"
+      - "That's normal: with a one-line idea, Lovable has to guess the rest"
+      - "Your sentence was too long: Lovable works best with just a few words"
+    answer: "That's normal: with a one-line idea, Lovable has to guess the rest"
+    explanation: "A one-line idea gets you something, but not always what you pictured. Whatever you leave out, Lovable guesses."
+    lesson: meet-lovable
+
+  - question: "Your prompt lists the pages and the design style, but the site's words and difficulty are far too grown-up for the younger students it's meant for. Which part did you leave out?"
+    options:
+      - "Target audience"
+      - "Output required"
+      - "Key features"
+      - "Role"
+    answer: "Target audience"
+    explanation: "The target audience says who the site is for, so the words, layout and difficulty suit them. Leave it out and Lovable has to guess."
+    lesson: the-art-of-prompting
+
+  - question: "You're writing a prompt for a careers website and describe every engineer as \"he\". Why is that a problem?"
+    options:
+      - "It isn't: the AI will notice and fix the bias for you"
+      - "The AI takes your words at face value, so the site can carry your bias too"
+      - "It makes the prompt too long for the AI to read properly"
+    answer: "The AI takes your words at face value, so the site can carry your bias too"
+    explanation: "That's input bias. If your prompt assumes something about people, the result can too, so check your prompt for your own bias."
+    lesson: ethical-considerations
+
+  - question: "A friend says bias in an AI tool doesn't matter, because it stays inside the tool. What does research suggest?"
+    options:
+      - "They're right: bias only changes the tool's answers, never the people using it"
+      - "Bias only matters for tools that big companies make, like ChatGPT"
+      - "People who keep using a biased AI tool can pick up its biases over time"
+    answer: "People who keep using a biased AI tool can pick up its biases over time"
+    explanation: "That's the amplification loop. Bias doesn't stay inside the tool: it can spread to the people who use it."
+    lesson: ethical-considerations
+
+  - question: "You're writing the prompt for your About Me website. Which of these should you put in it?"
+    options:
+      - "Your school's name, so classmates can find the site"
+      - "Your hobbies and the things you've made"
+      - "Your phone number, so visitors can get in touch"
+      - "Your home address, so people know where you're from"
+    answer: "Your hobbies and the things you've made"
+    explanation: "The site is about you, so keep it safe. Leave out anything you wouldn't tell a stranger, like your address, phone number and school."
+    lesson: build-about-me
+
+  - question: "Lovable has built your About Me site, but the look isn't what you wanted. What's the best next step?"
+    options:
+      - "Rewrite the whole prompt from scratch, changing every part at once"
+      - "Run exactly the same prompt again until the result looks different"
+      - "Add \"make it look nicer\" to the end of the prompt and run it again"
+      - "Make the design style part more specific, run it again and compare"
+    answer: "Make the design style part more specific, run it again and compare"
+    explanation: "Find the part of your prompt it got wrong and make that part more specific. Changing one part at a time shows you what each part does."
+    lesson: build-about-me

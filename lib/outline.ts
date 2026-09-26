@@ -16,12 +16,25 @@ export type OutlineLesson = {
   href: string;
 };
 
+/** A quiz page on the track. It isn't a lesson: it never counts towards progress. */
+export type OutlineQuiz = {
+  /** Where its last result is saved: "module-1/quiz" or "module-5/check-your-skills". */
+  id: string;
+  href: string;
+  /** How many questions it asks. */
+  questions: number;
+};
+
 /** A module that's out: its folder exists and has lessons. */
 export type OutlineModule = {
   number: number;
   title: string;
   summary: string;
   lessons: OutlineLesson[];
+  /** The module quiz (content/module-N/quiz.yml), shown after its last lesson. */
+  quiz: OutlineQuiz | null;
+  /** The Check your skills page after this module, if there is one. */
+  skillsCheck: OutlineQuiz | null;
 };
 
 /** Every module in the course plan, out or not, grouped into phases. */
@@ -42,6 +55,10 @@ export const moduleTrackHref = (module: number) => `/#module-${module}`;
 export const moduleCompleteHref = (module: number) => `/module-${module}/complete`;
 export const lessonHref = (module: number, slug: string) => `/module-${module}/${slug}`;
 export const lessonId = (module: number, slug: string) => `module-${module}/${slug}`;
+export const quizHref = (module: number) => `/module-${module}/quiz`;
+export const quizId = (module: number) => `module-${module}/quiz`;
+export const skillsCheckHref = (after: number) => `/module-${after}/check-your-skills`;
+export const skillsCheckId = (after: number) => `module-${after}/check-your-skills`;
 
 export function allLessons(outline: Outline): OutlineLesson[] {
   return outline.modules.flatMap((module) => module.lessons);

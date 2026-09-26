@@ -1,0 +1,72 @@
+questions:
+  - question: "You finish a game on your Wordle clone, close the tab and come back later. Your score and your saved game have gone. Why?"
+    options:
+      - "Your site forgets everyone, so it can't keep track of scores yet"
+      - "Closing the tab broke the game, so Claude has to rebuild it"
+      - "Your score was saved, but only the person who built the site can see it"
+    answer: "Your site forgets everyone, so it can't keep track of scores yet"
+    explanation: "Close the tab and your site has no idea who you were, so it can't keep track of users, scores or saved games. Authentication is how you fix that."
+    lesson: what-your-site-cant-do
+
+  - question: "You want your homepage to show the temperature outside, so you type today's temperature into your code. What's the problem?"
+    options:
+      - "Nothing: the number will update itself as the weather changes"
+      - "Each visitor's browser will swap it for the temperature where they live"
+      - "It will show that same number every day, whatever the weather"
+    answer: "It will show that same number every day, whatever the weather"
+    explanation: "Your site knows only its own files, so it can only display what you typed in the code. To show something live, it has to borrow the data from an API."
+    lesson: what-your-site-cant-do
+
+  - question: "You open the open-meteo link in your browser. Instead of a nice weather page, you see raw data. What's happened?"
+    options:
+      - "The link is broken, so the weather service must be down"
+      - "It worked: you sent a request, and the API answered with data"
+      - "You need to sign up to open-meteo before you can see the proper page"
+    answer: "It worked: you sent a request, and the API answered with data"
+    explanation: "An API is like a door: you knock with a request, and it answers with data. That raw data is what Singapore's weather comes back as."
+    lesson: what-an-api-is
+
+  - question: "You want your site to use a weather API, but you've no idea how the weather service works on the inside. Is that a problem?"
+    options:
+      - "Yes: you have to understand how its database works before you can ask it anything"
+      - "Yes: you have to copy the weather service's code into your own site first"
+      - "No: you send a request, get data back, and never need to see the inside"
+    answer: "No: you send a request, get data back, and never need to see the inside"
+    explanation: "Think of the API as a door. You knock with a request and it answers with data. You never see the inside, and you don't have to."
+    lesson: what-an-api-is
+
+  - question: "Claude has added the temperature box, but when you open your live site, there's no temperature. What should you check?"
+    options:
+      - "That you've typed Singapore's temperature into the code yourself"
+      - "That the chat is linked to the right repo, the changes are pushed, and the repo is connected to Vercel"
+      - "That you've signed up to open-meteo and added your own account details to the prompt"
+    answer: "That the chat is linked to the right repo, the changes are pushed, and the repo is connected to Vercel"
+    explanation: "Your live site only changes once Claude's changes are pushed to the right repo, and that repo is connected to Vercel. Then refresh the page to check."
+    lesson: put-live-data-on-your-page
+
+  - question: "You log in to a site, then click through five pages without typing your password again. How does the site know it's still you?"
+    options:
+      - "Your browser shows your token on every request"
+      - "Your browser quietly sends your password again on every click"
+      - "Once you've logged in, a site remembers you forever"
+    answer: "Your browser shows your token on every request"
+    explanation: "Logging in hands your browser a token, like a sticker that says who you are. Your browser shows it on every request, so the site doesn't need your password on every click."
+    lesson: how-logging-in-works
+
+  - question: "You log out of a site, then try to open your account page again. The site doesn't recognise you. Why?"
+    options:
+      - "Logging out deleted your row, with your email and password, from the user table"
+      - "Your password stopped working when you logged out"
+      - "Logging out threw your token away, so you have to log in again"
+    answer: "Logging out threw your token away, so you have to log in again"
+    explanation: "Logging out throws your token away. The site stops recognising you until you log in again, but your account is still there."
+    lesson: how-logging-in-works
+
+  - question: "Your practice login works with Confirm Email turned off. Now you want to turn it into a real app for your school club. What should you do about Confirm Email?"
+    options:
+      - "Leave it off, because it worked fine in practice"
+      - "Turn it back on: switching it off is only for practice"
+      - "Leave it off, but ask everyone to use a test email"
+    answer: "Turn it back on: switching it off is only for practice"
+    explanation: "Turning off Confirm Email is fine for practice, but don't do it for a real app. A test email is only for trying out your own sign-up."
+    lesson: creating-login-with-supabase
