@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { HandsOnChip, PracticeChip } from "@/components/chip";
 import { Hex, HexCheck } from "@/components/hex";
+import { LevelChip } from "@/components/mastery";
 import { formatAbout, formatCount } from "@/lib/format";
+import { type Level, levelOf } from "@/lib/mastery";
 import { type Outline, type OutlineLesson, type OutlineQuiz, allLessons, moduleHref, resumeTarget } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
-import { type QuizResult, useQuizResults } from "@/lib/quiz-results";
+import { type QuizResult, useMastery, useQuizResults } from "@/lib/quiz-results";
 
 type Props = {
   outline: Outline;
@@ -22,6 +24,7 @@ export function CourseTrack({ outline, module: moduleNumber }: Props) {
   const mod = outline.modules.find((m) => m.number === moduleNumber);
   const { completed, ready } = useCompletedLessons();
   const { results } = useQuizResults();
+  const { levels } = useMastery();
   if (!mod) return null;
 
   // Before progress loads (and with no JavaScript) this renders as a new
@@ -82,7 +85,7 @@ export function CourseTrack({ outline, module: moduleNumber }: Props) {
                 </div>
                 <div className="min-w-0 pt-1 pb-2">
                   {isNext ? (
-                    <UpNextCard lesson={lesson} startedCourse={startedCourse} />
+                    <UpNextCard lesson={lesson} startedCourse={startedCourse} level={levelOf(levels, lesson.id)} />
                   ) : (
                     // The whole row opens the lesson (the title link stretches over
                     // it), while the hands-on chip stays its own link on top.
@@ -97,7 +100,7 @@ export function CourseTrack({ outline, module: moduleNumber }: Props) {
                           </span>
                           {lesson.title}
                         </Link>
-                        <LessonMeta lesson={lesson} />
+                        <LessonMeta lesson={lesson} level={levelOf(levels, lesson.id)} />
                       </span>
                       {isDone && (
                         <span aria-hidden="true" className="text-[16px] font-bold text-accent">
@@ -246,12 +249,12 @@ export function UpcomingModule({ number, title, summary }: { number: number; tit
   );
 }
 
-function UpNextCard({ lesson, startedCourse }: { lesson: OutlineLesson; startedCourse: boolean }) {
+function UpNextCard({ lesson, startedCourse, level }: { lesson: OutlineLesson; startedCourse: boolean; level: Level }) {
   return (
     <div className="flex flex-col gap-1.5 rounded-2xl bg-tint px-[18px] pt-4 pb-[18px]">
       <span className="eyebrow">{startedCourse ? "Up next" : "Start here"}</span>
       <span className="display text-[24px] leading-[1.25] font-[650]">{lesson.title}</span>
-      <LessonMeta lesson={lesson} />
+      <LessonMeta lesson={lesson} level={level} />
       <Link href={lesson.href} className="btn btn-primary mt-2 min-h-12 self-start px-[22px] text-[18px]">
         {startedCourse ? "Continue" : `Start lesson ${lesson.number}`} <span aria-hidden="true">→</span>
       </Link>
@@ -259,12 +262,13 @@ function UpNextCard({ lesson, startedCourse }: { lesson: OutlineLesson; startedC
   );
 }
 
-function LessonMeta({ lesson }: { lesson: OutlineLesson }) {
+function LessonMeta({ lesson, level }: { lesson: OutlineLesson; level: Level }) {
   return (
     <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[16px] leading-[1.4] text-muted">
       <span>{lesson.duration} min</span>
       {lesson.requiresAccount && <HandsOnChip lessonId={lesson.id} className="relative z-10" />}
       {lesson.hasPractice && <PracticeChip />}
+      <LevelChip level={level} />
     </span>
   );
 }

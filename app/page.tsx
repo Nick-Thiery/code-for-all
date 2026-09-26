@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CourseTrack, UpcomingModule } from "@/components/course-track";
 import { Hex } from "@/components/hex";
 import { HomeHero } from "@/components/home-hero";
+import { SkillsOverview } from "@/components/mastery";
 import { getOutline } from "@/lib/lessons";
 
 export default async function HomePage() {
@@ -18,6 +19,7 @@ export default async function HomePage() {
 
       <section aria-label="Course" className="px-(--gut)">
         <div className="mx-auto flex max-w-[1120px] flex-col gap-(--sec) border-t border-border pt-(--hy) pb-(--sec)">
+          <SkillsOverview outline={outline} />
           {outline.phases.map((phase) => (
             <section key={phase.number} aria-labelledby={`phase-${phase.number}`} className="flex flex-col gap-10">
               <header className="flex flex-col gap-1.5">

@@ -71,7 +71,8 @@ export default async function CheckYourSkillsPage({ params }: Props) {
           </p>
           <h1 className="t-h1 m-0">Check your skills</h1>
           <p className="t-lead m-0">
-            A mixed quiz on {range(after)}, then a checklist for your final project. Nothing here is scored.
+            A mixed quiz on {range(after)}, then a checklist for your final project. Right answers in the quiz can
+            take a lesson all the way to Mastered.
           </p>
         </header>
 

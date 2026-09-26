@@ -119,9 +119,19 @@ questions:
 | `options` | 3 or 4 answers, each on its own line starting with `  - `, all different. No "all of the above": the order is shuffled when learners try again. |
 | `answer` | The correct option, copied exactly (capitals and punctuation too). |
 | `explanation` | Why that answer is right, in a sentence or two. Shown after every answer. |
-| `lesson` | The slug of the lesson in this module that teaches it. A wrong answer links there ("Review: ..."). |
+| `lesson` | The slug of the lesson in this module that teaches it. A wrong answer links there ("Review: ..."), and the answer moves that lesson's mastery level (see below). |
 
-Learners answer one question at a time, see the explanation after each, and get a summary at the end ("You got 5 of 7.") with the lessons to look at again. There are no points, grades or pass marks. The first try uses the order you wrote the options in; "Try again" shuffles them, so vary where the correct answer sits. The build checks every quiz file and says what to fix, like it does for lessons.
+Learners answer one question at a time, see the explanation after each, and get a summary at the end ("You got 5 of 7.") showing how each lesson's level moved. There are no grades or pass marks. The first try uses the order you wrote the options in; "Try again" shuffles them, so vary where the correct answer sits. The build checks every quiz file and says what to fix, like it does for lessons.
+
+### Mastery levels
+
+Like Khan Academy, every lesson that a quiz question tests has a mastery level: Not started, Attempted, Familiar, Proficient or Mastered. When a learner finishes a quiz, each lesson it asked about moves:
+
+- Every question on that lesson right: up one level. From Not started, a right answer goes straight to Familiar.
+- Any of them wrong: down one level, but never below Attempted.
+- A module quiz can take a lesson up to Proficient. Only a Check your skills quiz can take it to Mastered, so Mastered means the learner still remembers it later, in a mix.
+
+The course page shows "Your skills" once a learner has finished a lesson or a quiz: their course mastery (Familiar counts 50%, Proficient 80%, Mastered 100%, as on Khan Academy), how many lessons are at each level, and each module's lessons as a row of hexagons that fill up as the level rises. Each lesson row on the track shows its level too. A lesson no quiz question points at has no level and isn't counted. A module's lessons can only reach Mastered if a Check your skills page draws questions from that module, so give new modules one. The rules are in `lib/mastery.ts`.
 
 ### Check your skills
 
@@ -211,8 +221,10 @@ lib/outline.ts                the course outline the browser gets (no lesson tex
 lib/progress.ts               completion state in localStorage
 lib/quizzes.ts                reads and checks quiz.yml and check-your-skills.yml
 lib/quiz.ts                   quiz types, shuffling and the mixed-quiz draw
-lib/quiz-results.ts           quiz results and checklist ticks in localStorage
+lib/quiz-results.ts           quiz results, mastery levels and checklist ticks in localStorage
+lib/mastery.ts                mastery levels: how quizzes move them, and the mastery %
 components/module-quiz.tsx    the quiz card (ModuleQuiz)
+components/mastery.tsx        level hexagons, level chips and the "Your skills" overview
 lib/practice*.ts              practice types, mock grading and ?mock= fixtures
 lib/site.ts                   site copy, plus the Contact and session kit links (TODO)
 app/globals.css               design tokens, type, buttons, lesson styles
@@ -222,7 +234,7 @@ design/                       the Claude Design export this site is built from
 ## Notes
 
 - **Completion** is stored in the browser's localStorage under `cfa:completed-lessons`, as a list of lesson ids like `module-1/meet-lovable`. It doesn't sync between devices. If you rename a slug or move a lesson to another module, anyone who finished that lesson will see it as unfinished. Returning learners get a "Continue" button on the home page and a "Pick up where you left off" bar on other pages, pointing at their first unfinished lesson.
-- **Quiz results** are stored under `cfa:quiz-results`: for each quiz (`module-1/quiz`, `module-5/check-your-skills`), the last result only (how many right, out of how many, the ids of the lessons to review, and the date). Check your skills ticks are stored under `cfa:checklists`, per page. Neither holds anything the learner typed.
+- **Quiz results** are stored under `cfa:quiz-results`: for each quiz (`module-1/quiz`, `module-5/check-your-skills`), the last result only (how many right, out of how many, the ids of the lessons to review, and the date). Each lesson's mastery level is stored under `cfa:mastery`, as lesson id to level (`{"module-1/meet-lovable": "proficient"}`); renaming a slug resets that lesson to Not started. Check your skills ticks are stored under `cfa:checklists`, per page. None of them holds anything the learner typed or which answers they picked.
 - **Dark mode** follows the device setting until someone uses the toggle. After that, their choice is remembered in `cfa:theme`.
 - **Design**: the source is `design/Code for All Website.dc.html`, exported from Claude Design; open it in a browser to see every page and the spec sheet. The colour and size tokens at the top of `app/globals.css` are pasted from that spec sheet. Use the tokens (as Tailwind classes like `bg-tint` or `text-accent`, or `var(--accent)`); Tailwind's default colour palette is switched off. Headings are set in Recursive, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.
 - **TODO links**: Contact and the session kit links are empty in `lib/site.ts`. Until they're filled in, those links show as disabled buttons or plain text, with a dashed outline in development.
