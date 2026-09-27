@@ -19,7 +19,7 @@ type Props = {
 
 export function PrevNext({ label = "Lessons", previous, next }: Props) {
   return (
-    <nav aria-label={label} className="flex flex-row-reverse flex-wrap gap-4 leading-[1.4]">
+    <nav aria-label={label} className="flex flex-row-reverse flex-wrap gap-4 leading-[1.4] print:hidden">
       <Link
         href={next.href}
         rel={next.lesson ? "next" : undefined}

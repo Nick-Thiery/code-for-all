@@ -54,7 +54,7 @@ export function Question({ q, number, children }: QuestionProps) {
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((o) => !o)}
-        className="btn btn-small self-start"
+        className="btn btn-small self-start print:hidden"
       >
         {open ? "Hide answer" : "Show answer"}
       </button>

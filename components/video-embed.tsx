@@ -18,7 +18,7 @@ export function VideoEmbed({ id, title, start }: Props) {
   const watch = `https://www.youtube.com/watch?v=${id}${start ? `&t=${start}s` : ""}`;
   return (
     <figure className="flex flex-col gap-3">
-      <div className="relative aspect-video overflow-hidden rounded-[14px] border-[1.5px] border-border bg-surface2">
+      <div className="relative aspect-video overflow-hidden rounded-[14px] border-[1.5px] border-border bg-surface2 print:hidden">
         <iframe
           src={embed}
           title={title}
@@ -29,9 +29,13 @@ export function VideoEmbed({ id, title, start }: Props) {
           className="absolute inset-0 h-full w-full border-0"
         />
       </div>
-      <figcaption className="t-meta text-muted">
+      <figcaption className="t-meta text-muted print:hidden">
         Video: {title}. <a href={watch}>Watch it on YouTube</a> if it doesn&apos;t play here.
       </figcaption>
+      {/* On paper, a player is no use: print the link instead. */}
+      <p className="m-0 hidden print:block">
+        Video: {title}. Watch it at {watch}
+      </p>
     </figure>
   );
 }

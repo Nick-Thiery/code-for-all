@@ -45,7 +45,7 @@ export function RecapBox({ id, points, fallback, next }: Props) {
         aria-checked={checked}
         disabled={!ready}
         onClick={toggle}
-        className="flex min-h-[68px] w-full cursor-pointer items-center gap-4 rounded-[14px] border-[1.5px] border-border bg-surface px-[18px] py-3 text-left font-[inherit] text-fg hover:border-accent disabled:cursor-default"
+        className="flex min-h-[68px] w-full cursor-pointer items-center gap-4 print:hidden rounded-[14px] border-[1.5px] border-border bg-surface px-[18px] py-3 text-left font-[inherit] text-fg hover:border-accent disabled:cursor-default"
       >
         <span aria-hidden="true" className="relative h-[35px] w-8 flex-none">
           {checked ? (

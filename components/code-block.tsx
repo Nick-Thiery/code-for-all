@@ -76,7 +76,7 @@ function Line({ number, tokens }: { number: number; tokens: Token[] }) {
       <span aria-hidden="true" className="pl-4 text-right text-c-com select-none">
         {number}
       </span>
-      <span className="pr-4 whitespace-pre">
+      <span className="pr-4 whitespace-pre print:whitespace-pre-wrap print:[overflow-wrap:anywhere]">
         {tokens.map((token, index) =>
           token.kind === "plain" ? (
             token.text

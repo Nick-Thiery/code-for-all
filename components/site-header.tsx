@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Hex } from "@/components/hex";
+import type { LogoFiles } from "@/lib/logo";
 import { type Outline, type OutlineLesson, lessonLabel, resumeTarget } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
 import { THEME_CHANGE_EVENT, THEME_STORAGE_KEY, type Theme, applyTheme, readSavedTheme } from "@/lib/theme";
@@ -12,7 +13,7 @@ import { THEME_CHANGE_EVENT, THEME_STORAGE_KEY, type Theme, applyTheme, readSave
 // One header for every page. The URL decides the rest: which nav item is
 // current, whether to show lesson progress, and whether to show the
 // "pick up where you left off" bar.
-export function SiteHeader({ outline }: { outline: Outline }) {
+export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFiles }) {
   const pathname = usePathname();
   const { completed, ready } = useCompletedLessons();
 
@@ -25,9 +26,9 @@ export function SiteHeader({ outline }: { outline: Outline }) {
   const showResume = resume !== null && pathname !== "/" && !lesson;
 
   return (
-    <header className="border-b border-border bg-bg text-[16px] leading-[1.4] text-fg">
+    <header className="border-b border-border bg-bg text-[16px] leading-[1.4] text-fg print:hidden">
       <div className="mx-auto flex min-h-[68px] max-w-[1200px] items-center gap-3 px-(--gut)">
-        <Logo />
+        <Logo files={logo} />
         {lesson && (
           <div className="ml-3 hidden min-h-9 items-center gap-3 border-l border-border pl-5 desktop:flex">
             <span className="font-bold whitespace-nowrap">
@@ -80,32 +81,30 @@ function moduleLength(outline: Outline, lesson: OutlineLesson) {
   return outline.modules.find((module) => module.number === lesson.module)?.lessons.length ?? 0;
 }
 
-function Logo() {
+function Logo({ files }: { files: LogoFiles }) {
+  // The artwork is 401×126; shown 44px tall. Below 600px, only its hexagon shows.
+  // Unoptimised, so the browser gets the exact file: the light and dark
+  // versions must differ only in colour.
+  const image = (src: string) => (
+    <Image
+      src={src}
+      alt=""
+      width={401}
+      height={126}
+      priority
+      unoptimized
+      className="block h-11 w-auto max-w-none"
+    />
+  );
   return (
     <Link
       href="/"
       aria-label="Code for All home"
       className="flex min-h-11 flex-none items-center rounded-lg no-underline"
     >
-      {/* Light: the logo artwork. Below 600px, only its hexagon shows. */}
-      <span className="block h-11 w-[35px] overflow-hidden tablet:w-auto dark:hidden">
-        <Image src="/cfa-logo.png" alt="" width={140} height={44} priority className="block h-11 w-auto max-w-none" />
-      </span>
-      {/* Dark: the artwork's navy text disappears on the dark background, so
-          the mark and wordmark are drawn with theme colours instead. */}
-      <span className="hidden items-center gap-2 dark:flex">
-        <svg width="36" height="40" viewBox="0 0 24 26" aria-hidden="true">
-          <polygon points="12,1 23,7.25 23,18.75 12,25 1,18.75 1,7.25" className="fill-accent" />
-          <text x="12" y="16.4" textAnchor="middle" className="fill-on-accent font-mono text-[9px] font-bold">
-            &lt;/&gt;
-          </text>
-        </svg>
-        <span className="hidden flex-col gap-0.5 leading-none tablet:flex">
-          <span className="font-display text-[23px] font-medium tracking-[.03em] text-deco [font-variation-settings:'CASL'_1]">
-            CODE
-          </span>
-          <span className="font-display text-[16px] font-medium text-fg [font-variation-settings:'CASL'_1]">For All</span>
-        </span>
+      <span className="block h-11 w-[35px] overflow-hidden tablet:w-auto">
+        <span className="dark:hidden">{image(files.light)}</span>
+        <span className="hidden dark:block">{image(files.dark)}</span>
       </span>
     </Link>
   );
@@ -208,6 +207,24 @@ function ThemeToggle() {
     () => null,
   );
 
+  // Print in light colours, whatever the theme; put the theme back afterwards.
+  useEffect(() => {
+    let before: string | undefined;
+    const toLight = () => {
+      before = document.documentElement.dataset.theme;
+      document.documentElement.dataset.theme = "light";
+    };
+    const restore = () => {
+      if (before) document.documentElement.dataset.theme = before;
+    };
+    window.addEventListener("beforeprint", toLight);
+    window.addEventListener("afterprint", restore);
+    return () => {
+      window.removeEventListener("beforeprint", toLight);
+      window.removeEventListener("afterprint", restore);
+    };
+  }, []);
+
   // Until someone picks, keep following the device if it changes.
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
@@ -239,9 +256,12 @@ function ThemeToggle() {
         <path d="M12 3.5a8.5 8.5 0 0 1 0 17z" className="fill-current" />
       </svg>
       {/* The label names where the button takes you. CSS picks it, so it's
-          right before hydration too. */}
-      <span className="hidden tablet:inline dark:tablet:hidden">Dark</span>
-      <span className="hidden dark:tablet:inline">Light</span>
+          right before hydration too. Both share one grid cell, so the button
+          is the same width in either theme. */}
+      <span className="hidden tablet:grid">
+        <span className="[grid-area:1/1] dark:invisible">Dark</span>
+        <span className="invisible [grid-area:1/1] dark:visible">Light</span>
+      </span>
     </button>
   );
 }

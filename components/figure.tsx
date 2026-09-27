@@ -24,7 +24,7 @@ export function Figure({ src, alt, width, height, caption }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
 
   return (
-    <figure className="flex flex-col gap-3">
+    <figure className="flex flex-col gap-3 break-inside-avoid">
       <button
         type="button"
         onClick={() => dialog.current?.showModal()}
@@ -42,7 +42,7 @@ export function Figure({ src, alt, width, height, caption }: Props) {
         />
         <span
           aria-hidden="true"
-          className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-border bg-surface px-2.5 py-1 text-[14px] font-bold text-fg group-hover:border-accent"
+          className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-border bg-surface px-2.5 py-1 text-[14px] font-bold text-fg group-hover:border-accent print:hidden"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" className="fill-none stroke-current stroke-[2.5]">
             <circle cx="10.5" cy="10.5" r="6.5" />

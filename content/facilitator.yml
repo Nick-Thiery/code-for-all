@@ -1,0 +1,345 @@
+# Run sheets for the Run a session page (/run-it) and the session kit:
+# the facilitator script (/run-it/script), the student handout
+# (/run-it/handout) and the pre-session checklist (/run-it/checklist).
+#
+# Lesson titles, durations, recap points, key terms, the Challenge and which
+# lessons are hands-on all come from the lessons themselves, so they stay in
+# sync. This file only holds what the lessons can't say: suggested timings for
+# a 90-minute session, what to do at each step, what to prepare, and the group
+# version of each activity the site turned into a solo one.
+#
+# Where things come from:
+#   - Program facts, deliverable marks and the rubric: the LaunchLab Blueprint
+#     (docs/launchlab-curriculum-source.md, "Program facts from the Blueprint"
+#     and Module 10's "Assessment").
+#   - Group versions ("group"): the [solo version] notes and "Changes after
+#     review" in docs/course-map.md.
+#   - Timings and "do" lines: suggestions, based on each lesson's duration plus
+#     time for the activity. Change them to suit your group.
+#
+# Each module:
+#   module:   the module number
+#   tools:    the tools its hands-on parts use (shown on the checklist)
+#   prepare:  things to sort out before the session, one per line
+#   links:    links to have ready, each with a label and an href
+#   steps:    the session, in order. Each step has:
+#               minutes: suggested minutes (all the steps should add up to
+#                        sessionMinutes)
+#               lessons: optional list of lesson slugs this step covers
+#               title:   optional; without it, the step uses the lesson titles
+#               do:      what you do in this step
+#               group:   optional; the group version of a solo activity
+#               note:    optional; anything else to know
+#
+# Wrap any value that contains ": " in quotes.
+
+sessionMinutes: 90
+
+# Weekly deliverables are marked on this scale (Blueprint).
+deliverableMarks:
+  - Not yet
+  - Done
+  - Done and shared
+
+# The final project is marked out of 20: each criterion (the list in
+# content/check-your-skills.yml) is worth pointsPerCriterion points.
+rubric:
+  pointsPerCriterion: 4
+  bands:
+    - points: "17–20"
+      label: Standout
+    - points: "12–16"
+      label: Solid
+    - points: "8–11"
+      label: Getting there
+    - points: Below 8
+      label: Incomplete, with a two-week extension
+
+modules:
+  - module: 1
+    tools:
+      - Lovable
+    prepare:
+      - A notes file or document for each learner. They save their About me prompt there in lesson 4 and paste it into Lovable in lesson 6.
+      - "Remind learners that the About me site is about them, so it leaves out their address, phone number, school and anything else they wouldn't tell a stranger."
+    links:
+      - label: Lovable
+        href: https://lovable.dev
+    steps:
+      - minutes: 10
+        lessons: [how-this-course-works]
+        do: Welcome everyone. Go through how the course works, and where to get help when they're stuck.
+        group: "The original class had learners join the class Slack here. The site points to the Stuck boxes and to sessions instead. If your group has its own place for questions, share it now."
+      - minutes: 10
+        lessons: [what-is-vibe-coding]
+        do: Explain vibe coding and its three steps. Show what people build with it.
+      - minutes: 10
+        lessons: [meet-lovable]
+        do: Everyone opens Lovable and tries a one-line idea.
+      - minutes: 20
+        lessons: [the-art-of-prompting]
+        do: Compare the bad, better and strong prompts, one part at a time. Learners write their own About me prompt in the practice box and save it in their notes.
+      - minutes: 10
+        lessons: [ethical-considerations]
+        do: Talk through input bias, being representative and the amplification loop.
+      - minutes: 20
+        lessons: [build-about-me]
+        do: Learners paste their prompt into Lovable, then change one part of it and compare the two results.
+      - title: Quiz and Challenge
+        minutes: 10
+        do: Learners try the module quiz. Then set the Challenge.
+
+  - module: 2
+    tools:
+      - Lovable
+      - Claude
+    prepare:
+      - Each learner needs a notes file for their prompts. They save their first prompt in the solo sprint and use it again in lessons 3 and 4.
+      - "If you'll run the group version: decide who's in which group, and which site each group builds."
+    links:
+      - label: Lovable
+        href: https://lovable.dev
+    steps:
+      - minutes: 10
+        lessons: [todays-task]
+        do: Introduce the three sites. Each learner (or group) picks one.
+        group: "In the original class, learners were put into three groups: Group 1 built a personality quiz, Group 2 a news website and Group 3 an online store. The site lets each learner pick one instead."
+      - minutes: 20
+        lessons: [solo-sprint]
+        do: Learners write a detailed prompt for their site, paste it into Lovable and save the exact prompt in their notes.
+        note: The original class timed this sprint with a 20-minute countdown on screen.
+      - minutes: 15
+        lessons: [better-prompts-with-ai]
+        do: Learners practise their message to Claude in the practice box, then send it to Claude with their original prompt at the end.
+      - minutes: 20
+        lessons: [using-refined-prompts]
+        do: Learners check the refined prompt, then paste it into Lovable with the line in front. Remind them to screenshot their first draft before they paste.
+      - minutes: 15
+        lessons: [gallery]
+        do: Learners put their first draft and refined version side by side, write down three things that changed and show someone.
+        group: "In the original class, groups built in breakout rooms for 30 minutes, then posted their links in the class Slack channel (#socials) and everyone browsed the gallery of builds."
+      - title: Quiz and Challenge
+        minutes: 10
+        do: Learners try the module quiz. Then set the Challenge.
+        group: In the original class, learners sent their homework site to a tutor. You can collect the links instead.
+
+  - module: 3
+    tools:
+      - Claude Code
+    prepare:
+      - "Check that learners can install apps on their laptops. Lesson 3 installs the Claude desktop app (macOS or Windows; Linux has its own steps) or installs Claude Code from the terminal."
+      - A new, empty folder on each laptop for the Chrome extension project.
+      - Google Chrome on each laptop, to install and test the extension for the Challenge.
+    links:
+      - label: Claude Code desktop quickstart
+        href: https://code.claude.com/docs/en/desktop-quickstart
+      - label: Terminal guide
+        href: https://code.claude.com/docs/en/terminal-guide
+      - label: Installation troubleshooting
+        href: https://code.claude.com/docs/en/troubleshoot-install
+    steps:
+      - minutes: 10
+        lessons: [what-is-claude-code]
+        do: "Explain what an agent is, and the three places Claude Code works: the terminal, the VS Code extension and the desktop app."
+      - minutes: 10
+        lessons: [what-it-can-do]
+        do: Go through routines, refactoring and session context, with the example prompts.
+      - minutes: 30
+        lessons: [install-claude-code]
+        do: Everyone installs Claude Code, using the desktop app or the terminal, and checks it works. Leave time for install problems.
+        group: The slide told learners to reach out to their tutors if an install failed. In a session, that's you. The lesson's Stuck box has the common fixes.
+      - minutes: 10
+        lessons: [quick-business-lesson]
+        do: Talk through the business lesson. Ask learners why execution matters more than the idea.
+      - minutes: 20
+        lessons: [plan-your-extension]
+        do: Each learner picks a problem they actually have and writes one sentence on what their Chrome extension will do.
+      - title: Quiz and Challenge
+        minutes: 10
+        do: Learners try the module quiz. Then set the Challenge. They'll review their extension at the start of Module 4.
+
+  - module: 4
+    tools:
+      - Claude
+      - Claude in Excel
+      - Claude in Chrome
+    prepare:
+      - "Microsoft Excel on each laptop, and a way to open Claude in Excel with your group's access. The lesson doesn't include these setup steps yet, so sort them out before the session."
+      - Each learner's Chrome extension from the Module 3 Challenge, ready to open.
+      - "Learners upload a SKILL.md file in lesson 3. Lesson 3 shows what goes in one; Claude's menu also has Create with Claude and Write skill instructions."
+      - "Claude's menus change often. Check the path in lesson 3 (Customize, then Skills) in the live app before the session."
+    links:
+      - label: Claude in Chrome on the Chrome Web Store
+        href: https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn
+    steps:
+      - minutes: 15
+        lessons: [homework-review]
+        do: Learners open their Chrome extension and answer the four review questions in their notes.
+        group: "In the original class, this was an active homework review: learners demoed their extension to the class. Does it install cleanly? What problem does it solve? What was the hardest part to get working?"
+      - minutes: 10
+        lessons: [what-are-skills]
+        do: Explain reusable instructions, on-demand loading and consistent outputs.
+      - minutes: 20
+        lessons: [set-up-a-skill]
+        do: Everyone adds a skill of their own to Claude in four steps.
+      - minutes: 25
+        lessons: [claude-in-excel]
+        do: Learners download singapore-weather.csv, open it in Excel and ask Claude what the data shows. They check its answers against the cells, then explain the data in their own words.
+        note: The class activity was deciding whether a stock was worth buying, using data shared on Slack. The site uses the Singapore weather data instead.
+      - minutes: 10
+        lessons: [claude-in-chrome]
+        do: Watch the Claude in Chrome video, then learners add the extension from the Chrome Web Store.
+      - title: Quiz and Challenge
+        minutes: 10
+        do: Learners try the module quiz. Then set the Challenge.
+        group: In the original class, learners sent their skill to a tutor on Slack. You can collect them instead.
+
+  - module: 5
+    tools:
+      - Claude Design
+      - Claude Code
+      - tiiny.host
+    prepare:
+      - "Find \"Handoff to Claude Code…\" in Claude Design's Export menu before the session. It's easy to miss."
+      - "Try the handoff once yourself. If Claude Code can't reach the design, lesson 2's Stuck box has the fix."
+      - Google Chrome on each laptop. Lesson 5 uses F12 and the Console tab to read errors.
+      - "Each learner needs a project folder on their laptop for Claude Code to build in."
+    links:
+      - label: tiiny.host
+        href: https://tiiny.host/
+    steps:
+      - minutes: 15
+        lessons: [design-your-front-end-first]
+        do: Watch the Claude Design video, then everyone starts designing their site in Claude Design.
+      - minutes: 10
+        lessons: [export-your-design]
+        do: Show where the handoff is. Learners copy the handoff prompt and paste it into Claude Code in their project folder.
+      - minutes: 5
+        lessons: [what-claude-code-actually-does]
+        do: "Explain the difference between an agent and a chatbot, and that errors are normal: type continue."
+      - minutes: 20
+        lessons: [after-hand-off]
+        do: Learners tell Claude Code to build, watch it work, then make the site actually work.
+      - minutes: 10
+        lessons: [when-it-breaks]
+        do: Go through the four steps for when it breaks. Learners write a bug report in the practice box.
+      - minutes: 10
+        lessons: [the-three-files]
+        do: Go through the three files, then the four check questions.
+      - minutes: 10
+        lessons: [the-whole-workflow]
+        do: "Recap design, build, deploy. Learners publish with tiiny.host or run their site on localhost."
+      - title: Quiz and Challenge
+        minutes: 10
+        do: Learners try the module quiz. Then set the Challenge.
+        group: In the original class, learners sent their link or a screen recording to a tutor. You can collect them instead.
+
+  - module: 6
+    tools:
+      - GitHub
+      - Vercel
+      - Claude Code
+    prepare:
+      - "Learners sign in to GitHub, and to Vercel with their GitHub account, in the session, with your go-ahead. Sort out with your school, club or programme how those accounts are provided and managed before the session."
+      - Each learner's latest Claude Code or Lovable project, to push to GitHub.
+      - "Repos are Private, and nothing secret goes in them: no passwords, API keys or personal details."
+    links:
+      - label: GitHub
+        href: https://github.com
+      - label: Vercel
+        href: https://vercel.com
+    steps:
+      - minutes: 5
+        lessons: [what-is-github]
+        do: "Explain store, share and collaborate, and what a repository is."
+      - minutes: 10
+        lessons: [key-terms]
+        do: Go through the six terms in their three groups, then the check questions.
+      - minutes: 5
+        lessons: [push-vs-pull-request]
+        do: Compare a push and a pull request, and when to use each.
+      - minutes: 5
+        lessons: [intro-to-vercel]
+        do: "Explain connect, deploy and preview, and the difference between GitHub and Vercel."
+      - minutes: 25
+        lessons: [get-your-code-into-github]
+        do: Learners make a Private repo, then give Claude Code the prompt to push their project to it. Learners using Lovable connect it from Lovable's settings instead.
+        note: The slide said to keep the repo Public. The site says Private, because learners are under 18.
+      - minutes: 25
+        lessons: [connect-to-vercel]
+        do: Learners sign in to Vercel with their GitHub account, import their repo and deploy it to a live link.
+      - title: Quiz and Challenge
+        minutes: 15
+        do: Learners try the module quiz. Then set the Challenge.
+
+  - module: 7
+    tools:
+      - GitHub
+      - Vercel
+      - Claude Code
+    prepare:
+      - "If you'll run Wordle in teams: put learners into teams of three and pick a repo owner for each team."
+      - "Learners need their GitHub and Vercel sign-ins from Module 6, in the session, with your go-ahead."
+    links:
+      - label: GitHub
+        href: https://github.com
+    steps:
+      - minutes: 5
+        lessons: [key-terms]
+        do: Go through branch, main, switch and merge conflict.
+      - minutes: 5
+        lessons: [branch-vs-fork]
+        do: Compare a branch and a fork, and when to use each.
+      - minutes: 10
+        lessons: [make-your-own-branch]
+        do: Show both ways to make a branch, on GitHub and with Claude Code.
+      - minutes: 10
+        lessons: [pull-request-and-merging]
+        do: Show a pull request from the banner, a review in Files changed, and a merge.
+      - minutes: 10
+        lessons: [merge-conflicts]
+        do: Show what a conflict looks like and how to fix it, and the escape hatch prompt.
+      - minutes: 40
+        lessons: [recreate-wordle]
+        do: Learners build Wordle on three branches, connect Vercel at the start, merge with pull requests and fix a merge conflict.
+        group: "The original task is teams of three in breakout rooms. The repo owner adds teammates under Settings → Collaborators. One person each works on the board, the keyboard and the game logic. Everyone works on their own branch, nobody pushes straight to main, everyone pushes at least twice, and the team merges at least two pull requests. The site's solo version is \"be your own team\", with a merge conflict made on purpose."
+      - title: Quiz and Challenge
+        minutes: 10
+        do: Learners try the module quiz. Then set the Challenge.
+        group: "In the original class, the repo owner sent the Vercel and repo links to the tutors, who checked the branch and pull request history. Everyone also sent a one-line final project idea."
+
+  - module: 8
+    tools:
+      - Claude
+      - GitHub
+      - Vercel
+      - Supabase
+    prepare:
+      - "Learners sign up for Supabase with their GitHub account, in the session, with your go-ahead."
+      - A test email for each learner to try sign-up and log-in with.
+      - A project to add live data to, like their Wordle, connected to Vercel.
+    links:
+      - label: The open-meteo link for Singapore's weather
+        href: https://api.open-meteo.com/v1/forecast?latitude=1.29&longitude=103.85&current=temperature_2m
+      - label: Supabase
+        href: https://supabase.com
+    steps:
+      - minutes: 5
+        lessons: [what-your-site-cant-do]
+        do: "Set up the two problems: the site forgets everyone, and it only knows its own files."
+      - minutes: 10
+        lessons: [what-an-api-is]
+        do: Explain the door analogy. Everyone opens the open-meteo link to see the raw data.
+      - minutes: 20
+        lessons: [put-live-data-on-your-page]
+        do: Learners paste the open-meteo prompt into Claude, push the change and check the live temperature on their site.
+      - minutes: 10
+        lessons: [how-logging-in-works]
+        do: Go through sign up, log in, log out and what a token is.
+      - minutes: 35
+        lessons: [creating-login-with-supabase]
+        do: Learners sign up for Supabase, copy their two values, then paste the login prompt into Claude and try it with a test email.
+        note: "Turning off \"Confirm Email\" is fine for practice, but not for a real app."
+      - title: Quiz and Challenge
+        minutes: 10
+        do: Learners try the module quiz. Then set the Challenge.
