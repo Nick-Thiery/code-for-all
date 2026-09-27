@@ -308,10 +308,6 @@
     line-height: 1.4;
     color: var(--muted);
   }
-  .chip-practice {
-    border-color: var(--deco);
-    color: var(--text);
-  }
   .chip-label {
     align-self: flex-start;
     padding: 0 10px;

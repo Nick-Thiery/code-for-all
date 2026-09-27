@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CourseTrack, UpcomingModule } from "@/components/course-track";
+import { CourseGrid } from "@/components/course-grid";
 import { Hex } from "@/components/hex";
 import { HeroGallery } from "@/components/hero-gallery";
 import { HomeHero } from "@/components/home-hero";
@@ -15,34 +15,6 @@ export default async function HomePage() {
         <div className="mx-auto flex max-w-[1120px] flex-wrap items-center gap-x-14 gap-y-10 py-(--hy)">
           <HomeHero outline={outline} />
           <HeroGallery />
-        </div>
-      </section>
-
-      <section aria-label="Course" className="px-(--gut)">
-        <div className="mx-auto flex max-w-[1120px] flex-col gap-(--sec) border-t border-border pt-(--hy) pb-(--sec)">
-          {outline.phases.map((phase) => (
-            <section key={phase.number} aria-labelledby={`phase-${phase.number}`} className="flex flex-col gap-10">
-              <header className="flex flex-col gap-1.5">
-                <span className="eyebrow">Phase {phase.number}</span>
-                <h2 id={`phase-${phase.number}`} className="t-h1 m-0 scroll-mt-6">
-                  {phase.title}
-                </h2>
-                <p className="t-meta m-0 text-muted">{moduleRange(phase.modules.map((m) => m.number))}</p>
-              </header>
-              {phase.modules.map((mod) =>
-                mod.released ? <CourseTrack key={mod.number} outline={outline} module={mod.number} /> : null,
-              )}
-              {phase.modules.some((mod) => !mod.released) && (
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] gap-4">
-                  {phase.modules
-                    .filter((mod) => !mod.released)
-                    .map((mod) => (
-                      <UpcomingModule key={mod.number} number={mod.number} title={mod.title} summary={mod.summary} />
-                    ))}
-                </div>
-              )}
-            </section>
-          ))}
         </div>
       </section>
 
@@ -101,6 +73,12 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section aria-label="Course" className="px-(--gut)">
+        <div className="mx-auto max-w-[1120px] py-(--sec)">
+          <CourseGrid outline={outline} />
+        </div>
+      </section>
+
       <section className="px-(--gut) py-(--sec)">
         <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-x-8 gap-y-4 rounded-[20px] border-[1.5px] border-border p-(--pad)">
           <div className="flex flex-[1_1_360px] flex-col gap-1">
@@ -114,13 +92,6 @@ export default async function HomePage() {
       </section>
     </>
   );
-}
-
-/** [1, 2, 3, 4, 5] -> "Modules 1 to 5", [9, 10] -> "Modules 9 and 10" */
-function moduleRange(numbers: number[]) {
-  if (numbers.length === 1) return `Module ${numbers[0]}`;
-  if (numbers.length === 2) return `Modules ${numbers[0]} and ${numbers[1]}`;
-  return `Modules ${numbers[0]} to ${numbers.at(-1)}`;
 }
 
 function HowStep({ title, text, children }: { title: string; text: string; children: React.ReactNode }) {

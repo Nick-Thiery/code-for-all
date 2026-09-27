@@ -196,7 +196,8 @@ To make another component available in lessons, add it to `components/mdx-compon
 ```
 content/course.yml              every module, grouped into phases
 content/module-N/               one .mdx file per lesson
-app/page.tsx                    home: hero, the phases and their modules, how it works
+app/page.tsx                    home: hero, how it works, the course grid
+components/course-grid.tsx      the home page course: continue card, module grid (phone: module list), lessons
 app/[module]/[lesson]/page.tsx  lesson template (/module-1/<slug>)
 app/[module]/complete/page.tsx  Module complete (/module-1/complete)
 app/[module]/quiz/page.tsx      module quiz (/module-1/quiz)
@@ -230,7 +231,7 @@ design/                       the Claude Design export this site is built from
 
 ## Notes
 
-- **Completion** is stored in the browser's localStorage under `cfa:completed-lessons`, as a list of lesson ids like `module-1/meet-lovable`. It doesn't sync between devices. If you rename a slug or move a lesson to another module, anyone who finished that lesson will see it as unfinished. Returning learners get a "Continue" button on the home page and a "Pick up where you left off" bar on other pages, pointing at their first unfinished lesson.
+- **Completion** is stored in the browser's localStorage under `cfa:completed-lessons`, as a list of lesson ids like `module-1/meet-lovable`. It doesn't sync between devices. If you rename a slug or move a lesson to another module, anyone who finished that lesson will see it as unfinished. Returning learners get a "Continue" button in the home page hero, a "Pick up where you left off" card above the course grid and bar on other pages, pointing at their first unfinished lesson. The course grid opens on that lesson's module (Module 1 for a new visitor); `/#module-N` opens another, which is where lesson, quiz and Check your skills pages link back to.
 - **Quiz results** are stored under `cfa:quiz-results`: for each quiz (`module-1/quiz`, `module-5/check-your-skills`), the last result only (how many right, out of how many, the ids of the lessons to review, and the date). Check your skills ticks are stored under `cfa:checklists`, per page. Neither holds anything the learner typed.
 - **Dark mode** follows the device setting until someone uses the toggle. After that, their choice is remembered in `cfa:theme`.
 - **Design**: the source is `design/Code for All Website.dc.html`, exported from Claude Design; open it in a browser to see every page and the spec sheet. The colour and size tokens at the top of `app/globals.css` are pasted from that spec sheet. Use the tokens (as Tailwind classes like `bg-tint` or `text-accent`, or `var(--accent)`); Tailwind's default colour palette is switched off. Headings are set in Recursive, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.
