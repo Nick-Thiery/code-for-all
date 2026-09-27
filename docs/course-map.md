@@ -67,6 +67,11 @@ Then walk through the strong prompt one part at a time, one line each on what th
 - [added] 1.3 link to lovable.dev (Lovable's homepage).
 - [added] 1.3 and 1.6 Stuck answers ("you don't need to sign up for Lovable yourself", from the access page); 1.2 connecting line introducing the analytics image.
 
+**Changes after review (27 Sep 2026):**
+
+- [changed] 1.4: the Bad, Better and Strong prompt blocks and the "What each part does" list become the prompt ladder (design board "Prompt ladder · lesson 1.4"): Bad and Better side by side, then the strong prompt in its seven parts, where tapping a part's label shows what it does. The three prompts and the seven explanations are word for word as before; only the Strong prompt has a Copy button now. The ladder keeps the slides' "Bad" (the design board says "Weak").
+- [added] 1.4 ladder: the strength meter (Bad has 1 of the 7 parts, its goal; Better has 2, adding pages), the "It leaves out" / "Still missing" chips, the chip 'Design style ("modern" is vague)', "Tap a label to see what that part does." and the line "The strong prompt has seven parts, each with one job." (from the recap).
+
 ---
 
 ## Module 2: Applying Lovable

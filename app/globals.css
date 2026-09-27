@@ -55,6 +55,29 @@
 [data-theme="dark"] {
   color-scheme: dark;
 }
+
+/* The seven parts of the strong prompt (the prompt ladder in lesson 1.4,
+   components/prompt-ladder.tsx): a label fill, its text, and the row
+   highlight. Light values from the "Prompt ladder" design board; dark values
+   keep each hue with the same contrast. */
+:root {
+  --part-role: #DCEBFA; --part-role-ink: #00487E; --part-role-row: #F1F7FD;
+  --part-goal: #DDF3E8; --part-goal-ink: #14532D; --part-goal-row: #F0FAF5;
+  --part-audience: #FFF1CC; --part-audience-ink: #6B4E00; --part-audience-row: #FFF9E8;
+  --part-pages: #ECE4FF; --part-pages-ink: #3B2A7A; --part-pages-row: #F6F2FF;
+  --part-style: #FCE4EF; --part-style-ink: #7A1F4B; --part-style-row: #FEF3F8;
+  --part-output: #D9F2F2; --part-output-ink: #0F5257; --part-output-row: #EFF9F9;
+  --part-features: #E9EDF2; --part-features-ink: #33404D; --part-features-row: #F5F7F9;
+}
+[data-theme="dark"] {
+  --part-role: #12314F; --part-role-ink: #A8D4FF; --part-role-row: #10202F;
+  --part-goal: #123A29; --part-goal-ink: #9BE3BD; --part-goal-row: #0F221A;
+  --part-audience: #3D300A; --part-audience-ink: #F7D57E; --part-audience-row: #221C0C;
+  --part-pages: #2C2352; --part-pages-ink: #CFC0FF; --part-pages-row: #1C1830;
+  --part-style: #45182E; --part-style-ink: #F7B0CE; --part-style-row: #26141D;
+  --part-output: #10393C; --part-output-ink: #8FE0E0; --part-output-row: #0F2324;
+  --part-features: #2B333E; --part-features-ink: #CDD5DE; --part-features-row: #1A2027;
+}
 @media (min-width: 960px) {
   :root { --task: 24px; --head: 26px; }
 }
