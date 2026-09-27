@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getOutline } from "@/lib/lessons";
 import { getLogoFiles } from "@/lib/logo";
-import { site, siteUrl } from "@/lib/site";
+import { allowIndexing, site, siteUrl } from "@/lib/site";
 import { themeScript } from "@/lib/theme";
 import "./globals.css";
 
@@ -39,6 +39,8 @@ export const metadata: Metadata = {
   description: site.description,
   openGraph: { siteName: site.name, type: "website", locale: "en_GB" },
   twitter: { card: "summary_large_image" },
+  // Hidden from search engines unless NEXT_PUBLIC_ALLOW_INDEXING is "true".
+  ...(allowIndexing ? {} : { robots: { index: false, follow: false } }),
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

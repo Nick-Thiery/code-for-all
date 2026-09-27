@@ -57,6 +57,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - `/glossary` is built from every `<KeyTerm>` in the lessons (`lib/glossary.ts`); nothing to edit by hand.
 - `/run-it` and its printable kit pages come from `content/facilitator.yml` (`lib/facilitator.ts`). Never link or publish the PDFs in `source/slides/`.
 - `/privacy` states what the site stores and sends. Change it whenever that changes.
+- Hidden from search engines unless `NEXT_PUBLIC_ALLOW_INDEXING` is `"true"` (`allowIndexing` in `lib/site.ts`): `app/robots.ts` disallows everything and the root layout adds `noindex`.
 - Every page needs a `title` and `description` in its metadata. `NEXT_PUBLIC_SITE_URL` sets the address used in share links and `sitemap.xml`.
 
 ## Practice grading
