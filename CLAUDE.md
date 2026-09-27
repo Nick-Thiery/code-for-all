@@ -49,7 +49,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 - All colours and sizes are tokens at the top of `app/globals.css`, pasted from the spec sheet in `design/Code for All Website.dc.html`. Use them as Tailwind classes (`bg-tint`, `text-accent`) or `var(--accent)`. Tailwind's default palette is switched off. Never hardcode a colour.
 - Dark mode is `[data-theme="dark"]`, set before first paint by the script in `lib/theme.ts`.
-- Logo: `public/cfa-logo-light.png` and `public/cfa-logo-dark.png`, the original with only colours changed. Adding `public/cfa-logo.svg` (and `cfa-logo-dark.svg`) switches the header to SVG (`lib/logo.ts`). Don't redraw it.
+- Logo: `public/cfa-logo-light.png` and `public/cfa-logo-dark.png`, the original with only colours changed. Adding `public/cfa-logo.svg` (and `cfa-logo-dark.svg`) switches the header and footer to SVG (`lib/logo.ts`). Don't redraw it.
 - Print: hide controls with `print:hidden` (buttons, practice, Stuck?, navigation); keep images and prompt blocks. Pages print in light colours.
 - No dead buttons: every button or link must do something. Don't add disabled placeholders; leave the control out until it works.
 

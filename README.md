@@ -228,7 +228,7 @@ lib/quiz-results.ts           quiz results and checklist ticks in localStorage
 components/module-quiz.tsx    the quiz card (ModuleQuiz)
 lib/practice*.ts              practice types, mock grading and ?mock= fixtures
 lib/site.ts                   site copy, the contact address and the site URL
-lib/logo.ts                   which logo files the header uses
+lib/logo.ts                   which logo files the header and footer use
 app/globals.css               design tokens, type, buttons, lesson styles
 design/                       the Claude Design export this site is built from
 ```
@@ -240,7 +240,7 @@ design/                       the Claude Design export this site is built from
 - **Dark mode** follows the device setting until someone uses the toggle. After that, their choice is remembered in `cfa:theme`.
 - **Design**: the source is `design/Code for All Website.dc.html`, exported from Claude Design; open it in a browser to see every page and the spec sheet. The colour and size tokens at the top of `app/globals.css` are pasted from that spec sheet. Use the tokens (as Tailwind classes like `bg-tint` or `text-accent`, or `var(--accent)`); Tailwind's default colour palette is switched off. Headings are set in Recursive, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.
 - **Contact**: the address is one value in `lib/site.ts`. Every "Contact us" button links to `site.contactHref`.
-- **Logo**: `public/cfa-logo-light.png` (transparent background) and `public/cfa-logo-dark.png` (the same pixels with only the colours changed for dark mode). If `public/cfa-logo.svg` exists, the header uses it instead, with `public/cfa-logo-dark.svg` for dark mode if that exists too.
+- **Logo**: `public/cfa-logo-light.png` (transparent background) and `public/cfa-logo-dark.png` (the same pixels with only the colours changed for dark mode). The header and the footer both use them (the footer a little smaller). If `public/cfa-logo.svg` exists, both use it instead, with `public/cfa-logo-dark.svg` for dark mode if that exists too.
 - **Search engines**: the site is hidden from them by default (`robots.txt` disallows everything and every page has a `noindex` meta tag). Set `NEXT_PUBLIC_ALLOW_INDEXING=true` at build time to let them in.
 - **Site URL**: share links and `sitemap.xml` use `NEXT_PUBLIC_SITE_URL` (for example `https://codeforall.example`). On Vercel it falls back to the project's production address; locally, to http://localhost:3000.
 - **Printing**: lessons and kit pages print in light colours without the header, navigation, buttons or practice box. Give any new control `print:hidden`.
