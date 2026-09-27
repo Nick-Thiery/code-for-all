@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import { ModuleQuiz } from "@/components/module-quiz";
 import { PrevNext } from "@/components/prev-next";
 import { formatCount } from "@/lib/format";
-import { getModule, getModules, parseModuleParam } from "@/lib/lessons";
-import { moduleCompleteHref, moduleTrackHref, quizId } from "@/lib/outline";
+import { getModule, getModules, getSkillsCheckFor, parseModuleParam } from "@/lib/lessons";
+import { moduleCompleteHref, moduleTrackHref, quizId, skillsCheckHref } from "@/lib/outline";
 
 type Props = { params: Promise<{ module: string }> };
 
@@ -30,10 +30,11 @@ export default async function QuizPage({ params }: Props) {
   const mod = await find(params);
   if (!mod) notFound();
   const last = mod.lessons[mod.lessons.length - 1];
+  const skillsCheck = await getSkillsCheckFor(mod.number);
 
   return (
     <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-(--sec)">
+      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-12 tablet:pb-(--sec)">
         <header className="mb-2 flex flex-col gap-3.5">
           <p className="t-meta m-0 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-muted">
             <span className="font-bold text-fg">{formatCount(mod.quiz.length, "question")}</span>
@@ -46,12 +47,21 @@ export default async function QuizPage({ params }: Props) {
           </p>
           <h1 className="t-h1 m-0">Module {mod.number} quiz</h1>
           <p className="t-lead m-0">
-            Questions on this module&apos;s lessons. It&apos;s just for you: if you get one wrong, you&apos;ll see which
-            lesson explains it.
+            Questions on this module&apos;s lessons. It&apos;s just for you: get a lesson&apos;s questions right and it
+            levels up, and if you get one wrong, you&apos;ll see which lesson explains it.
           </p>
         </header>
 
-        <ModuleQuiz id={quizId(mod.number)} label="Quiz" questions={mod.quiz} />
+        <ModuleQuiz
+          id={quizId(mod.number)}
+          label="Quiz"
+          questions={mod.quiz}
+          masterAt={
+            skillsCheck
+              ? { href: skillsCheckHref(skillsCheck.after), label: `Check your skills after Module ${skillsCheck.after}` }
+              : undefined
+          }
+        />
 
         <div className="mt-6">
           <PrevNext

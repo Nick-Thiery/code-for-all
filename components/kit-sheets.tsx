@@ -30,7 +30,7 @@ export function KitShell({
   return (
     <div className="px-(--gut) print:px-0">
       <PrintSetup />
-      <div className="mx-auto flex max-w-[820px] flex-col gap-12 pt-(--hy) pb-(--sec) print:max-w-none print:gap-0 print:p-0 print:text-[10.5pt] print:leading-[1.45]">
+      <div className="mx-auto flex max-w-[820px] flex-col gap-12 pt-(--hy) pb-12 tablet:pb-(--sec) print:max-w-none print:gap-0 print:p-0 print:text-[10.5pt] print:leading-[1.45]">
         <header className="flex flex-col gap-4 print:hidden">
           <Link href="/run-it#kit" className="text-link gap-1.5 self-start text-[17px]">
             <span aria-hidden="true">←</span> Run a session

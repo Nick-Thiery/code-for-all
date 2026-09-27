@@ -208,6 +208,22 @@ export async function getSkillsCheck(after: number) {
   return { ...page, module: mod, checklist, questions };
 }
 
+/**
+ * The first Check your skills page whose mixed quiz asks about module
+ * `number`, if its module is out: where that module's lessons can reach
+ * Mastered (lib/mastery.ts).
+ */
+export async function getSkillsCheckFor(number: number) {
+  const [{ pages }, modules] = await Promise.all([getSkillsChecks(), getModules()]);
+  return (
+    pages.find(
+      (page) =>
+        modules.some((mod) => mod.number === page.after) &&
+        page.draw.some((group) => group.from <= number && number <= group.to && group.count > 0),
+    ) ?? null
+  );
+}
+
 /** Everything the browser needs to know about the course, and nothing more. */
 export const getOutline = cache(async (): Promise<Outline> => {
   const [phases, modules, skills] = await Promise.all([getPhases(), getModules(), getSkillsChecks()]);
@@ -240,6 +256,7 @@ export const getOutline = cache(async (): Promise<Outline> => {
         duration: lesson.duration,
         requiresAccount: lesson.requiresAccount,
         hasPractice: lesson.hasPractice,
+        tested: module.quiz?.some((question) => question.lesson.id === lesson.id) ?? false,
         href: lesson.href,
       })),
     })),

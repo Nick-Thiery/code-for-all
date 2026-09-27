@@ -37,7 +37,7 @@ export default async function ModuleCompletePage({ params }: Props) {
 
   return (
     <div className="px-(--gut)">
-      <div className="mx-auto flex max-w-[760px] flex-col items-center gap-5 pt-(--hy) pb-(--sec) text-center">
+      <div className="mx-auto flex max-w-[760px] flex-col items-center gap-5 pt-(--hy) pb-12 tablet:pb-(--sec) text-center">
         <Honeycomb lessons={mod.lessons.length} />
         <span className="eyebrow">Module {mod.number} complete</span>
         <h1 className="t-hero m-0 leading-[1.05]">You finished {mod.title}.</h1>

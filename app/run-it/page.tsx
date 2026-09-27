@@ -32,7 +32,7 @@ export default async function RunItPage() {
     <div className="px-(--gut)">
       {/* Prints in light colours, even in dark mode. */}
       <PrintSetup />
-      <div className="mx-auto flex max-w-[1120px] flex-col gap-[72px] pt-(--hy) pb-(--sec)">
+      <div className="mx-auto flex max-w-[1120px] flex-col gap-12 pt-(--hy) tablet:gap-[72px] pb-12 tablet:pb-(--sec)">
         <section className="flex flex-wrap items-start gap-x-16 gap-y-8">
           <div className="flex max-w-[660px] flex-[1_1_460px] flex-col gap-4">
             <span className="eyebrow leading-[1.3]">For teachers, volunteers and club leaders</span>

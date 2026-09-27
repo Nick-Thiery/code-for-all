@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useEffect, useId, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Hex, HexCheck } from "@/components/hex";
+import { MasteryHex } from "@/components/mastery";
+import { LEVELS, LEVEL_NAMES, type Level, type LevelChange, atModuleCeiling, levelOf } from "@/lib/mastery";
 import { drawMixed, shuffle, type DrawGroup, type QuizLesson, type QuizQuestion } from "@/lib/quiz";
-import { saveQuizResult, useQuizResults } from "@/lib/quiz-results";
+import { saveMastery, saveQuizResult, useMastery, useQuizResults } from "@/lib/quiz-results";
 
 type Props = {
   /** Where the last result is saved: "module-1/quiz". */
@@ -20,6 +22,11 @@ type Props = {
   draw?: readonly DrawGroup[];
   /** Heading level for the question number and the summary. */
   level?: 2 | 3;
+  /**
+   * Module quizzes: the Check your skills page that asks about this module,
+   * where a lesson this quiz took to Proficient can go on to Mastered.
+   */
+  masterAt?: { href: string; label: string };
 };
 
 type Item = { question: QuizQuestion; options: string[] };
@@ -34,6 +41,8 @@ type Run = {
   done: boolean;
   /** Counts restarts, so each attempt gets fresh radio buttons. */
   attempt: number;
+  /** Once done: how the attempt moved each lesson's mastery level. */
+  changes: LevelChange[];
 };
 
 type Focus = "question" | "next" | "summary";
@@ -56,14 +65,18 @@ function newRun(questions: QuizQuestion[], shuffled: boolean, attempt: number): 
     right: [],
     done: false,
     attempt,
+    changes: [],
   };
 }
 
-export function ModuleQuiz({ id, label, questions, draw, level = 2 }: Props) {
+export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: Props) {
   const uid = useId();
   const Heading = level === 2 ? "h2" : "h3";
   const mixed = draw !== undefined;
+  // "module-5/check-your-skills" → /#module-5 on the home page's course grid.
+  const levelsHref = `/#module-${/^module-(\d+)\//.exec(id)?.[1] ?? 1}`;
   const { results, ready } = useQuizResults();
+  const { levels } = useMastery();
   const saved = results[id] ?? null;
 
   const [run, setRun] = useState<Run | null>(
@@ -130,13 +143,17 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2 }: Props) {
     const review = [
       ...new Set(run.items.filter((_, i) => !run.right[i]).map((item) => item.question.lesson.id)),
     ];
+    const changes = saveMastery(
+      run.items.map((item, i) => ({ lesson: item.question.lesson.id, right: run.right[i] })),
+      mixed ? "mixed" : "module",
+    );
     saveQuizResult(id, {
       correct: run.right.filter(Boolean).length,
       total: run.items.length,
       review,
       date: new Date().toISOString(),
     });
-    setRun({ ...run, done: true });
+    setRun({ ...run, done: true, changes });
     focusNext.current = "summary";
   }
 
@@ -153,9 +170,14 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2 }: Props) {
         }
         note={`Saved on this device on ${formatDate(saved.date)}.`}
         allRight={saved.correct === saved.total}
-        review={saved.review.flatMap((lessonId) => lessons.get(lessonId) ?? [])}
+        rows={saved.review.flatMap((lessonId) => {
+          const lesson = lessons.get(lessonId);
+          return lesson ? [{ lesson, level: levelOf(levels, lessonId), change: null }] : [];
+        })}
+        rowsTitle={saved.review.length === 1 ? "Have another look at this lesson:" : "Have another look at these lessons:"}
         lessonName={lessonName}
         mixed={mixed}
+        levelsHref={levelsHref}
         onTryAgain={tryAgain}
         celebrate={false}
       />
@@ -179,10 +201,11 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2 }: Props) {
     );
   } else if (run.done) {
     const correct = run.right.filter(Boolean).length;
-    const review: QuizLesson[] = [];
-    run.items.forEach((item, i) => {
-      if (!run.right[i] && !review.some((l) => l.id === item.question.lesson.id)) review.push(item.question.lesson);
+    const rows = run.changes.flatMap((change) => {
+      const lesson = lessons.get(change.lesson);
+      return lesson ? [{ lesson, level: change.after, change }] : [];
     });
+    const capped = masterAt && run.changes.some((change) => atModuleCeiling(change, mixed ? "mixed" : "module"));
     body = (
       <Summary
         heading={
@@ -192,9 +215,19 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2 }: Props) {
         }
         note="Saved on this device."
         allRight={correct === run.items.length}
-        review={review}
+        rows={rows}
+        rowsTitle="Your skills"
+        footnote={
+          capped && (
+            <p className="t-meta m-0 mt-2 text-muted">
+              Proficient is as high as a module quiz goes. A lesson reaches Mastered when you get it right again in{" "}
+              <Link href={masterAt.href}>{masterAt.label}</Link>.
+            </p>
+          )
+        }
         lessonName={lessonName}
         mixed={mixed}
+        levelsHref={levelsHref}
         onTryAgain={tryAgain}
         celebrate
       />
@@ -384,22 +417,32 @@ function ResultHex({ right, small = false }: { right: boolean; small?: boolean }
   );
 }
 
+/** A lesson in the summary: its level now and, straight after a quiz, how the quiz moved it. */
+type SkillRow = { lesson: QuizLesson; level: Level; change: LevelChange | null };
+
 function Summary({
   heading,
   note,
   allRight,
-  review,
+  rows,
+  rowsTitle,
+  footnote = null,
   lessonName,
   mixed,
+  levelsHref,
   onTryAgain,
   celebrate,
 }: {
   heading: ReactNode;
   note: string;
   allRight: boolean;
-  review: QuizLesson[];
+  rows: SkillRow[];
+  rowsTitle: string;
+  footnote?: ReactNode;
   lessonName: (lesson: QuizLesson) => string;
   mixed: boolean;
+  /** The course grid opened on this quiz's module, where the lesson levels show. */
+  levelsHref: string;
   onTryAgain: () => void;
   celebrate: boolean;
 }) {
@@ -419,27 +462,31 @@ function Summary({
         <p className="t-meta m-0 text-muted">{note}</p>
       </div>
 
-      {allRight ? (
-        <p className="m-0">You got every question right. Well done.</p>
-      ) : (
-        review.length > 0 && (
-          <div className="flex flex-col gap-1">
-            <p className="m-0 font-bold">
-              Have another look at {review.length === 1 ? "this lesson" : "these lessons"}:
-            </p>
-            <ul className="m-0 flex list-none flex-col p-0">
-              {review.map((lesson) => (
-                <li key={lesson.id} className="flex items-start gap-3">
-                  <Hex width={14} height={15} shape="fill-deco" className="mt-[15px] flex-none" />
-                  <Link href={lesson.href} className="text-link">
-                    {lessonName(lesson)}
+      {allRight && <p className="m-0">You got every question right. Well done.</p>}
+
+      {rows.length > 0 && (
+        <div className="flex flex-col gap-1">
+          <p className="m-0 font-bold">{rowsTitle}</p>
+          <ul className="m-0 flex list-none flex-col gap-1 p-0">
+            {rows.map((row) => (
+              <li key={row.lesson.id} className="flex items-start gap-3">
+                <MasteryHex level={row.level} width={22} height={24} className="mt-2.5 flex-none" />
+                <span className="flex min-w-0 flex-col">
+                  <Link href={row.lesson.href} className="text-link">
+                    {lessonName(row.lesson)}
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )
+                  <span className="t-meta -mt-2 text-muted">{describe(row)}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          {footnote}
+        </div>
       )}
+
+      <Link href={levelsHref} className="text-link gap-1.5">
+        See your lesson levels <span aria-hidden="true">→</span>
+      </Link>
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 border-t border-border pt-5">
         <button type="button" onClick={onTryAgain} className="btn btn-secondary">
@@ -451,6 +498,16 @@ function Summary({
       </div>
     </div>
   );
+}
+
+/** "Up to Proficient", "Still Mastered", "Missed a question · down to Familiar", or just the level. */
+function describe({ level, change }: SkillRow) {
+  const name = LEVEL_NAMES[level];
+  if (!change) return name;
+  const rise = LEVELS.indexOf(change.after) - LEVELS.indexOf(change.before);
+  if (!change.missed) return rise > 0 ? `Up to ${name}` : `Still ${name}`;
+  // A miss never moves a lesson up, but a Not started one becomes Attempted.
+  return `Missed a question · ${rise < 0 ? "down to" : rise > 0 ? "now" : "still"} ${name}`;
 }
 
 function formatDate(iso: string) {

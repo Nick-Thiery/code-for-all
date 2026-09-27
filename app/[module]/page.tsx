@@ -34,7 +34,7 @@ export default async function ModulePage({ params }: Props) {
 
   return (
     <div className="px-(--gut)">
-      <div className="mx-auto flex max-w-[640px] flex-col items-center gap-[18px] py-(--sec) text-center">
+      <div className="mx-auto flex max-w-[640px] flex-col items-center gap-[18px] py-12 text-center tablet:py-(--sec)">
         <ComingSoonHoneycomb />
         <span className="eyebrow">Module {found.number} · Coming soon</span>
         <h1 className="t-h1 m-0">{found.planned.title}</h1>

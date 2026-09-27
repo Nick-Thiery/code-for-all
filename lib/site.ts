@@ -38,12 +38,14 @@ export const practiceCopy = aiGrading
   ? {
       notice: "Your feedback is written by AI.",
       howItWorks: "Write a prompt and get kind, specific tips from AI. Try as many times as you like.",
+      howItWorksShort: "Write a prompt and get tips from AI.",
       accessItem: "Practice with AI feedback",
     }
   : {
       notice: "For now this is sample feedback, while AI grading is being set up.",
       howItWorks:
         "Write a prompt and get kind, specific tips. For now it's sample feedback, while AI grading is being set up.",
+      howItWorksShort: "Write a prompt and get kind, specific tips.",
       accessItem: "Practice with sample feedback (AI grading is being set up)",
     };
 

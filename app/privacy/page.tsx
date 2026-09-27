@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const summary = [
   "No accounts. Nobody signs up or logs in.",
   "Nothing collected. No names, no email addresses, no analytics, no adverts.",
-  "Your progress and quiz results stay in this browser.",
+  "Your progress, quiz results and lesson levels stay in this browser.",
   "Practice feedback sends only your prompt and which task it's for, and it isn't stored.",
 ];
 
@@ -26,12 +26,17 @@ const saved = [
   {
     name: "Lesson progress",
     key: "cfa:completed-lessons",
-    what: "Which lessons you've ticked with “I've finished this lesson”.",
+    what: "Which lessons you've finished: ticked with “I've finished this lesson”, or moved on from with the Next button at the end.",
   },
   {
     name: "Quiz results",
     key: "cfa:quiz-results",
     what: "For each quiz, your last score, which lessons to look at again, and when you took it. Not the answers you picked.",
+  },
+  {
+    name: "Lesson levels",
+    key: "cfa:mastery",
+    what: "The level each lesson has reached in the quizzes, from Attempted to Mastered. Not your answers.",
   },
   {
     name: "Checklist ticks",
@@ -48,7 +53,7 @@ const saved = [
 export default function PrivacyPage() {
   return (
     <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-(--sec)">
+      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-12 tablet:pb-(--sec)">
         <header className="flex flex-col gap-3.5">
           <span className="eyebrow">For learners, parents and schools</span>
           <h1 className="t-h1 m-0">Privacy</h1>
