@@ -145,7 +145,7 @@ export function SkillsOverview({ outline }: { outline: Outline }) {
           aria-expanded={open}
           aria-controls={howId}
           onClick={() => setOpen((o) => !o)}
-          className="btn btn-small mt-1 self-start"
+          className="btn btn-small mt-1 self-start print:hidden"
         >
           How levels work
         </button>

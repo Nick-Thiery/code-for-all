@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const summary = [
   "No accounts. Nobody signs up or logs in.",
   "Nothing collected. No names, no email addresses, no analytics, no adverts.",
-  "Your progress and quiz results stay in this browser.",
+  "Your progress, quiz results and skill levels stay in this browser.",
   "Practice feedback sends only your prompt and which task it's for, and it isn't stored.",
 ];
 
@@ -32,6 +32,11 @@ const saved = [
     name: "Quiz results",
     key: "cfa:quiz-results",
     what: "For each quiz, your last score, which lessons to look at again, and when you took it. Not the answers you picked.",
+  },
+  {
+    name: "Skill levels",
+    key: "cfa:mastery",
+    what: "For each lesson a quiz has asked about, its level: Attempted, Familiar, Proficient or Mastered. Not the answers you picked.",
   },
   {
     name: "Checklist ticks",
