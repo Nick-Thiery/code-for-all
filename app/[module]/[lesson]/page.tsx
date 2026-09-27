@@ -51,6 +51,7 @@ export default async function LessonPage({ params }: Props) {
     : mod.quiz
       ? { label: `Next · Module ${mod.number} quiz`, title: "Check what you learned", href: quizHref(mod.number) }
       : { label: `You've finished Module ${mod.number}`, title: "See what's next", href: moduleCompleteHref(mod.number) };
+  const moduleInfo = { number: mod.number, title: mod.title, lessonIds: mod.lessons.map((l) => l.id) };
   const previousTarget: NavTarget | null = previous
     ? { label: `Previous · Lesson ${previous.number}`, title: previous.title, href: previous.href, lesson: true }
     : null;
@@ -87,8 +88,10 @@ export default async function LessonPage({ params }: Props) {
             points={lesson.recap}
             fallback={lesson.summary}
             next={next ? next.title : mod.quiz ? `Module ${mod.number} quiz` : undefined}
+            module={moduleInfo}
           />
-          <PrevNext previous={previousTarget} next={nextTarget} />
+          {/* Following "Next" marks this lesson done; the recap tick above can undo it. */}
+          <PrevNext previous={previousTarget} next={nextTarget} markDone={{ lessonId: lesson.id, module: moduleInfo }} />
         </div>
       </article>
     </div>

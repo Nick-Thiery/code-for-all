@@ -4,6 +4,7 @@ import { Callout } from "@/components/callout";
 import { Hex, HexCheck } from "@/components/hex";
 import { getOutline } from "@/lib/lessons";
 import { allLessons } from "@/lib/outline";
+import { practiceCopy } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Hands-on access",
@@ -39,7 +40,7 @@ export default async function AccessPage({ searchParams }: Props) {
           <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
             {[
               "Reading every lesson, including the hands-on ones",
-              "Practice with AI feedback",
+              practiceCopy.accessItem,
               "Saving your progress on this device",
             ].map((item) => (
               <li key={item} className="flex items-start gap-3">

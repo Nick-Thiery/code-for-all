@@ -67,6 +67,12 @@ Then walk through the strong prompt one part at a time, one line each on what th
 - [added] 1.3 link to lovable.dev (Lovable's homepage).
 - [added] 1.3 and 1.6 Stuck answers ("you don't need to sign up for Lovable yourself", from the access page); 1.2 connecting line introducing the analytics image.
 
+**Changes after review (27 Sep 2026):**
+
+- [changed] 1.4: the Bad, Better and Strong prompt blocks and the "What each part does" list become the prompt ladder (design board "Prompt ladder · lesson 1.4"): Bad and Better side by side, then the strong prompt in its seven parts, where tapping a part's label shows what it does. The three prompts and the seven explanations are word for word as before; only the Strong prompt has a Copy button now. The ladder keeps the slides' "Bad" (the design board says "Weak").
+- [added] 1.4 ladder: the strength meter (Bad has 1 of the 7 parts, its goal; Better has 2, adding pages), the "It leaves out" / "Still missing" chips, the chip 'Design style ("modern" is vague)', "Tap a label to see what that part does." and the line "The strong prompt has seven parts, each with one job." (from the recap).
+- [added] 1.2: the "Vibe coding in three steps" diagram (design board "1.2 · Vibe coding in three steps") after the three steps. Its card lines and caption are shortened from the lesson and the slide steps ("You say what you want, in plain words."; "The AI writes the code, the database and the layout."; "You review it, tweak it and put it online."; "You define the rules; the AI writes the code."), not the board's wording. The pictures (speech bubble, code hexagon, a page with a LIVE badge) are illustrations only.
+
 ---
 
 ## Module 2: Applying Lovable
@@ -212,6 +218,10 @@ Source: LaunchLab 5 (the best-written deck; stays almost word for word)
 - [changed] 5.1: a Tip claiming Module 1's prompting advice carries over to Claude Design is removed.
 - [added] 5.1 "front end" gloss and video lead-in; 5.2 opening line ("Claude Design makes your site look right. Claude Code makes it work."); 5.3 "A chatbot tells you what to change. An agent makes the change."; 5.4 "Don't skip step 4" and a caption noting the pictured prompt is shorter; 5.5 the practice scenario (a sign-up button that does nothing and one console error), which the bug-report task needs; 5.6 the open-ended answer to question 4; 5.7 localhost gloss ("your own computer, running your website") and access line for tiiny.host.
 
+**Changes after review (27 Sep 2026):**
+
+- [added] 5.6: "The three files" diagram (design board "5.6 · The three files") under the opening paragraph: a small "Join the club" page with a Sign up button, and a numbered label for each file pointing at the part it controls. The three descriptions are the lesson's own. The caption "One button, three files: change the words in index.html, the colour in styles.css and the click in script.js." is from the board. The example page is invented and has no real names.
+
 ---
 
 ## Module 6: Introduction to GitHub and Vercel
@@ -287,6 +297,11 @@ Source: LaunchLab 7
 - [changed] 7.4: "It's that easy." sits inside the callout with the rest of the slide sentence.
 - [added] 7.4 a line saying "step two" means this whole lesson; 7.5 the lead-in to the conflict example, the worked fix ("those five lines become one") and the CheckYourself answers; 7.3 a pointer from the GitHub track to the Claude Code push prompt; 7.6 "the conflict shows up on the second pull request"; sign-in Stuck answers matched to the access page.
 
+**Changes after review (27 Sep 2026):**
+
+- [changed] 7.1: the slide's "How branching works" image is replaced by the "Branches as lanes" diagram (design board "7.1 · Branches as lanes"), which shows the same thing and works in dark mode and on phones. The PNG stays in public/lessons/module-7/ but is no longer used.
+- [added] 7.1 diagram: a second, unfinished branch (sam-board, "Still working…"), the step labels "Branch off", "Your commits", "Main keeps moving" and "Pull request merges it back", the "Vercel: live" tag on main (from the lesson's "the branch that Vercel puts live"), and the caption "Every branch is its own lane, and main never sees your work until your pull request is merged." (from the lesson's bold line).
+
 ---
 
 ## Module 8: Authentication and APIs
@@ -318,6 +333,11 @@ Source: LaunchLab 8
 - [changed] 8.3: "fork the team wordle project" becomes "Open your Wordle project, or any project": learners own their Wordle on this site, and GitHub can't fork your own repo into your account. Slide typos fixed ("update your site", "Singapore"); the URL is joined onto one line.
 - [changed] 8.5: the Supabase sign-up (with GitHub) is done in a session, with the teacher's go-ahead, matching the access page. "Ask your tutor" becomes "In a Code for All session, ask your tutor".
 - [added] 8.1 opening and closing lines; 8.2 API KeyTerm (from slides 2 and 3), "the API is the messenger" gloss, "DB is short for database", diagram caption; 8.3 Stuck answers from the slide note and the access page; 8.4 Authentication KeyTerm (from slides 2 and 6) and two more CheckYourself questions answered from the lesson; 8.5 "keep the key and ID handy", the instruction to swap in your own values, and a pointer to the Task 1 project.
+
+**Changes after review (27 Sep 2026):**
+
+- [added] 8.2: the "An API is a door" diagram (design board "8.2 · An API is a door") after the door analogy, alongside the existing "Where the API sits" image, which shows something different. Its example (a site showing Singapore's temperature, the request "What's the temperature in Singapore?", the answer `{ "temperature_2m": 31.2 }` and a weather service behind the door) matches the Open-Meteo request in 8.3. The numbers are examples. Caption from the lesson's analogy.
+- [added] 8.4: the "How logging in works" diagram (design board "8.4 · How logging in works") after the Token KeyTerm: sign up (a new row in the user table), log in (a token saying "this is James") and log out (the token thrown away). Lines are from the lesson; "Email and password match" is from the board. james@example.com is an example address.
 
 ---
 

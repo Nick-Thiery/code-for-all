@@ -45,6 +45,11 @@ export function useCompletedLessons() {
   return { completed, ready: raw !== null };
 }
 
+/** The finished lessons right now, outside React. */
+export function readCompleted(): Set<string> {
+  return parse(readRaw());
+}
+
 export function setLessonComplete(id: string, done: boolean) {
   const completed = parse(readRaw());
   if (done) completed.add(id);

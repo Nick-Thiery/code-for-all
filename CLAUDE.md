@@ -30,6 +30,8 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - `<CheckYourself><Question q="…">answer</Question>`: a short quiz.
 - `<Challenge title="…">`: the module homework, at the end of the module's last lesson.
 - `<PromptPractice taskId="…" hint="…">task</PromptPractice>`: the practice card.
+- `<PromptLadder><LadderPrompt …/></PromptLadder>` and `<StrongPrompt parts={[…]} />`: the prompt ladder in lesson 1.4 (components/prompt-ladder.tsx). It replaces that lesson's prompt blocks; the strong prompt's parts, joined by line breaks, must stay the exact slide prompt. Part colours are `--part-*` tokens in globals.css.
+- `<VibeCodingDiagram />` (1.2), `<ThreeFilesDiagram />` (5.6), `<BranchLanesDiagram />` (7.1), `<ApiDoorDiagram />` (8.2), `<LoginDiagram />` (8.4): lesson diagrams in components/diagrams/, drawn in HTML and inline SVG with tokens only, inside `Diagram` (components/diagram.tsx), which needs a caption and a full-sentence `alt`. On phones they reflow rather than shrink; `enlargeWidth` adds an Enlarge button for one that can't.
 - `<Figure src alt width height caption />`: an image (width/height = file pixels; tap to enlarge is built in).
 - `<VideoEmbed id="…" title="…" />`: a YouTube video from the slides (youtube-nocookie).
 - `<Placeholder>` for content a human still has to supply; `<Screenshot>` for a screenshot still to be taken.
@@ -47,13 +49,15 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 - All colours and sizes are tokens at the top of `app/globals.css`, pasted from the spec sheet in `design/Code for All Website.dc.html`. Use them as Tailwind classes (`bg-tint`, `text-accent`) or `var(--accent)`. Tailwind's default palette is switched off. Never hardcode a colour.
 - Dark mode is `[data-theme="dark"]`, set before first paint by the script in `lib/theme.ts`.
-- Logo: `public/cfa-logo-light.png` and `public/cfa-logo-dark.png`, the original with only colours changed. Adding `public/cfa-logo.svg` (and `cfa-logo-dark.svg`) switches the header to SVG (`lib/logo.ts`). Don't redraw it.
+- Logo: `public/cfa-logo-light.png` and `public/cfa-logo-dark.png`, the original with only colours changed. Adding `public/cfa-logo.svg` (and `cfa-logo-dark.svg`) switches the header and footer to SVG (`lib/logo.ts`). Don't redraw it.
 - Print: hide controls with `print:hidden` (buttons, practice, Stuck?, navigation); keep images and prompt blocks. Pages print in light colours.
 - No dead buttons: every button or link must do something. Don't add disabled placeholders; leave the control out until it works.
 
 ## Site pages
 
 - `lib/site.ts`: site copy and the contact address (`site.contactHref`, one value). Link to it as "Contact us", never print the address.
+- Home page course section: `components/course-grid.tsx` (`CourseGrid`), built from the outline, `lib/progress.ts` and `lib/quiz-results.ts`. Module cards are buttons (aria-pressed) that show one module's lessons; on phones each module opens in place (aria-expanded). It opens on the learner's current module; `/#module-N` picks another. Hands-on lessons get a labelled laptop icon, explained once per module.
+- Lesson completion: the recap tick and the "Next" card at the end of a lesson (`MarkDoneLink`) both call `markLessonDone` in `lib/celebration.ts`; unticking the recap un-marks. Finishing a module's last unfinished lesson shows `ModuleCelebration` (in the root layout): the module's honeycomb filling in, kept in memory only, still under reduced motion.
 - `/glossary` is built from every `<KeyTerm>` in the lessons (`lib/glossary.ts`); nothing to edit by hand.
 - `/run-it` and its printable kit pages come from `content/facilitator.yml` (`lib/facilitator.ts`). Never link or publish the PDFs in `source/slides/`.
 - `/privacy` states what the site stores and sends. Change it whenever that changes.
@@ -64,6 +68,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 - `POST /api/practice` (`app/api/practice/route.ts`) always uses the mock grader in `lib/practice-mock.ts`. There's no real grading and no API key yet. Response shapes are in `lib/practice.ts`.
 - Each `taskId` needs a mock in `TASKS` in `lib/practice-mock.ts`.
+- The site calls it sample feedback, not AI feedback, while `aiGrading` in `lib/site.ts` is `false`. Flip it to `true` when real grading goes live; the wording (`practiceCopy`) follows.
 - Force a state by adding `?mock=<name>` to a lesson URL: empty, near, loading, weak, middling, strong, offtopic, error, hourly or daily.
 
 ## Privacy
