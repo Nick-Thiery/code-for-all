@@ -231,6 +231,10 @@ function ContinueCard({
             style={{ width: `${lessons.length ? (100 * doneCount) / lessons.length : 0}%` }}
           />
         </span>
+        {/* Progress lives on this device; /move-progress carries it to another. */}
+        <Link href="/move-progress" className="text-link min-h-9 text-[15px]">
+          {progress.startedCourse ? "Move my progress to another device" : "Got progress on another device?"}
+        </Link>
       </div>
       {cta && (
         <Link href={cta.href} className="btn btn-primary tablet:min-h-14 tablet:px-7">
