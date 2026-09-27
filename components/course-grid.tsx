@@ -12,7 +12,7 @@ import {
   type OutlineModule,
   type OutlineQuiz,
   allLessons,
-  moduleCompleteHref,
+  courseCertificateHref,
   moduleHref,
   resumeTarget,
 } from "@/lib/outline";
@@ -209,7 +209,7 @@ function ContinueCard({
   } else {
     eyebrow = "All caught up";
     title = "You've finished every lesson that's out so far.";
-    cta = lastModule ? { href: moduleCompleteHref(lastModule.number), label: "See what's next" } : null;
+    cta = lastModule ? { href: courseCertificateHref, label: "Get your course certificate" } : null;
   }
 
   return (
