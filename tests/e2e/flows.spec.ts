@@ -111,7 +111,8 @@ test.describe("Quizzes", () => {
     await answerQuiz(page, (i) => (i === 1 ? "wrong" : "right"));
     const total = quiz1.length;
     await expect(page.getByRole("heading", { name: `You got ${total - 1} of ${total}.` })).toBeVisible();
-    await expect(page.getByText(/Have another look at this lesson/)).toBeVisible();
+    // Without mastery levels the summary lists the lesson to review; with them it shows each lesson's level.
+    await expect(page.getByText(hasMastery ? /Missed a question/ : /Have another look at this lesson/)).toBeVisible();
 
     const results = await readStorage<Record<string, { correct: number; total: number; review: string[] }>>(page, RESULTS_KEY);
     expect(results?.["module-1/quiz"]).toMatchObject({ correct: total - 1, total, review: [`module-1/${quiz1[1].lesson}`] });
