@@ -32,7 +32,7 @@ export default async function AboutPage() {
 
   return (
     <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-[22px] pt-(--hy) pb-(--sec)">
+      <article className="mx-auto flex max-w-[720px] flex-col gap-[22px] pt-(--hy) pb-12 tablet:pb-(--sec)">
         <DraftNotice>
           <p>
             This page is a first draft, written from the LaunchLab Blueprint and the course map. Rewrite it in your own

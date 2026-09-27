@@ -7,7 +7,10 @@ import Link from "next/link";
 export function HandsOnChip({ lessonId, className = "" }: { lessonId?: string; className?: string }) {
   const href = lessonId ? `/access?from=${encodeURIComponent(lessonId)}` : "/access";
   return (
-    <Link href={href} className={`chip no-underline hover:border-accent hover:text-fg ${className}`}>
+    <Link
+      href={href}
+      className={`chip no-underline hover:border-accent hover:text-fg max-tablet:min-h-11 max-tablet:px-3.5 ${className}`}
+    >
       Hands-on: needs access
     </Link>
   );

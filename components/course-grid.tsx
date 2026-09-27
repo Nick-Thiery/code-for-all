@@ -99,7 +99,7 @@ export function CourseGrid({ outline }: { outline: Outline }) {
   const selectedModule = outline.modules.find((m) => m.number === selected) ?? outline.modules[0];
 
   return (
-    <div className="flex flex-col gap-10 tablet:gap-12">
+    <div className="flex flex-col gap-8 tablet:gap-12">
       <ContinueCard outline={outline} progress={progress} resume={resume} />
 
       <section aria-labelledby={`${uid}-title`} className="flex flex-col gap-5">

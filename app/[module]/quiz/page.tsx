@@ -33,7 +33,7 @@ export default async function QuizPage({ params }: Props) {
 
   return (
     <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-(--sec)">
+      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-12 tablet:pb-(--sec)">
         <header className="mb-2 flex flex-col gap-3.5">
           <p className="t-meta m-0 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-muted">
             <span className="font-bold text-fg">{formatCount(mod.quiz.length, "question")}</span>

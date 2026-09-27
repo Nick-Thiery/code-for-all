@@ -16,7 +16,7 @@ export default async function GlossaryPage() {
 
   return (
     <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-8 pt-(--hy) pb-(--sec)">
+      <article className="mx-auto flex max-w-[720px] flex-col gap-8 pt-(--hy) pb-12 tablet:pb-(--sec)">
         <header className="flex flex-col gap-3.5">
           <span className="eyebrow">Glossary</span>
           <h1 className="t-h1 m-0">Key terms, A to Z</h1>
