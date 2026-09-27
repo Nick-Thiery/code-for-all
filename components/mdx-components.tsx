@@ -6,6 +6,11 @@ import { CheckYourself, Question } from "@/components/check-yourself";
 import { HandsOn } from "@/components/chip";
 import { MdxPre } from "@/components/code-block";
 import { CommandBlock } from "@/components/command-block";
+import { ApiDoorDiagram } from "@/components/diagrams/api-door";
+import { BranchLanesDiagram } from "@/components/diagrams/branch-lanes";
+import { LoginDiagram } from "@/components/diagrams/logging-in";
+import { ThreeFilesDiagram } from "@/components/diagrams/three-files";
+import { VibeCodingDiagram } from "@/components/diagrams/vibe-coding";
 import { Figure } from "@/components/figure";
 import { KeyTerm } from "@/components/key-term";
 import { Placeholder } from "@/components/placeholder";
@@ -23,6 +28,8 @@ export const mdxComponents: MDXComponents = {
     href.startsWith("/") ? <Link href={href} {...props} /> : <a href={href} {...props} />,
   // Fenced code blocks.
   pre: MdxPre,
+  ApiDoorDiagram,
+  BranchLanesDiagram,
   Callout,
   Challenge,
   CheckYourself,
@@ -31,6 +38,7 @@ export const mdxComponents: MDXComponents = {
   HandsOn,
   KeyTerm,
   LadderPrompt,
+  LoginDiagram,
   Placeholder,
   PromptLadder,
   PromptPractice,
@@ -40,5 +48,7 @@ export const mdxComponents: MDXComponents = {
   StrongPrompt,
   StuckItem,
   Term,
+  ThreeFilesDiagram,
+  VibeCodingDiagram,
   VideoEmbed,
 };

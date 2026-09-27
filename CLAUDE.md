@@ -31,6 +31,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - `<Challenge title="…">`: the module homework, at the end of the module's last lesson.
 - `<PromptPractice taskId="…" hint="…">task</PromptPractice>`: the practice card.
 - `<PromptLadder><LadderPrompt …/></PromptLadder>` and `<StrongPrompt parts={[…]} />`: the prompt ladder in lesson 1.4 (components/prompt-ladder.tsx). It replaces that lesson's prompt blocks; the strong prompt's parts, joined by line breaks, must stay the exact slide prompt. Part colours are `--part-*` tokens in globals.css.
+- `<VibeCodingDiagram />` (1.2), `<ThreeFilesDiagram />` (5.6), `<BranchLanesDiagram />` (7.1), `<ApiDoorDiagram />` (8.2), `<LoginDiagram />` (8.4): lesson diagrams in components/diagrams/, drawn in HTML and inline SVG with tokens only, inside `Diagram` (components/diagram.tsx), which needs a caption and a full-sentence `alt`. On phones they reflow rather than shrink; `enlargeWidth` adds an Enlarge button for one that can't.
 - `<Figure src alt width height caption />`: an image (width/height = file pixels; tap to enlarge is built in).
 - `<VideoEmbed id="…" title="…" />`: a YouTube video from the slides (youtube-nocookie).
 - `<Placeholder>` for content a human still has to supply; `<Screenshot>` for a screenshot still to be taken.

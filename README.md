@@ -167,6 +167,7 @@ These work in any lesson without an import. Module 1 uses most of them.
 | `<CheckYourself><Question q="…">answer</Question></CheckYourself>` | A short quiz. Each answer shows when the learner asks for it. |
 | `<Challenge title="…">…</Challenge>` | The module's homework (from the slides). Goes at the end of the module's last lesson. |
 | `<Figure src="/lessons/module-6/x.jpg" alt="…" width={1600} height={770} caption="…" />` | An image, usually cropped from a slide into `public/lessons/module-N/`. `width` and `height` are the file's size in pixels. Readers can tap it to see it full size; images narrower than the column show at their own size. |
+| `<VibeCodingDiagram />` `<ThreeFilesDiagram />` `<BranchLanesDiagram />` `<ApiDoorDiagram />` `<LoginDiagram />` | The lesson diagrams (1.2, 5.6, 7.1, 8.2, 8.4), one file each in `components/diagrams/`. They are HTML and inline SVG drawn with the design tokens, so they work in dark mode, and each sits in the `Diagram` frame (`components/diagram.tsx`) with a caption and a full text alternative. On phones they reflow (cards stack, arrows turn downwards) instead of shrinking. A diagram that can't reflow can pass `enlargeWidth` to get an Enlarge button on phones. |
 | `<VideoEmbed id="hwP7WQkmECE" title="…" />` | A YouTube video from the slides (youtube-nocookie.com, loads when scrolled near), with a plain link underneath. |
 | `<Placeholder>What's missing</Placeholder>` | Marks content that's still needed, like a video link. Find them all with `grep -rn "<Placeholder\|<Screenshot" content`. |
 
@@ -216,6 +217,7 @@ app/opengraph-image.tsx       the share image
 app/not-found.tsx             404
 app/api/practice/route.ts     practice submissions (mock grading)
 components/                   one file per piece of the design (header, footer, track, callouts, ...)
+components/diagrams/          the lesson diagrams, each in the Diagram frame (components/diagram.tsx)
 lib/lessons.ts                reads, checks and orders modules and lessons
 lib/outline.ts                the course outline the browser gets (no lesson text)
 lib/progress.ts               completion state in localStorage
