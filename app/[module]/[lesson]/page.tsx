@@ -58,13 +58,16 @@ export default async function LessonPage({ params }: Props) {
 
   return (
     <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-(--sec)">
+      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-12 tablet:pb-(--sec)">
         <header className="mb-2 flex flex-col gap-3.5">
           <p className="t-meta m-0 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-muted">
-            <span className="font-bold text-fg">
+            {/* Below 960px the header's lesson bar already says "Lesson 4 of 6", so it's left out here. */}
+            <span className="hidden font-bold text-fg desktop:inline">
               Lesson {lesson.number} of {mod.lessons.length}
             </span>
-            <span aria-hidden="true">·</span>
+            <span aria-hidden="true" className="hidden desktop:inline">
+              ·
+            </span>
             <span>{lesson.duration} min</span>
             {/* On phones the module link gets its own line, so no dot is left hanging at a line end. */}
             <span aria-hidden="true" className="hidden tablet:inline">
