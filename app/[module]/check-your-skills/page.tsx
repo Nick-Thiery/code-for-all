@@ -62,7 +62,7 @@ export default async function CheckYourSkillsPage({ params }: Props) {
 
   return (
     <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-(--sec)">
+      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-12 tablet:pb-(--sec)">
         <header className="mb-2 flex flex-col gap-3.5">
           <p className="t-meta m-0">
             <Link href={moduleTrackHref(after)} className="font-bold">

@@ -6,7 +6,7 @@ export default function NotFound() {
     <div className="px-(--gut)">
       {/* The metadata API doesn't reach not-found pages; React puts this in <head>. */}
       <title>{`Page not found | ${site.name}`}</title>
-      <div className="mx-auto flex max-w-[640px] flex-col items-center gap-[18px] py-(--sec) text-center">
+      <div className="mx-auto flex max-w-[640px] flex-col items-center gap-[18px] py-12 text-center tablet:py-(--sec)">
         {/* An MRT line that runs out: three stops, then a dashed gap and a "?". */}
         <div aria-hidden="true" className="relative mb-3 h-24 w-full max-w-[400px]">
           <span className="absolute top-11 left-3.5 h-2 w-[calc(64%-14px)] rounded bg-accent" />
