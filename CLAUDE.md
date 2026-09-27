@@ -57,6 +57,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 - `lib/site.ts`: site copy and the contact address (`site.contactHref`, one value). Link to it as "Contact us", never print the address.
 - Home page course section: `components/course-grid.tsx` (`CourseGrid`), built from the outline, `lib/progress.ts` and `lib/quiz-results.ts`. Module cards are buttons (aria-pressed) that show one module's lessons; on phones each module opens in place (aria-expanded). It opens on the learner's current module; `/#module-N` picks another. Hands-on lessons get a labelled laptop icon, explained once per module.
+- Lesson completion: the recap tick and the "Next" card at the end of a lesson (`MarkDoneLink`) both call `markLessonDone` in `lib/celebration.ts`; unticking the recap un-marks. Finishing a module's last unfinished lesson shows `ModuleCelebration` (in the root layout): the module's honeycomb filling in, kept in memory only, still under reduced motion.
 - `/glossary` is built from every `<KeyTerm>` in the lessons (`lib/glossary.ts`); nothing to edit by hand.
 - `/run-it` and its printable kit pages come from `content/facilitator.yml` (`lib/facilitator.ts`). Never link or publish the PDFs in `source/slides/`.
 - `/privacy` states what the site stores and sends. Change it whenever that changes.

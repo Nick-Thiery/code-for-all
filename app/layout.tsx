@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Atkinson_Hyperlegible_Mono, Atkinson_Hyperlegible_Next, Recursive } from "next/font/google";
+import { ModuleCelebration } from "@/components/module-celebration";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getOutline } from "@/lib/lessons";
@@ -69,6 +70,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           {children}
         </main>
         <SiteFooter />
+        <ModuleCelebration />
       </body>
     </html>
   );

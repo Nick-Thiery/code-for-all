@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Hex, HEX_POINTS } from "@/components/hex";
+import { type ModuleInfo, markLessonDone } from "@/lib/celebration";
 import { setLessonComplete, useCompletedLessons } from "@/lib/progress";
 
 type Props = {
@@ -13,9 +14,11 @@ type Props = {
   fallback: string;
   /** Title of the next lesson, for the "Saved" line. */
   next?: string;
+  /** The lesson's module: ticking the last unfinished lesson celebrates it. */
+  module?: ModuleInfo;
 };
 
-export function RecapBox({ id, points, fallback, next }: Props) {
+export function RecapBox({ id, points, fallback, next, module }: Props) {
   const { completed, ready } = useCompletedLessons();
   const checked = completed.has(id);
   // Animate only when someone ticks it, not when a finished lesson loads.
@@ -23,7 +26,8 @@ export function RecapBox({ id, points, fallback, next }: Props) {
 
   function toggle() {
     setJustChecked(!checked);
-    setLessonComplete(id, !checked);
+    if (!checked && module) markLessonDone(id, module);
+    else setLessonComplete(id, !checked);
   }
 
   return (
