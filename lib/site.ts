@@ -1,45 +1,27 @@
 // Site-wide copy and links.
+
+// The one place the contact address lives. Everything links to site.contactHref.
+const CONTACT_EMAIL = "thiery774315@sas.edu.sg";
+
 export const site = {
   name: "Code for All",
   tagline: "Build real things with AI.",
   description:
     "A free course for beginners. Learn how AI tools work, then use one to build your own website.",
   madeBy: "Made by students at Code for All, a service club at Singapore American School.",
-
-  // TODO(contact): where "Contact" and "Email the Code for All team" go, for
-  // example "mailto:team@example.org". Until then they render without a link.
-  contactHref: null as string | null,
-
-  // TODO(kit): links for the session kit on /run-it. Each null renders its
-  // Open or Download button without a link.
-  kit: [
-    {
-      format: "Slides",
-      title: "Slide deck",
-      description: "What you'll show, from the opening hook to show and tell.",
-      openHref: null as string | null,
-      downloadHref: null as string | null,
-    },
-    {
-      format: "PDF",
-      title: "Facilitator script",
-      description: "What to say and do at each step, with timings.",
-      openHref: null as string | null,
-      downloadHref: null as string | null,
-    },
-    {
-      format: "PDF",
-      title: "Student handout",
-      description: "A one-page take-home with the key ideas and the course link.",
-      openHref: null as string | null,
-      downloadHref: null as string | null,
-    },
-    {
-      format: "PDF",
-      title: "Pre-session checklist",
-      description: "Laptops, accounts and room setup, sorted the day before.",
-      openHref: null as string | null,
-      downloadHref: null as string | null,
-    },
-  ],
+  contactEmail: CONTACT_EMAIL,
+  contactHref: `mailto:${CONTACT_EMAIL}`,
 };
+
+/**
+ * The site's public address, for share links, the sitemap and robots.txt.
+ * Set NEXT_PUBLIC_SITE_URL (e.g. https://codeforall.example) when you know the
+ * domain. On Vercel it falls back to the production URL Vercel provides.
+ */
+export function siteUrl(): URL {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL;
+  if (configured) return new URL(configured);
+  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (vercel) return new URL(`https://${vercel}`);
+  return new URL("http://localhost:3000");
+}

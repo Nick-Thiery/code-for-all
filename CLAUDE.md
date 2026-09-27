@@ -47,6 +47,17 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 - All colours and sizes are tokens at the top of `app/globals.css`, pasted from the spec sheet in `design/Code for All Website.dc.html`. Use them as Tailwind classes (`bg-tint`, `text-accent`) or `var(--accent)`. Tailwind's default palette is switched off. Never hardcode a colour.
 - Dark mode is `[data-theme="dark"]`, set before first paint by the script in `lib/theme.ts`.
+- Logo: `public/cfa-logo-light.png` and `public/cfa-logo-dark.png`, the original with only colours changed. Adding `public/cfa-logo.svg` (and `cfa-logo-dark.svg`) switches the header to SVG (`lib/logo.ts`). Don't redraw it.
+- Print: hide controls with `print:hidden` (buttons, practice, Stuck?, navigation); keep images and prompt blocks. Pages print in light colours.
+- No dead buttons: every button or link must do something. Don't add disabled placeholders; leave the control out until it works.
+
+## Site pages
+
+- `lib/site.ts`: site copy and the contact address (`site.contactHref`, one value). Link to it as "Contact us", never print the address.
+- `/glossary` is built from every `<KeyTerm>` in the lessons (`lib/glossary.ts`); nothing to edit by hand.
+- `/run-it` and its printable kit pages come from `content/facilitator.yml` (`lib/facilitator.ts`). Never link or publish the PDFs in `source/slides/`.
+- `/privacy` states what the site stores and sends. Change it whenever that changes.
+- Every page needs a `title` and `description` in its metadata. `NEXT_PUBLIC_SITE_URL` sets the address used in share links and `sitemap.xml`.
 
 ## Practice grading
 

@@ -163,7 +163,7 @@ export function PromptPractice({ taskId, hint, children }: Props) {
         : "";
 
   return (
-    <section aria-labelledby={`${id}-label`} data-task-id={taskId} className="flex flex-col gap-5 text-left text-fg">
+    <section aria-labelledby={`${id}-label`} data-task-id={taskId} className="flex flex-col gap-5 text-left text-fg print:hidden">
       <div className="overflow-hidden rounded-[20px] border-[1.5px] border-border bg-surface">
         <div className="flex flex-col gap-2.5 bg-tint p-(--pad)">
           <div className="flex items-center gap-2">

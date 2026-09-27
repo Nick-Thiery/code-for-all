@@ -19,7 +19,12 @@ async function resolve(params: Props["params"]) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const found = await resolve(params);
-  return found && !found.released ? { title: `Module ${found.number}: coming soon` } : {};
+  return found && !found.released
+    ? {
+        title: `Module ${found.number}: coming soon`,
+        description: `Module ${found.number}, ${found.planned.title}, isn't out yet. ${found.planned.summary}`,
+      }
+    : {};
 }
 
 export default async function ModulePage({ params }: Props) {

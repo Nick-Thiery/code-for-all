@@ -28,7 +28,16 @@ async function find(params: Props["params"]) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const found = await find(params);
-  return found ? { title: found.lesson.title, description: found.lesson.summary } : {};
+  if (!found) return {};
+  const { lesson } = found;
+  // Two lessons can share a title ("Key terms"); the module number tells their tabs apart.
+  const shared = (await getModules()).some((mod) =>
+    mod.lessons.some((other) => other.id !== lesson.id && other.title === lesson.title),
+  );
+  return {
+    title: shared ? `${lesson.title} (Module ${lesson.module})` : lesson.title,
+    description: lesson.summary,
+  };
 }
 
 export default async function LessonPage({ params }: Props) {

@@ -19,7 +19,9 @@ async function find(params: Props["params"]) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const mod = await find(params);
-  return mod ? { title: `Module ${mod.number} complete` } : {};
+  return mod
+    ? { title: `Module ${mod.number} complete`, description: `You've finished Module ${mod.number}: ${mod.title}.` }
+    : {};
 }
 
 export default async function ModuleCompletePage({ params }: Props) {

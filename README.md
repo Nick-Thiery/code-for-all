@@ -200,9 +200,15 @@ app/[module]/complete/page.tsx  Module complete (/module-1/complete)
 app/[module]/quiz/page.tsx      module quiz (/module-1/quiz)
 app/[module]/check-your-skills/page.tsx  Check your skills (/module-5/check-your-skills)
 app/[module]/page.tsx           /module-N: Coming soon for a module that isn't out
-app/run-it/page.tsx           Run a session, for adults
+app/run-it/page.tsx           Run a session: the facilitator kit, for adults
+app/run-it/[kit]/             printable kit pages (/run-it/script/module-3)
+content/facilitator.yml       run sheets for the kit (read by lib/facilitator.ts)
+app/glossary/page.tsx         glossary, built from every <KeyTerm> (lib/glossary.ts)
+app/privacy/page.tsx          privacy, for parents and schools
 app/access/page.tsx           how hands-on access works
-app/about/page.tsx            about
+app/about/page.tsx            about (a draft to rewrite)
+app/sitemap.ts, app/robots.ts sitemap.xml and robots.txt
+app/opengraph-image.tsx       the share image
 app/not-found.tsx             404
 app/api/practice/route.ts     practice submissions (mock grading)
 components/                   one file per piece of the design (header, footer, track, callouts, ...)
@@ -214,7 +220,8 @@ lib/quiz.ts                   quiz types, shuffling and the mixed-quiz draw
 lib/quiz-results.ts           quiz results and checklist ticks in localStorage
 components/module-quiz.tsx    the quiz card (ModuleQuiz)
 lib/practice*.ts              practice types, mock grading and ?mock= fixtures
-lib/site.ts                   site copy, plus the Contact and session kit links (TODO)
+lib/site.ts                   site copy, the contact address and the site URL
+lib/logo.ts                   which logo files the header uses
 app/globals.css               design tokens, type, buttons, lesson styles
 design/                       the Claude Design export this site is built from
 ```
@@ -225,5 +232,8 @@ design/                       the Claude Design export this site is built from
 - **Quiz results** are stored under `cfa:quiz-results`: for each quiz (`module-1/quiz`, `module-5/check-your-skills`), the last result only (how many right, out of how many, the ids of the lessons to review, and the date). Check your skills ticks are stored under `cfa:checklists`, per page. Neither holds anything the learner typed.
 - **Dark mode** follows the device setting until someone uses the toggle. After that, their choice is remembered in `cfa:theme`.
 - **Design**: the source is `design/Code for All Website.dc.html`, exported from Claude Design; open it in a browser to see every page and the spec sheet. The colour and size tokens at the top of `app/globals.css` are pasted from that spec sheet. Use the tokens (as Tailwind classes like `bg-tint` or `text-accent`, or `var(--accent)`); Tailwind's default colour palette is switched off. Headings are set in Recursive, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.
-- **TODO links**: Contact and the session kit links are empty in `lib/site.ts`. Until they're filled in, those links show as disabled buttons or plain text, with a dashed outline in development.
+- **Contact**: the address is one value in `lib/site.ts`. Every "Contact us" button links to `site.contactHref`.
+- **Logo**: `public/cfa-logo-light.png` (transparent background) and `public/cfa-logo-dark.png` (the same pixels with only the colours changed for dark mode). If `public/cfa-logo.svg` exists, the header uses it instead, with `public/cfa-logo-dark.svg` for dark mode if that exists too.
+- **Site URL**: share links and `sitemap.xml` use `NEXT_PUBLIC_SITE_URL` (for example `https://codeforall.example`). On Vercel it falls back to the project's production address; locally, to http://localhost:3000.
+- **Printing**: lessons and kit pages print in light colours without the header, navigation, buttons or practice box. Give any new control `print:hidden`.
 - **Lessons can run code.** MDX files can contain JavaScript that runs when the site builds. Review lesson pull requests before merging them.

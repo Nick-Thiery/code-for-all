@@ -17,7 +17,7 @@ export function CopyButton({ text, className = "btn btn-small min-w-24 text-[17p
 
   return (
     <>
-      <button type="button" onClick={copy} className={className}>
+      <button type="button" onClick={copy} className={`${className} print:hidden`}>
         {copied ? "✓ Copied" : "Copy"}
       </button>
       <span aria-live="polite" className="sr-only">

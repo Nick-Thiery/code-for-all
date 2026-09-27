@@ -1,8 +1,11 @@
 import Link from "next/link";
+import { site } from "@/lib/site";
 
 export default function NotFound() {
   return (
     <div className="px-(--gut)">
+      {/* The metadata API doesn't reach not-found pages; React puts this in <head>. */}
+      <title>{`Page not found | ${site.name}`}</title>
       <div className="mx-auto flex max-w-[640px] flex-col items-center gap-[18px] py-(--sec) text-center">
         {/* An MRT line that runs out: three stops, then a dashed gap and a "?". */}
         <div aria-hidden="true" className="relative mb-3 h-24 w-full max-w-[400px]">
