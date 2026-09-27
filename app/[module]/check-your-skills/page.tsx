@@ -75,7 +75,8 @@ export default async function CheckYourSkillsPage({ params }: Props) {
           </p>
         </header>
 
-        <section aria-labelledby="mixed-quiz" className="flex flex-col gap-4">
+        {/* Not a named landmark: the quiz card inside is already the "Mixed quiz" region. */}
+        <section className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <h2 id="mixed-quiz" className="t-h2 m-0">
               Mixed quiz

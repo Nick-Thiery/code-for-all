@@ -8,6 +8,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - `npm run build`: production build. It checks every lesson and stops with a plain-English error naming the file.
 - `npm run lint`: ESLint
 - `npm run typecheck`: TypeScript check (`tsc --noEmit`)
+- `npm test`: build, then the Playwright suite in `tests/e2e/` (learner flows, axe on every page type in light and dark, keyboard-only pass) at 375px and 1280px. `npm run test:e2e` reuses an existing build. Tests read lesson and quiz content from `content/`, so they don't need updating when a lesson changes. CI (`.github/workflows/ci.yml`) runs lint, typecheck, build and the tests on every pull request.
 
 ## Content
 
