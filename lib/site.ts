@@ -25,3 +25,6 @@ export function siteUrl(): URL {
   if (vercel) return new URL(`https://${vercel}`);
   return new URL("http://localhost:3000");
 }
+
+/** Search engines may index the site only when NEXT_PUBLIC_ALLOW_INDEXING is "true". */
+export const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
