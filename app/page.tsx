@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CourseTrack, UpcomingModule } from "@/components/course-track";
 import { Hex } from "@/components/hex";
+import { HeroGallery } from "@/components/hero-gallery";
 import { HomeHero } from "@/components/home-hero";
 import { getOutline } from "@/lib/lessons";
 
@@ -12,7 +13,7 @@ export default async function HomePage() {
       <section className="px-(--gut)">
         <div className="mx-auto flex max-w-[1120px] flex-wrap items-center gap-x-14 gap-y-10 py-(--hy)">
           <HomeHero outline={outline} />
-          <BuildPreview />
+          <HeroGallery />
         </div>
       </section>
 
@@ -111,45 +112,6 @@ export default async function HomePage() {
         </div>
       </section>
     </>
-  );
-}
-
-// "You write → Claude Code builds it". Decoration, so it's hidden from
-// screen readers, and dropped on phones so Lesson 1 shows up sooner.
-function BuildPreview() {
-  return (
-    <div aria-hidden="true" className="hidden max-w-[470px] flex-[1_1_380px] flex-col rounded-3xl bg-tint p-7 tablet:flex">
-      <div className="box-border flex w-[84%] flex-col gap-1.5 rounded-[14px] border-[1.5px] border-border bg-surface px-4 py-3.5">
-        <span className="text-[13px] font-bold tracking-[.04em] text-muted">You write</span>
-        <span className="font-mono text-[14px] leading-[1.55]">
-          Build a one-page website with my name at the top and a section about my cat, Mochi. Use dark blue and white.
-        </span>
-      </div>
-      <div className="flex items-center gap-2 py-3 pl-[22px] text-[14px] font-bold text-accent">
-        <Hex width={12} height={13} shape="fill-deco" />
-        Claude Code builds it
-      </div>
-      <div className="w-[86%] self-end overflow-hidden rounded-[14px] border-[1.5px] border-border bg-surface">
-        <div className="flex items-center gap-1.5 border-b border-border bg-surface2 px-3 py-2">
-          <span className="size-2 rounded-full bg-pip" />
-          <span className="size-2 rounded-full bg-pip" />
-          <span className="size-2 rounded-full bg-pip" />
-          <span className="ml-2 rounded-full bg-surface px-2.5 font-mono text-[12px] leading-[1.6] text-muted">aisyah.html</span>
-        </div>
-        <div className="flex flex-col gap-2 px-[18px] pt-[18px] pb-5">
-          <span className="display text-[28px] leading-[1.1] font-bold text-accent">Hi, I&apos;m Aisyah</span>
-          <span className="text-[14px] leading-[1.4] text-muted">I like cats, badminton and drawing.</span>
-          <div className="mt-1.5 grid grid-cols-2 gap-2.5">
-            {["Meet Mochi", "Badminton"].map((label) => (
-              <div key={label} className="flex flex-col gap-1.5 rounded-[10px] bg-tint p-2.5">
-                <span className="text-[13px] leading-[1.2] font-bold">{label}</span>
-                <span className="h-[52px] rounded-md bg-[repeating-linear-gradient(135deg,var(--surface)_0_6px,var(--tint)_6px_12px)]" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
