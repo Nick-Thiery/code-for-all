@@ -1,0 +1,744 @@
+/*
+  The homepage hero visual (components/hero-gallery.tsx).
+
+  Sizes are design pixels times --u. From 600px wide it's the 580×600
+  design frame, scaled to its column: --u is 1/580 of the frame's width.
+  On phones the cards stack in a grid instead, with the extra details
+  (.more) left out.
+
+  Motion: each element's resting style is its finished state, and every
+  animation runs from something else back to it. So with reduced motion
+  (app/globals.css turns all animation off) or in print, the finished cards
+  are simply there. data-paused (components/pause-offscreen.tsx) stops the
+  loops while the hero is scrolled out of view.
+*/
+
+.gallery {
+  /* The projects' own colours. They're pictures of things learners build,
+     so they're the same in both themes. */
+  --quiz: #0f766e;
+  --sun: #ffc94d;
+  --sun-ray: #e0a800;
+  --hit: #1e7f4b;
+  --miss: #6b7785;
+  --site-ink: #172554;
+  --site-bio: #c7d6f5;
+  --mochi: #dce8ff;
+  --badminton: #d6f2ea;
+  --badminton-ink: #134e3a;
+  --on-project: #ffffff;
+
+  /* Shadows are mixed from tokens: a blue haze in light, dark in dark,
+     where a hairline keeps each card's edge. */
+  --shadow: color-mix(in srgb, var(--accent) 16%, transparent);
+  --shadow-top: color-mix(in srgb, var(--accent) 26%, transparent);
+  --ring: transparent;
+
+  --u: 1px;
+  position: relative;
+  flex: 1 1 400px;
+  max-width: 580px;
+  min-width: 0;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+  border-radius: 24px;
+  background: var(--tint);
+  overflow: hidden;
+  line-height: 1.2;
+  user-select: none;
+  break-inside: avoid;
+}
+:global([data-theme="dark"]) .gallery {
+  --shadow: color-mix(in srgb, var(--bg) 70%, transparent);
+  --shadow-top: color-mix(in srgb, var(--bg) 85%, transparent);
+  --ring: var(--border);
+}
+
+/* ---- Cards ---- */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--u));
+  min-width: 0;
+  box-sizing: border-box;
+  padding: calc(16 * var(--u));
+  border-radius: calc(18 * var(--u));
+  background: var(--surface);
+  box-shadow:
+    0 calc(16 * var(--u)) calc(40 * var(--u)) var(--shadow),
+    0 0 0 1px var(--ring);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: calc(6 * var(--u));
+  height: calc(24 * var(--u));
+  padding: 0 calc(10 * var(--u));
+  border-radius: calc(12 * var(--u));
+  background: var(--tint);
+  color: var(--accent);
+  font-size: calc(12 * var(--u));
+  font-weight: 700;
+  white-space: nowrap;
+}
+.chipMain {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.chipHex {
+  flex: none;
+  width: calc(10 * var(--u));
+  height: calc(11 * var(--u));
+}
+
+.title,
+.temp,
+.board,
+.popupTitle,
+.name {
+  font-family: var(--font-display);
+  font-variation-settings: "CASL" 0.5;
+  font-weight: 800;
+}
+.title {
+  font-size: calc(20 * var(--u));
+  line-height: 1.15;
+  color: var(--text);
+}
+.words .title {
+  font-size: calc(18 * var(--u));
+}
+.place {
+  font-size: calc(14 * var(--u));
+  font-weight: 700;
+  color: var(--text);
+}
+.source {
+  font-size: calc(12 * var(--u));
+  color: var(--muted);
+}
+.note {
+  font-size: calc(13 * var(--u));
+  line-height: 1.3;
+  color: var(--muted);
+}
+
+/* Quiz: the highlight moves down the answers. */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--u));
+}
+.option {
+  display: flex;
+  align-items: center;
+  height: calc(36 * var(--u));
+  box-sizing: border-box;
+  padding: 0 calc(12 * var(--u));
+  border: calc(1.5 * var(--u)) solid var(--border);
+  border-radius: calc(10 * var(--u));
+  background: var(--surface);
+  color: var(--muted);
+  font-size: calc(14 * var(--u));
+  font-weight: 700;
+  white-space: nowrap;
+  animation: pick 6s ease infinite;
+}
+.option:first-child {
+  border-color: var(--quiz);
+  background: var(--quiz);
+  color: var(--on-project);
+  animation-delay: 1.2s;
+  animation-fill-mode: backwards;
+}
+.option:nth-child(2) {
+  animation-delay: 3.2s;
+}
+.option:nth-child(3) {
+  animation-delay: 5.2s;
+}
+
+/* Live weather: the sun turns, the cloud drifts, the dot pulses. */
+.weather {
+  gap: calc(8 * var(--u));
+}
+.weatherTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(6 * var(--u));
+}
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(5 * var(--u));
+  font-size: calc(11 * var(--u));
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.liveDot {
+  width: calc(8 * var(--u));
+  height: calc(8 * var(--u));
+  border-radius: 50%;
+  background: var(--deco);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.reading {
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--u));
+}
+.weatherIcon {
+  flex: none;
+  width: calc(46 * var(--u));
+  height: calc(46 * var(--u));
+}
+.sun {
+  transform-origin: 18px 18px;
+  animation: spin 14s linear infinite;
+}
+.sun circle {
+  fill: var(--sun);
+}
+.sun path {
+  stroke: var(--sun-ray);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+.cloud {
+  fill: var(--surface);
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  animation: drift 4s ease-in-out infinite;
+}
+.temp {
+  font-size: calc(44 * var(--u));
+  line-height: 1;
+  color: var(--accent);
+}
+
+/* Word game: each guess flips over, letter by letter. */
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: calc(5 * var(--u));
+  perspective: calc(400 * var(--u));
+  font-size: calc(17 * var(--u));
+}
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(34 * var(--u));
+  border-radius: calc(6 * var(--u));
+  background: var(--c);
+  color: var(--on-project);
+  animation: flip 8s ease infinite backwards;
+}
+.hit {
+  --c: var(--hit);
+}
+.miss {
+  --c: var(--miss);
+}
+
+/* Tab Tidy: the group bars fill, the button calls. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  height: calc(30 * var(--u));
+  padding: 0 calc(8 * var(--u));
+  border-radius: calc(8 * var(--u));
+  background: var(--surface2);
+}
+.address {
+  flex: 1;
+  height: calc(16 * var(--u));
+  border-radius: calc(8 * var(--u));
+  background: var(--surface);
+}
+.extIcon {
+  display: grid;
+  place-items: center;
+  width: calc(24 * var(--u));
+  height: calc(24 * var(--u));
+  border-radius: calc(6 * var(--u));
+  background: var(--accent);
+}
+.extIcon svg {
+  width: calc(14 * var(--u));
+  height: calc(14 * var(--u));
+  fill: none;
+  stroke: var(--on-accent);
+  stroke-width: 2.4;
+}
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: calc(6 * var(--u));
+  padding: calc(12 * var(--u));
+  border: calc(1.5 * var(--u)) solid var(--border);
+  border-radius: calc(12 * var(--u));
+}
+.popupTitle {
+  font-size: calc(16 * var(--u));
+  color: var(--text);
+}
+.bars {
+  display: flex;
+  gap: calc(4 * var(--u));
+  height: calc(8 * var(--u));
+}
+.bars span {
+  border-radius: calc(4 * var(--u));
+  transform-origin: left;
+  animation: grow 5s ease-in-out infinite backwards;
+}
+.bars span:nth-child(1) {
+  width: 45%;
+  background: var(--accent);
+  animation-delay: 1.6s;
+}
+.bars span:nth-child(2) {
+  width: 30%;
+  background: var(--deco);
+  animation-delay: 1.8s;
+}
+.bars span:nth-child(3) {
+  width: 25%;
+  background: color-mix(in srgb, var(--deco) 50%, var(--surface));
+  animation-delay: 2s;
+}
+.tidy {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  height: calc(30 * var(--u));
+  margin-top: calc(4 * var(--u));
+  padding: 0 calc(12 * var(--u));
+  border-radius: calc(15 * var(--u));
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: calc(12 * var(--u));
+  font-weight: 700;
+  animation: ring 2.4s ease-out 2s infinite;
+}
+
+/* Aisyah's website: the cursor blinks, the sections take turns. */
+.site {
+  border-radius: calc(20 * var(--u));
+  box-shadow:
+    0 calc(26 * var(--u)) calc(60 * var(--u)) var(--shadow-top),
+    0 0 0 1px var(--ring);
+}
+.page {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: calc(12 * var(--u));
+}
+.masthead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(4 * var(--u));
+  height: calc(92 * var(--u));
+  box-sizing: border-box;
+  padding: 0 calc(16 * var(--u));
+  background: var(--site-ink);
+}
+.name {
+  font-size: calc(26 * var(--u));
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--on-project);
+}
+.cursor {
+  display: inline-block;
+  width: calc(3 * var(--u));
+  height: calc(24 * var(--u));
+  margin-left: calc(4 * var(--u));
+  vertical-align: calc(-3 * var(--u));
+  background: var(--deco);
+  animation: blink 1s steps(1) infinite;
+}
+.bio {
+  font-size: calc(13 * var(--u));
+  color: var(--site-bio);
+}
+.sections {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(8 * var(--u));
+  padding: calc(10 * var(--u));
+}
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8 * var(--u));
+  height: calc(58 * var(--u));
+  border-radius: calc(10 * var(--u));
+  font-size: calc(13 * var(--u));
+  font-weight: 700;
+  white-space: nowrap;
+  animation: pop 4s ease-in-out infinite;
+}
+.section svg {
+  flex: none;
+  width: calc(20 * var(--u));
+  height: calc(20 * var(--u));
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mochi {
+  background: var(--mochi);
+  color: var(--site-ink);
+  animation-delay: 1.5s;
+}
+.badminton {
+  background: var(--badminton);
+  color: var(--badminton-ink);
+  animation-delay: 2.1s;
+}
+
+.caption {
+  display: inline-flex;
+  align-items: center;
+  height: calc(40 * var(--u));
+  padding: 0 calc(18 * var(--u));
+  border-radius: calc(20 * var(--u));
+  background: var(--text);
+  color: var(--bg);
+  font-size: calc(14 * var(--u));
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ---- Phones: stacked, website first, details left out ---- */
+
+@media (max-width: 599.98px) {
+  .backdrop,
+  .more {
+    display: none;
+  }
+  .site {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+  .quiz,
+  .weather,
+  .words,
+  .tabs {
+    --u: 0.85px;
+  }
+  .card,
+  .site {
+    box-shadow:
+      0 4px 12px var(--shadow),
+      0 0 0 1px var(--ring);
+  }
+  .weatherIcon {
+    width: calc(34 * var(--u));
+    height: calc(34 * var(--u));
+  }
+  .reading {
+    gap: calc(8 * var(--u));
+  }
+  .temp {
+    font-size: calc(32 * var(--u));
+  }
+  .caption {
+    --u: 0.85px;
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}
+
+/* ---- 600px and up: the design frame, cards dealt in, then floating ---- */
+
+@media (min-width: 600px) {
+  .gallery {
+    --u: calc(100cqw / 580);
+    container-type: inline-size;
+    display: block;
+    padding: 0;
+    aspect-ratio: 580 / 600;
+    border-radius: 5.5% / 5.33%;
+  }
+
+  .backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .bigHex,
+  .cornerHex {
+    fill: none;
+    stroke: var(--deco);
+    stroke-width: 2;
+    opacity: 0.3;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: turn 40s linear infinite alternate;
+  }
+  .cornerHex {
+    animation-duration: 30s;
+    animation-direction: alternate-reverse;
+  }
+  .dotHex {
+    fill: var(--deco);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  /* Where each card rests (x, y, width, tilt) and where it's dealt from. */
+  .card {
+    position: absolute;
+    left: calc(var(--x) * var(--u));
+    top: calc(var(--y) * var(--u));
+    width: calc(var(--w) * var(--u));
+    rotate: var(--r);
+    animation-name: deal, bob;
+    animation-duration: 0.9s, var(--bob);
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1), ease-in-out;
+    animation-delay: var(--deal), var(--bob-delay);
+    animation-iteration-count: 1, infinite;
+    animation-fill-mode: both, none;
+  }
+  .quiz {
+    --x: 10;
+    --y: 26;
+    --w: 250;
+    --r: -7deg;
+    --dx: 155;
+    --dy: 150;
+    --deal: 0.25s;
+    --bob: 6.4s;
+    --bob-delay: 1.15s;
+  }
+  .weather {
+    --x: 336;
+    --y: 22;
+    --w: 228;
+    --r: 6deg;
+    --dx: -160;
+    --dy: 180;
+    --deal: 0.35s;
+    --bob: 7s;
+    --bob-delay: 1.25s;
+  }
+  .words {
+    --x: 16;
+    --y: 358;
+    --w: 238;
+    --r: 5deg;
+    --dx: 155;
+    --dy: -130;
+    --deal: 0.45s;
+    --bob: 6.8s;
+    --bob-delay: 1.35s;
+  }
+  .tabs {
+    --x: 330;
+    --y: 360;
+    --w: 236;
+    --r: -5deg;
+    --dx: -158;
+    --dy: -140;
+    --deal: 0.55s;
+    --bob: 5.8s;
+    --bob-delay: 1.45s;
+  }
+  .site {
+    --x: 140;
+    --y: 110;
+    --w: 300;
+    --r: -1deg;
+    --dx: 0;
+    --dy: 40;
+    --deal: 0.1s;
+    --bob: 7.4s;
+    --bob-delay: 1s;
+  }
+
+  .caption {
+    position: absolute;
+    left: 50%;
+    bottom: calc(8 * var(--u));
+    height: calc(34 * var(--u));
+    font-size: calc(13 * var(--u));
+    translate: -50% 0;
+  }
+}
+
+/* ---- Pausing, printing ---- */
+
+.gallery[data-paused],
+.gallery[data-paused] * {
+  animation-play-state: paused !important;
+}
+
+@media print {
+  .gallery,
+  .gallery * {
+    animation: none !important;
+  }
+}
+
+/* ---- Keyframes ---- */
+
+@keyframes deal {
+  from {
+    opacity: 0;
+    translate: calc(var(--dx) * var(--u)) calc(var(--dy) * var(--u));
+    rotate: 0deg;
+    scale: 0.82;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    rotate: var(--r);
+    scale: 1;
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: var(--r);
+  }
+  50% {
+    translate: 0 calc(-10 * var(--u));
+    rotate: calc(var(--r) + 1.2deg);
+  }
+}
+@keyframes pick {
+  0%,
+  30% {
+    border-color: var(--quiz);
+    background: var(--quiz);
+    color: var(--on-project);
+  }
+  34%,
+  100% {
+    border-color: var(--border);
+    background: var(--surface);
+    color: var(--muted);
+  }
+}
+/* Blank tile, turns edge-on, comes back coloured, holds, fades, resets. */
+@keyframes flip {
+  0%,
+  3% {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: inset 0 0 0 2px var(--border);
+  }
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  3%,
+  3.1% {
+    transform: rotateX(90deg);
+  }
+  3.1%,
+  90% {
+    background: var(--c);
+    color: var(--on-project);
+    box-shadow: inset 0 0 0 0 transparent;
+  }
+  6% {
+    transform: rotateX(0deg);
+  }
+  90% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0;
+  }
+  97%,
+  100% {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: inset 0 0 0 2px var(--border);
+  }
+  97% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes drift {
+  50% {
+    transform: translateX(4px);
+  }
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+@keyframes ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 calc(10 * var(--u)) transparent;
+  }
+}
+@keyframes grow {
+  0% {
+    transform: scaleX(0);
+  }
+  25%,
+  85% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+@keyframes pop {
+  0%,
+  80%,
+  100% {
+    transform: scale(1);
+  }
+  88% {
+    transform: scale(1.06);
+  }
+}
+@keyframes blink {
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes turn {
+  to {
+    transform: rotate(60deg);
+  }
+}
