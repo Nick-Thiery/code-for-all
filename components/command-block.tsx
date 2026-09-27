@@ -30,7 +30,7 @@ export function CommandBlock({ children }: { children: ReactNode }) {
         <span aria-hidden="true" className="text-term-muted select-none">
           $
         </span>
-        <code className="font-[inherit] whitespace-pre">{command}</code>
+        <code className="font-[inherit] whitespace-pre print:whitespace-pre-wrap print:[overflow-wrap:anywhere]">{command}</code>
       </ScrollArea>
     </div>
   );

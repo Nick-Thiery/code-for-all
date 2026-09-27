@@ -23,10 +23,10 @@ export function PromptBlock({ text, title }: { text: string; title?: string }) {
   }
 
   return (
-    <figure className="m-0 flex flex-col gap-2.5">
+    <figure className="m-0 flex flex-col gap-2.5 break-inside-avoid">
       <figcaption className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
         <span className="kicker">{title ? `Prompt: ${title}` : "Prompt"}</span>
-        <button type="button" onClick={copy} className="btn btn-small min-w-24 text-[17px]">
+        <button type="button" onClick={copy} className="btn btn-small min-w-24 text-[17px] print:hidden">
           {copied ? "✓ Copied" : "Copy"}
         </button>
       </figcaption>

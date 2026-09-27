@@ -15,60 +15,61 @@ Lovable builds what you ask for. Whatever you leave out, it guesses. So the way 
 
 Here's the same request three times: bad, better and strong.
 
-## Bad
+<PromptLadder>
 
-```prompt title="Bad"
-Create a website for my course
-```
+<LadderPrompt level="Bad" prompt="Create a website for my course" leavesOut={["Role", "Target audience", "Core pages", "Design style", "Output required", "Key features"]}>
 
 It doesn't say what the course is, who it's for, which pages it needs or how it should look. Lovable has to guess all of it.
 
-## Better
+</LadderPrompt>
 
-```prompt title="Better"
-Create a modern website for my coding course with a homepage and lessons.
-```
+<LadderPrompt level="Better" prompt="Create a modern website for my coding course with a homepage and lessons." leavesOutLabel="Still missing" leavesOut={["Role", "Target audience", 'Design style ("modern" is vague)', "Output required", "Key features"]}>
 
 Better: it says what kind of course it is and names two pages. But "modern" could mean almost anything, and there's still no audience.
 
-## Strong
+</LadderPrompt>
 
-```prompt title="Strong"
-Role: You are an expert educational web designer and full-stack developer.
-Goal: Create a responsive website for a 15-lesson course called “Vibe Coding: Build Apps with Lovable & GitHub.”
-Target audience: High-school and early-college students with little to no coding experience.
-Core pages required:
-1. Landing page (course overview + value proposition)
-2. Curriculum page (15 lessons with goals and agendas)
-3. Lesson page template (objectives, agenda, exercises)
-4. About page (instructor + course philosophy)
-5. Resources page (GitHub links, tools, templates)
-Design style:
-1. Modern, playful, and approachable
-2. Light background, bold headings
-3. Friendly typography (not corporate)
-Output required:
-1. Folder structure
-2. Core page code
-3. Reusable lesson template
-4. Brief explanation of design decisions
-5. Build the site so it can be easily expanded with more lessons later.
-Key features:
-1. Clean, student-friendly UI
-2. Clear call-to-action buttons (Enrol / Start Lesson)
-3. Mobile-first design
-4. Easy navigation between lessons
-```
+</PromptLadder>
 
-## What each part does
+The strong prompt has seven parts, each with one job.
 
-- **Role** tells the AI what kind of expert to be, so it makes the choices that expert would make.
-- **Goal** says exactly what to build, including its name and size.
-- **Target audience** says who it's for, so the words, layout and difficulty suit them.
-- **Core pages** lists every page, so nothing gets left out and nothing gets made up.
-- **Design style** describes the look in real words, not just "modern" or "nice".
-- **Output required** says what you want back: code you can use, organised the way you need it.
-- **Key features** lists the must-haves that make the site easy to use.
+<StrongPrompt parts={[
+  {
+    name: "Role",
+    text: "Role: You are an expert educational web designer and full-stack developer.",
+    does: "tells the AI what kind of expert to be, so it makes the choices that expert would make.",
+  },
+  {
+    name: "Goal",
+    text: "Goal: Create a responsive website for a 15-lesson course called “Vibe Coding: Build Apps with Lovable & GitHub.”",
+    does: "says exactly what to build, including its name and size.",
+  },
+  {
+    name: "Target audience",
+    text: "Target audience: High-school and early-college students with little to no coding experience.",
+    does: "says who it's for, so the words, layout and difficulty suit them.",
+  },
+  {
+    name: "Core pages",
+    text: "Core pages required:\n1. Landing page (course overview + value proposition)\n2. Curriculum page (15 lessons with goals and agendas)\n3. Lesson page template (objectives, agenda, exercises)\n4. About page (instructor + course philosophy)\n5. Resources page (GitHub links, tools, templates)",
+    does: "lists every page, so nothing gets left out and nothing gets made up.",
+  },
+  {
+    name: "Design style",
+    text: "Design style:\n1. Modern, playful, and approachable\n2. Light background, bold headings\n3. Friendly typography (not corporate)",
+    does: 'describes the look in real words, not just "modern" or "nice".',
+  },
+  {
+    name: "Output required",
+    text: "Output required:\n1. Folder structure\n2. Core page code\n3. Reusable lesson template\n4. Brief explanation of design decisions\n5. Build the site so it can be easily expanded with more lessons later.",
+    does: "says what you want back: code you can use, organised the way you need it.",
+  },
+  {
+    name: "Key features",
+    text: "Key features:\n1. Clean, student-friendly UI\n2. Clear call-to-action buttons (Enrol / Start Lesson)\n3. Mobile-first design\n4. Easy navigation between lessons",
+    does: "lists the must-haves that make the site easy to use.",
+  },
+]} />
 
 <Callout kind="tip">
 The bad prompt leaves out the audience, the pages and the style. Check your own prompts for those three first.

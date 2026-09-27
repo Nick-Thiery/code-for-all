@@ -46,19 +46,19 @@ export function ScrollArea({ children, className = "", fade, hintClassName = "" 
           ref={box}
           // Focusable when it scrolls, so keyboard users can scroll it too.
           tabIndex={overflows ? 0 : undefined}
-          className={`overflow-x-auto ${className}`}
+          className={`overflow-x-auto print:overflow-visible ${className}`}
         >
           {children}
         </div>
         {overflows && !atEnd && (
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-linear-to-l from-(--fade) to-transparent"
+            className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-linear-to-l from-(--fade) to-transparent print:hidden"
           />
         )}
       </div>
       {overflows && (
-        <p className={`m-0 text-[15px] leading-[1.5] ${hintClassName}`}>
+        <p className={`m-0 text-[15px] leading-[1.5] print:hidden ${hintClassName}`}>
           Scroll sideways to see all of it <span aria-hidden="true">→</span>
         </p>
       )}

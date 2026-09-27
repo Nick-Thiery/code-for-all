@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { HEX_POINTS, Hex, HexCheck } from "@/components/hex";
 import { LEVELS, LEVEL_NAMES, type Level, levelOf, masteryPercent } from "@/lib/mastery";
 import { type Outline, allLessons, testedLessons } from "@/lib/outline";
@@ -66,12 +66,12 @@ export function MasteryHex({
   );
 }
 
-/** A lesson's level on the course track. Not started shows nothing. */
-export function LevelChip({ level }: { level: Level }) {
+/** A lesson's level on the course grid's lesson rows. Not started shows nothing. */
+export function LevelLabel({ level }: { level: Level }) {
   if (level === "not-started") return null;
   return (
-    <span className="chip">
-      <MasteryHex level={level} width={12} height={13} />
+    <span className="inline-flex items-center gap-1.5">
+      <MasteryHex level={level} width={13} height={14} className="flex-none" />
       <span className="sr-only">Skill level: </span>
       {LEVEL_NAMES[level]}
     </span>
@@ -96,7 +96,18 @@ export function SkillsOverview({ outline }: { outline: Outline }) {
   const ids = modules.flatMap((mod) => mod.skills.map((lesson) => lesson.id));
   const anyLevel = ids.some((id) => levelOf(levels, id) !== "not-started");
   const started = anyLevel || allLessons(outline).some((lesson) => completed.has(lesson.id));
-  if (!ready || !progressReady || ids.length === 0 || !started) return null;
+  const visible = ready && progressReady && ids.length > 0 && started;
+
+  // The quiz summary links to /#skills, but this only appears once progress
+  // has loaded, after the browser has already looked for the anchor. Scroll
+  // to it then, a frame later so the course grid above has settled.
+  useEffect(() => {
+    if (!visible || window.location.hash !== "#skills") return;
+    const frame = requestAnimationFrame(() => document.getElementById("skills")?.scrollIntoView({ block: "start" }));
+    return () => cancelAnimationFrame(frame);
+  }, [visible]);
+
+  if (!visible) return null;
 
   const counts = new Map(LEVELS.map((level) => [level, ids.filter((id) => levelOf(levels, id) === level).length]));
 

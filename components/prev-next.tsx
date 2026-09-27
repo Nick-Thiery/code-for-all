@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { MarkDoneLink } from "@/components/mark-done-link";
+import type { ModuleInfo } from "@/lib/celebration";
 
 /** Where a Previous or Next card goes, and what it says. */
 export type NavTarget = {
@@ -15,16 +17,18 @@ type Props = {
   label?: string;
   previous: NavTarget | null;
   next: NavTarget;
+  /** At the end of a lesson: following "Next" marks this lesson done. */
+  markDone?: { lessonId: string; module: ModuleInfo };
 };
 
-export function PrevNext({ label = "Lessons", previous, next }: Props) {
-  return (
-    <nav aria-label={label} className="flex flex-row-reverse flex-wrap gap-4 leading-[1.4]">
-      <Link
-        href={next.href}
-        rel={next.lesson ? "next" : undefined}
-        className="flex min-h-24 flex-[1.4_1_280px] items-center justify-between gap-4 rounded-2xl bg-accent px-[22px] py-[18px] text-on-accent no-underline hover:text-on-accent hover:brightness-[1.15]"
-      >
+export function PrevNext({ label = "Lessons", previous, next, markDone }: Props) {
+  const nextProps = {
+    href: next.href,
+    rel: next.lesson ? "next" : undefined,
+    className:
+      "flex min-h-24 flex-[1.4_1_280px] items-center justify-between gap-4 rounded-2xl bg-accent px-[22px] py-[18px] text-on-accent no-underline hover:text-on-accent hover:brightness-[1.15]",
+    children: (
+      <>
         <span className="flex flex-col gap-1">
           <span className="text-[15px] font-bold tracking-[.03em]">{next.label}</span>
           <span className="display text-[22px] leading-[1.25] font-[650]">{next.title}</span>
@@ -32,7 +36,12 @@ export function PrevNext({ label = "Lessons", previous, next }: Props) {
         <span aria-hidden="true" className="text-[26px] font-bold">
           →
         </span>
-      </Link>
+      </>
+    ),
+  };
+  return (
+    <nav aria-label={label} className="flex flex-row-reverse flex-wrap gap-4 leading-[1.4] print:hidden">
+      {markDone ? <MarkDoneLink {...nextProps} lessonId={markDone.lessonId} module={markDone.module} /> : <Link {...nextProps} />}
       {previous && (
         <Link
           href={previous.href}

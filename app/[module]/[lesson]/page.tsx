@@ -28,7 +28,16 @@ async function find(params: Props["params"]) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const found = await find(params);
-  return found ? { title: found.lesson.title, description: found.lesson.summary } : {};
+  if (!found) return {};
+  const { lesson } = found;
+  // Two lessons can share a title ("Key terms"); the module number tells their tabs apart.
+  const shared = (await getModules()).some((mod) =>
+    mod.lessons.some((other) => other.id !== lesson.id && other.title === lesson.title),
+  );
+  return {
+    title: shared ? `${lesson.title} (Module ${lesson.module})` : lesson.title,
+    description: lesson.summary,
+  };
 }
 
 export default async function LessonPage({ params }: Props) {
@@ -42,6 +51,7 @@ export default async function LessonPage({ params }: Props) {
     : mod.quiz
       ? { label: `Next · Module ${mod.number} quiz`, title: "Check what you learned", href: quizHref(mod.number) }
       : { label: `You've finished Module ${mod.number}`, title: "See what's next", href: moduleCompleteHref(mod.number) };
+  const moduleInfo = { number: mod.number, title: mod.title, lessonIds: mod.lessons.map((l) => l.id) };
   const previousTarget: NavTarget | null = previous
     ? { label: `Previous · Lesson ${previous.number}`, title: previous.title, href: previous.href, lesson: true }
     : null;
@@ -78,8 +88,10 @@ export default async function LessonPage({ params }: Props) {
             points={lesson.recap}
             fallback={lesson.summary}
             next={next ? next.title : mod.quiz ? `Module ${mod.number} quiz` : undefined}
+            module={moduleInfo}
           />
-          <PrevNext previous={previousTarget} next={nextTarget} />
+          {/* Following "Next" marks this lesson done; the recap tick above can undo it. */}
+          <PrevNext previous={previousTarget} next={nextTarget} markDone={{ lessonId: lesson.id, module: moduleInfo }} />
         </div>
       </article>
     </div>

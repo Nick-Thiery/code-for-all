@@ -12,6 +12,7 @@ import {
   type Score,
 } from "@/lib/practice";
 import { isMockName, mockFixture, type MockName } from "@/lib/practice-mock";
+import { practiceCopy } from "@/lib/site";
 
 type Graded = Extract<PracticeResponse, { status: "graded" }>;
 type Scores = Graded["scores"];
@@ -163,7 +164,7 @@ export function PromptPractice({ taskId, hint, children }: Props) {
         : "";
 
   return (
-    <section aria-labelledby={`${id}-label`} data-task-id={taskId} className="flex flex-col gap-5 text-left text-fg">
+    <section aria-labelledby={`${id}-label`} data-task-id={taskId} className="flex flex-col gap-5 text-left text-fg print:hidden">
       <div className="overflow-hidden rounded-[20px] border-[1.5px] border-border bg-surface">
         <div className="flex flex-col gap-2.5 bg-tint p-(--pad)">
           <div className="flex items-center gap-2">
@@ -225,7 +226,7 @@ export function PromptPractice({ taskId, hint, children }: Props) {
             </span>
           </div>
           <p className="t-meta mt-1.5 mb-0 text-muted">
-            Your feedback is written by AI. Don&apos;t include personal details like your address or phone number.
+            {practiceCopy.notice} Don&apos;t include personal details like your address or phone number.
           </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
             <button type="button" onClick={() => void submit()} disabled={!canSubmit} className="btn btn-primary">

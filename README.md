@@ -131,7 +131,7 @@ Like Khan Academy, every lesson that a quiz question tests has a mastery level: 
 - Any of them wrong: down one level, but never below Attempted.
 - A module quiz can take a lesson up to Proficient. Only a Check your skills quiz can take it to Mastered, so Mastered means the learner still remembers it later, in a mix.
 
-The course page shows "Your skills" once a learner has finished a lesson or a quiz: their course mastery (Familiar counts 50%, Proficient 80%, Mastered 100%, as on Khan Academy), how many lessons are at each level, and each module's lessons as a row of hexagons that fill up as the level rises. Each lesson row on the track shows its level too. A lesson no quiz question points at has no level and isn't counted. A module's lessons can only reach Mastered if a Check your skills page draws questions from that module, so give new modules one. The rules are in `lib/mastery.ts`.
+The course page shows "Your skills" below the course grid once a learner has finished a lesson or a quiz: their course mastery (Familiar counts 50%, Proficient 80%, Mastered 100%, as on Khan Academy), how many lessons are at each level, and each module's lessons as a row of hexagons that fill up as the level rises. Each lesson row in the course grid shows its level too. A lesson no quiz question points at has no level and isn't counted. A module's lessons can only reach Mastered if a Check your skills page draws questions from that module, so give new modules one. The rules are in `lib/mastery.ts`.
 
 ### Check your skills
 
@@ -173,9 +173,11 @@ These work in any lesson without an import. Module 1 uses most of them.
 | `<StuckBlock><StuckItem question="…">…</StuckItem></StuckBlock>` | Common fixes, folded away. |
 | ```` ```prompt title="Strong" ```` | A prompt to paste into an AI tool, exactly as written, with a Copy button. Use it for every exact prompt from the slides. |
 | `<PromptPractice taskId="…" hint="…">…</PromptPractice>` | The practice card. See below. |
+| `<PromptLadder>` `<LadderPrompt level="Bad" prompt="…" leavesOut={[…]}>…</LadderPrompt>` `</PromptLadder>` and `<StrongPrompt parts={[{ name, text, does }, …]} />` | The prompt ladder (lesson 1.4): weaker prompts side by side with a 7-hexagon strength meter and "leaves out" chips, then the strong prompt split into its parts, each with a colour-coded label that shows what that part does. Part names must be one of the seven (Role, Goal, Target audience, Core pages, Design style, Output required, Key features); their colours are the `--part-*` tokens. Copy copies the parts' text joined by line breaks. |
 | `<CheckYourself><Question q="…">answer</Question></CheckYourself>` | A short quiz. Each answer shows when the learner asks for it. |
 | `<Challenge title="…">…</Challenge>` | The module's homework (from the slides). Goes at the end of the module's last lesson. |
 | `<Figure src="/lessons/module-6/x.jpg" alt="…" width={1600} height={770} caption="…" />` | An image, usually cropped from a slide into `public/lessons/module-N/`. `width` and `height` are the file's size in pixels. Readers can tap it to see it full size; images narrower than the column show at their own size. |
+| `<VibeCodingDiagram />` `<ThreeFilesDiagram />` `<BranchLanesDiagram />` `<ApiDoorDiagram />` `<LoginDiagram />` | The lesson diagrams (1.2, 5.6, 7.1, 8.2, 8.4), one file each in `components/diagrams/`. They are HTML and inline SVG drawn with the design tokens, so they work in dark mode, and each sits in the `Diagram` frame (`components/diagram.tsx`) with a caption and a full text alternative. On phones they reflow (cards stack, arrows turn downwards) instead of shrinking. A diagram that can't reflow can pass `enlargeWidth` to get an Enlarge button on phones. |
 | `<VideoEmbed id="hwP7WQkmECE" title="…" />` | A YouTube video from the slides (youtube-nocookie.com, loads when scrolled near), with a plain link underneath. |
 | `<Placeholder>What's missing</Placeholder>` | Marks content that's still needed, like a video link. Find them all with `grep -rn "<Placeholder\|<Screenshot" content`. |
 
@@ -195,6 +197,8 @@ On submit, the card sends `POST /api/practice` with `{ "taskId": string, "prompt
 
 Grading is mocked for now, in `lib/practice-mock.ts`: each task has canned feedback at three levels and simple rules, built from its grading anchors in `docs/course-map.md`, to pick one. Tasks without a mock get an error saying so. Real grading goes in `app/api/practice/route.ts` and should answer with the same shapes.
 
+While grading is mocked, the site calls it sample feedback, not AI feedback (the practice card, the homepage "How it works" card and /access). That wording comes from one setting, `aiGrading` in `lib/site.ts`. Set it to `true` when real grading goes live.
+
 **Mock fixtures.** Add `?mock=<name>` to a lesson URL to open every practice card on the page in one state: `empty`, `near`, `loading`, `weak`, `middling`, `strong`, `offtopic`, `error`, `hourly` or `daily`. For example http://localhost:3000/module-1/the-art-of-prompting?mock=strong. Each task has its own fixture prompts in `lib/practice-mock.ts`.
 
 To make another component available in lessons, add it to `components/mdx-components.tsx`.
@@ -204,38 +208,52 @@ To make another component available in lessons, add it to `components/mdx-compon
 ```
 content/course.yml              every module, grouped into phases
 content/module-N/               one .mdx file per lesson
-app/page.tsx                    home: hero, the phases and their modules, how it works
+app/page.tsx                    home: hero, how it works, the course grid
+components/course-grid.tsx      the home page course: continue card, module grid (phone: module list), lessons
 app/[module]/[lesson]/page.tsx  lesson template (/module-1/<slug>)
 app/[module]/complete/page.tsx  Module complete (/module-1/complete)
 app/[module]/quiz/page.tsx      module quiz (/module-1/quiz)
 app/[module]/check-your-skills/page.tsx  Check your skills (/module-5/check-your-skills)
 app/[module]/page.tsx           /module-N: Coming soon for a module that isn't out
-app/run-it/page.tsx           Run a session, for adults
+app/run-it/page.tsx           Run a session: the facilitator kit, for adults
+app/run-it/[kit]/             printable kit pages (/run-it/script/module-3)
+content/facilitator.yml       run sheets for the kit (read by lib/facilitator.ts)
+app/glossary/page.tsx         glossary, built from every <KeyTerm> (lib/glossary.ts)
+app/privacy/page.tsx          privacy, for parents and schools
 app/access/page.tsx           how hands-on access works
-app/about/page.tsx            about
+app/about/page.tsx            about (a draft to rewrite)
+app/sitemap.ts, app/robots.ts sitemap.xml and robots.txt
+app/opengraph-image.tsx       the share image
 app/not-found.tsx             404
 app/api/practice/route.ts     practice submissions (mock grading)
 components/                   one file per piece of the design (header, footer, track, callouts, ...)
+components/diagrams/          the lesson diagrams, each in the Diagram frame (components/diagram.tsx)
 lib/lessons.ts                reads, checks and orders modules and lessons
 lib/outline.ts                the course outline the browser gets (no lesson text)
 lib/progress.ts               completion state in localStorage
+lib/celebration.ts            marking a lesson done, and the Module complete card it can start
 lib/quizzes.ts                reads and checks quiz.yml and check-your-skills.yml
 lib/quiz.ts                   quiz types, shuffling and the mixed-quiz draw
 lib/quiz-results.ts           quiz results, mastery levels and checklist ticks in localStorage
 lib/mastery.ts                mastery levels: how quizzes move them, and the mastery %
 components/module-quiz.tsx    the quiz card (ModuleQuiz)
-components/mastery.tsx        level hexagons, level chips and the "Your skills" overview
+components/mastery.tsx        level hexagons, level labels and the "Your skills" overview
 lib/practice*.ts              practice types, mock grading and ?mock= fixtures
-lib/site.ts                   site copy, plus the Contact and session kit links (TODO)
+lib/site.ts                   site copy, the contact address and the site URL
+lib/logo.ts                   which logo files the header and footer use
 app/globals.css               design tokens, type, buttons, lesson styles
 design/                       the Claude Design export this site is built from
 ```
 
 ## Notes
 
-- **Completion** is stored in the browser's localStorage under `cfa:completed-lessons`, as a list of lesson ids like `module-1/meet-lovable`. It doesn't sync between devices. If you rename a slug or move a lesson to another module, anyone who finished that lesson will see it as unfinished. Returning learners get a "Continue" button on the home page and a "Pick up where you left off" bar on other pages, pointing at their first unfinished lesson.
+- **Completion** is stored in the browser's localStorage under `cfa:completed-lessons`, as a list of lesson ids like `module-1/meet-lovable`. It doesn't sync between devices. If you rename a slug or move a lesson to another module, anyone who finished that lesson will see it as unfinished. Returning learners get a "Continue" button in the home page hero, a "Pick up where you left off" card above the course grid and bar on other pages, pointing at their first unfinished lesson. The course grid opens on that lesson's module (Module 1 for a new visitor); `/#module-N` opens another, which is where lesson, quiz and Check your skills pages link back to. A lesson is marked done when the learner ticks its recap box or follows the "Next" card at the end of it (`components/mark-done-link.tsx`); unticking the recap box un-marks it. When that finishes a module's last unfinished lesson, a small card shows the module's honeycomb filling in (`components/module-celebration.tsx`, started by `lib/celebration.ts`). It lives in memory only, so nothing extra is stored, and with reduced motion on the honeycomb is simply full.
 - **Quiz results** are stored under `cfa:quiz-results`: for each quiz (`module-1/quiz`, `module-5/check-your-skills`), the last result only (how many right, out of how many, the ids of the lessons to review, and the date). Each lesson's mastery level is stored under `cfa:mastery`, as lesson id to level (`{"module-1/meet-lovable": "proficient"}`); renaming a slug resets that lesson to Not started. Check your skills ticks are stored under `cfa:checklists`, per page. None of them holds anything the learner typed or which answers they picked.
 - **Dark mode** follows the device setting until someone uses the toggle. After that, their choice is remembered in `cfa:theme`.
 - **Design**: the source is `design/Code for All Website.dc.html`, exported from Claude Design; open it in a browser to see every page and the spec sheet. The colour and size tokens at the top of `app/globals.css` are pasted from that spec sheet. Use the tokens (as Tailwind classes like `bg-tint` or `text-accent`, or `var(--accent)`); Tailwind's default colour palette is switched off. Headings are set in Recursive, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.
-- **TODO links**: Contact and the session kit links are empty in `lib/site.ts`. Until they're filled in, those links show as disabled buttons or plain text, with a dashed outline in development.
+- **Contact**: the address is one value in `lib/site.ts`. Every "Contact us" button links to `site.contactHref`.
+- **Logo**: `public/cfa-logo-light.png` (transparent background) and `public/cfa-logo-dark.png` (the same pixels with only the colours changed for dark mode). The header and the footer both use them (the footer a little smaller). If `public/cfa-logo.svg` exists, both use it instead, with `public/cfa-logo-dark.svg` for dark mode if that exists too.
+- **Search engines**: the site is hidden from them by default (`robots.txt` disallows everything and every page has a `noindex` meta tag). Set `NEXT_PUBLIC_ALLOW_INDEXING=true` at build time to let them in.
+- **Site URL**: share links and `sitemap.xml` use `NEXT_PUBLIC_SITE_URL` (for example `https://codeforall.example`). On Vercel it falls back to the project's production address; locally, to http://localhost:3000.
+- **Printing**: lessons and kit pages print in light colours without the header, navigation, buttons or practice box. Give any new control `print:hidden`.
 - **Lessons can run code.** MDX files can contain JavaScript that runs when the site builds. Review lesson pull requests before merging them.
