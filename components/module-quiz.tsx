@@ -73,6 +73,8 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
   const uid = useId();
   const Heading = level === 2 ? "h2" : "h3";
   const mixed = draw !== undefined;
+  // "module-5/check-your-skills" → /#module-5 on the home page's course grid.
+  const levelsHref = `/#module-${/^module-(\d+)\//.exec(id)?.[1] ?? 1}`;
   const { results, ready } = useQuizResults();
   const { levels } = useMastery();
   const saved = results[id] ?? null;
@@ -175,6 +177,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
         rowsTitle={saved.review.length === 1 ? "Have another look at this lesson:" : "Have another look at these lessons:"}
         lessonName={lessonName}
         mixed={mixed}
+        levelsHref={levelsHref}
         onTryAgain={tryAgain}
         celebrate={false}
       />
@@ -224,6 +227,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
         }
         lessonName={lessonName}
         mixed={mixed}
+        levelsHref={levelsHref}
         onTryAgain={tryAgain}
         celebrate
       />
@@ -425,6 +429,7 @@ function Summary({
   footnote = null,
   lessonName,
   mixed,
+  levelsHref,
   onTryAgain,
   celebrate,
 }: {
@@ -436,6 +441,8 @@ function Summary({
   footnote?: ReactNode;
   lessonName: (lesson: QuizLesson) => string;
   mixed: boolean;
+  /** The course grid opened on this quiz's module, where the lesson levels show. */
+  levelsHref: string;
   onTryAgain: () => void;
   celebrate: boolean;
 }) {
@@ -477,8 +484,8 @@ function Summary({
         </div>
       )}
 
-      <Link href="/#skills" className="text-link gap-1.5">
-        See all your skills <span aria-hidden="true">→</span>
+      <Link href={levelsHref} className="text-link gap-1.5">
+        See your lesson levels <span aria-hidden="true">→</span>
       </Link>
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 border-t border-border pt-5">

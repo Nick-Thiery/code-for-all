@@ -131,7 +131,7 @@ Like Khan Academy, every lesson that a quiz question tests has a mastery level: 
 - Any of them wrong: down one level, but never below Attempted.
 - A module quiz can take a lesson up to Proficient. Only a Check your skills quiz can take it to Mastered, so Mastered means the learner still remembers it later, in a mix.
 
-The course page shows "Your skills" once a learner has finished a lesson or a quiz: their course mastery (Familiar counts 50%, Proficient 80%, Mastered 100%, as on Khan Academy), how many lessons are at each level, and each module's lessons as a row of hexagons that fill up as the level rises. Each lesson row on the track shows its level too. A lesson no quiz question points at has no level and isn't counted. A module's lessons can only reach Mastered if a Check your skills page draws questions from that module, so give new modules one. The rules are in `lib/mastery.ts`.
+On the home page's course grid, each lesson row shows its level once it has one, and the chosen module shows its mastery % (Familiar counts 50%, Proficient 80%, Mastered 100%, as on Khan Academy) with a "How levels work" note, once a quiz has given one of its lessons a level. The grid's honeycombs still mean lessons finished, not levels. After a quiz, the summary lists each lesson's new level and links back to that module on the grid. A lesson no quiz question points at has no level and isn't counted. A module's lessons can only reach Mastered if a Check your skills page draws questions from that module, so give new modules one. The rules are in `lib/mastery.ts`.
 
 ### Check your skills
 
@@ -237,7 +237,7 @@ lib/quiz.ts                   quiz types, shuffling and the mixed-quiz draw
 lib/quiz-results.ts           quiz results, mastery levels and checklist ticks in localStorage
 lib/mastery.ts                mastery levels: how quizzes move them, and the mastery %
 components/module-quiz.tsx    the quiz card (ModuleQuiz)
-components/mastery.tsx        level hexagons, level chips and the "Your skills" overview
+components/mastery.tsx        level hexagons, level chips and a module's mastery % (on the course grid)
 lib/practice*.ts              practice types, mock grading and ?mock= fixtures
 lib/site.ts                   site copy, the contact address and the site URL
 lib/logo.ts                   which logo files the header and footer use
