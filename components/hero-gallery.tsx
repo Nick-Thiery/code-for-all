@@ -5,8 +5,9 @@ import s from "@/components/hero-gallery.module.css";
 // The homepage hero visual (design: "B · What you'll build"): projects from
 // the course dealt out like cards, each with its own small loop. It's CSS
 // only; motion, sizes and the phone layout are in hero-gallery.module.css.
-// With reduced motion on, or when printing, the finished cards are simply
-// there. One picture to a screen reader, so it has a label, not its text.
+// With reduced motion on, on phones (where it's a still picture of three
+// cards), or when printing, the finished cards are simply there. One
+// picture to a screen reader, so it has a label, not its text.
 export function HeroGallery() {
   return (
     <PauseOffscreen

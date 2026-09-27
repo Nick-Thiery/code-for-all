@@ -3,14 +3,15 @@
 
   Sizes are design pixels times --u. From 600px wide it's the 580×600
   design frame, scaled to its column: --u is 1/580 of the frame's width.
-  On phones the cards stack in a grid instead, with the extra details
-  (.more) left out.
+  On phones it's a still picture of three cards instead (see the phone
+  block below), with the extra details (.more) left out.
 
   Motion: each element's resting style is its finished state, and every
   animation runs from something else back to it. So with reduced motion
-  (app/globals.css turns all animation off) or in print, the finished cards
-  are simply there. data-paused (components/pause-offscreen.tsx) stops the
-  loops while the hero is scrolled out of view.
+  (app/globals.css turns all animation off), on phones or in print, the
+  finished cards are simply there. data-paused
+  (components/pause-offscreen.tsx) stops the loops while the hero is
+  scrolled out of view.
 */
 
 .gallery {
@@ -426,22 +427,44 @@
   white-space: nowrap;
 }
 
-/* ---- Phones: stacked, website first, details left out ---- */
+/* ---- Phones: a short, still picture ---- */
 
+/*
+  Under 600px the gallery is static: the website card, then the weather and
+  Tab Tidy cards side by side, each in its finished state. Nothing animates,
+  so nothing can be caught half-drawn, and the quiz, the word game, the
+  backdrop and the caption are left out to keep the hero short.
+*/
 @media (max-width: 599.98px) {
+  .gallery,
+  .gallery * {
+    animation: none !important;
+  }
   .backdrop,
-  .more {
+  .more,
+  .quiz,
+  .words,
+  .cursor,
+  .caption {
     display: none;
   }
+  .gallery {
+    gap: 8px;
+    padding: 10px;
+  }
   .site {
+    --u: 0.85px;
     grid-column: 1 / -1;
     order: -1;
   }
-  .quiz,
   .weather,
-  .words,
   .tabs {
-    --u: 0.85px;
+    --u: 0.75px;
+  }
+  /* The two small cards share a row: the weather card spreads out to the
+     same height as Tab Tidy instead of leaving a gap under its text. */
+  .weather {
+    justify-content: space-between;
   }
   .card,
   .site {
@@ -459,10 +482,9 @@
   .temp {
     font-size: calc(32 * var(--u));
   }
-  .caption {
-    --u: 0.85px;
-    grid-column: 1 / -1;
-    justify-self: center;
+  .popup {
+    flex: 1;
+    justify-content: center;
   }
 }
 
