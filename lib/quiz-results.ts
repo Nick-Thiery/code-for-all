@@ -1,13 +1,19 @@
 import { useMemo, useSyncExternalStore } from "react";
+import { type Answer, type LevelChange, type Levels, type QuizKind, applyQuiz, isLevel } from "@/lib/mastery";
 
-// Quiz results and checklist ticks live in this browser only, like lesson
-// progress (lib/progress.ts):
+// Quiz results, mastery levels and checklist ticks live in this browser only,
+// like lesson progress (lib/progress.ts):
 //   cfa:quiz-results  {"module-1/quiz": {correct, total, review, date}, ...}
 //                     the last result of each quiz; `review` is lesson ids.
+//   cfa:mastery       {"module-1/meet-lovable": "proficient", ...}
+//                     each lesson's level (lib/mastery.ts). A lesson that
+//                     isn't there is Not started.
 //   cfa:checklists    {"module-5/check-your-skills": ["<item id>", ...], ...}
 //                     the ticked items on each Check your skills page.
 const RESULTS_KEY = "cfa:quiz-results";
+const MASTERY_KEY = "cfa:mastery";
 const CHECKLISTS_KEY = "cfa:checklists";
+const KEYS = [RESULTS_KEY, MASTERY_KEY, CHECKLISTS_KEY];
 const CHANGE_EVENT = "cfa:quiz-change";
 
 export type QuizResult = {
@@ -21,7 +27,7 @@ export type QuizResult = {
 
 function subscribe(onChange: () => void) {
   const onStorage = (event: StorageEvent) => {
-    if (event.key === null || event.key === RESULTS_KEY || event.key === CHECKLISTS_KEY) onChange();
+    if (event.key === null || KEYS.includes(event.key)) onChange();
   };
   window.addEventListener("storage", onStorage);
   window.addEventListener(CHANGE_EVENT, onChange);
@@ -84,6 +90,30 @@ export function useQuizResults() {
 
 export function saveQuizResult(id: string, result: QuizResult) {
   write(RESULTS_KEY, { ...parseResults(read(RESULTS_KEY)), [id]: result });
+}
+
+function parseLevels(raw: string): Levels {
+  const levels: Levels = {};
+  for (const [id, value] of Object.entries(parseObject(raw))) {
+    if (isLevel(value) && value !== "not-started") levels[id] = value;
+  }
+  return levels;
+}
+
+/** Every lesson's mastery level. `ready` is false during the server render and hydration. */
+export function useMastery() {
+  const raw = useSyncExternalStore<string | null>(subscribe, () => read(MASTERY_KEY), () => null);
+  const levels = useMemo(() => (raw === null ? {} : parseLevels(raw)), [raw]);
+  return { levels, ready: raw !== null };
+}
+
+/** Move the levels of the lessons a finished quiz asked about. Returns what changed, for the summary. */
+export function saveMastery(answers: readonly Answer[], kind: QuizKind): LevelChange[] {
+  const levels = parseLevels(read(MASTERY_KEY));
+  const changes = applyQuiz(levels, answers, kind);
+  for (const change of changes) levels[change.lesson] = change.after;
+  write(MASTERY_KEY, levels);
+  return changes;
 }
 
 function parseChecklists(raw: string): Record<string, string[]> {

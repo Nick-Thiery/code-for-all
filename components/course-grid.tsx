@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { Hex, HexCheck } from "@/components/hex";
+import { LevelChip, ModuleMastery } from "@/components/mastery";
 import { formatAbout, formatCount } from "@/lib/format";
+import { type Levels, levelOf } from "@/lib/mastery";
 import {
   type Outline,
   type OutlineLesson,
@@ -15,7 +17,7 @@ import {
   resumeTarget,
 } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
-import { type QuizResult, useQuizResults } from "@/lib/quiz-results";
+import { type QuizResult, useMastery, useQuizResults } from "@/lib/quiz-results";
 
 // The homepage course section (design: "Course grid · desktop" and "Course
 // list · phone"). A "pick up where you left off" card, then every module by
@@ -24,12 +26,16 @@ import { type QuizResult, useQuizResults } from "@/lib/quiz-results";
 // The learner's current module is chosen at first; /#module-N picks another.
 //
 // Progress comes from lib/progress.ts and lib/quiz-results.ts, unchanged.
+// Lesson rows also show each lesson's mastery level, and the chosen module
+// its mastery % (components/mastery.tsx, lib/mastery.ts).
 // Before it loads (and without JavaScript) this renders as a new visitor
 // sees it.
 
 type Progress = {
   done: Set<string>;
   results: Record<string, QuizResult>;
+  /** Mastery level per lesson id (lib/mastery.ts). */
+  levels: Levels;
   /** The lesson the learner should do next: their resume point, or lesson 1. */
   nextId: string | undefined;
   startedCourse: boolean;
@@ -38,13 +44,14 @@ type Progress = {
 export function CourseGrid({ outline }: { outline: Outline }) {
   const { completed, ready } = useCompletedLessons();
   const { results } = useQuizResults();
+  const { levels } = useMastery();
   const uid = useId();
 
   const done = ready ? completed : new Set<string>();
   const lessons = allLessons(outline);
   const startedCourse = lessons.some((lesson) => done.has(lesson.id));
   const resume = startedCourse ? resumeTarget(outline, done) : lessons[0];
-  const progress: Progress = { done, results, nextId: resume?.id, startedCourse };
+  const progress: Progress = { done, results, levels, nextId: resume?.id, startedCourse };
 
   // Finished everything so far: the last module is "current".
   const currentModule = resume?.module ?? outline.modules.at(-1)?.number ?? 1;
@@ -387,6 +394,7 @@ function ModulePanel({ id, mod, progress }: { id: string; mod: OutlineModule; pr
           {doneCount > 0 && ` · ${doneCount} done`}
         </p>
         {mod.lessons.some((lesson) => lesson.requiresAccount) && <HandsOnNote className="mt-3" />}
+        <ModuleMastery lessons={mod.lessons} className="mt-3" />
       </div>
       <ol className="m-0 flex min-w-0 flex-[999_1_420px] list-none flex-col gap-1.5 p-0">
         {mod.lessons.map((lesson) => (
@@ -468,6 +476,7 @@ function PhoneModule({
           )}
         </ol>
         {mod.lessons.some((lesson) => lesson.requiresAccount) && <HandsOnNote className="mx-2 mt-2" onSurface />}
+        <ModuleMastery lessons={mod.lessons} className="mx-2 mt-3" />
       </div>
     </li>
   );
@@ -560,6 +569,7 @@ function LessonRow({ lesson, progress, compact = false }: { lesson: OutlineLesso
           </span>
           {lesson.requiresAccount && <LaptopIcon label="Hands-on: needs access" />}
           {lesson.hasPractice && <span className="font-bold text-accent">Includes practice</span>}
+          <LevelChip level={levelOf(progress.levels, lesson.id)} />
         </>
       }
     />
