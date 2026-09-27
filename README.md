@@ -185,6 +185,8 @@ On submit, the card sends `POST /api/practice` with `{ "taskId": string, "prompt
 
 Grading is mocked for now, in `lib/practice-mock.ts`: each task has canned feedback at three levels and simple rules, built from its grading anchors in `docs/course-map.md`, to pick one. Tasks without a mock get an error saying so. Real grading goes in `app/api/practice/route.ts` and should answer with the same shapes.
 
+While grading is mocked, the site calls it sample feedback, not AI feedback (the practice card, the homepage "How it works" card and /access). That wording comes from one setting, `aiGrading` in `lib/site.ts`. Set it to `true` when real grading goes live.
+
 **Mock fixtures.** Add `?mock=<name>` to a lesson URL to open every practice card on the page in one state: `empty`, `near`, `loading`, `weak`, `middling`, `strong`, `offtopic`, `error`, `hourly` or `daily`. For example http://localhost:3000/module-1/the-art-of-prompting?mock=strong. Each task has its own fixture prompts in `lib/practice-mock.ts`.
 
 To make another component available in lessons, add it to `components/mdx-components.tsx`.

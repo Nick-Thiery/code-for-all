@@ -26,5 +26,26 @@ export function siteUrl(): URL {
   return new URL("http://localhost:3000");
 }
 
+/**
+ * Whether practice feedback really comes from AI. It doesn't yet: POST
+ * /api/practice always uses the mock grader (lib/practice-mock.ts), so the
+ * site calls it sample feedback. Set this to true when real grading goes
+ * live and every mention below switches back to "written by AI".
+ */
+export const aiGrading = false;
+
+export const practiceCopy = aiGrading
+  ? {
+      notice: "Your feedback is written by AI.",
+      howItWorks: "Write a prompt and get kind, specific tips from AI. Try as many times as you like.",
+      accessItem: "Practice with AI feedback",
+    }
+  : {
+      notice: "For now this is sample feedback, while AI grading is being set up.",
+      howItWorks:
+        "Write a prompt and get kind, specific tips. For now it's sample feedback, while AI grading is being set up.",
+      accessItem: "Practice with sample feedback (AI grading is being set up)",
+    };
+
 /** Search engines may index the site only when NEXT_PUBLIC_ALLOW_INDEXING is "true". */
 export const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";

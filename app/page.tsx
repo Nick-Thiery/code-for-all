@@ -4,6 +4,7 @@ import { Hex } from "@/components/hex";
 import { HeroGallery } from "@/components/hero-gallery";
 import { HomeHero } from "@/components/home-hero";
 import { getOutline } from "@/lib/lessons";
+import { practiceCopy } from "@/lib/site";
 
 export default async function HomePage() {
   const outline = await getOutline();
@@ -53,7 +54,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-x-7 gap-y-8">
             <HowStep title="Read a short lesson" text="Each one takes 3 to 15 minutes, in plain English.">
               <div className="flex w-[70%] flex-col gap-[7px]">
-                <span className="display text-[14px] leading-[1.2] font-bold">How a language model works</span>
+                <span className="display text-[14px] leading-[1.2] font-bold">The art of prompting</span>
                 <span className="h-1.5 rounded-[3px] bg-track" />
                 <span className="h-1.5 w-[86%] rounded-[3px] bg-track" />
                 <span className="h-1.5 w-[94%] rounded-[3px] bg-track" />
@@ -64,7 +65,7 @@ export default async function HomePage() {
             </HowStep>
             <HowStep
               title="Practice with instant feedback"
-              text="Write a prompt and get kind, specific tips from AI. Try as many times as you like."
+              text={practiceCopy.howItWorks}
             >
               <div className="flex w-[72%] flex-col gap-2 text-[14px] leading-[1.2] font-bold">
                 {[
@@ -104,7 +105,7 @@ export default async function HomePage() {
         <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-x-8 gap-y-4 rounded-[20px] border-[1.5px] border-border p-(--pad)">
           <div className="flex flex-[1_1_360px] flex-col gap-1">
             <h2 className="t-h3 m-0">Teacher, volunteer or club leader?</h2>
-            <p className="m-0">Run Code for All with your own group. The slides, script and handouts are free.</p>
+            <p className="m-0">Run Code for All with your own group. The script, handouts and checklist are free.</p>
           </div>
           <Link href="/run-it" className="btn btn-secondary">
             Get the session kit <span aria-hidden="true">→</span>

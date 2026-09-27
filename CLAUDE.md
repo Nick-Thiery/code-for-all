@@ -64,6 +64,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 - `POST /api/practice` (`app/api/practice/route.ts`) always uses the mock grader in `lib/practice-mock.ts`. There's no real grading and no API key yet. Response shapes are in `lib/practice.ts`.
 - Each `taskId` needs a mock in `TASKS` in `lib/practice-mock.ts`.
+- The site calls it sample feedback, not AI feedback, while `aiGrading` in `lib/site.ts` is `false`. Flip it to `true` when real grading goes live; the wording (`practiceCopy`) follows.
 - Force a state by adding `?mock=<name>` to a lesson URL: empty, near, loading, weak, middling, strong, offtopic, error, hourly or daily.
 
 ## Privacy
