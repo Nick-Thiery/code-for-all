@@ -8,6 +8,7 @@ const links = [
   { href: "/help", label: "Help" },
   { href: "/run-it", label: "Run a session" },
   { href: "/glossary", label: "Glossary" },
+  { href: "/move-progress", label: "Move my progress" },
   { href: "/privacy", label: "Privacy" },
 ];
 
@@ -29,7 +30,7 @@ export function SiteFooter({ logo }: { logo: LogoFiles }) {
         </div>
         <nav aria-label="Footer" className="-mx-2.5 flex flex-wrap items-center gap-x-1">
           {links.map(({ href, label }) => (
-            <Link key={href} href={href} className="flex min-h-11 items-center px-2.5 text-muted hover:text-fg">
+            <Link key={href} href={href} prefetch={false} className="flex min-h-11 items-center px-2.5 text-muted hover:text-fg">
               {label}
             </Link>
           ))}
