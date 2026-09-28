@@ -55,7 +55,7 @@ questions:
     explanation: "That's the amplification loop. Bias doesn't stay inside the tool: it can spread to the people who use it."
     lesson: ethical-considerations
 
-  - question: "You're writing the prompt for your About Me website. Which of these should you put in it?"
+  - question: "You're writing the prompt for your About me website. Which of these should you put in it?"
     options:
       - "Your school's name, so classmates can find the site"
       - "Your hobbies and the things you've made"
@@ -65,7 +65,7 @@ questions:
     explanation: "The site is about you, so keep it safe. Leave out anything you wouldn't tell a stranger, like your address, phone number and school."
     lesson: build-about-me
 
-  - question: "Lovable has built your About Me site, but the look isn't what you wanted. What's the best next step?"
+  - question: "Lovable has built your About me site, but the look isn't what you wanted. What's the best next step?"
     options:
       - "Rewrite the whole prompt from scratch, changing every part at once"
       - "Run exactly the same prompt again until the result looks different"
