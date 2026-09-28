@@ -74,6 +74,7 @@ A lesson is one file. You don't need to touch any code.
    | `summary` | One sentence. Shown under the lesson title. If it contains a colon, wrap it in quotes. |
    | `requiresAccount` | `true` if the lesson has a hands-on part that needs an account (Lovable, Claude, GitHub, Vercel or Supabase), otherwise `false`. Adds a notice at the top of the lesson, linking to `/access`, and a label on the course page. Mark the hands-on sections themselves with `<HandsOn />` (see below). |
    | `recap` | Optional. Short points shown in the recap box at the end. Each point goes on its own line, starting with two spaces, a dash and a space. A point with a colon in it needs quotes: `- "Input bias: check your prompt."`. If you leave `recap` out, the recap box shows the summary. |
+   | `needs` | Optional, for hands-on lessons: the "You'll need" box at the top, which replaces the plain access notice. `device` (one line, like `A laptop or Chromebook`), `access` (a list of tools, like `- Lovable`) and `before` (a list of things from earlier lessons; `[text](/module-1/the-art-of-prompting)` makes a link). Time comes from `duration`. |
 
 3. **Write the lesson** below the second `---`, in Markdown:
 
@@ -198,12 +199,15 @@ These work in any lesson without an import. Module 1 uses most of them.
 | --- | --- |
 | `<Callout kind="tip">…</Callout>` | A boxed aside. `kind` is `tip`, `headsup` or `tryit`. |
 | `<KeyTerm term="Token">…</KeyTerm>` | A term and its definition, in a box. |
-| `<Term def="…">model</Term>` | An inline term. Tapping it shows the definition. |
+| `<Term def="…">model</Term>` | An inline term. Tapping it shows the definition, with a link to the glossary. Write `<Term>repository</Term>` without a `def` for a word the glossary already defines: the definition is filled in from there, and the build fails if the glossary doesn't have it. Inline defs are in the glossary too. |
 | ```` ```html title="index.html" ```` | A code block with line numbers and a Copy button. HTML is coloured; other languages are shown plain. Use ```` ```console ```` for error messages. Long lines scroll sideways, with a hint. |
 | `<CommandBlock>claude --version</CommandBlock>` | A terminal command with a Copy button. |
 | `<HandsOn />` | Put above the heading of a section that needs an account. |
 | `<Screenshot caption="…">what goes here</Screenshot>` | A placeholder for a screenshot you haven't taken yet. Like `<Placeholder>`, it shows locally and on previews and renders nothing on the production site. |
-| `<StuckBlock><StuckItem question="…">…</StuckItem></StuckBlock>` | Common fixes, folded away. |
+| `<StuckBlock><StuckItem question="…">…</StuckItem></StuckBlock>` | Common fixes, folded away. Every hands-on lesson has one, and each ends with a link to the Help page. |
+| `<SaveHere id="solo-sprint-prompt" label="Your exact prompt" placeholder="…" />` | A box that saves what the learner types, in their browser only. |
+| `<SavedWork id="solo-sprint-prompt" what="your prompt" from="/module-2/solo-sprint" fromLabel="the solo sprint" sample="…" />` | Shows what they saved under that id, with a Copy button, or links back and offers the sample. Practice cards save their draft under their `taskId`, so `id="about-me-prompt"` shows the 1.4 practice prompt. |
+| `<PublishSafely />` | The safety reminder for lessons where learners put something online. Add `testEmail` where the lesson uses a test email. |
 | ```` ```prompt title="Strong" ```` | A prompt to paste into an AI tool, exactly as written, with a Copy button. Use it for every exact prompt from the slides. |
 | `<PromptPractice taskId="…" hint="…">…</PromptPractice>` | The practice card. See below. |
 | `<PromptLadder>` `<LadderPrompt level="Bad" prompt="…" leavesOut={[…]}>…</LadderPrompt>` `</PromptLadder>` and `<StrongPrompt parts={[{ name, text, does }, …]} />` | The prompt ladder (lesson 1.4): weaker prompts side by side with a 7-hexagon strength meter and "leaves out" chips, then the strong prompt split into its parts, each with a colour-coded label that shows what that part does. Part names must be one of the seven (Role, Goal, Target audience, Core pages, Design style, Output required, Key features); their colours are the `--part-*` tokens. Copy copies the parts' text joined by line breaks. |
@@ -253,7 +257,8 @@ app/run-it/[kit]/             printable kit pages (/run-it/script/module-3)
 content/facilitator.yml       run sheets for the kit (read by lib/facilitator.ts)
 app/glossary/page.tsx         glossary, built from every <KeyTerm> (lib/glossary.ts)
 app/privacy/page.tsx          privacy, for parents and schools
-app/access/page.tsx           how hands-on access works
+app/access/page.tsx           how hands-on access works, and the device guide (#devices)
+app/help/page.tsx             help for learners; linked from the footer and every Stuck box
 app/about/page.tsx            about (a draft to rewrite)
 app/sitemap.ts, app/robots.ts sitemap.xml and robots.txt
 app/opengraph-image.tsx       the share image
@@ -281,6 +286,7 @@ design/                       the Claude Design export this site is built from
 ## Notes
 
 - **Completion** is stored in the browser's localStorage under `cfa:completed-lessons`, as a list of lesson ids like `module-1/meet-lovable`. It doesn't sync between devices. If you rename a slug or move a lesson to another module, anyone who finished that lesson will see it as unfinished. Returning learners get a "Continue" button in the home page hero, a "Pick up where you left off" card above the course grid and bar on other pages, pointing at their first unfinished lesson. The course grid opens on that lesson's module (Module 1 for a new visitor); `/#module-N` opens another, which is where lesson, quiz and Check your skills pages link back to. A lesson is marked done when the learner ticks its recap box or follows the "Next" card at the end of it (`components/mark-done-link.tsx`); unticking the recap box un-marks it. When that finishes a module's last unfinished lesson, a small card shows the module's honeycomb filling in (`components/module-celebration.tsx`, started by `lib/celebration.ts`). It lives in memory only, so nothing extra is stored, and with reduced motion on the honeycomb is simply full.
+- **Saved work** is stored under `cfa:saved-work`, as `{ id: text }`: what a learner types in a `<SaveHere>` box and the draft in each practice card (under its task id). It stays in the browser and is never sent anywhere; a later lesson's `<SavedWork>` shows it back. Clearing a box deletes it.
 - **Quiz results** are stored under `cfa:quiz-results`: for each quiz (`module-1/quiz`, `module-5/check-your-skills`), the last result only (how many right, out of how many, the ids of the lessons to review, and the date). Each lesson's mastery level is stored under `cfa:mastery`, as lesson id to level (`{"module-1/meet-lovable": "proficient"}`); renaming a slug resets that lesson to Not started. Check your skills ticks are stored under `cfa:checklists`, per page. None of them holds anything the learner typed or which answers they picked.
 - **Dark mode** follows the device setting until someone uses the toggle. After that, their choice is remembered in `cfa:theme`.
 - **Design**: the source is `design/Code for All Website.dc.html`, exported from Claude Design; open it in a browser to see every page and the spec sheet. The colour and size tokens at the top of `app/globals.css` are pasted from that spec sheet. Use the tokens (as Tailwind classes like `bg-tint` or `text-accent`, or `var(--accent)`); Tailwind's default colour palette is switched off. Headings are set in Recursive, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.

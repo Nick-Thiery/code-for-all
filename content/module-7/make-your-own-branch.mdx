@@ -5,13 +5,22 @@ order: 30
 duration: 8
 summary: Make your own branch on GitHub or with Claude Code, build your feature on it, then push it.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - GitHub
+    - Claude Code
+  before:
+    - "A repo on GitHub, from [Module 6](/module-6/get-your-code-into-github)"
 recap:
   - "On GitHub: click the branch dropdown (it says main), type a name like alex-keyboard, then click Create branch."
   - "With Claude Code, the entire process can be done with prompts: branch first, build, then push."
   - After you push, a yellow Compare & pull request banner appears on the repo page. That's your branch arriving on GitHub.
 ---
 
-There are two ways to make your own branch: on GitHub, or with Claude Code. The entire process can actually be done just using Claude Code. Both tracks end with the same check.
+There are two ways to make your own <Term>branch</Term>: on GitHub, or with Claude Code. The entire process can actually be done just using Claude Code. Both tracks end with the same check.
+
+A track here means a route. Pick one. You don't need to do both.
 
 <HandsOn />
 
@@ -35,7 +44,7 @@ Paste these prompts into Claude Code. This part needs access; see [how hands-on 
 Create a branch called <your branch name> and switch to it.
 ```
 
-Replace `<your branch name>` with your own branch name, like alex-keyboard.
+Replace `<your branch name>` with your own branch name, like alex-keyboard. Use your first name and the part you're working on, not your full name.
 
 ### 2. Build
 

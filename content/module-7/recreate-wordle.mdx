@@ -5,13 +5,24 @@ order: 60
 duration: 15
 summary: Be your own team. Build a Wordle clone on three branches, merge them with pull requests, and hit (and fix) a merge conflict on purpose.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - GitHub
+    - Vercel
+    - Claude Code (or Lovable or Claude Design, your choice)
+  before:
+    - "How to make a repo and connect it to Vercel, from [Module 6](/module-6/get-your-code-into-github)"
+    - "How to make a branch and open a pull request, from [lessons 3](/module-7/make-your-own-branch) and [4](/module-7/pull-request-and-merging)"
 recap:
   - Work on your own branches. Never push straight to main.
   - Connect the repo to Vercel at the start, so every merged pull request updates the live site.
   - Changing the same line on two branches on purpose is how you learn to fix a merge conflict.
 ---
 
-Time to use everything from this module: recreate Wordle, with branches and pull requests. The original task is for teams of three. Here, you'll be your own team.
+Time to use everything from this module: recreate Wordle, with <Term term="branch">branches</Term> and <Term term="pull request">pull requests</Term>. The original task is for teams of three. Here, you'll be your own team.
+
+Wordle is the word game where you guess a five-letter word in six tries. A clone is your own copy of it.
 
 <HandsOn />
 
@@ -34,6 +45,8 @@ You are free to use any tools you like: Claude Design, Claude Code, Lovable. Spl
 ## Ship it as you go
 
 Connect the repo to **Vercel** at the **start** of the process, not the end. This way every merged PR updates the live site. [Module 6](/module-6/connect-to-vercel) shows how to connect it.
+
+<PublishSafely />
 
 ## Must-have requirements
 
@@ -94,5 +107,7 @@ Don't hesitate to ask AI if you have a question or are getting stuck. In a Code 
 <Challenge title="Finish your Wordle">
 Finish your Wordle copy. When it's done, look at your repo history, not just the website: your branches and your merged pull requests are part of the work.
 
-Then start thinking of final project ideas. Write a one-line explanation of your idea in your own notes. You'll come back to it in [Module 9](/module-9).
+Then start thinking of final project ideas. Write a one-line explanation of your idea in your own notes, and save it here too. You'll come back to it in [Module 9](/module-9).
+
+<SaveHere id="project-idea" label="My final project idea, in one line" placeholder="One line: what it is, and who it's for." rows={3} />
 </Challenge>

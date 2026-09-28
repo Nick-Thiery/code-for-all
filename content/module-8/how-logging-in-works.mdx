@@ -21,6 +21,8 @@ What lets your site remember who is here: signing up, logging in and logging out
 
 When someone signs up on a website or app, it creates a new row in the user table. This table includes your email and a scrambled version of your password.
 
+The user table is a list of everyone who has signed up, one row per person. Scrambled means the site can check your password without ever storing the real one.
+
 ## Log in
 
 When you try to log in, it verifies if your email and password match what is registered in the user table. If they match, it will hand your browser a token.
@@ -39,7 +41,7 @@ A token is a temporary sticker that says "this is James". Your browser shows it 
 
 ## Notice what all 3 actions are
 
-Your site is sending a request to another computer and getting an answer back. Logging in is just an API call!
+Your site is sending a request to another computer and getting an answer back. Logging in is just an <Term>API</Term> call!
 
 It's the door from [lesson 2](/module-8/what-an-api-is) again: you knock with a request, and it answers.
 

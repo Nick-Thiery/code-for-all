@@ -12,6 +12,7 @@ import {
   type Score,
 } from "@/lib/practice";
 import { isMockName, mockFixture, type MockName } from "@/lib/practice-mock";
+import { readSavedWork, saveWork } from "@/lib/saved-work";
 import { practiceCopy } from "@/lib/site";
 
 type Graded = Extract<PracticeResponse, { status: "graded" }>;
@@ -87,6 +88,18 @@ export function PromptPractice({ taskId, hint, children }: Props) {
     if (wasLoading.current && !busy) headlineRef.current?.focus();
     wasLoading.current = busy;
   }, [busy]);
+
+  // The draft is kept on this device (lib/saved-work.ts), so a lesson that
+  // needs it later can show it back, and so it survives a reload.
+  useEffect(() => {
+    const saved = readSavedWork(taskId);
+    if (saved) setText(saved);
+  }, [taskId]);
+  function edit(value: string) {
+    const next = value.slice(0, PROMPT_MAX);
+    setText(next);
+    saveWork(taskId, next);
+  }
 
   // ?mock=<name>: open in one of the fixture states. See lib/practice-mock.ts.
   const submitRef = useRef(submit);
@@ -206,7 +219,7 @@ export function PromptPractice({ taskId, hint, children }: Props) {
             ref={textareaRef}
             id={`${id}-prompt`}
             value={text}
-            onChange={(event) => setText(event.target.value.slice(0, PROMPT_MAX))}
+            onChange={(event) => edit(event.target.value)}
             maxLength={PROMPT_MAX}
             readOnly={busy}
             rows={6}
@@ -226,7 +239,8 @@ export function PromptPractice({ taskId, hint, children }: Props) {
             </span>
           </div>
           <p className="t-meta mt-1.5 mb-0 text-muted">
-            {practiceCopy.notice} Don&apos;t include personal details like your address or phone number.
+            {practiceCopy.notice} Don&apos;t include personal details like your address or phone number. Your draft
+            stays on this device, so you can come back to it.
           </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
             <button type="button" onClick={() => void submit()} disabled={!canSubmit} className="btn btn-primary">

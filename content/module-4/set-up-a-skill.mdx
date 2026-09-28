@@ -3,8 +3,14 @@ title: How to set up a skill
 slug: set-up-a-skill
 order: 30
 duration: 10
-summary: Add a skill of your own to Claude in four steps.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - Claude
+  before:
+    - "A SKILL.md file with your instructions in it (any text editor works; see step 3)"
+summary: Add a skill of your own to Claude in four steps.
 recap:
   - "Four steps: open Skills under Customize, create a skill, upload your SKILL.md, attach it to a project."
   - A SKILL.md starts with the skill's name and a description of when to use it, then the instructions.
@@ -12,7 +18,7 @@ recap:
   - "A plugin is a bundle: skills, connectors and more, installed together. You don't need any for this course."
 ---
 
-Here's how to add a skill of your own to Claude, so it can use your instructions whenever they fit.
+Here's how to add a <Term>skill</Term> of your own to Claude, so it can use your instructions whenever they fit.
 
 <HandsOn />
 
@@ -24,6 +30,8 @@ This part needs access; see [how hands-on access works](/access). Open Claude us
 2. **Add Skill.** Click the **+** button, then **Create skill**, then **Upload a skill**.
 3. **Upload File.** Upload your SKILL.md file with your instructions.
 4. **Attach.** Link the skill to a project so it loads automatically.
+
+A SKILL.md is a plain text file named SKILL.md. Write it in any text editor, like Notepad, TextEdit or Google Docs (download it as plain text). It starts with the skill's name and a line about when to use it, then your instructions.
 
 <Callout kind="headsup">
 Claude's menus change often, so a button may have moved since this was written. If you can't find one, look for **Skills** under **Customize**.
@@ -59,9 +67,12 @@ You don't need any plugins for this course. Your own skill is enough.
 
 <StuckBlock>
   <StuckItem question="Claude asks me to sign up or log in.">
-    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access). You can keep reading the lessons without it.
+    Don't create your own account: Claude accounts are for people aged 18 and over. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access). You can keep reading the lessons without it.
   </StuckItem>
   <StuckItem question="I can't find the button in step 2.">
     Claude's menus change often. Go to **Customize**, then **Skills**, and look for the **+** button.
+  </StuckItem>
+  <StuckItem question="I don't know what to put in my SKILL.md.">
+    Start small. Name the skill, say when Claude should use it, then write three or four instructions, like "Always answer in British English" or "Keep answers under 100 words". You can also pick **Create with Claude** in step 2 and let Claude write it with you.
   </StuckItem>
 </StuckBlock>

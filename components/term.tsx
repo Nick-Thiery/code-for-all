@@ -1,12 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
 /**
- * An inline key term. Tapping the word shows its meaning right after it.
+ * An inline key term. Tapping the word shows its meaning right after it, with
+ * a link to the glossary entry when there is one.
  * In MDX: The part doing the writing is called the <Term def="the trained AI system that generates the text.">model</Term>.
+ * Or, for a word the glossary already defines: <Term>repository</Term>
+ * (components/term-lookup.tsx fills in the definition and the link).
  */
-export function Term({ def, children }: { def: string; children: ReactNode }) {
+export function Term({ def, href, children }: { def: string; href?: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -23,6 +27,14 @@ export function Term({ def, children }: { def: string; children: ReactNode }) {
           {" "}
           <span className="rounded-md bg-tint px-2 py-0.5 [box-decoration-break:clone]">
             {typeof children === "string" && <strong>{capitalise(children)}:</strong>} {def}
+            {href && (
+              <>
+                {" "}
+                <Link href={href} className="whitespace-nowrap">
+                  Glossary →
+                </Link>
+              </>
+            )}
           </span>
         </>
       )}

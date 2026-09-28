@@ -22,9 +22,12 @@ import { KeyTerm } from "@/components/key-term";
 import { Placeholder } from "@/components/placeholder";
 import { LadderPrompt, PromptLadder, StrongPrompt } from "@/components/prompt-ladder";
 import { PromptPractice } from "@/components/prompt-practice";
+import { PublishSafely } from "@/components/publish-safely";
+import { SaveHere } from "@/components/save-here";
+import { SavedWork } from "@/components/saved-work";
 import { Screenshot } from "@/components/screenshot";
 import { StuckBlock, StuckItem } from "@/components/stuck-block";
-import { Term } from "@/components/term";
+import { TermLookup } from "@/components/term-lookup";
 import { VideoEmbed } from "@/components/video-embed";
 
 // Everything here can be used in any lesson without an import.
@@ -52,12 +55,16 @@ export const mdxComponents: MDXComponents = {
   Placeholder,
   PromptLadder,
   PromptPractice,
+  PublishSafely,
   Question,
+  SaveHere,
+  SavedWork,
   Screenshot,
   StuckBlock,
   StrongPrompt,
   StuckItem,
-  Term,
+  // A Term without a def shows the glossary's definition (components/term-lookup.tsx).
+  Term: TermLookup,
   ThreeFilesDiagram,
   VibeCodingDiagram,
   VideoEmbed,

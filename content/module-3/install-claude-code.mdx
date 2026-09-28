@@ -5,6 +5,10 @@ order: 30
 duration: 12
 summary: Download Claude Code onto your computer, using the desktop app or the terminal, and check that it works.
 requiresAccount: true
+needs:
+  device: A Windows or Mac laptop. On a Chromebook or a device that blocks installs, use Claude Code on the web instead (see below).
+  access:
+    - Claude Code
 recap:
   - The desktop app is the main way in. It includes Claude Code, so there's nothing else to install.
   - The other option is the terminal. Run the install command for your computer, then check it with claude --version.
@@ -15,7 +19,11 @@ Download Claude Code onto your computer. You'll use it to build a Chrome extensi
 
 There are two ways to get it. Start with the desktop app. The terminal is the other option, if you'd rather work there.
 
-These steps come from the official [Claude Code docs](https://code.claude.com/docs/en/desktop-quickstart), which is where the class slide sends you.
+These steps come from the official [Claude Code docs](https://code.claude.com/docs/en/desktop-quickstart), which is where the class slide sends you. Claude Code is free to download, and you sign in with your Code for All access.
+
+<Callout kind="headsup">
+**Can't install apps on your device?** Chromebooks and many school devices block installs. You can still use Claude Code: open Claude Code on the web at [claude.ai/code](https://claude.ai/code), or the Code tab of the Claude app on a phone. It runs in the cloud, so there's nothing to install. It needs a GitHub repository connected, which you set up in [Module 6](/module-6), and your Code for All access. Or use a laptop in a session. [Which device do you have?](/access#devices)
+</Callout>
 
 <HandsOn />
 
@@ -43,7 +51,9 @@ The desktop app includes Claude Code, so you don't need to install anything else
 
 This part needs access; see [how hands-on access works](/access).
 
-1. Open a terminal. Never used one? The official [terminal guide](https://code.claude.com/docs/en/terminal-guide) shows how to open one and paste a command.
+The <Term>terminal</Term> is the text window where you type commands. Never used one? The official [terminal guide](https://code.claude.com/docs/en/terminal-guide) shows how to open one and paste a command.
+
+1. Open a terminal.
 2. Run the install command for your computer.
 
    **macOS, Linux or WSL:**
@@ -73,7 +83,10 @@ This part needs access; see [how hands-on access works](/access).
 
 <StuckBlock>
   <StuckItem question="Claude asks me to log in, or to upgrade.">
-    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access). You can keep reading the lessons without it.
+    Sign in with the access your Code for All session gives you. You don't need to sign up or pay for anything. If it asks you to upgrade or for a card, stop and ask in your session. See [how hands-on access works](/access). You can keep reading the lessons without it.
+  </StuckItem>
+  <StuckItem question="My device won't let me install the app.">
+    Use Claude Code on the web instead: [claude.ai/code](https://claude.ai/code) in your browser, with nothing to install. It needs a GitHub repository, which you set up in [Module 6](/module-6). Or do this lesson on a laptop in a session. [Which device do you have?](/access#devices)
   </StuckItem>
   <StuckItem question="My terminal says claude isn't found or isn't recognised.">
     Open a new terminal window and run `claude --version` again. If it's still not found, the install folder isn't on your PATH yet. The official page [Fix your PATH](https://code.claude.com/docs/en/troubleshoot-install#command-not-found-claude-after-installation) shows how to fix it.

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 // Every claim here was checked against the code. If you change what the site
 // stores or sends, update this page:
-//   localStorage keys: lib/progress.ts, lib/quiz-results.ts, lib/certificate.ts, lib/theme.ts
+//   localStorage keys: lib/progress.ts, lib/quiz-results.ts, lib/saved-work.ts, lib/certificate.ts, lib/theme.ts
 //   offline copies of pages: public/sw.js
 //   moving progress: lib/transfer.ts, app/move-progress/page.tsx
 //   practice: components/prompt-practice.tsx, app/api/practice/route.ts
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
 const summary = [
   "No accounts. Nobody signs up or logs in.",
   "Nothing collected. No names, no email addresses, no analytics, no adverts.",
-  "Your progress, quiz results and lesson levels stay in this browser. You can move them to another device yourself, with a code that's never sent to us.",
-  "Practice feedback sends only your prompt and which task it's for, and it isn't stored.",
+  "Your progress, quiz results, lesson levels and saved work stay in this browser. You can move your progress to another device yourself, with a code that's never sent to us.",
+  "Practice feedback sends only your prompt and which task it's for, and the server doesn't store it.",
 ];
 
 const saved = [
@@ -44,6 +44,11 @@ const saved = [
     name: "Checklist ticks",
     key: "cfa:checklists",
     what: "What you've ticked on the Check your skills pages.",
+  },
+  {
+    name: "Saved work",
+    key: "cfa:saved-work",
+    what: "Text you save in a lesson's “Save it here” box, and the draft in each practice card, so a later lesson can show it back to you. It stays in this browser. Clear a box to delete it.",
   },
   {
     name: "Certificate name",
@@ -143,7 +148,10 @@ export default function PrivacyPage() {
           your feedback and sends it straight back. It doesn&apos;t store your prompt or write it to a log. Nothing
           else from the site goes with it, not even your progress.
         </p>
-        <p className="m-0">Your prompt isn&apos;t saved in your browser either. It&apos;s gone when you leave the page.</p>
+        <p className="m-0">
+          Your draft is kept in this browser (under &ldquo;Saved work&rdquo; above), so a later lesson can show it back to
+          you. It isn&apos;t sent anywhere except when you press Get feedback.
+        </p>
         <Callout kind="tip">
           <p>
             The practice doesn&apos;t need real personal details. If a task asks about you, made-up ones work just as

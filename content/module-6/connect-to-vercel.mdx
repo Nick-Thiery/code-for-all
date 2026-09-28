@@ -5,6 +5,13 @@ order: 60
 duration: 8
 summary: Sign up to Vercel with your GitHub account, import your repo and deploy it to a live public link.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - GitHub
+    - Vercel (free for personal projects, signed in with GitHub during a session)
+  before:
+    - "The repo you pushed in [Step 1](/module-6/get-your-code-into-github)"
 recap:
   - Sign up to Vercel using your GitHub account, not email. That's what lets Vercel see your repos.
   - New Project → Import Git Repository → pick your repo → Deploy.
@@ -13,13 +20,15 @@ recap:
 
 Your project is on GitHub. Now connect it to Vercel, which turns it into a live website.
 
+<PublishSafely />
+
 <HandsOn />
 
 ## 1. Sign in with GitHub
 
-Go to [vercel.com](https://vercel.com) and sign up using your **GitHub account**, not email. This is what lets Vercel see your repos.
+Go to [vercel.com](https://vercel.com) and sign up using your **GitHub account**, not email. This is what lets Vercel see your <Term term="repository">repos</Term>.
 
-This part needs access; see [how hands-on access works](/access). Do this step in a session, with your teacher's go-ahead.
+This part needs access; see [how hands-on access works](/access). Do this step in a session, with your teacher's go-ahead. Vercel's plan for personal projects is free: if it asks for a card, you're on the wrong plan, so stop and ask.
 
 ## 2. Import your repo
 
@@ -30,7 +39,7 @@ On your dashboard, click **New Project** → **Import Git Repository** → pick 
 Vercel auto-detects your setup. Click **Deploy**, wait a few seconds, and you get a **live public link**.
 
 <Callout kind="tip">
-**From now on, you never upload anything again.** Every time you push to GitHub, Vercel rebuilds and updates your live site automatically. And every pull request gets its own preview link, so your team can see changes before merging.
+**From now on, you never upload anything again.** Every time you <Term>push</Term> to GitHub, Vercel rebuilds and updates your live site automatically. And every <Term>pull request</Term> gets its own preview link, so your team can see changes before merging.
 </Callout>
 
 That's the task done: your latest project is on GitHub, and it's live on Vercel.
@@ -45,11 +54,14 @@ That's the task done: your latest project is on GitHub, and it's live on Vercel.
   <StuckItem question="I changed my project. Do I upload it again?">
     No. From now on, you never upload anything again. Push to GitHub, and Vercel rebuilds and updates your live site automatically.
   </StuckItem>
+  <StuckItem question="Vercel asks me to pay.">
+    You don't need to. Personal projects use the free plan. If a page asks for a card, go back and pick the free option, or ask in your session.
+  </StuckItem>
 </StuckBlock>
 
 <Challenge title="Fork an open source project and send it to Vercel">
 1. Find an <Term def="a project whose code is shared publicly for others to use.">open source</Term> project on GitHub that interests you.
-2. Fork it and send it to Vercel. Your fork is a repo on your GitHub account, so you import it just like you did in step 2 above.
+2. <Term>Fork</Term> it and send it to Vercel. Your fork is a repo on your GitHub account, so you import it just like you did in step 2 above.
 3. Also review the new terms from this module: fork, clone, commit, push, pull request and merge. [Key terms](/module-6/key-terms) has them all. VERY IMPORTANT!
 
 Forking and deploying need GitHub and Vercel; see [how hands-on access works](/access). Do them in a session, with your teacher's go-ahead.

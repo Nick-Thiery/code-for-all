@@ -27,6 +27,16 @@ const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 // /module-1/certificate and /module-5/check-your-skills.
 const RESERVED_SLUGS = ["complete", "quiz", "check-your-skills", "certificate"];
 
+/** The "You'll need" box on a hands-on lesson (components/you-need.tsx). */
+export type LessonNeeds = {
+  /** "A laptop or Chromebook". May contain [text](/link). */
+  device: string;
+  /** Tools the hands-on part uses: "Lovable", "Claude Code". */
+  access: string[];
+  /** Things from earlier lessons, each may contain [text](/link). */
+  before: string[];
+};
+
 export type LessonMeta = {
   title: string;
   slug: string;
@@ -38,6 +48,8 @@ export type LessonMeta = {
   requiresAccount: boolean;
   /** Optional. The recap block falls back to the summary when empty. */
   recap: string[];
+  /** Optional. Set on hands-on lessons to show the "You'll need" box. */
+  needs: LessonNeeds | null;
 };
 
 export type Lesson = LessonMeta & {
@@ -425,8 +437,30 @@ function parseFrontmatter(data: Record<string, unknown>, file: string): LessonMe
     problems.push(`"recap" should be a list of short points, each on its own line starting with "  - ".`);
   }
 
+  let needs: LessonNeeds | null = null;
+  if (data.needs !== undefined) {
+    const raw = data.needs;
+    if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+      problems.push(`"needs" should have a "device" line and optional "access" and "before" lists. See the README.`);
+    } else {
+      const block = raw as Record<string, unknown>;
+      const device = typeof block.device === "string" ? block.device.trim() : "";
+      if (!device) problems.push(`"needs" must say which device, like: device: A laptop or Chromebook`);
+      const strings = (key: string): string[] => {
+        const value = block[key];
+        if (value === undefined) return [];
+        if (Array.isArray(value) && value.every((item) => typeof item === "string")) {
+          return value.map((item: string) => item.trim()).filter(Boolean);
+        }
+        problems.push(`"needs: ${key}" should be a list, each item on its own line starting with "    - ".`);
+        return [];
+      };
+      needs = { device, access: strings("access"), before: strings("before") };
+    }
+  }
+
   if (problems.length > 0) throw contentError(file, problems);
-  return { title, slug, order, duration, summary, requiresAccount, recap };
+  return { title, slug, order, duration, summary, requiresAccount, recap, needs };
 }
 
 function assertUnique(lessons: LessonFile[], key: "slug" | "order") {

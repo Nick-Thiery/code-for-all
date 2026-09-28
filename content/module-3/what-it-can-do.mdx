@@ -11,11 +11,11 @@ recap:
   - "Session context: it keeps track of the commands, errors, file changes and goal from earlier in your session."
 ---
 
-You ask Claude Code for things in plain words, the same way you prompted Lovable. Here are three kinds of job it can do, with example prompts.
+You ask Claude Code for things in plain words, the same way you <Term term="prompt" def="the message you type to tell an AI what you want.">prompted</Term> Lovable. Here are three kinds of job it can do, with example prompts.
 
 ## Routines
 
-Claude Code can run jobs in the background, again and again. It can run checks on a schedule, like testing your code every day, or carry out a task with several steps. It does all of this right inside the project on your computer.
+A routine is a job that repeats. Claude Code can run jobs in the background, again and again. It can run checks on a schedule, like testing your code every day, or carry out a task with several steps. It does all of this right inside the project on your computer.
 
 ```prompt title="Check for errors"
 Check this folder for errors every hour.
@@ -26,6 +26,8 @@ Run a multi-step process: clean the files, test the code, then generate a report
 ```
 
 **Key idea:** Claude Code can handle repeated background workflows inside your local project environment.
+
+In plain words: it can do repeated jobs for you, inside your project, on your computer.
 
 ## Refactoring
 
@@ -51,3 +53,5 @@ Claude Code remembers what has happened so far in your <Term def="one conversati
 - What errors happened earlier.
 - What files were changed.
 - What you were trying to fix.
+
+So you don't have to repeat yourself. It already knows what you did five minutes ago.
