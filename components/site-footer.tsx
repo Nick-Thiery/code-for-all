@@ -7,6 +7,7 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/run-it", label: "Run a session" },
   { href: "/glossary", label: "Glossary" },
+  { href: "/move-progress", label: "Move my progress" },
   { href: "/privacy", label: "Privacy" },
 ];
 

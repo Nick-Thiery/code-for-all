@@ -50,6 +50,11 @@
   /* Text on a --deco fill: the </> in the Module complete honeycomb. Same in
      both themes because --deco is. */
   --on-deco: #0E1116;
+  /* The QR code on "Move my progress" (components/qr-code.tsx): always dark
+     on light, in both themes, so a phone camera reads it first time. Same
+     values as the light --bg and --text. */
+  --qr-bg: #FFFFFF;
+  --qr-ink: #15202B;
   color-scheme: light;
 }
 [data-theme="dark"] {
@@ -170,6 +175,8 @@
   --color-term-text: var(--term-text);
   --color-term-muted: var(--term-muted);
   --color-term-rule: var(--term-rule);
+  --color-qr-bg: var(--qr-bg);
+  --color-qr-ink: var(--qr-ink);
   --color-transparent: transparent;
   --color-current: currentColor;
 

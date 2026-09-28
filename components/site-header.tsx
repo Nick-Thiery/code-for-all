@@ -137,7 +137,7 @@ function NavLink({
 }
 
 // Lesson pips: filled = done · tinted with a thick ring = this lesson ·
-// gray outline = not started. Always next to "Lesson 2 of 7".
+// grey outline = not started. Always next to "Lesson 2 of 7".
 function LessonPips({
   outline,
   lesson,

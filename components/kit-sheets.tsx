@@ -294,7 +294,7 @@ export function HandoutSheet({ sheet }: { sheet: RunSheet }) {
         Find this module at <CourseLink path={moduleHref(mod.number)} />
         {sheet.handsOn.length > 0 && (
           <>
-            . {lessonNumbers(sheet.handsOn)} {sheet.handsOn.length === 1 ? "is" : "are"} hands-on: they need access,
+            . {lessonNumbers(sheet.handsOn)} {sheet.handsOn.length === 1 ? "is" : "are"} hands-on: {sheet.handsOn.length === 1 ? "it needs" : "they need"} access,
             which your session sets up for you, so you don&apos;t sign up for anything yourself.
           </>
         )}

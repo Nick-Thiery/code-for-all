@@ -8,6 +8,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - `npm run build`: production build. It checks every lesson and stops with a plain-English error naming the file.
 - `npm run lint`: ESLint
 - `npm run typecheck`: TypeScript check (`tsc --noEmit`)
+- `npm test`: build, then the Playwright suite in `tests/e2e/` (learner flows, axe on every page type in light and dark, keyboard-only pass) at 375px and 1280px. `npm run test:e2e` reuses an existing build. Tests read lesson and quiz content from `content/`, so they don't need updating when a lesson changes. CI (`.github/workflows/ci.yml`) runs lint, typecheck, build and the tests on every pull request.
 
 ## Content
 
@@ -62,6 +63,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - `/run-it` and its printable kit pages come from `content/facilitator.yml` (`lib/facilitator.ts`). Never link or publish the PDFs in `source/slides/`.
 - Offline and install: `public/sw.js` (registered by components/service-worker.tsx as `/sw.js?v=<build id>`, the id set in next.config.ts) keeps every page a learner opens, network-first so online is always fresh; hashed `/_next/static` files cache-first; images and fonts stale-while-revalidate; nothing for `/api/`. A new deploy is a new worker that deletes older caches. `/offline` is the fallback for a page never opened; `OfflineNotice` (root layout) shows "You're offline…" from the browser's online/offline events. `app/manifest.ts` and `public/icons/` (made from app/icon.svg) make the site installable. Nothing runs in `npm run dev`.
 - Fonts are self-hosted in `public/fonts/` with `@font-face` rules in globals.css (Atkinson Hyperlegible Next: Google's own files; Recursive: instanced to weights 600 to 800 and casual 0 to 0.6 with fontTools, so keep headings inside that range). Only the two upright latin files are preloaded (root layout). The mono font still comes from next/font. File names carry a version; bump it when a file changes.
+- `/move-progress` ("Move my progress", linked from the course grid's continue card and the footer): the learner's progress (done lessons and `cfa:mastery` levels) as a versioned code (`lib/transfer.ts`: `CFA1Z…`, deflated JSON, base64url, with a check), a QR code (components/qr-code.tsx, `--qr-*` tokens) that carries the code after `#` so it never reaches the server, and a text file. Loading asks before overwriting and can combine (union of done lessons, higher level wins; `lib/transfer-storage.ts`). Nothing is sent anywhere.
 - `/privacy` states what the site stores and sends. Change it whenever that changes.
 - Hidden from search engines unless `NEXT_PUBLIC_ALLOW_INDEXING` is `"true"` (`allowIndexing` in `lib/site.ts`): `app/robots.ts` disallows everything and the root layout adds `noindex`.
 - Every page needs a `title` and `description` in its metadata. `NEXT_PUBLIC_SITE_URL` sets the address used in share links and `sitemap.xml`.

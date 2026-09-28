@@ -231,6 +231,10 @@ function ContinueCard({
             style={{ width: `${lessons.length ? (100 * doneCount) / lessons.length : 0}%` }}
           />
         </span>
+        {/* Progress lives on this device; /move-progress carries it to another. */}
+        <Link href="/move-progress" className="text-link min-h-9 text-[15px]">
+          {progress.startedCourse ? "Move my progress to another device" : "Got progress on another device?"}
+        </Link>
       </div>
       {cta && (
         <Link href={cta.href} className="btn btn-primary tablet:min-h-14 tablet:px-7">
@@ -552,6 +556,7 @@ function LessonRow({ lesson, progress, compact = false }: { lesson: OutlineLesso
   const next = lesson.id === progress.nextId;
   const state = done ? "done" : next ? "next" : "todo";
   const words = { done: "done", next: progress.startedCourse ? "up next" : "start here", todo: "not started" }[state];
+  const level = levelOf(progress.levels, lesson.id);
   return (
     <Row
       href={lesson.href}
@@ -569,7 +574,15 @@ function LessonRow({ lesson, progress, compact = false }: { lesson: OutlineLesso
           </span>
           {lesson.requiresAccount && <LaptopIcon label="Hands-on: needs access" />}
           {lesson.hasPractice && <span className="font-bold text-accent">Includes practice</span>}
-          <LevelChip level={levelOf(progress.levels, lesson.id)} />
+          {/* On phones (compact rows) the level chip gets its own line, so the row isn't cramped. */}
+          {level !== "not-started" &&
+            (compact ? (
+              <span className="basis-full">
+                <LevelChip level={level} />
+              </span>
+            ) : (
+              <LevelChip level={level} />
+            ))}
         </>
       }
     />
