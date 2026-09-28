@@ -24,7 +24,7 @@ const OTHER = [
   {
     where: "Modules 9 and 10",
     needed:
-      "The lessons themselves. Until they're out, /module-9 and /module-10 show what each module will cover (content/course.yml).",
+      "Rishabh's approval of the draft lessons (docs/course-map.md, Modules 9 and 10), the Module 9 and 10 slide decks as PDFs in source/slides/ (the drafts use only docs/launchlab-curriculum-source.md), and the tutor's OK to be named on the closing quote in 10.4.",
   },
 ];
 

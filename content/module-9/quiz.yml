@@ -1,0 +1,74 @@
+# Module 9 quiz. Questions come only from this module's lessons; each links to
+# the lesson that teaches it. Situations, not definitions.
+questions:
+  - question: "You type example.com into your browser. What happens first, before the page can load?"
+    options:
+      - "DNS turns the name into the IP address of the computer to ask"
+      - "Vercel builds the page from your GitHub repo"
+      - "Your browser searches Google for the name"
+    answer: "DNS turns the name into the IP address of the computer to ask"
+    explanation: "DNS is the phonebook of the internet: it turns names like example.com into IP addresses, the numbers computers use to find each other."
+    lesson: what-is-dns
+
+  - question: "Your project is live at a free vercel.app address. A friend says you have to buy a .com before you can show it to anyone. Are they right?"
+    options:
+      - "Yes: a site without a bought domain can't be opened by other people"
+      - "No: a free Vercel address works, and buying a domain costs money, so ask a parent first"
+      - "Yes, but only a .org will do for a student project"
+    answer: "No: a free Vercel address works, and buying a domain costs money, so ask a parent first"
+    explanation: "You don't need to buy a domain for this course. A free Vercel address is fine. Buying one costs money and needs a card, so ask a parent or guardian first."
+    lesson: domains-and-deployment
+
+  - question: "You built your project with Claude Code and want it online. Which is the standard route?"
+    options:
+      - "Push it to GitHub and let Vercel build it"
+      - "Email the files to Vercel"
+      - "Publish it from inside Lovable"
+    answer: "Push it to GitHub and let Vercel build it"
+    explanation: "The standard route is the one from Module 6: push your code to GitHub and let Vercel build it. Lovable's own publish button is the other route, for projects built in Lovable."
+    lesson: domains-and-deployment
+
+  - question: "Your site loads slowly on phones and search engines can't read half its pages. Which part of SEO is the problem?"
+    options:
+      - "Technical"
+      - "Off-page"
+      - "Content quality"
+    answer: "Technical"
+    explanation: "Technical SEO is crawlability, speed and mobile-friendliness. Off-page is about links from other sites, and content quality is about being genuinely useful."
+    lesson: search-engine-optimisation
+
+  - question: "Two sites cover the same topic. One is genuinely useful; the other has clever keywords but thin content. Over time, which is likely to rank higher?"
+    options:
+      - "The one with clever keywords, because keywords are all that count"
+      - "The genuinely useful one, because content quality matters most"
+      - "Neither: ranking is random"
+    answer: "The genuinely useful one, because content quality matters most"
+    explanation: "Content quality, genuinely useful content, is the part of SEO that matters most. There's no trick that beats being useful."
+    lesson: search-engine-optimisation
+
+  - question: "You want people to find your project but you have no money to spend. Which channel should you start with?"
+    options:
+      - "Google Ads"
+      - "Hiring a social media marketing agency"
+      - "Search, your own social posts and telling people"
+    answer: "Search, your own social posts and telling people"
+    explanation: "Adverts and agencies cost money. Start with the free channels: search, your own posts, and word of mouth."
+    lesson: getting-users
+
+  - question: "You're choosing between a fan page about your favourite band and a tool that helps your school's clubs share their equipment. Which one meets the requirements?"
+    options:
+      - "The fan page, because you're more interested in it"
+      - "The equipment tool, because it gives real value rather than just information"
+      - "Neither: only business ideas count"
+    answer: "The equipment tool, because it gives real value rather than just information"
+    explanation: "A project needs to give real value, not just be an information site. Both business-forward and social impact projects count, and a tool that helps clubs share equipment is social impact."
+    lesson: project-requirements
+
+  - question: "Your idea has an AI feature you're not sure will work, plus a nice homepage you know you can build. Which do you build first?"
+    options:
+      - "The homepage, so there's something to show quickly"
+      - "The AI feature, because a prototype should prove the hardest part works"
+      - "Both at the same time, styled and polished"
+    answer: "The AI feature, because a prototype should prove the hardest part works"
+    explanation: "The Challenge is to build a prototype that proves the hardest part works. Build the risky part first and skip styling and polish."
+    lesson: plan-and-get-to-work

@@ -25,9 +25,17 @@ const ALT =
   "Developer fundamentals, Modules 6 to 8 (GitHub, Vercel, APIs and logging in). Your final project, Modules 9 and 10 (plan it, ship it, show it). " +
   "Underneath, the loop every module runs: Read (a short lesson teaches one idea), Practise (try it in a practice box or a quiz), Build (a hands-on part, then the module's Challenge), and back to Read.";
 
-export function CoursePathDiagram() {
+/** `complete`: every module filled in, for the last lesson of the course. */
+export function CoursePathDiagram({ complete = false }: { complete?: boolean }) {
   return (
-    <Diagram alt={ALT} caption="Ten modules in three phases, and the loop every module runs: read, practise, build.">
+    <Diagram
+      alt={complete ? ALT.replace("The course path:", "The whole course path, every module done:") : ALT}
+      caption={
+        complete
+          ? "All ten modules, done. The loop keeps going: read, practise, build."
+          : "Ten modules in three phases, and the loop every module runs: read, practise, build."
+      }
+    >
       <div className="flex flex-col gap-4">
         <div className="grid gap-2.5 tablet:grid-cols-3">
           {PHASES.map((phase, index) => (
@@ -37,8 +45,8 @@ export function CoursePathDiagram() {
               <div className="flex flex-wrap gap-1.5" aria-hidden="true">
                 {phase.modules.map((n) => (
                   <span key={n} className="relative flex h-[30px] w-[27px] items-center justify-center">
-                    <Hex width={27} height={30} shape={n <= 8 ? "fill-accent" : "fill-none stroke-pip stroke-2 [stroke-dasharray:4_3]"} className="absolute inset-0" />
-                    <span className={`relative text-[13px] leading-none font-extrabold ${n <= 8 ? "text-on-accent" : "text-muted"}`}>{n}</span>
+                    <Hex width={27} height={30} shape={complete || n <= 8 ? "fill-accent" : "fill-none stroke-pip stroke-2 [stroke-dasharray:4_3]"} className="absolute inset-0" />
+                    <span className={`relative text-[13px] leading-none font-extrabold ${complete || n <= 8 ? "text-on-accent" : "text-muted"}`}>{n}</span>
                   </span>
                 ))}
               </div>

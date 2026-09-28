@@ -1,0 +1,58 @@
+---
+title: Ship it
+slug: ship-it
+order: 10
+duration: 8
+requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - GitHub
+    - Vercel
+  before:
+    - "Your prototype from the [Module 9 Challenge](/module-9/plan-and-get-to-work)"
+    - "How to connect a repo to Vercel, from [Module 6](/module-6/connect-to-vercel)"
+summary: Put your final project live, then check it the way a stranger would.
+recap:
+  - Your project is live at a working URL that anyone can open.
+  - It loads properly on a phone and on a laptop.
+  - Every page and link works, with none broken.
+---
+
+Shipping means putting your project live, where anyone can open it. It's the first thing a finished project has to do.
+
+<SavedWork id="project-brief" what="your project brief from Module 9" from="/module-9/plan-and-get-to-work" fromLabel="Plan it and get to work" sample="The problem: people at my hawker centre can't tell which stall has the shortest queue. Who has it: anyone on a short lunch break. What my project does: shows a live queue guess for each stall. The hardest part: guessing the queue from the number of people who tap 'I'm in this queue'." />
+
+<PublishSafely />
+
+<HandsOn />
+
+## Deploy it
+
+This part needs access; see [how hands-on access works](/access).
+
+Use the route from [Module 6](/module-6/connect-to-vercel): push your project to GitHub and let Vercel build it. Built it in Lovable? Publish from Lovable instead. Either way, you get a public link.
+
+<DeployLoopDiagram />
+
+## Check it ships
+
+This is the first of the five things a finished project needs. Open your live link on a phone and on a laptop, and tick each one:
+
+- Is your project live at a working URL that anyone can open?
+- Does it load properly on a phone and on a laptop?
+- Do all your pages and links work, with none broken?
+
+Try it as a stranger would: open the link in a private window, where you're not logged in to anything.
+
+<StuckBlock>
+  <StuckItem question="GitHub or Vercel asks me to sign up or log in.">
+    You sign in to GitHub and Vercel with a GitHub account: do these steps in a session, with your teacher's go-ahead. See [how hands-on access works](/access).
+  </StuckItem>
+  <StuckItem question="The live site is different from what I see on my computer.">
+    Push your latest commits to GitHub. Vercel only builds what's in the repo. [Module 6](/module-6/connect-to-vercel) shows how it updates.
+  </StuckItem>
+  <StuckItem question="A page works on my laptop but not on my phone.">
+    That's what this check is for. Press F12 on the laptop, pick the phone view in DevTools, and paste any red error into Claude, as in [When it breaks](/module-5/when-it-breaks).
+  </StuckItem>
+</StuckBlock>

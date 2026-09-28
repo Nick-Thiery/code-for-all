@@ -1,0 +1,65 @@
+# Module 10 quiz. Questions come only from this module's lessons; each links to
+# the lesson that teaches it. Situations, not definitions.
+questions:
+  - question: "Your project works perfectly on your laptop, but you haven't put it online. Has it shipped?"
+    options:
+      - "Yes: it works, so it's finished"
+      - "No: shipping means it's live at a working URL that anyone can open"
+      - "Yes, as long as you've recorded a demo"
+    answer: "No: shipping means it's live at a working URL that anyone can open"
+    explanation: "It ships means your project is live at a working URL that anyone can open, loads on a phone and a laptop, and has no broken pages or links."
+    lesson: ship-it
+
+  - question: "You've deployed your project. What's the best way to check it the way a stranger would?"
+    options:
+      - "Open the live link in a private window on a phone and a laptop"
+      - "Open the files on your own computer"
+      - "Ask Claude whether it looks finished"
+    answer: "Open the live link in a private window on a phone and a laptop"
+    explanation: "Open your live link on a phone and on a laptop, in a private window where you're not logged in to anything, and check every page and link."
+    lesson: ship-it
+
+  - question: "Your project has a beautiful home page, but the sign-up form on page two doesn't work. Which of the five things does it fail?"
+    options:
+      - "It works end to end"
+      - "It ships"
+      - "AI-assisted workflow"
+    answer: "It works end to end"
+    explanation: "Works end to end means someone can use it from start to finish without it breaking. A broken step on page two fails that, however good the home page is."
+    lesson: what-a-finished-project-looks-like
+
+  - question: "Someone asks how you used AI to build your project. Which answer shows the AI-assisted workflow best?"
+    options:
+      - "\"I typed one prompt and it worked first time\""
+      - "\"Here's a prompt that failed, and here's what I changed to fix it\""
+      - "\"I didn't use AI, so it's all my own work\""
+    answer: "\"Here's a prompt that failed, and here's what I changed to fix it\""
+    explanation: "The question is: can you show a prompt that failed and how you fixed it? A failed prompt isn't a bad sign. Showing how you fixed it is exactly what this asks for."
+    lesson: what-a-finished-project-looks-like
+
+  - question: "You're planning your 5-minute demo. Which order matches the lesson's plan?"
+    options:
+      - "The problem, show it working, what was hard, what's next"
+      - "What's next, the problem, your favourite feature, the code"
+      - "Show every line of code, then the problem"
+    answer: "The problem, show it working, what was hard, what's next"
+    explanation: "The plan is: the problem (about a minute), show it working from start to finish (about two), what was hard and how you fixed it (about one), and what's next (about one)."
+    lesson: show-your-work
+
+  - question: "You show your demo to a friend and ask what they think it's for. Their answer is completely different from what you meant. What should you do?"
+    options:
+      - "Ignore it: they didn't watch properly"
+      - "Write it down: it's the most useful thing you'll learn today"
+      - "Delete the project and start again"
+    answer: "Write it down: it's the most useful thing you'll learn today"
+    explanation: "If their answer doesn't match what you meant, that's the most useful thing you'll learn. It tells you what to make clearer."
+    lesson: show-your-work
+
+  - question: "You've finished the course and your project is live. What was the last piece of homework in the original course?"
+    options:
+      - "Try to get more users"
+      - "Buy a domain"
+      - "Rebuild the project in a different tool"
+    answer: "Try to get more users"
+    explanation: "The last piece of homework was simple: try to get more users. Show your project to more people, listen, and improve it."
+    lesson: next-steps

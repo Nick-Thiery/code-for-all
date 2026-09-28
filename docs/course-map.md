@@ -460,6 +460,29 @@ Source: LaunchLab 10 (image-only slides), plus the Blueprint rubric and schedule
 
 **Module 10 needs the most new content**: the deck is almost entirely images.
 
+**Draft written (28 Sep 2026), needs Rishabh's approval before merging.** Modules 9 and 10 are drafted from this map and docs/launchlab-curriculum-source.md only; the Module 9 and 10 decks aren't in source/slides/, so nothing beyond the source file's text is used.
+
+Module 9:
+
+- 9.1 as planned: the DNS KeyTerm word for word. [added] the IP address gloss, "It happens in a fraction of a second", the DNS diagram (name, phonebook, number; the number shown is an illustration). The video stays a hidden Placeholder until its link arrives.
+- 9.2 as planned, including the HeadsUp (free Vercel address is fine; buying a domain costs money, ask a parent first). [added] glosses of domain and registrar, ".org is often used by non-profit groups, and .edu by schools and universities", "never enter card details yourself", the two deployment routes reusing the Module 6 code journey diagram. The two videos stay a hidden Placeholder.
+- 9.3 as planned: the SEO definition and four components word for word. [added] glosses of rank, unpaid, keyword, meta description, backlinks and crawlability; "there's no trick that beats being useful"; the Tip to ask Claude to check a page's SEO; the four-part diagram. The video stays a hidden Placeholder.
+- 9.4 as planned: the five channels named on the slide, one short section each, linking back to 1.2 rather than repeating it. [added] each channel's one-line description (Google Ads: paid adverts you pay per click; email automation: emails that send themselves; affiliate marketing: others promote you for a share; social media marketing: your own posts; SMMA: an agency that runs social media), the HeadsUp that adverts and agencies cost money and the free channels come first, and the diagram splitting free from paid. Search, social posts and word of mouth are on the diagram's free side from 1.2's "Getting users".
+- 9.5 as planned, with the two kinds and "Challenge yourself. Don't pick low hanging fruit." word for word. [solo version] "Split up into groups of 3" becomes "work alone or with friends" (with a pointer to Module 7 for teams). [changed] the real-business framing is an optional Tip. [added] "low hanging fruit means the easy option", the SaaS gloss, the saved one-line idea from the Module 7 Challenge shown back (with an invented hawker-centre sample), the two-paths diagram.
+- 9.6 as planned: the six requirements, each with a plain-English line [added], the tick-list diagram, and the CheckYourself with three example ideas (bus delays, a football fan page, an app with a made-up statistic; all invented).
+- 9.7 as planned: Miro board, then a shared Google Drive with a master doc and task sheets. [added] what a board and each document is, "any board works, even paper", "one document is enough" for solo learners, the project brief defined as one page (problem, who has it, what it does, the hardest part), the Save it here box for the brief (shown back in 10.1), the child-safety HeadsUp, the four-step diagram. Challenge: the slide homework word for word, plus the source's "Build the risky part first (AI feature, tricky algorithm). Skip styling and polish."
+- Quiz: 8 questions, situations, from these lessons only.
+
+Module 10:
+
+- 10.1 Ship it: rubric criterion 1 as three questions, word for word from content/check-your-skills.yml. [added] "Shipping means putting your project live", the two deployment routes, "try it as a stranger would: a private window", the saved brief shown back, PublishSafely, a Stuck box, the deploy-loop diagram from 6.6, You'll need box.
+- 10.2 What a finished project looks like: the five criteria as the questions from content/check-your-skills.yml, no points or bands (the Run a session page keeps the marks for adults). [added] "start to finish means every step a real user would take", "a failed prompt isn't a bad sign", the Tip pointing at the Check your skills page after Module 10, the five-row diagram.
+- 10.3 Show your work: [solo version] the class pitch becomes a recorded 5-minute demo shown to someone (the length is the Blueprint's). [added] the four-part plan and its minutes (the problem, show it working, what was hard, what's next: ours), the screen-only safety HeadsUp, and the three feedback questions (what is it for, what confused you, what next: ours). The pitching-order and feedback slides are images only, so a hidden Placeholder asks for their text.
+- 10.4 Next steps: the closing line from the last slide, quoted word for word but attributed to "the tutor who ran the last session" rather than by name (CLAUDE.md: no tutor names without permission; swap the name in once he's OKed it), and the Blueprint homework "try to get more users" as the Challenge. [added] the "What you can do now" list (one line per phase of the course), the full course-path diagram, "every lesson stays here".
+- Quiz: 7 questions from these lessons only.
+- Also: a Check your skills page after Module 10 (4 questions from Modules 9 and 10, 4 from Modules 1 to 8, plus the checklist), so the new modules' lessons can reach Mastered; run sheets for Modules 9 and 10 in content/facilitator.yml (timings are suggestions; group versions from the slides' groups of 3 and the class pitches); the Coming soon pages retire by themselves once these folders exist.
+- Videos not embedded (no link in the source): DNS (9.1), buying a domain and deploying to AWS (9.2), SEO (9.3). Each is a hidden Placeholder and is in docs/content-needed.md.
+
 ---
 
 ## Quizzes and Check your skills [added]

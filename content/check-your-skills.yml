@@ -20,6 +20,14 @@ pages:
         questions: 5
       - modules: 1-5
         questions: 3
+  - after: 10
+    intro: "The whole course, one last time. The checklist is your final project's own check."
+    # 4 from the final project phase (Modules 9 and 10) and 4 from everything before.
+    draw:
+      - modules: 9-10
+        questions: 4
+      - modules: 1-8
+        questions: 4
 
 checklist:
   - criterion: It ships
