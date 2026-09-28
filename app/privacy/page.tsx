@@ -13,12 +13,14 @@ export const metadata: Metadata = {
 // Every claim here was checked against the code. If you change what the site
 // stores or sends, update this page:
 //   localStorage keys: lib/progress.ts, lib/quiz-results.ts, lib/certificate.ts, lib/theme.ts
+//   offline copies of pages: public/sw.js
+//   moving progress: lib/transfer.ts, app/move-progress/page.tsx
 //   practice: components/prompt-practice.tsx, app/api/practice/route.ts
 //   videos: components/video-embed.tsx
 const summary = [
   "No accounts. Nobody signs up or logs in.",
   "Nothing collected. No names, no email addresses, no analytics, no adverts.",
-  "Your progress, quiz results and lesson levels stay in this browser.",
+  "Your progress, quiz results and lesson levels stay in this browser. You can move them to another device yourself, with a code that's never sent to us.",
   "Practice feedback sends only your prompt and which task it's for, and it isn't stored.",
 ];
 
@@ -105,11 +107,33 @@ export default function PrivacyPage() {
           ))}
         </dl>
 
+        <h3 className="t-h3 mt-2 mb-0">Pages saved for offline</h3>
+        <p className="m-0">
+          The site also keeps a copy of each page you open, so lessons and quizzes you&apos;ve already read still
+          work when you have no signal. That copy is the page itself, nothing about you, and it&apos;s replaced by
+          the new version the next time you&apos;re online after the site is updated.
+        </p>
+
         <h3 className="t-h3 mt-2 mb-0">How to delete it</h3>
         <p className="m-0">
           Clear this site&apos;s data in your browser&apos;s settings (it&apos;s usually listed with cookies and site
           data). Everything above goes for good: there&apos;s no other copy, so your progress can&apos;t be brought
           back afterwards.
+        </p>
+
+        <h2 className="t-h2 mt-6 mb-0">Moving your progress to another device</h2>
+        <p className="m-0">
+          Because your progress stays on one device, there&apos;s a page called{" "}
+          <Link href="/move-progress">Move my progress</Link> for taking it with you. It turns the notes above
+          (which lessons you&apos;ve done, and their levels) into a code. You copy the code, scan it as a QR code, or
+          download it as a small file, then load it on the other device.
+        </p>
+        <p className="m-0">
+          The code is made by your browser and read by your browser. It is never sent to us. The QR code opens the
+          Move my progress page with the code after a &quot;#&quot; in the address, and browsers don&apos;t send that
+          part to any server. The code holds nothing about you: no name, no email, nothing you typed. Anyone you give
+          the code to could load your progress onto their device, so treat it like a password to your progress and
+          only share it with yourself.
         </p>
 
         <h2 className="t-h2 mt-6 mb-0">Practice feedback</h2>

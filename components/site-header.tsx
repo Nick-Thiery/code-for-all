@@ -42,7 +42,7 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
           <NavLink href="/" current={active === "course"}>
             Course
           </NavLink>
-          <NavLink href="/run-it" current={active === "run"}>
+          <NavLink href="/run-it" current={active === "run"} prefetch={false}>
             Run a session
           </NavLink>
         </nav>
@@ -110,10 +110,22 @@ function Logo({ files }: { files: LogoFiles }) {
   );
 }
 
-function NavLink({ href, current, children }: { href: string; current: boolean; children: string }) {
+function NavLink({
+  href,
+  current,
+  prefetch,
+  children,
+}: {
+  href: string;
+  current: boolean;
+  /** Off for pages most learners won't open from here, to save data on every page view. */
+  prefetch?: boolean;
+  children: string;
+}) {
   return (
     <Link
       href={href}
+      prefetch={prefetch}
       aria-current={current ? "page" : undefined}
       className={`flex min-h-11 items-center rounded-[10px] px-2.5 font-bold whitespace-nowrap no-underline ${
         current ? "bg-tint text-accent hover:text-accent" : "text-fg hover:bg-surface2 hover:text-fg"
@@ -125,7 +137,7 @@ function NavLink({ href, current, children }: { href: string; current: boolean; 
 }
 
 // Lesson pips: filled = done · tinted with a thick ring = this lesson ·
-// gray outline = not started. Always next to "Lesson 2 of 7".
+// grey outline = not started. Always next to "Lesson 2 of 7".
 function LessonPips({
   outline,
   lesson,

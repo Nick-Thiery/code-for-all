@@ -50,6 +50,11 @@
   /* Text on a --deco fill: the </> in the Module complete honeycomb. Same in
      both themes because --deco is. */
   --on-deco: #0E1116;
+  /* The QR code on "Move my progress" (components/qr-code.tsx): always dark
+     on light, in both themes, so a phone camera reads it first time. Same
+     values as the light --bg and --text. */
+  --qr-bg: #FFFFFF;
+  --qr-ink: #15202B;
   color-scheme: light;
 }
 [data-theme="dark"] {
@@ -82,6 +87,67 @@
   :root { --task: 24px; --head: 26px; }
 }
 
+/* Body text: Atkinson Hyperlegible Next, self-hosted (public/fonts): the
+   files Google Fonts serves, unchanged. Only the upright latin file is
+   preloaded (app/layout.tsx); the italic and latin-ext files download on
+   the pages that use them. */
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/fonts/atkinson-next-latin.v1.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/fonts/atkinson-next-latin-ext.v1.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/fonts/atkinson-next-italic-latin.v1.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/fonts/atkinson-next-italic-latin-ext.v1.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Headings: Recursive, self-hosted (public/fonts) and cut down to the weights
+   and casual range the site uses. See app/layout.tsx. Only the latin file is
+   preloaded; latin-ext loads if a page needs one of its characters. */
+@font-face {
+  font-family: "Recursive";
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("/fonts/recursive-casual-latin.v1.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Recursive";
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("/fonts/recursive-casual-latin-ext.v1.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+:root {
+  --font-atkinson: "Atkinson Hyperlegible Next";
+  --font-recursive: "Recursive";
+}
+
 /* Only the tokens above exist as Tailwind colours: no palette to reach for. */
 @theme inline {
   --color-*: initial;
@@ -109,6 +175,8 @@
   --color-term-text: var(--term-text);
   --color-term-muted: var(--term-muted);
   --color-term-rule: var(--term-rule);
+  --color-qr-bg: var(--qr-bg);
+  --color-qr-ink: var(--qr-ink);
   --color-transparent: transparent;
   --color-current: currentColor;
 

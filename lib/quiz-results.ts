@@ -107,6 +107,18 @@ export function useMastery() {
   return { levels, ready: raw !== null };
 }
 
+/** Every saved level right now, outside React. */
+export function readLevels(): Levels {
+  return parseLevels(read(MASTERY_KEY));
+}
+
+/** Replace every level at once: "Move my progress" (lib/transfer-storage.ts). */
+export function replaceLevels(levels: Levels) {
+  const kept: Levels = {};
+  for (const [id, level] of Object.entries(levels)) if (isLevel(level) && level !== "not-started") kept[id] = level;
+  write(MASTERY_KEY, kept);
+}
+
 /** Move the levels of the lessons a finished quiz asked about. Returns what changed, for the summary. */
 export function saveMastery(answers: readonly Answer[], kind: QuizKind): LevelChange[] {
   const levels = parseLevels(read(MASTERY_KEY));

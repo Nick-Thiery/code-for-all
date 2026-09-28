@@ -258,6 +258,7 @@ Source: LaunchLab 6
 - [changed] 6.5 and 6.6: signing in to GitHub and Vercel (with a GitHub account) is done in a session, with the teacher's go-ahead, matching the access page.
 - [changed] 6.5: the Task slide's text opens the lesson, and the "Using Lovable instead?" box sits before step 1 (with its own access line).
 - [changed] 6.3: small grammar fixes to the slide text.
+- [changed] 6.5: the slide prompt says "Push this project to Github"; the lesson's prompt block says "GitHub", the product's own spelling and the form used everywhere else on the site (content check, 27 Sep 2026).
 - [changed] 6.1: the slide 5 repository screenshot (a tutor's username, photo and private repos) isn't used; a screenshot slot asks for one from a neutral account.
 - [added] 6.1 glosses (codebase, repo, history) and the "How it works" lead-in; 6.2 "locally" gloss, "a commit on its own isn't on GitHub yet", six scenario CheckYourself questions; 6.3 branch gloss (from Module 7's slide) and a closing line; 6.4 the tiiny.host comparison line; 6.5 "a public repo can be seen by anyone"; 6.6 open source gloss ("a project whose code is shared publicly for others to use") and a Challenge reminder about secrets.
 

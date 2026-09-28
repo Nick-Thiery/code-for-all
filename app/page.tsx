@@ -47,7 +47,7 @@ export default async function HomePage() {
               </div>
             </HowStep>
             <HowStep
-              title="Practice with instant feedback"
+              title="Practise with instant feedback"
               text={practiceCopy.howItWorks}
               shortText={practiceCopy.howItWorksShort}
               icon={
