@@ -5,6 +5,14 @@ order: 20
 duration: 5
 summary: The Handoff button gives you a prompt that brings your design into Claude Code. Find it before you start building.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - Claude Design
+    - Claude Code
+  before:
+    - "The design you started in [lesson 1](/module-5/design-your-front-end-first)"
+    - "Claude Code, installed in [Module 3](/module-3/install-claude-code), or Claude Code on the web"
 recap:
   - When your design is done, open the Export menu and find "Handoff to Claude Code…".
   - "It gives you a prompt to copy: open Claude Code in your project folder, paste it in, and Claude Code fetches your design."
@@ -19,7 +27,7 @@ Claude Design makes your site look right. Claude Code makes it work. The handoff
 
 - When your design is done, open the **Export** menu.
 - Find **"Handoff to Claude Code…"** in the export options. This is the bridge that connects the two tools.
-- It gives you a prompt to copy. Open Claude Code in your project folder and paste the prompt in. Claude Code then fetches your design, ready to turn it into a real, working site.
+- It gives you a <Term>prompt</Term> to copy. Open Claude Code in your project folder and paste the prompt in. Claude Code then fetches your design, ready to turn it into a real, working site.
 
 This part needs access; see [how hands-on access works](/access).
 
@@ -37,6 +45,6 @@ Locate this button *before* you start building. You'll need it, and it's easy to
     There are two ways to fix it. Connect Claude Code to Claude Design once: run the command Claude Code suggests, then type `/design-login`, then restart Claude Code and paste the prompt again. Or, in the same menu, choose **Project archive** ("Every project file, zipped"; older versions: **Download project as .zip**), put the files in your project folder, and tell Claude Code where they are.
   </StuckItem>
   <StuckItem question="Claude Design asks me to sign up or log in.">
-    The hands-on parts need access, which is set up through a Code for All session or a teacher running one. See [how hands-on access works](/access).
+    Don't create your own account. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access).
   </StuckItem>
 </StuckBlock>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useState, type ReactNode } from "react";
 
 /**
@@ -37,6 +38,10 @@ export function StuckBlock({ children, open: initiallyOpen = false }: { children
       </button>
       <div id={id} hidden={!open} className="flex-col gap-4 border-t border-border px-5 pt-4 pb-5 [&:not([hidden])]:flex">
         {children}
+        <p className="t-meta m-0 border-t border-border pt-4 text-muted">
+          Still stuck? The <Link href="/help">Help page</Link> covers devices, access, lost progress and what to do when
+          something breaks.
+        </p>
       </div>
     </div>
   );

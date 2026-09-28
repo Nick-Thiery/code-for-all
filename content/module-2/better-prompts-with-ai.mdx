@@ -5,13 +5,23 @@ order: 30
 duration: 8
 summary: Ask Claude to help you revise your Lovable prompt before you build again.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - Claude
+  before:
+    - "Your exact prompt from the [solo sprint](/module-2/solo-sprint)"
 recap:
   - You can ask an AI, Claude, to help you revise your prompt for Lovable.
   - Tell it what the site should include, who it's for and how it should look.
   - Paste your original prompt at the end, and ask for a revision, not a new idea.
 ---
 
-Your first prompt got you a first draft. Now you'll ask another AI, Claude, to help you make that prompt better before you give it to Lovable again.
+Your first prompt got you a first draft. Now you'll ask another AI, Claude, to help you make that <Term>prompt</Term> better before you give it to Lovable again.
+
+Claude is a chat AI made by Anthropic. You'll use it a lot in this course. It runs in your browser, through your Code for All access.
+
+<SavedWork id="solo-sprint-prompt" what="your exact prompt from the solo sprint" from="/module-2/solo-sprint" fromLabel="the solo sprint" sample="Create a personality quiz website called Which noodle are you? It has five questions with four answers each, and six possible results with a fun description for each one. Make it colourful and friendly, for teenagers, and make it work on a phone." />
 
 <HandsOn />
 
@@ -51,14 +61,16 @@ Write your own message to Claude for the site you picked. Practise it here first
 Write the message you'd send Claude asking it to improve your prompt from the solo sprint.
 </PromptPractice>
 
-When your message is ready, send it to Claude (step 3). Save the revised prompt it gives you in your notes file. You'll use it in the [next lesson](/module-2/using-refined-prompts).
+When your message is ready, send it to Claude (step 3). Claude will reply with a refined prompt: a better version of yours. Save it here, so the [next lesson](/module-2/using-refined-prompts) can show it back to you.
+
+<SaveHere id="refined-prompt" label="The refined prompt Claude gave you" placeholder="Paste the refined prompt from Claude." rows={7} />
 
 <StuckBlock>
   <StuckItem question="Claude asks me to sign up or log in.">
     Don't create your own account: Claude accounts are for people aged 18 and over. You don't need to sign up for Claude yourself. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access).
   </StuckItem>
   <StuckItem question="I didn't save my prompt from the solo sprint.">
-    Go back to the [solo sprint](/module-2/solo-sprint) and write it again as closely as you can. Save it in a notes file this time.
+    If you saved it on this device, it's in the box at the top of this lesson. If not, go back to the [solo sprint](/module-2/solo-sprint) and write it again as closely as you can.
   </StuckItem>
   <StuckItem question="Claude gave me an idea for a different site.">
     Check that your message says what your site should include, who it's for and how it should look, and that your original prompt is pasted at the end. Then ask it to revise your prompt, not write a new one.

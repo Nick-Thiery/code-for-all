@@ -21,12 +21,15 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 ## Lesson components (registered in components/mdx-components.tsx)
 
-- `<Callout kind="tip|headsup|tryit">`: asides. `<KeyTerm term="…">` for a defined term; `<Term def="…">word</Term>` inline.
+- `<Callout kind="tip|headsup|tryit">`: asides. `<KeyTerm term="…">` for a defined term; `<Term def="…">word</Term>` inline, or `<Term>word</Term>` for a word the glossary already defines (components/term-lookup.tsx fills in the definition; the build fails if it can't). The glossary collects both KeyTerms and inline defs.
 - ```` ```prompt title="…" ````: a copyable prompt. Use it for every exact prompt from the slides.
 - `<CommandBlock>…</CommandBlock>`: terminal commands only (shows "$", has Copy).
 - ```` ```html title="index.html" ````: code with line numbers and Copy; ```` ```console ```` for error messages.
 - `<HandsOn />` above a hands-on section's heading, in lessons with `requiresAccount: true`, plus the line "This part needs access; see [how hands-on access works](/access)."
-- `<StuckBlock><StuckItem question="…">`: common fixes. Answers must come from the lesson, the slides or /access.
+- `<StuckBlock><StuckItem question="…">`: common fixes. Answers must come from the lesson, the slides or /access. Every hands-on lesson has one; each box ends with a link to /help.
+- `<SaveHere id label placeholder />`: a box that saves what the learner types on this device; `<SavedWork id what from fromLabel sample />` shows it back in a later lesson with Copy, or links back and offers the sample. Practice cards save their draft under their `taskId`, so `<SavedWork id="about-me-prompt">` shows the 1.4 practice prompt.
+- `<PublishSafely />` (`testEmail` for Supabase): the safety reminder on every lesson where learners put something online.
+- Hands-on lessons set `needs` in the frontmatter (`device`, `access` list, `before` list, with `[text](/link)` allowed) for the "You'll need" box (components/you-need.tsx), which replaces the plain access notice.
 - `<CheckYourself><Question q="…">answer</Question>`: a short quiz.
 - `<Challenge title="…">`: the module homework, at the end of the module's last lesson.
 - `<PromptPractice taskId="…" hint="…">task</PromptPractice>`: the practice card.
@@ -58,7 +61,8 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - `lib/site.ts`: site copy and the contact address (`site.contactHref`, one value). Link to it as "Contact us", never print the address.
 - Home page course section: `components/course-grid.tsx` (`CourseGrid`), built from the outline, `lib/progress.ts` and `lib/quiz-results.ts`. Module cards are buttons (aria-pressed) that show one module's lessons; on phones each module opens in place (aria-expanded). It opens on the learner's current module; `/#module-N` picks another. Hands-on lessons get a labelled laptop icon, explained once per module. Lesson rows show their mastery level and the chosen module its mastery %; the honeycombs mean lessons finished, not levels.
 - Lesson completion: the recap tick and the "Next" card at the end of a lesson (`MarkDoneLink`) both call `markLessonDone` in `lib/celebration.ts`; unticking the recap un-marks. Finishing a module's last unfinished lesson shows `ModuleCelebration` (in the root layout): the module's honeycomb filling in, kept in memory only, still under reduced motion.
-- `/glossary` is built from every `<KeyTerm>` in the lessons (`lib/glossary.ts`); nothing to edit by hand.
+- `/glossary` is built from every `<KeyTerm>` and inline `<Term def>` in the lessons (`lib/glossary.ts`); nothing to edit by hand.
+- `/help`: short answers for learners (no laptop, blocked installs, can't sign up, limited data, lost progress, something broke, what a word means, who to ask). Linked from the footer and every Stuck box. `/access#devices` is the device guide.
 - `/run-it` and its printable kit pages come from `content/facilitator.yml` (`lib/facilitator.ts`). Never link or publish the PDFs in `source/slides/`.
 - `/privacy` states what the site stores and sends. Change it whenever that changes.
 - Hidden from search engines unless `NEXT_PUBLIC_ALLOW_INDEXING` is `"true"` (`allowIndexing` in `lib/site.ts`): `app/robots.ts` disallows everything and the root layout adds `noindex`.
@@ -73,7 +77,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 ## Privacy
 
-- Never log, store or send learner prompt text anywhere except the practice request itself. localStorage holds only lesson progress (`cfa:completed-lessons`), quiz results (`cfa:quiz-results`: score and lessons to review, never answer text), mastery levels (`cfa:mastery`: lesson id to level), checklist ticks (`cfa:checklists`) and the theme (`cfa:theme`).
+- Never log, store or send learner prompt text anywhere except the practice request itself. localStorage holds only lesson progress (`cfa:completed-lessons`), quiz results (`cfa:quiz-results`: score and lessons to review, never answer text), mastery levels (`cfa:mastery`: lesson id to level), checklist ticks (`cfa:checklists`), saved work (`cfa:saved-work`: id to the text a learner saved in a `<SaveHere>` box or a practice card's draft, on this device only, shown back by `<SavedWork>`; lib/saved-work.ts) and the theme (`cfa:theme`).
 - No personal data in images: no emails, account IDs, API keys, faces, full names, usernames or avatars. Crop it out or use a `<Placeholder>` saying why.
 
 ## Git

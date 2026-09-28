@@ -5,6 +5,7 @@ import { AccountNotice } from "@/components/account-notice";
 import { LessonBody } from "@/components/lesson-body";
 import { type NavTarget, PrevNext } from "@/components/prev-next";
 import { RecapBox } from "@/components/recap-box";
+import { YouNeed } from "@/components/you-need";
 import { getLessonWithNeighbours, getModules, parseModuleParam } from "@/lib/lessons";
 import { moduleCompleteHref, moduleTrackHref, quizHref } from "@/lib/outline";
 
@@ -81,7 +82,11 @@ export default async function LessonPage({ params }: Props) {
           <p className="t-lead m-0">{lesson.summary}</p>
         </header>
 
-        {lesson.requiresAccount && <AccountNotice lessonId={lesson.id} />}
+        {lesson.needs ? (
+          <YouNeed lessonId={lesson.id} needs={lesson.needs} minutes={lesson.duration} />
+        ) : (
+          lesson.requiresAccount && <AccountNotice lessonId={lesson.id} />
+        )}
 
         <LessonBody lesson={lesson} />
 

@@ -5,6 +5,15 @@ order: 50
 duration: 15
 summary: Sign up for Supabase, copy your two values, then paste one prompt into Claude to add sign-up, log-in and log-out to your page.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - GitHub
+    - Supabase (free plan, signed in with GitHub during a session)
+    - Claude Code
+  before:
+    - "The page from [Task 1](/module-8/put-live-data-on-your-page)"
+    - "A test email address to try sign-up with, not your own"
 recap:
   - Sign up for Supabase with GitHub, in a session. Your database password is NOT your login password, so save it.
   - "Copy two values: your Publishable key and your Project ID. Turn off \"Confirm Email\" for practice only."
@@ -12,6 +21,10 @@ recap:
 ---
 
 Your turn! You've seen [how logging in works](/module-8/how-logging-in-works). Now add it to your own page.
+
+Supabase is a service that gives your site a database and <Term>authentication</Term>, so it can remember users. Its free plan is all you need.
+
+<PublishSafely testEmail />
 
 <HandsOn />
 
@@ -38,7 +51,7 @@ In your Supabase project:
 7. Disable **Confirm Email**.
 8. Click **Save changes**.
 
-Keep the Publishable key and the Project ID somewhere handy. They go into the prompt in the next step.
+Keep the Publishable key and the Project ID somewhere handy. They go into the prompt in the next step. A key is a long code that proves to Supabase which project is asking.
 
 <Callout kind="headsup">
 Turning off **Confirm Email** is fine for practice, but don't do it for a real app. And when you try out your sign-up, use a test email, not your own.
@@ -79,6 +92,9 @@ Got questions? In a Code for All session, ask your tutor.
   </StuckItem>
   <StuckItem question="Where do I find my Project ID and Publishable key?">
     Publishable key: **Project Settings** → **API Keys**. Project ID: **General**. Steps 1 to 5 in "Get your two values" above.
+  </StuckItem>
+  <StuckItem question="Supabase asks me to pay.">
+    You don't need to. The free plan is enough for this course. If a page asks for a card, go back and pick the free option, or ask in your session.
   </StuckItem>
 </StuckBlock>
 

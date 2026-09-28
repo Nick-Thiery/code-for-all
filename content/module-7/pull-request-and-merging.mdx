@@ -5,13 +5,19 @@ order: 40
 duration: 8
 summary: Open a pull request, get it reviewed, then merge it into main so Vercel puts it live.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - GitHub
+  before:
+    - "A branch you pushed in [Step 1](/module-7/make-your-own-branch)"
 recap:
   - Open a pull request from the yellow Compare & pull request banner, with one line about your change.
   - "A teammate reviews it in the Files changed tab: green lines were added, red lines removed."
   - Merging joins your branch to main, and Vercel redeploys the live site automatically.
 ---
 
-Your branch is on GitHub. Now it needs to join main. You met pull requests and merging in [Module 6's key terms](/module-6/key-terms). Here's how they work with a branch.
+Your <Term>branch</Term> is on GitHub. Now it needs to join <Term>main</Term>. You met <Term term="pull request">pull requests</Term> and merging in [Module 6's key terms](/module-6/key-terms). Here's how they work with a branch.
 
 <HandsOn />
 

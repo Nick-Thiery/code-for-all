@@ -5,19 +5,28 @@ order: 70
 duration: 6
 summary: "Design, build, deploy: Claude Design makes the look, Claude Code builds it, and localhost or tiiny.host launches it."
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - Claude Design
+    - Claude Code
+  before:
+    - "The site Claude Code built in [lesson 4](/module-5/after-hand-off)"
 recap:
   - "Design: use Claude Design to make your website look how you want it, without any code."
   - "Build: hand off your design to Claude Code to build the actual files."
   - "Deploy: launch your final website with localhost or tiiny.host."
 ---
 
-Everything in this module, in three steps.
+Everything in this module, in three steps. A workflow is the order you do things in.
 
 ## Design, build, deploy
 
 1. **Design.** Use Claude Design to make your website look like how you want it to without any code. ([Lesson 1](/module-5/design-your-front-end-first))
 2. **Build.** Use Claude Code to build the actual file by handing off the design you made in Claude Design. ([Lessons 2](/module-5/export-your-design) and [4](/module-5/after-hand-off))
 3. **Deploy.** Use <Term def="your own computer, running your website.">localhost</Term> or [tiiny.host](https://tiiny.host/) to launch your final website!
+
+Deploy means put it online, where other people can open it. tiiny.host is a website where you upload your files and get a link. It has a free option, which is all you need.
 
 <Figure src="/lessons/module-5/tiiny-host-upload.png" alt="tiiny.host's home page, headed 'The simplest way to host & share your work online', with a box for a link name ending in .tiiny.site, tabs for Documents, Images, Code, Paste HTML, More and Examples, and a dashed area reading 'Drag & drop zip or single file here' above an Upload file button." width={989} height={593} caption="tiiny.host, where you can upload your website as a zip file." />
 
@@ -33,6 +42,10 @@ If using tiiny.host, put this prompt into Claude Code once you are done:
 Put all my website files into one folder and zip it, with index.html at the top level, so I can upload it to tiiny.host.
 ```
 
+Then upload the zip file on tiiny.host, and you get a link.
+
+<PublishSafely />
+
 <HandsOn />
 
 ## Your turn
@@ -42,6 +55,21 @@ This part needs access; see [how hands-on access works](/access).
 <Callout kind="tryit">
 Your turn! Take your own website through the whole workflow: design it in Claude Design, hand it off to Claude Code to build, then launch it on localhost or tiiny.host.
 </Callout>
+
+<StuckBlock>
+  <StuckItem question="tiiny.host asks me to pay.">
+    You don't need to. Use the free option. If you can't find it, or it asks for a card, stop and screen-record your site working on localhost instead, which the Challenge also accepts.
+  </StuckItem>
+  <StuckItem question="tiiny.host says it can't find index.html.">
+    Your index.html has to be at the top level of the zip, not inside another folder. Ask Claude Code to zip it again with the prompt above.
+  </StuckItem>
+  <StuckItem question="What's localhost?">
+    Your own computer, running your website. Only you can see it. Ask Claude Code to "open this site on localhost" and it tells you the address to open in your browser.
+  </StuckItem>
+  <StuckItem question="Claude Design or Claude Code asks me to sign up or log in.">
+    Sign in with the access your Code for All session gives you. You don't sign up or pay for anything yourself. See [how hands-on access works](/access).
+  </StuckItem>
+</StuckBlock>
 
 <Challenge title="Finish your website">
 Finish up creating your website. Publish it with [tiiny.host](https://tiiny.host/), or screen-record it working on localhost.

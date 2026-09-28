@@ -5,6 +5,13 @@ order: 50
 duration: 10
 summary: Make a repo on GitHub, then let Claude Code commit your project and push it there.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - GitHub (a free account, signed in during a session)
+    - Claude Code
+  before:
+    - "Your latest project from Claude Code or Lovable, like the site from [Module 5](/module-5/the-whole-workflow)"
 recap:
   - Make a repo on github.com, copy its URL, then give Claude Code the prompt to push your project to it.
   - Using Lovable? Settings → GitHub → Connect does it all for you.
@@ -25,17 +32,19 @@ This part needs access; see [how hands-on access works](/access). Connect to Git
 Make your repo **Private** when you create it in step 1. A public repo can be seen by anyone, and so can everything you commit to it. And never put passwords, API keys or personal details in a repo.
 </Callout>
 
+<PublishSafely />
+
 <HandsOn />
 
 ## 1. Make a repo
 
 Sign in to [github.com](https://github.com) → click the green **New repository** button. Name it, choose **Private**, click **Create**.
 
-This part needs access; see [how hands-on access works](/access). Sign in to GitHub in a session, with your teacher's go-ahead.
+This part needs access; see [how hands-on access works](/access). Sign in to GitHub in a session, with your teacher's go-ahead. GitHub accounts are free.
 
 ## 2. Let Claude Code push it
 
-Copy your new repo's URL, then paste the prompt below into Claude Code. It runs the git commands for you.
+Copy your new repo's URL, then paste the <Term>prompt</Term> below into Claude Code. It runs the git commands for you.
 
 Do this with your latest project open in Claude Code: "this project" in the prompt means the one Claude Code is working on. Swap `<paste your repo URL>` for the URL you copied.
 
@@ -47,7 +56,7 @@ If it asks you to sign in to GitHub, follow its instructions in the terminal.
 
 ## 3. Check it worked
 
-Refresh your repo page. Your files should be there. That's your first **commit** and **push**.
+Refresh your repo page. Your files should be there. That's your first <Term>commit</Term> and <Term>push</Term>.
 
 <StuckBlock>
   <StuckItem question="GitHub or Claude Code asks me to sign up or log in.">
@@ -58,5 +67,8 @@ Refresh your repo page. Your files should be there. That's your first **commit**
   </StuckItem>
   <StuckItem question="My files aren't on my repo page.">
     Refresh the page. Then check the prompt you pasted: `<paste your repo URL>` needs to be replaced with your new repo's URL.
+  </StuckItem>
+  <StuckItem question="Where do I find my repo's URL?">
+    It's the address in your browser when you're on the repo page, like `https://github.com/your-name/your-repo`. Copy it from the address bar.
   </StuckItem>
 </StuckBlock>

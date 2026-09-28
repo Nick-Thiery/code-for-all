@@ -11,11 +11,11 @@ recap:
   - "To fix it: keep the version you want or combine both, delete the marker lines, then commit again. Or paste the block into Claude Code."
 ---
 
-You will hit one. That's normal: a merge conflict doesn't mean you broke anything.
+You will hit one. That's normal: a <Term>merge conflict</Term> doesn't mean you broke anything.
 
 ## Why it happens
 
-This tends to happen when two branches change the **same line**. Instead of assuming which is correct, Git stops and asks you.
+This tends to happen when two <Term term="branch">branches</Term> change the **same line**. Instead of assuming which is correct, Git stops and asks you.
 
 ## What it looks like
 
@@ -54,7 +54,7 @@ For example, in the Wordle conflict, to keep main's title, those five lines beco
 
 ## The escape hatch
 
-Paste the entire block of code into Claude Code, then say:
+An escape hatch is the easy way out. Paste the entire block of code into Claude Code, then say:
 
 ```prompt title="The escape hatch"
 I have a merge conflict in <name of the file>. Please help me resolve it and keep all features working.
@@ -75,6 +75,8 @@ Replace `<name of the file>` with the name of the file that has the conflict.
 </CheckYourself>
 
 ## Watch these two videos
+
+Both are short. On limited data, save them for Wi-Fi.
 
 <VideoEmbed id="hwP7WQkmECE" title="Git Explained in 100 Seconds" />
 

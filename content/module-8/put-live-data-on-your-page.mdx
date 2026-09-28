@@ -5,13 +5,22 @@ order: 30
 duration: 10
 summary: Ask Claude to fetch Singapore's live temperature from a weather API and show it in a small box at the top of your page.
 requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - Claude Code
+    - GitHub and Vercel, to see it live
+  before:
+    - "Any project of yours, like your [Wordle](/module-7/recreate-wordle), connected to Vercel as in [Module 6](/module-6/connect-to-vercel)"
 recap:
   - Open any project, paste the open-meteo prompt into Claude, then refresh the page to check it worked.
   - A real temperature, from a real weather service, that changes every time you reload.
   - Link the chat to the correct repo, push the changes, and make sure the repo is connected to Vercel so you can see them.
 ---
 
-Time to fix the second thing your site can't do. You'll use the weather API from [lesson 2](/module-8/what-an-api-is) to put live data on your page.
+Time to fix the second thing your site can't do. You'll use the weather <Term>API</Term> from [lesson 2](/module-8/what-an-api-is) to put live data on your page.
+
+The weather API is free and needs no account or key.
 
 <HandsOn />
 
@@ -47,5 +56,8 @@ Refresh the page. A real temperature, from a real weather service, that changes 
   </StuckItem>
   <StuckItem question="My live site doesn't show the temperature.">
     Link the chat to the correct repo and push the changes. Then make sure that repo is connected to Vercel, so you can see the changes. [Module 6](/module-6/connect-to-vercel) shows how to connect it.
+  </StuckItem>
+  <StuckItem question="The box shows nothing, or an error.">
+    Press F12, open the Console and copy the red text, then paste it into Claude with what you expected to see, as in [When it breaks](/module-5/when-it-breaks).
   </StuckItem>
 </StuckBlock>

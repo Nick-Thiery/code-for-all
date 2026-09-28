@@ -18,6 +18,8 @@ Your site will break at some point. That's normal. Here's what to do when it doe
 3. **Give Claude the whole story.** Paste the exact error, then say what you clicked and what you expected to happen.
 4. **Reload and check it yourself.** Refresh the page and test the exact thing that broke. If it's still broken, say so and go around again.
 
+DevTools is a set of tools built into Chrome for looking under the bonnet of a web page. The Console is the tab where errors show up. On a Mac, if F12 does nothing, press Option, Command and I together.
+
 ## Practice: the broken sign-up button
 
 In [the last lesson](/module-5/after-hand-off), you asked Claude Code to make the sign-up form really save what people type. Now say you fill in the form, click **Sign up**, and nothing happens. You press F12, click the Console tab and see this in red:
@@ -31,3 +33,15 @@ You don't need to know what it means. Step 3 says what to do with it.
 <PromptPractice taskId="bug-report" hint="Give Claude the whole story: paste the exact error, then say what you clicked and what you expected to happen.">
 Your sign-up button does nothing when you click it, and the console shows the error above. Write the message you'd send Claude.
 </PromptPractice>
+
+<StuckBlock>
+  <StuckItem question="I can't see any red text in the Console.">
+    Make sure you're on the Console tab, not Elements. Then do the thing that broke again, with the Console open: the error appears when the problem happens.
+  </StuckItem>
+  <StuckItem question="Claude fixed it, but something else broke.">
+    That happens. Go around again: read the new error, paste it into Claude, say what you did and what you expected. Each round gets you closer.
+  </StuckItem>
+  <StuckItem question="Nothing is red, but the page still doesn't work.">
+    Tell Claude exactly that: what you clicked, what you expected and what happened instead. The [Help page](/help) has a prompt you can copy for this.
+  </StuckItem>
+</StuckBlock>
