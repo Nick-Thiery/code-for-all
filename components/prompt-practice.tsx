@@ -511,7 +511,7 @@ function Feedback({
         )}
         {fix.kind === "missing" && (
           <div className="flex flex-col gap-3 rounded-[14px] border-[1.5px] border-border px-5 py-[18px]">
-            <span className="kicker tracking-[.03em]">Something to add:</span>
+            <span className="kicker tracking-[.03em]">Something to add</span>
             <div className="flex items-start gap-2.5 rounded-[10px] border-2 border-dashed border-deco px-3.5 py-2.5">
               <span aria-hidden="true" className="text-[22px] leading-[1.3] font-bold text-accent">
                 +
