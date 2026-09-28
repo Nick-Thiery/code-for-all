@@ -22,7 +22,21 @@ npm run build      # production build; fails if any lesson has a mistake
 npm run start      # serve the production build (run build first)
 npm run lint       # check the code
 npm run typecheck  # check the TypeScript types
+npm test           # build, then run the browser tests (see below)
 ```
+
+### Browser tests
+
+`tests/e2e/` holds Playwright tests that click through the site the way a learner would: starting Module 1, finishing lessons, the module-complete celebration, quizzes and Check your skills, plus an axe accessibility check and a keyboard-only pass on every kind of page. They run at a phone width (375px) and a desktop width (1280px), in light and dark mode.
+
+```bash
+npx playwright install chromium   # once: the browser the tests drive
+npm test                          # build, then run everything
+npm run test:e2e                  # run the tests against an existing build
+npx playwright test --ui          # pick and watch tests one at a time
+```
+
+They need a production build (`npm run build`) because they start `npm run start`. The same checks run on every pull request (`.github/workflows/ci.yml`).
 
 ## Add a lesson
 
