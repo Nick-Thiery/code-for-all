@@ -24,6 +24,7 @@ const pages: { name: string; path: string }[] = [
   { name: "access", path: "/access" },
   { name: "Move my progress", path: "/move-progress" },
   { name: "the offline page", path: "/offline" },
+  { name: "a certificate (locked)", path: "/module-1/certificate" },
 ];
 
 for (const theme of ["light", "dark"] as const) {

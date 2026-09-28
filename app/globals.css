@@ -591,6 +591,20 @@
   @page {
     margin: 16mm 14mm;
   }
+  /* A certificate (components/certificate.tsx) is one A4 landscape page,
+     colours and all. */
+  .certificate {
+    page: certificate;
+    width: 277mm;
+    height: 190mm;
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @page certificate {
+    size: A4 landscape;
+    margin: 10mm;
+  }
   h1,
   h2,
   h3,

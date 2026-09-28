@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 // Every claim here was checked against the code. If you change what the site
 // stores or sends, update this page:
-//   localStorage keys: lib/progress.ts, lib/quiz-results.ts, lib/theme.ts
+//   localStorage keys: lib/progress.ts, lib/quiz-results.ts, lib/certificate.ts, lib/theme.ts
 //   offline copies of pages: public/sw.js
 //   moving progress: lib/transfer.ts, app/move-progress/page.tsx
 //   practice: components/prompt-practice.tsx, app/api/practice/route.ts
@@ -44,6 +44,11 @@ const saved = [
     name: "Checklist ticks",
     key: "cfa:checklists",
     what: "What you've ticked on the Check your skills pages.",
+  },
+  {
+    name: "Certificate name",
+    key: "cfa:certificate-name",
+    what: "The name you type for a certificate, so it's ready for the next one. Only if you type one; clear the box to forget it.",
   },
   {
     name: "Light or dark mode",
