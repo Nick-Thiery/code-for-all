@@ -34,11 +34,11 @@ type TaskMock = {
 const ABOUT_ME = (() => {
   const weak = "Make a nice about me website";
   const middling =
-    "Create an About Me website for me. It should have a home page with my name and a short intro, a page about my hobbies (badminton and drawing) and a page for projects I've made. Make it modern and make sure it works well on phones.";
+    "Create an About me website for me. It should have a home page with my name and a short intro, a page about my hobbies (badminton and drawing) and a page for projects I've made. Make it modern and make sure it works well on phones.";
   const audience = "The site is for my classmates and teachers, so keep it friendly.";
   const strong = [
     "Role: You are an expert web designer.",
-    "Goal: Create an About Me website for me.",
+    "Goal: Create an About me website for me.",
     "Target audience: my classmates and teachers.",
     "Core pages: a home page with my name and a short intro, a hobbies page (badminton and drawing), and a projects page.",
     "Design style: light background, bold headings, friendly typography (not corporate).",
@@ -46,7 +46,7 @@ const ABOUT_ME = (() => {
   ].join("\n");
   const near = [
     "Role: You are an expert web designer and front-end developer.",
-    "Goal: Create an About Me website for me.",
+    "Goal: Create an About me website for me.",
     "Target audience: my classmates, my teachers and the clubs I want to join at school.",
     "Core pages: a home page with my first name, a short friendly intro and a space for a picture; a hobbies page about badminton and drawing, with a small gallery of four drawings; a projects page listing things I've built, each with a title, one sentence and a button; and a page about what I'm learning right now, with a short list I can update every week.",
     "Design style: light background, bold headings, friendly rounded typography, soft blue and white colours, lots of space, not corporate and not too busy.",
@@ -67,7 +67,7 @@ const ABOUT_ME = (() => {
           try: "Name the pages you want, who the site is for, and the style: colours, fonts, a feeling.",
         },
         rewrite: [
-          { text: "Make an About Me website " },
+          { text: "Make an About me website " },
           {
             text: "for my classmates and teachers. It needs a home page with my name and a short intro, a hobbies page and a projects page. Use a light background, bold headings and friendly fonts, and make it work well on phones.",
             added: true,

@@ -23,9 +23,9 @@ const CONTENT_DIR = path.join(process.cwd(), "content");
 const COURSE_FILE = "course.yml";
 const MODULE_FOLDER = /^module-(\d+)$/;
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-// These URLs belong to the module itself: /module-1/complete, /module-1/quiz
-// and /module-5/check-your-skills.
-const RESERVED_SLUGS = ["complete", "quiz", "check-your-skills"];
+// These URLs belong to the module itself: /module-1/complete, /module-1/quiz,
+// /module-1/certificate and /module-5/check-your-skills.
+const RESERVED_SLUGS = ["complete", "quiz", "check-your-skills", "certificate"];
 
 export type LessonMeta = {
   title: string;
