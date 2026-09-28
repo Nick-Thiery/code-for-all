@@ -22,6 +22,7 @@ npm run build      # production build; fails if any lesson has a mistake
 npm run start      # serve the production build (run build first)
 npm run lint       # check the code
 npm run typecheck  # check the TypeScript types
+npm run content-needed  # list every placeholder in docs/content-needed.md
 ```
 
 ## Add a lesson
@@ -157,6 +158,20 @@ To add a page, add another `- after: N`. The checklist is shared by every page; 
 
 To release a module, make its folder, for example `content/module-2/`, and add lessons. Nothing else: the course page, the lesson URLs (`/module-2/<slug>`), the header's lesson counter and the Module complete page (`/module-2/complete`) all follow. Until then the module shows as "Coming soon" on the course page, and `/module-2` is its Coming soon page.
 
+A module that isn't out yet can list its planned lessons and say what to do in the meantime, in `course.yml`:
+
+```yaml
+      - number: 9
+        title: Project ideas and drafting
+        summary: The start of your final project.
+        planned:
+          - What is DNS?
+          - Domains and deployment
+        waiting: "Until then, finish the Module 8 Challenge."
+```
+
+Its Coming soon page then shows "What this module will cover" and a "While you wait" section, which also links to the previous module's Challenge, quiz and Check your skills page. Both fields are optional and are ignored once the module is out.
+
 ## Lesson components
 
 These work in any lesson without an import. Module 1 uses most of them.
@@ -169,7 +184,7 @@ These work in any lesson without an import. Module 1 uses most of them.
 | ```` ```html title="index.html" ```` | A code block with line numbers and a Copy button. HTML is coloured; other languages are shown plain. Use ```` ```console ```` for error messages. Long lines scroll sideways, with a hint. |
 | `<CommandBlock>claude --version</CommandBlock>` | A terminal command with a Copy button. |
 | `<HandsOn />` | Put above the heading of a section that needs an account. |
-| `<Screenshot caption="…">what goes here</Screenshot>` | A placeholder for a screenshot you haven't taken yet. |
+| `<Screenshot caption="…">what goes here</Screenshot>` | A placeholder for a screenshot you haven't taken yet. Like `<Placeholder>`, it shows locally and on previews and renders nothing on the production site. |
 | `<StuckBlock><StuckItem question="…">…</StuckItem></StuckBlock>` | Common fixes, folded away. |
 | ```` ```prompt title="Strong" ```` | A prompt to paste into an AI tool, exactly as written, with a Copy button. Use it for every exact prompt from the slides. |
 | `<PromptPractice taskId="…" hint="…">…</PromptPractice>` | The practice card. See below. |
@@ -179,7 +194,7 @@ These work in any lesson without an import. Module 1 uses most of them.
 | `<Figure src="/lessons/module-6/x.jpg" alt="…" width={1600} height={770} caption="…" />` | An image, usually cropped from a slide into `public/lessons/module-N/`. `width` and `height` are the file's size in pixels. Readers can tap it to see it full size; images narrower than the column show at their own size. |
 | `<VibeCodingDiagram />` `<ThreeFilesDiagram />` `<BranchLanesDiagram />` `<ApiDoorDiagram />` `<LoginDiagram />` | The lesson diagrams (1.2, 5.6, 7.1, 8.2, 8.4), one file each in `components/diagrams/`. They are HTML and inline SVG drawn with the design tokens, so they work in dark mode, and each sits in the `Diagram` frame (`components/diagram.tsx`) with a caption and a full text alternative. On phones they reflow (cards stack, arrows turn downwards) instead of shrinking. A diagram that can't reflow can pass `enlargeWidth` to get an Enlarge button on phones. |
 | `<VideoEmbed id="hwP7WQkmECE" title="…" />` | A YouTube video from the slides (youtube-nocookie.com, loads when scrolled near), with a plain link underneath. |
-| `<Placeholder>What's missing</Placeholder>` | Marks content that's still needed, like a video link. Find them all with `grep -rn "<Placeholder\|<Screenshot" content`. |
+| `<Placeholder>What's missing</Placeholder>` | Marks content that's still needed, like a video link. It shows locally and on preview deployments; on the production site (where Vercel sets `VERCEL_ENV` to `production`) it renders nothing, so write the text around it so it reads without it. `npm run content-needed` lists every one, with its lesson, in `docs/content-needed.md`. |
 
 ## Prompt practice
 

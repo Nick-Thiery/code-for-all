@@ -7,7 +7,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "content-needed": "node scripts/content-needed.mjs"
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.1.1",
