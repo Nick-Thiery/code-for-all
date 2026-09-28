@@ -8,6 +8,12 @@ import { MdxPre } from "@/components/code-block";
 import { CommandBlock } from "@/components/command-block";
 import { ApiDoorDiagram } from "@/components/diagrams/api-door";
 import { BranchLanesDiagram } from "@/components/diagrams/branch-lanes";
+import { DirectoryTabsDiagram } from "@/components/diagrams/directory-tabs";
+import {
+  InstallCodeTabDrawing,
+  InstallDownloadDrawing,
+  InstallTerminalDrawing,
+} from "@/components/diagrams/install-claude-code";
 import { LoginDiagram } from "@/components/diagrams/logging-in";
 import { ThreeFilesDiagram } from "@/components/diagrams/three-files";
 import { VibeCodingDiagram } from "@/components/diagrams/vibe-coding";
@@ -34,8 +40,12 @@ export const mdxComponents: MDXComponents = {
   Challenge,
   CheckYourself,
   CommandBlock,
+  DirectoryTabsDiagram,
   Figure,
   HandsOn,
+  InstallCodeTabDrawing,
+  InstallDownloadDrawing,
+  InstallTerminalDrawing,
   KeyTerm,
   LadderPrompt,
   LoginDiagram,
