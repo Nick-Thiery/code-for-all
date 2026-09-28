@@ -23,6 +23,7 @@ const pages: { name: string; path: string }[] = [
   { name: "privacy", path: "/privacy" },
   { name: "access", path: "/access" },
   { name: "Move my progress", path: "/move-progress" },
+  { name: "the offline page", path: "/offline" },
 ];
 
 for (const theme of ["light", "dark"] as const) {
