@@ -2,6 +2,10 @@
 # A module is released when its folder, content/module-N/, exists with
 # lessons in it. Until then it shows on the course page as "Coming soon".
 # Titles and summaries come from docs/course-map.md.
+#
+# A module that isn't out yet can list its planned lessons ("planned", from
+# the course map) and a "waiting" line: what to do until it's out, pointing
+# back at finished work. Both show on its Coming soon page, /module-N.
 
 phases:
   - title: Build with AI
@@ -39,6 +43,21 @@ phases:
       - number: 9
         title: Project ideas and drafting
         summary: The start of your final project.
+        planned:
+          - What is DNS?
+          - Domains and deployment
+          - Search engine optimisation
+          - Getting users
+          - Choosing your project
+          - Requirements
+          - Plan it and get to work
+        waiting: "Your final project starts here. Until then, keep the one-line project idea from the Module 7 Challenge in your notes, and finish the Module 8 Challenge: a simple site with working sign-up, log-in and log-out."
       - number: 10
         title: Publishing + final showcase
         summary: Ship it and show it.
+        planned:
+          - Ship it
+          - What a finished project looks like
+          - Show your work
+          - Next steps
+        waiting: "Module 10 is about putting your final project live and showing it to people. Until it's out, keep building the prototype from the Module 9 Challenge, and check your latest project is live on Vercel."

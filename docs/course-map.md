@@ -73,6 +73,11 @@ Then walk through the strong prompt one part at a time, one line each on what th
 - [added] 1.4 ladder: the strength meter (Bad has 1 of the 7 parts, its goal; Better has 2, adding pages), the "It leaves out" / "Still missing" chips, the chip 'Design style ("modern" is vague)', "Tap a label to see what that part does." and the line "The strong prompt has seven parts, each with one job." (from the recap).
 - [added] 1.2: the "Vibe coding in three steps" diagram (design board "1.2 · Vibe coding in three steps") after the three steps. Its card lines and caption are shortened from the lesson and the slide steps ("You say what you want, in plain words."; "The AI writes the code, the database and the layout."; "You review it, tweak it and put it online."; "You define the rules; the AI writes the code."), not the board's wording. The pictures (speech bubble, code hexagon, a page with a LIVE badge) are illustrations only.
 
+**Changes after review (28 Sep 2026):**
+
+- [changed] 1.6: the slide's example About Me site (a tutor's full name) is replaced by an example built for the course: a plain "first draft" About Me page for a made-up teenager, Kai, with hobbies only and no contact details (source/about-me-example/first-draft.html, captured to public/lessons/module-1/about-me-first-draft.png). A better version from a stronger prompt (better.html, public/lessons/module-2/about-me-better.png) is for the Module 2 gallery lesson. Neither is a real Lovable build.
+- [added] 1.6 the two lines around the example ("Here's the kind of site a short prompt gets you" and "Look at how much it had to guess").
+
 ---
 
 ## Module 2: Applying Lovable
@@ -143,6 +148,12 @@ Source: LaunchLab 3
 - [changed] British spelling in slide text: "reorganise" (3.2 Key idea), "tab organiser" (3.5).
 - [added] 3.1 Agent KeyTerm (from Module 5's wording), glosses for terminal, VS Code and autocomplete, link back to vibe coding; 3.2 glosses for refactoring, packages and session; 3.3 "a new, empty folder is fine", "ask in your Code for All session" (for the slide's "reach out to your tutors"), Stuck answers from the official troubleshooting page and the access page; 3.4 founders gloss and a closing line linking to the homework; 3.5 Chrome extension gloss and a TryIt (write one sentence on what your extension will do).
 
+**Changes after review (28 Sep 2026):**
+
+- [changed] 3.3: the three screenshot slots (download page, the desktop app's Code tab, a terminal after `claude --version`) become simplified drawings (components/diagrams/install-claude-code.tsx), labelled as drawings, not screenshots, so they never show an account and work in dark mode. The version string in the terminal drawing, 2.1.283, is what `claude --version` printed on 28 Sep 2026; the caption says yours will be newer.
+- [changed] 3.4: "Snapiq: one tutor's journey" becomes "What Snapiq does": what the extension does (screenshots of lecture slides and web pages, merging several into one image to get round AI tutors' upload limits), that it's on the Chrome Web Store with a free weekly allowance and a paid Pro plan, and its rating (4.8 stars from more than 13 reviews, as of September 2026). All from snapiq.tools and its Chrome Web Store listing, checked 27 Sep 2026. The tutor's own story stays a hidden placeholder until he provides it and OKs it; the tutor isn't named.
+- [added] 3.4 "You don't need Snapiq for this course, and nothing in this course asks you to pay for anything."
+
 ---
 
 ## Module 4: Claude Skills + Claude in Excel
@@ -176,6 +187,11 @@ Source: LaunchLab 4
 - [changed] Module 4 Challenge: use Claude in Excel to find and explain what the weather data shows, in your own words, and build a Claude skill (slide homework, DM removed).
 - [changed] British spelling in slide text: Standardised, analyse, Summarise ("Customize" kept as a menu name).
 - [added] 4.1 "write your answers in your notes" and "not working yet? go back to the Module 3 challenge"; 4.2 a plain-English line under each slide point, skill KeyTerm, context window gloss; 4.3 HeadsUp that Claude's menus change often (from this map's 4.3 reason), descriptions read from the slide 5 screenshot; 4.4 glosses (formulas, anomalies, business rules), a gloss of the slide 8 question, the four TryIt steps and an example prompt in our own words; 4.5 intro line.
+
+**Changes after review (28 Sep 2026):**
+
+- [added] 4.3 "Plugins": the section slide 6 only shows as a screenshot. Text from the official plugins overview (claude.com/docs/plugins/overview) and the Help Centre's Directory article, checked 27 Sep 2026: a skill is instructions Claude uses when they fit; a connector lets Claude reach another app (Gmail, Google Drive, Canva); a plugin bundles skills, connectors, slash commands and sub-agents so they install together. Plus the "Directory tabs" drawing (components/diagrams/directory-tabs.tsx) and "You don't need any plugins for this course." The slash command and sub-agent glosses are ours.
+- [added] 4.4 "Open Claude in Excel": from the official Claude for Excel docs (claude.com/docs/office-agents/excel, checked 27 Sep 2026). Claude for Excel is an add-in for Pro, Max, Team and Enterprise plans; it runs in Excel on the web, Excel on Windows with Microsoft 365 and Excel on Mac 16.46 or later, not on iPad or Android. Install: the Claude for Microsoft 365 listing on Microsoft AppSource, Get it now, then Home > Add-ins (Windows and web) or Tools > Add-ins (Mac), then sign in. Excel on the web is free with a Microsoft account, which the lesson says so learners without Office can join in; sign-in uses the access from their Code for All session. Three Stuck answers follow from the same page.
 
 ---
 
@@ -221,6 +237,10 @@ Source: LaunchLab 5 (the best-written deck; stays almost word for word)
 **Changes after review (27 Sep 2026):**
 
 - [added] 5.6: "The three files" diagram (design board "5.6 · The three files") under the opening paragraph: a small "Join the club" page with a Sign up button, and a numbered label for each file pointing at the part it controls. The three descriptions are the lesson's own. The caption "One button, three files: change the words in index.html, the colour in styles.css and the click in script.js." is from the board. The example page is invented and has no real names.
+
+**Changes after review (28 Sep 2026):**
+
+- [changed] 5.2: the menu path is confirmed. The handoff is under **Export** ("Hand off to Claude Code"; official tutorial claude.com/resources/tutorials/using-claude-design-for-prototypes-and-ux, checked 27 Sep 2026), so the placeholder asking to check it is removed. The Stuck answer keeps the Share menu as a fallback, dated.
 
 ---
 
@@ -411,6 +431,8 @@ Not in the slides. Added 26 Sep 2026 for adults running sessions, and for parent
 - **/about**: a marked draft from the Blueprint, no tutor names. "The club's live course" and "LaunchLab is planned like this" are our wording; confirm both.
 - **/privacy**: checked against the code. The line about the host keeping standard request logs is ours; when real grading replaces the mock, name the service that receives prompts.
 - **/glossary**: built from the lessons' `<KeyTerm>`s; nothing written for it.
+- **Placeholders (28 Sep 2026)**: `<Placeholder>` and `<Screenshot>` render nothing on the production site (VERCEL_ENV is "production") and still show locally and on previews. Every remaining one is listed in docs/content-needed.md (`npm run content-needed`). The Run a session page's "Slide deck: Coming soon" card is removed until a deck exists.
+- **Coming soon pages (28 Sep 2026)**: /module-9 and /module-10 list the module's planned lessons (from this map, as `planned` in content/course.yml) and a "While you wait" section pointing back at the previous module's Challenge, quiz and Check your skills page, with a `waiting` line per module in course.yml.
 
 ## Practice tasks (PromptPractice)
 

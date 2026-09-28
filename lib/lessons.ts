@@ -56,7 +56,16 @@ export type Lesson = LessonMeta & {
 };
 
 /** One module from course.yml. */
-export type PlannedModule = { number: number; title: string; summary: string; phase: number };
+export type PlannedModule = {
+  number: number;
+  title: string;
+  summary: string;
+  phase: number;
+  /** For a module that isn't out yet: its planned lesson titles, from the course map. */
+  planned: string[];
+  /** For a module that isn't out yet: what to do until it is, pointing back at finished work. */
+  waiting: string | null;
+};
 
 export type Phase = { number: number; title: string; modules: PlannedModule[] };
 
@@ -123,7 +132,23 @@ export const getPhases = cache(async (): Promise<Phase[]> => {
         const text = (key: string) => (typeof mod[key] === "string" && (mod[key] as string).trim()) || "";
         if (!text("title")) problems.push(`Module ${number} needs a "title".`);
         if (!text("summary")) problems.push(`Module ${number} needs a "summary": one short line on what it's about.`);
-        modules.push({ number, title: text("title"), summary: text("summary"), phase: p + 1 });
+        let planned: string[] = [];
+        if (Array.isArray(mod.planned) && mod.planned.every((item) => typeof item === "string")) {
+          planned = (mod.planned as string[]).map((item) => item.trim()).filter(Boolean);
+        } else if (mod.planned !== undefined) {
+          problems.push(`Module ${number}: "planned" should be a list of lesson titles, each on its own line starting with "  - ".`);
+        }
+        if (mod.waiting !== undefined && typeof mod.waiting !== "string") {
+          problems.push(`Module ${number}: "waiting" should be one line of text. Wrap it in quotes if it contains ": ".`);
+        }
+        modules.push({
+          number,
+          title: text("title"),
+          summary: text("summary"),
+          phase: p + 1,
+          planned,
+          waiting: text("waiting") || null,
+        });
       });
     }
     phases.push({ number: p + 1, title, modules });

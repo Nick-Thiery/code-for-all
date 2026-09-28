@@ -86,9 +86,6 @@ export default async function RunItPage() {
                 </KitCard>
               );
             })}
-            <KitCard label="Slides" title="Slide deck" description="Slides to show in each session." keepInPrint>
-              <span className="chip">Coming soon</span>
-            </KitCard>
           </div>
         </section>
 
@@ -268,14 +265,11 @@ function KitCard({
   label,
   title,
   description,
-  keepInPrint = false,
   children,
 }: {
   label: string;
   title: string;
   description: string;
-  /** Buttons are hidden on paper; a label like "Coming soon" isn't. */
-  keepInPrint?: boolean;
   children: ReactNode;
 }) {
   return (
@@ -283,7 +277,8 @@ function KitCard({
       <span className="chip-label">{label}</span>
       <h3 className="display m-0 text-[22px] leading-[1.25] font-[650]">{title}</h3>
       <p className="m-0 flex-1 text-[17px] leading-[1.55] text-muted">{description}</p>
-      <div className={`mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 ${keepInPrint ? "" : "print:hidden"}`}>{children}</div>
+      {/* Buttons are hidden on paper. */}
+      <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 print:hidden">{children}</div>
     </article>
   );
 }
