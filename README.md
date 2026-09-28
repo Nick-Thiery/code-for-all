@@ -38,6 +38,10 @@ npx playwright test --ui          # pick and watch tests one at a time
 
 They need a production build (`npm run build`) because they start `npm run start`. The same checks run on every pull request (`.github/workflows/ci.yml`).
 
+## Offline and installing
+
+The site can be installed on a phone or laptop like an app (`app/manifest.ts`, icons in `public/icons/`). A service worker (`public/sw.js`) keeps every page a learner opens, so lessons and quizzes they've read still work without a connection; a small bar says "You're offline. Lessons you've opened still work." Online, pages always come from the network, and each deploy replaces the cache, so nobody sees an old version. The worker only runs on the built site (`npm run build && npm run start`), not in `npm run dev`.
+
 ## Add a lesson
 
 A lesson is one file. You don't need to touch any code.

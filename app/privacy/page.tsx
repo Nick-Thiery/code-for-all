@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 // Every claim here was checked against the code. If you change what the site
 // stores or sends, update this page:
 //   localStorage keys: lib/progress.ts, lib/quiz-results.ts, lib/theme.ts
+//   offline copies of pages: public/sw.js
 //   moving progress: lib/transfer.ts, app/move-progress/page.tsx
 //   practice: components/prompt-practice.tsx, app/api/practice/route.ts
 //   videos: components/video-embed.tsx
@@ -100,6 +101,13 @@ export default function PrivacyPage() {
             </div>
           ))}
         </dl>
+
+        <h3 className="t-h3 mt-2 mb-0">Pages saved for offline</h3>
+        <p className="m-0">
+          The site also keeps a copy of each page you open, so lessons and quizzes you&apos;ve already read still
+          work when you have no signal. That copy is the page itself, nothing about you, and it&apos;s replaced by
+          the new version the next time you&apos;re online after the site is updated.
+        </p>
 
         <h3 className="t-h3 mt-2 mb-0">How to delete it</h3>
         <p className="m-0">
