@@ -22,6 +22,7 @@ const pages: { name: string; path: string }[] = [
   { name: "the glossary", path: "/glossary" },
   { name: "privacy", path: "/privacy" },
   { name: "access", path: "/access" },
+  { name: "Move my progress", path: "/move-progress" },
 ];
 
 for (const theme of ["light", "dark"] as const) {
