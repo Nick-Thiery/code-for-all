@@ -23,6 +23,7 @@ const pages: { name: string; path: string }[] = [
   { name: "privacy", path: "/privacy" },
   { name: "access", path: "/access" },
   { name: "help", path: "/help" },
+  { name: "a lesson with several new diagrams", path: lessonsOf(6).find((lesson) => lesson.slug === "key-terms")!.href },
   { name: "a hands-on lesson with a You'll need box", path: lessonsOf(2).find((lesson) => lesson.slug === "solo-sprint")!.href },
   { name: "Move my progress", path: "/move-progress" },
   { name: "the offline page", path: "/offline" },

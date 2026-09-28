@@ -8,6 +8,23 @@ import { MdxPre } from "@/components/code-block";
 import { CommandBlock } from "@/components/command-block";
 import { ApiDoorDiagram } from "@/components/diagrams/api-door";
 import { BranchLanesDiagram } from "@/components/diagrams/branch-lanes";
+import { BranchVsForkDiagram } from "@/components/diagrams/branch-vs-fork";
+import { CantCanDiagram } from "@/components/diagrams/cant-can";
+import { ChatVsAgentDiagram } from "@/components/diagrams/chat-vs-agent";
+import { CodeJourneyDiagram } from "@/components/diagrams/code-journey";
+import { ConsoleDrawing } from "@/components/diagrams/console-drawing";
+import { CoursePathDiagram } from "@/components/diagrams/course-path";
+import { DeployLoopDiagram } from "@/components/diagrams/deploy-loop";
+import { EthicsCardsDiagram } from "@/components/diagrams/ethics-cards";
+import { ExtensionPartsDiagram } from "@/components/diagrams/extension-parts";
+import { FourJobsDiagram } from "@/components/diagrams/four-jobs";
+import { GalleryCompareDiagram } from "@/components/diagrams/gallery-compare";
+import { PrJourneyDiagram } from "@/components/diagrams/pr-journey";
+import { PromptLoopDiagram } from "@/components/diagrams/prompt-loop";
+import { PushVsPrDiagram } from "@/components/diagrams/push-vs-pr";
+import { RefinePromptDiagram } from "@/components/diagrams/refine-prompt";
+import { SkillRecipeDiagram } from "@/components/diagrams/skill-recipe";
+import { SprintTimelineDiagram } from "@/components/diagrams/sprint-timeline";
 import { DirectoryTabsDiagram } from "@/components/diagrams/directory-tabs";
 import {
   InstallCodeTabDrawing,
@@ -39,6 +56,23 @@ export const mdxComponents: MDXComponents = {
   pre: MdxPre,
   ApiDoorDiagram,
   BranchLanesDiagram,
+  BranchVsForkDiagram,
+  CantCanDiagram,
+  ChatVsAgentDiagram,
+  CodeJourneyDiagram,
+  ConsoleDrawing,
+  CoursePathDiagram,
+  DeployLoopDiagram,
+  EthicsCardsDiagram,
+  ExtensionPartsDiagram,
+  FourJobsDiagram,
+  GalleryCompareDiagram,
+  PrJourneyDiagram,
+  PromptLoopDiagram,
+  PushVsPrDiagram,
+  RefinePromptDiagram,
+  SkillRecipeDiagram,
+  SprintTimelineDiagram,
   Callout,
   Challenge,
   CheckYourself,
