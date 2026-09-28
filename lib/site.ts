@@ -49,5 +49,12 @@ export const practiceCopy = aiGrading
       accessItem: "Practice with sample feedback (AI grading is being set up)",
     };
 
+/**
+ * True on the production site. Vercel sets VERCEL_ENV to "production" for
+ * production builds and "preview" for pull request previews; locally it's
+ * unset. Placeholders and screenshot slots render nothing when this is true.
+ */
+export const isProduction = process.env.VERCEL_ENV === "production";
+
 /** Search engines may index the site only when NEXT_PUBLIC_ALLOW_INDEXING is "true". */
 export const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";

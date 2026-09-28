@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kai · Things I make</title>
+<style>
+  /* The better version: built from a prompt with a role, a goal, an audience
+     (other teenagers), named pages, a design style ("playful, light background,
+     bold headings, friendly typography") and key features (mobile-first,
+     clear navigation). Kai is made up. Hobbies and projects, no personal
+     details, and no contact address: that's the safe way to do it. */
+  :root { --ink: #1c1b2e; --accent: #ff6b4a; --accent2: #2ec4b6; --sun: #ffd166; --paper: #fffaf2; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Trebuchet MS", "Segoe UI", Verdana, sans-serif; color: var(--ink); background: var(--paper); }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; }
+  nav .brand { font-weight: 800; font-size: 22px; letter-spacing: -0.01em; }
+  nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; font-weight: 700; font-size: 16px; }
+  nav li.current { border-bottom: 3px solid var(--accent); padding-bottom: 2px; }
+  .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: center; padding: 32px 40px 24px; }
+  .hero h1 { font-size: 46px; line-height: 1.05; margin: 0 0 14px; font-weight: 900; }
+  .hero h1 span { background: linear-gradient(transparent 60%, var(--sun) 60%); }
+  .hero p { font-size: 19px; line-height: 1.5; margin: 0 0 20px; max-width: 30em; }
+  .btn { display: inline-block; background: var(--accent); color: #fff; font-weight: 800; padding: 12px 22px; border-radius: 999px; text-decoration: none; font-size: 17px; }
+  .avatar { width: 100%; aspect-ratio: 1; max-width: 300px; margin-left: auto; border-radius: 40% 60% 55% 45% / 50% 40% 60% 50%; background: radial-gradient(circle at 35% 30%, var(--sun), var(--accent2) 70%); display: grid; place-items: center; font-size: 96px; }
+  section { padding: 20px 40px 8px; }
+  section h2 { font-size: 26px; margin: 0 0 14px; font-weight: 900; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: #fff; border-radius: 18px; padding: 18px; box-shadow: 0 6px 18px rgba(28, 27, 46, 0.08); }
+  .card .tag { display: inline-block; font-size: 13px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--accent2); margin-bottom: 8px; }
+  .card h3 { margin: 0 0 6px; font-size: 19px; }
+  .card p { margin: 0; font-size: 15.5px; line-height: 1.5; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: #fff; border: 2px solid var(--ink); border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: 15px; }
+  footer { padding: 28px 40px 36px; font-size: 14px; color: #6a6880; }
+</style>
+</head>
+<body>
+  <nav>
+    <span class="brand">Kai</span>
+    <ul><li class="current">Home</li><li>Projects</li><li>Hobbies</li><li>Now</li></ul>
+  </nav>
+  <div class="hero">
+    <div>
+      <h1>Hi, I'm Kai. I make <span>small games</span> and big drawings.</h1>
+      <p>I'm 14, I play badminton, and I'm learning to build things with AI. This site is where I keep the stuff I've made.</p>
+      <a class="btn" href="#">See my projects →</a>
+    </div>
+    <div class="avatar">🎮</div>
+  </div>
+  <section>
+    <h2>Projects</h2>
+    <div class="cards">
+      <div class="card"><span class="tag">Game</span><h3>Bus Stop Dash</h3><p>A one-button game where you dodge puddles on the way to the bus. Built with Lovable in an afternoon.</p></div>
+      <div class="card"><span class="tag">Quiz</span><h3>Which noodle are you?</h3><p>A personality quiz with five questions and six very serious results.</p></div>
+      <div class="card"><span class="tag">Art</span><h3>Sketchbook</h3><p>Pencil drawings of hawker centres and my cat, one a week for a whole year.</p></div>
+    </div>
+  </section>
+  <section>
+    <h2>Hobbies</h2>
+    <div class="chips"><span class="chip">🏸 Badminton</span><span class="chip">✏️ Drawing</span><span class="chip">🎮 Making games</span><span class="chip">🍜 Trying every noodle</span></div>
+  </section>
+  <footer>Made by Kai with Lovable. No contact details here on purpose: ask me in person.</footer>
+</body>
+</html>

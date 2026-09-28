@@ -12,7 +12,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 
 ## Content
 
-- `content/course.yml` lists all 10 modules in three phases. A module is released when `content/module-N/` exists with lessons in it; until then it shows as Coming soon.
+- `content/course.yml` lists all 10 modules in three phases. A module is released when `content/module-N/` exists with lessons in it; until then it shows as Coming soon, and its `/module-N` page shows the module's optional `planned` lesson titles and `waiting` line from course.yml.
 - One lesson = one `.mdx` file in `content/module-N/`, served at `/module-N/<slug>`. Frontmatter: `title`, `slug` (matches the file name; not `complete`), `order` (10, 20, 30…), `duration` (minutes), `summary`, `requiresAccount`, optional `recap` list. Quote any YAML value containing ": ".
 - To add one: copy a lesson in the same module, change the frontmatter, write the body in Markdown. No code changes needed.
 - MDX reads `<` and `{` as code: put them in backticks or a code block.
@@ -35,7 +35,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - `<VibeCodingDiagram />` (1.2), `<ThreeFilesDiagram />` (5.6), `<BranchLanesDiagram />` (7.1), `<ApiDoorDiagram />` (8.2), `<LoginDiagram />` (8.4): lesson diagrams in components/diagrams/, drawn in HTML and inline SVG with tokens only, inside `Diagram` (components/diagram.tsx), which needs a caption and a full-sentence `alt`. On phones they reflow rather than shrink; `enlargeWidth` adds an Enlarge button for one that can't.
 - `<Figure src alt width height caption />`: an image (width/height = file pixels; tap to enlarge is built in).
 - `<VideoEmbed id="…" title="…" />`: a YouTube video from the slides (youtube-nocookie).
-- `<Placeholder>` for content a human still has to supply; `<Screenshot>` for a screenshot still to be taken.
+- `<Placeholder>` for content a human still has to supply; `<Screenshot>` for a screenshot still to be taken. Both render nothing in production (`isProduction` in lib/site.ts: `VERCEL_ENV` is "production"), so the text around them must read without them. `npm run content-needed` regenerates docs/content-needed.md, the list of every one; keep the "elsewhere" list in scripts/content-needed.mjs current.
 
 ## Rules for course content (docs/course-map.md)
 
