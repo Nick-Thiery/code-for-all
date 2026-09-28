@@ -123,6 +123,12 @@ export default async function AccessPage({ searchParams }: Props) {
           <Link href="/module-6">Module 6</Link>, and the access your session gives you. A session laptop works for
           everything.
         </p>
+        <p className="m-0">
+          Switching between devices? Your progress is saved on the device you used, not in an account. Use{" "}
+          <Link href="/move-progress">Move my progress</Link> to carry it across with a code, a QR code or a file.
+          On limited data, open the lessons you want while you have Wi-Fi: lessons you&apos;ve already opened keep
+          working offline, and you can add the site to your home screen like an app.
+        </p>
 
         <h2 id="cost" className="t-h2 mt-6 mb-0 scroll-mt-6">
           What does it cost?

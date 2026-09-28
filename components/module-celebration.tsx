@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Honeycomb } from "@/components/honeycomb";
 import { dismissCelebration, useCelebration } from "@/lib/celebration";
-import { moduleCompleteHref } from "@/lib/outline";
+import { moduleCertificateHref, moduleCompleteHref } from "@/lib/outline";
 
 // A small card that says a module is done, with its honeycomb filling in
 // (lib/celebration.ts starts it). It sits in the root layout, so it still
@@ -49,9 +49,14 @@ export function ModuleCelebration() {
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <span className="eyebrow">Module {celebration.module} complete</span>
             <span className="display text-[19px] leading-[1.25] font-bold">You finished {celebration.title}.</span>
-            <Link href={moduleCompleteHref(celebration.module)} onClick={dismissCelebration} className="text-link min-h-9 text-[16px]">
-              See what&apos;s next →
-            </Link>
+            <span className="flex flex-wrap gap-x-4">
+              <Link href={moduleCertificateHref(celebration.module)} onClick={dismissCelebration} className="text-link min-h-9 text-[16px]">
+                Get your certificate →
+              </Link>
+              <Link href={moduleCompleteHref(celebration.module)} onClick={dismissCelebration} className="text-link min-h-9 text-[16px]">
+                See what&apos;s next →
+              </Link>
+            </span>
           </div>
           <button
             type="button"

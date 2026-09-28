@@ -50,6 +50,16 @@ export function readCompleted(): Set<string> {
   return parse(readRaw());
 }
 
+/** Replace every finished lesson at once: "Move my progress" (lib/transfer-storage.ts). */
+export function replaceCompleted(ids: Iterable<string>) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...new Set(ids)]));
+  } catch {
+    return;
+  }
+  window.dispatchEvent(new Event(CHANGE_EVENT));
+}
+
 export function setLessonComplete(id: string, done: boolean) {
   const completed = parse(readRaw());
   if (done) completed.add(id);

@@ -316,7 +316,7 @@ modules:
       - Supabase
     prepare:
       - "Learners sign up for Supabase with their GitHub account, in the session, with your go-ahead."
-      - A test email for each learner to try sign-up and log-in with.
+      - A test email for each learner to try sign-up and login with.
       - A project to add live data to, like their Wordle, connected to Vercel.
     links:
       - label: The open-meteo link for Singapore's weather

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Honeycomb } from "@/components/honeycomb";
 import { getModule, getModules, getPlannedModule, getSkillsChecks, parseModuleParam } from "@/lib/lessons";
-import { moduleHref, skillsCheckHref } from "@/lib/outline";
+import { courseCertificateHref, moduleCertificateHref, moduleHref, skillsCheckHref } from "@/lib/outline";
 
 type Props = { params: Promise<{ module: string }> };
 
@@ -34,6 +34,8 @@ export default async function ModuleCompletePage({ params }: Props) {
     getSkillsChecks(),
   ]);
   const hasSkillsCheck = skills.pages.some((page) => page.after === mod.number);
+  // The last module that's out: finishing it can mean finishing the course.
+  const isLast = (await getModules()).every((m) => m.number <= mod.number);
 
   return (
     <div className="px-(--gut)">
@@ -47,6 +49,22 @@ export default async function ModuleCompletePage({ params }: Props) {
           <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-border p-6">
             <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Show someone what you made</h2>
             <p className="m-0">Explaining how you made it is the best way to remember it.</p>
+          </div>
+          <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-border p-6">
+            <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Get your certificate</h2>
+            <p className="m-0">
+              {isLast
+                ? "One for this module, and one for the whole course now that you've finished every module that's out."
+                : "Your name, the module and the date, to print or save as an image."}
+            </p>
+            <Link href={moduleCertificateHref(mod.number)} className="text-link">
+              Module {mod.number} certificate →
+            </Link>
+            {isLast && (
+              <Link href={courseCertificateHref} className="text-link">
+                Course certificate →
+              </Link>
+            )}
           </div>
           {hasSkillsCheck && (
             <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-accent p-6">
