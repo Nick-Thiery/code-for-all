@@ -26,7 +26,7 @@ export function BuildChecklist({ id, groups }: { id: string; groups: ChecklistGr
               const on = ticked.has(item.id);
               return (
                 <li key={item.id}>
-                  <label className="flex min-h-14 cursor-pointer items-center gap-4 rounded-[14px] border-[1.5px] border-border bg-surface px-[18px] py-3 text-fg hover:border-accent has-[:disabled]:cursor-default has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-accent">
+                  <label className="flex min-h-14 cursor-pointer items-center gap-4 rounded-xl border border-border bg-surface px-[18px] py-3 text-fg hover:border-accent has-[:disabled]:cursor-default has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-accent">
                     <input
                       type="checkbox"
                       className="sr-only"

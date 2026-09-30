@@ -46,11 +46,11 @@ export default async function ModuleCompletePage({ params }: Props) {
         <p className="t-lead m-0 max-w-[30em]">{mod.summary}</p>
 
         <div className="mt-6 grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-4 text-left">
-          <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-border p-6">
+          <div className="flex flex-col gap-1.5 rounded-2xl border border-border p-6">
             <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Show someone what you made</h2>
             <p className="m-0">Explaining how you made it is the best way to remember it.</p>
           </div>
-          <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-border p-6">
+          <div className="flex flex-col gap-1.5 rounded-2xl border border-border p-6">
             <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Get your certificate</h2>
             <p className="m-0">
               {isLast
@@ -67,7 +67,7 @@ export default async function ModuleCompletePage({ params }: Props) {
             )}
           </div>
           {hasSkillsCheck && (
-            <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-accent p-6">
+            <div className="flex flex-col gap-1.5 rounded-2xl border border-accent p-6">
               <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Check your skills</h2>
               <p className="m-0">
                 A mixed quiz on {mod.number === 1 ? "Module 1" : `Modules 1 to ${mod.number}`}, and a checklist for your
@@ -79,7 +79,7 @@ export default async function ModuleCompletePage({ params }: Props) {
             </div>
           )}
           {planned && (
-            <div className="flex flex-col gap-1.5 rounded-[20px] bg-tint p-6">
+            <div className="flex flex-col gap-1.5 rounded-2xl bg-tint p-6">
               {next ? (
                 <>
                   <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Up next: Module {nextNumber}</h2>

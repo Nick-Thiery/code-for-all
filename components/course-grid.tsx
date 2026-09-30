@@ -213,7 +213,7 @@ function ContinueCard({
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-[20px] bg-tint p-[18px] tablet:flex-row tablet:flex-wrap tablet:items-center tablet:gap-x-8 tablet:gap-y-4 tablet:rounded-3xl tablet:px-8 tablet:py-[26px]">
+    <div className="flex flex-col gap-3 rounded-2xl bg-tint p-[18px] tablet:flex-row tablet:flex-wrap tablet:items-center tablet:gap-x-8 tablet:gap-y-4 tablet:rounded-3xl tablet:px-8 tablet:py-[26px]">
       <div className="flex min-w-0 flex-col gap-1 tablet:flex-[1_1_300px]">
         <span className="eyebrow text-[14px] tracking-[.1em]">{eyebrow}</span>
         {where && <span className="t-meta text-muted">{where}</span>}
@@ -286,7 +286,7 @@ function ModuleCard({
       aria-pressed={selected}
       aria-controls={controls}
       onClick={onPick}
-      className={`flex min-h-[188px] cursor-pointer flex-col items-start gap-2 rounded-[18px] border-[1.5px] p-4 text-left font-[inherit] text-fg ${
+      className={`flex min-h-[188px] cursor-pointer flex-col items-start gap-2 rounded-2xl border p-4 text-left font-[inherit] text-fg ${
         selected ? "border-accent bg-tint shadow-[0_0_0_3px_var(--accent)]" : "border-border bg-surface hover:border-accent"
       }`}
     >
@@ -351,7 +351,7 @@ function ComingSoonCard({ number, title, compact = false }: { number: number; ti
   return (
     <Link
       href={moduleHref(number)}
-      className={`flex flex-col items-start gap-2 rounded-[18px] border-[1.5px] border-dashed border-border text-fg no-underline hover:border-accent hover:text-fg ${
+      className={`flex flex-col items-start gap-2 rounded-2xl border border-dashed border-border text-fg no-underline hover:border-accent hover:text-fg ${
         compact ? "min-h-16 px-3.5 py-2.5" : "min-h-[188px] p-4"
       }`}
     >
@@ -385,7 +385,7 @@ function ModulePanel({ id, mod, progress }: { id: string; mod: OutlineModule; pr
       id={id}
       role="region"
       aria-labelledby={`${id}-title`}
-      className="hidden scroll-mt-6 flex-wrap gap-x-12 gap-y-6 rounded-3xl border-[1.5px] border-border bg-surface2 p-(--pad) tablet:flex desktop:p-8"
+      className="hidden scroll-mt-6 flex-wrap gap-x-12 gap-y-6 rounded-3xl border border-border bg-surface2 p-(--pad) tablet:flex desktop:p-8"
     >
       <div className="flex flex-[1_1_260px] flex-col gap-3 desktop:max-w-[300px]">
         <h3 id={`${id}-title`} className="m-0 flex flex-col gap-1">
@@ -434,7 +434,7 @@ function PhoneModule({
   return (
     <li
       id={id}
-      className={`scroll-mt-4 rounded-2xl border-[1.5px] ${open ? "border-accent bg-surface" : "border-border"}`}
+      className={`scroll-mt-4 rounded-2xl border ${open ? "border-accent bg-surface" : "border-border"}`}
     >
       <h4 className="m-0">
         <button
@@ -515,7 +515,7 @@ function Row({
 }) {
   return (
     <li
-      className={`relative flex items-center rounded-[14px] has-[.row-link:focus-visible]:outline-3 has-[.row-link:focus-visible]:outline-offset-3 has-[.row-link:focus-visible]:outline-accent ${
+      className={`relative flex items-center rounded-xl has-[.row-link:focus-visible]:outline-3 has-[.row-link:focus-visible]:outline-offset-3 has-[.row-link:focus-visible]:outline-accent ${
         compact ? "min-h-12 gap-3 px-2 py-1" : "min-h-14 gap-4 px-3.5 py-1.5"
       } ${highlight ? "bg-tint" : "hover:bg-surface"}`}
     >
@@ -523,7 +523,7 @@ function Row({
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
         <Link
           href={href}
-          className={`row-link font-bold text-fg no-underline after:absolute after:inset-0 after:rounded-[14px] hover:text-fg focus-visible:outline-none ${
+          className={`row-link font-bold text-fg no-underline after:absolute after:inset-0 after:rounded-xl hover:text-fg focus-visible:outline-none ${
             compact ? "text-[17px] leading-[1.3]" : "display text-[19px] leading-[1.3]"
           }`}
         >

@@ -57,7 +57,7 @@ export function DirectoryTabsDiagram() {
             >
               <span
                 className={`inline-flex h-8 items-center self-start rounded-full px-3 text-[14px] font-bold ${
-                  index === TABS.length - 1 ? "bg-accent text-on-accent" : "border-[1.5px] border-border text-fg"
+                  index === TABS.length - 1 ? "bg-accent text-on-accent" : "border border-border text-fg"
                 }`}
               >
                 {tab.name}

@@ -40,7 +40,7 @@ export function ModuleCelebration() {
         <div
           key={celebration.key}
           ref={card}
-          className="pointer-events-auto flex w-full max-w-[400px] items-center gap-4 rounded-[20px] border-[1.5px] border-border bg-surface p-4 shadow-[0_18px_44px_color-mix(in_srgb,var(--accent)_16%,transparent)] dark:shadow-none"
+          className="pointer-events-auto flex w-full max-w-[400px] items-center gap-4 rounded-2xl border border-border bg-surface p-4 shadow-[0_18px_44px_color-mix(in_srgb,var(--accent)_16%,transparent)] dark:shadow-none"
           style={{ animation: "cfaRise 300ms ease both" }}
         >
           <div className="w-[84px] flex-none [&>svg]:h-auto [&>svg]:w-full">

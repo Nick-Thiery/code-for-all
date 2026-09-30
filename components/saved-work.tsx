@@ -32,7 +32,7 @@ export function SavedWork({
   const saved = ready && text.trim() !== "";
 
   return (
-    <div className="flex flex-col gap-3 rounded-[20px] border-[1.5px] border-border bg-surface p-(--pad)">
+    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-(--pad)">
       <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
         <div className="flex flex-col gap-0.5">
           <span className="kicker">{saved ? "Saved on this device" : "From an earlier lesson"}</span>
@@ -48,7 +48,7 @@ export function SavedWork({
           <Link href={from}>go back to {fromLabel}</Link> and write it, or start from this sample:
         </p>
       )}
-      <pre className="m-0 rounded-xl border-[1.5px] border-border bg-surface2 px-[18px] py-4 font-mono text-[16px] leading-[1.6] whitespace-pre-wrap [overflow-wrap:anywhere] text-fg">
+      <pre className="m-0 rounded-xl border border-border bg-surface2 px-[18px] py-4 font-mono text-[16px] leading-[1.6] whitespace-pre-wrap [overflow-wrap:anywhere] text-fg">
         {saved ? text : sample}
       </pre>
       {saved && (

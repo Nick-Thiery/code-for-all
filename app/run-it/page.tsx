@@ -43,7 +43,7 @@ export default async function RunItPage() {
               here.
             </p>
           </div>
-          <dl className="m-0 box-border grid max-w-[400px] flex-[1_1_280px] grid-cols-[auto_minmax(0,1fr)] gap-x-[18px] gap-y-3 rounded-[20px] border-[1.5px] border-border px-6 py-5 text-[17px] leading-[1.5]">
+          <dl className="m-0 box-border grid max-w-[400px] flex-[1_1_280px] grid-cols-[auto_minmax(0,1fr)] gap-x-[18px] gap-y-3 rounded-2xl border border-border px-6 py-5 text-[17px] leading-[1.5]">
             <dt className="font-bold text-muted">Who</dt>
             <dd className="m-0">Ages 13 to 16, with mixed skill levels</dd>
             <dt className="font-bold text-muted">Time</dt>
@@ -110,7 +110,7 @@ export default async function RunItPage() {
             <ol className="m-0 flex list-none flex-wrap items-center gap-2 p-0">
               {kit.deliverableMarks.map((mark, index) => (
                 <li key={mark} className="flex items-center gap-2">
-                  <span className="rounded-full border-[1.5px] border-accent px-3 py-0.5 text-[17px] font-bold text-accent">
+                  <span className="rounded-full border border-accent px-3 py-0.5 text-[17px] font-bold text-accent">
                     {mark}
                   </span>
                   {index < kit.deliverableMarks.length - 1 && (
@@ -211,7 +211,7 @@ export default async function RunItPage() {
 
         <section
           aria-labelledby="accounts-title"
-          className="box-border flex max-w-[820px] flex-col gap-3 rounded-[20px] bg-tint p-(--pad)"
+          className="box-border flex max-w-[820px] flex-col gap-3 rounded-2xl bg-tint p-(--pad)"
         >
           <h2 id="accounts-title" className="t-h3 m-0">
             Accounts for the hands-on lessons
@@ -273,7 +273,7 @@ function KitCard({
   children: ReactNode;
 }) {
   return (
-    <article className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-border p-[22px]">
+    <article className="flex flex-col gap-2.5 rounded-2xl border border-border p-[22px]">
       <span className="chip-label">{label}</span>
       <h3 className="display m-0 text-[22px] leading-[1.25] font-[650]">{title}</h3>
       <p className="m-0 flex-1 text-[17px] leading-[1.55] text-muted">{description}</p>
@@ -304,7 +304,7 @@ function RunSheetDetails({ sheet, last }: { sheet: RunSheet; last: boolean }) {
       <summary className="flex min-h-11 cursor-pointer list-none items-start gap-3 py-4 [&::-webkit-details-marker]:hidden">
         <span
           aria-hidden="true"
-          className="mt-[3px] flex size-7 flex-none items-center justify-center rounded-full border-[1.5px] border-accent font-bold text-accent transition-transform group-open:rotate-90"
+          className="mt-[3px] flex size-7 flex-none items-center justify-center rounded-full border border-accent font-bold text-accent transition-transform group-open:rotate-90"
         >
           ›
         </span>
@@ -340,7 +340,7 @@ function RunSheetDetails({ sheet, last }: { sheet: RunSheet; last: boolean }) {
                   <h4 className="m-0 text-[19px] leading-[1.45] font-bold">{step.title}</h4>
                   <p className="m-0">{step.do}</p>
                   {step.group && (
-                    <p className="m-0 mt-1 rounded-[14px] border-[1.5px] border-accent px-4 py-3">
+                    <p className="m-0 mt-1 rounded-xl border border-accent px-4 py-3">
                       <span className="kicker block">Group version</span>
                       {step.group}
                     </p>

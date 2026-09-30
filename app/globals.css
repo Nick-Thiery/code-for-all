@@ -87,6 +87,24 @@
   :root { --task: 24px; --head: 26px; }
 }
 
+/*
+  Shape: one small set of corner radii for the whole site, so cards, rows and
+  controls read as one system rather than a mix of pills and soft boxes.
+  Tailwind's rounded-lg / -xl / -2xl / -3xl use these (see @theme below):
+    8px   controls: buttons, inputs, small rows, code
+    10px  list rows and inner panels
+    12px  cards
+    16px  large panels and the hero picture
+  Borders are 1px (--border); 1.5px and 2px are kept for focus and for the
+  outline button, where the edge is the whole signal.
+*/
+:root {
+  --radius-control: 8px;
+  --radius-row: 10px;
+  --radius-card: 12px;
+  --radius-panel: 16px;
+}
+
 /* Body text: Atkinson Hyperlegible Next, self-hosted (public/fonts): the
    files Google Fonts serves, unchanged. Only the upright latin file is
    preloaded (app/layout.tsx); the italic and latin-ext files download on
@@ -184,6 +202,12 @@
   --font-mono: var(--font-atkinson-mono), ui-monospace, monospace;
   --font-display: var(--font-recursive), system-ui, sans-serif;
 
+  /* Corner radii (see "Shape" above). */
+  --radius-lg: var(--radius-control);
+  --radius-xl: var(--radius-row);
+  --radius-2xl: var(--radius-card);
+  --radius-3xl: var(--radius-panel);
+
   /* The spec's breakpoints: mobile < 600 ≤ tablet < 960 ≤ desktop. */
   --breakpoint-*: initial;
   --breakpoint-tablet: 600px;
@@ -245,41 +269,45 @@
 }
 
 @layer components {
-  /* Recursive, casual axis halfway up. Weight is set per use. */
+  /* Recursive, linear (casual axis at 0): crisp and formal. Weight is set per use. */
   .display {
     font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
+    font-variation-settings: "CASL" 0;
+    letter-spacing: -0.01em;
   }
 
   /* Type scale (spec sheet, desktop / mobile via the size tokens). */
   .t-hero {
     font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
+    font-variation-settings: "CASL" 0;
     font-weight: 750;
     font-size: var(--hero);
-    line-height: 1.04;
-    letter-spacing: -0.01em;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
   }
   .t-h1 {
     font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
+    font-variation-settings: "CASL" 0;
     font-weight: 700;
     font-size: var(--h1);
     line-height: 1.12;
+    letter-spacing: -0.02em;
   }
   .t-h2 {
     font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
+    font-variation-settings: "CASL" 0;
     font-weight: 650;
     font-size: var(--h2);
     line-height: 1.2;
+    letter-spacing: -0.015em;
   }
   .t-h3 {
     font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
+    font-variation-settings: "CASL" 0;
     font-weight: 650;
     font-size: var(--h3);
     line-height: 1.25;
+    letter-spacing: -0.01em;
   }
   .t-lead {
     font-size: var(--lead);
@@ -290,14 +318,14 @@
     line-height: 1.5;
   }
 
-  /* Eyebrow and callout label: Recursive 700 · 15 · caps · +0.06em · CASL 0.6 */
+  /* Eyebrow and callout label: Atkinson Next 700 · 14 · caps · +0.1em. The
+     body face rather than the display face keeps labels quiet and formal. */
   .eyebrow {
-    font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.6;
+    font-family: var(--font-sans);
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.2;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--accent);
   }
@@ -318,7 +346,7 @@
     justify-content: center;
     gap: 8px;
     box-sizing: border-box;
-    border-radius: 12px;
+    border-radius: var(--radius-control);
     font-family: inherit;
     font-weight: 700;
     text-decoration: none;
@@ -348,7 +376,7 @@
   .btn-secondary {
     min-height: 52px;
     padding: 0 24px;
-    border: 2px solid var(--accent);
+    border: 1.5px solid var(--accent);
     background: transparent;
     color: var(--accent);
     font-size: 18px;
@@ -356,10 +384,27 @@
   .btn-small {
     min-height: 44px;
     padding: 0 18px;
-    border: 2px solid var(--accent);
+    border: 1.5px solid var(--accent);
     background: transparent;
     color: var(--accent);
     font-size: 16px;
+  }
+  /* On an accent band: the page colours swapped, and a focus ring that shows
+     against the band. */
+  .btn-inverse {
+    min-height: 52px;
+    padding: 0 24px;
+    border: 0;
+    background: var(--on-accent);
+    color: var(--accent);
+    font-size: 18px;
+  }
+  .btn-inverse:hover {
+    background: var(--tint);
+    color: var(--accent);
+  }
+  .btn-inverse:focus-visible {
+    outline-color: var(--on-accent);
   }
   .btn-secondary:hover,
   .btn-small:hover {
@@ -392,8 +437,8 @@
     align-items: center;
     gap: 6px;
     padding: 3px 10px;
-    border: 1.5px solid var(--border);
-    border-radius: 999px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
     background: var(--surface);
     font-size: 15px;
     line-height: 1.4;
@@ -402,7 +447,7 @@
   .chip-label {
     align-self: flex-start;
     padding: 0 10px;
-    border-radius: 999px;
+    border-radius: 4px;
     background: var(--tint);
     font-size: 14px;
     font-weight: 700;
@@ -522,7 +567,7 @@
   .prose img {
     max-width: 100%;
     height: auto;
-    border-radius: 14px;
+    border-radius: var(--radius-card);
   }
 
   .prose table {

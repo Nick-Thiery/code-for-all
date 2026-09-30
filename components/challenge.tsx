@@ -12,7 +12,7 @@ export function Challenge({ title, children }: { title: string; children: ReactN
   return (
     <section
       aria-labelledby="challenge-heading"
-      className="overflow-hidden rounded-[20px] border-2 border-accent bg-surface text-fg"
+      className="overflow-hidden rounded-2xl border-2 border-accent bg-surface text-fg"
     >
       <div className="flex flex-col gap-2 bg-accent p-(--pad) text-on-accent">
         <span className="flex items-center gap-2">

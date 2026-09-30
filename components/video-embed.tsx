@@ -18,7 +18,7 @@ export function VideoEmbed({ id, title, start }: Props) {
   const watch = `https://www.youtube.com/watch?v=${id}${start ? `&t=${start}s` : ""}`;
   return (
     <figure className="flex flex-col gap-3">
-      <div className="relative aspect-video overflow-hidden rounded-[14px] border-[1.5px] border-border bg-surface2 print:hidden">
+      <div className="relative aspect-video overflow-hidden rounded-xl border border-border bg-surface2 print:hidden">
         <iframe
           src={embed}
           title={title}

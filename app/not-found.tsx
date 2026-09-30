@@ -18,7 +18,7 @@ export default function NotFound() {
               style={{ left }}
             />
           ))}
-          <span className="absolute top-3 right-0 box-border grid size-[72px] place-items-center rounded-full border-[3px] border-dashed border-pip bg-bg font-display text-[32px] font-bold text-muted [font-variation-settings:'CASL'_1]">
+          <span className="absolute top-3 right-0 box-border grid size-[72px] place-items-center rounded-full border-[3px] border-dashed border-pip bg-bg font-display text-[32px] font-bold text-muted [font-variation-settings:'CASL'_0]">
             ?
           </span>
         </div>

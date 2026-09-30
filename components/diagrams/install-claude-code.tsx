@@ -40,8 +40,8 @@ function Window({ address, children }: { address?: string; children: ReactNode }
 function Button({ primary = false, children }: { primary?: boolean; children: ReactNode }) {
   return (
     <span
-      className={`inline-flex min-h-10 items-center justify-center rounded-[10px] px-4 text-[15px] font-bold ${
-        primary ? "bg-accent text-on-accent" : "border-[1.5px] border-accent text-accent"
+      className={`inline-flex min-h-10 items-center justify-center rounded-lg px-4 text-[15px] font-bold ${
+        primary ? "bg-accent text-on-accent" : "border border-accent text-accent"
       }`}
     >
       {children}
@@ -97,7 +97,7 @@ export function InstallCodeTabDrawing() {
             </span>
             <span className="h-8 w-14 rounded-full bg-surface2" />
           </div>
-          <div className="flex flex-col gap-3 rounded-2xl border-[1.5px] border-border p-3.5">
+          <div className="flex flex-col gap-3 rounded-2xl border border-border p-3.5">
             <div className="flex items-center gap-2.5">
               <span className={`${diagramLabel} text-muted`}>Where</span>
               <span className="inline-flex rounded-full bg-surface2 p-0.5">
@@ -132,7 +132,7 @@ export function InstallTerminalDrawing() {
       }
       caption={`A terminal after running claude --version. A version number means it worked; yours will be newer. ${NOTE}`}
     >
-      <div className="mx-auto max-w-[520px] overflow-hidden rounded-xl border-[1.5px] border-term-border bg-term-bg">
+      <div className="mx-auto max-w-[520px] overflow-hidden rounded-xl border border-term-border bg-term-bg">
         <div className="flex items-center gap-2 border-b border-term-rule px-3 py-2" aria-hidden="true">
           <span className="size-[8px] rounded-full bg-term-rule" />
           <span className="size-[8px] rounded-full bg-term-rule" />

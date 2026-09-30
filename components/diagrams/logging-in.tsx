@@ -47,7 +47,7 @@ export function LoginDiagram() {
             >
               <path d="M9 2v16M3 12l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <div className="overflow-hidden rounded-lg border-[1.5px] border-accent">
+            <div className="overflow-hidden rounded-lg border border-accent">
               <div className={`${diagramLabel} bg-accent px-2.5 py-1 text-on-accent`}>User table</div>
               <div className="grid grid-cols-2 gap-2 px-2.5 py-1.5 font-mono text-[13px] leading-[1.4]">
                 <span>james@…</span>
@@ -119,7 +119,7 @@ function Step({ title, note, children }: { title: string; note: string; children
 /** One line of the sign-up form. */
 function Field({ children }: { children: ReactNode }) {
   return (
-    <span className="flex min-h-[30px] items-center rounded-lg border-[1.5px] border-border px-2.5 py-1 text-[14px] leading-[1.3] text-muted">
+    <span className="flex min-h-[30px] items-center rounded-lg border border-border px-2.5 py-1 text-[14px] leading-[1.3] text-muted">
       {children}
     </span>
   );

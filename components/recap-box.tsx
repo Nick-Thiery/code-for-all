@@ -31,7 +31,7 @@ export function RecapBox({ id, points, fallback, next, module }: Props) {
   }
 
   return (
-    <section aria-labelledby="recap-heading" className="flex flex-col gap-[18px] rounded-[20px] bg-tint p-(--pad) text-fg">
+    <section aria-labelledby="recap-heading" className="flex flex-col gap-[18px] rounded-2xl bg-tint p-(--pad) text-fg">
       <h2 id="recap-heading" className="t-h3 m-0">
         What you learned
       </h2>
@@ -49,7 +49,7 @@ export function RecapBox({ id, points, fallback, next, module }: Props) {
         aria-checked={checked}
         disabled={!ready}
         onClick={toggle}
-        className="flex min-h-[68px] w-full cursor-pointer items-center gap-4 print:hidden rounded-[14px] border-[1.5px] border-border bg-surface px-[18px] py-3 text-left font-[inherit] text-fg hover:border-accent disabled:cursor-default"
+        className="flex min-h-[68px] w-full cursor-pointer items-center gap-4 print:hidden rounded-xl border border-border bg-surface px-[18px] py-3 text-left font-[inherit] text-fg hover:border-accent disabled:cursor-default"
       >
         <span aria-hidden="true" className="relative h-[35px] w-8 flex-none">
           {checked ? (

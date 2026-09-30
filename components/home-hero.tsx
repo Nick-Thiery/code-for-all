@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Hex } from "@/components/hex";
 import { formatCount } from "@/lib/format";
 import { type Outline, allLessons, moduleCompleteHref, resumeTarget } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
@@ -39,10 +38,7 @@ export function HomeHero({ outline }: { outline: Outline }) {
 
   return (
     <div className="flex max-w-[600px] flex-[1_1_420px] flex-col gap-5">
-      <span className="flex items-center gap-2">
-        <Hex width={16} height={18} shape="fill-deco" />
-        <span className="eyebrow">{eyebrow}</span>
-      </span>
+      <span className="eyebrow">{eyebrow}</span>
       <h1 className="t-hero m-0">Build real things with AI.</h1>
       {/* A returning learner's words replace the new visitor's after the page
           loads. The new visitor's stay underneath, invisible, so the lead and
@@ -58,7 +54,34 @@ export function HomeHero({ outline }: { outline: Outline }) {
           <p className="t-meta m-0 text-muted">Free. No sign-up. Your progress saves on this device.</p>
         </div>
       )}
+      <AtAGlance outline={outline} />
     </div>
+  );
+}
+
+/**
+ * The course in three numbers, counted from the content, so they stay true
+ * as modules come out. From tablet up only: on phones the hero stays short
+ * so the course is close.
+ */
+function AtAGlance({ outline }: { outline: Outline }) {
+  const lessons = allLessons(outline);
+  const minutes = lessons.reduce((sum, lesson) => sum + lesson.duration, 0);
+  const hours = Math.round(minutes / 30) / 2;
+  const facts = [
+    { value: String(outline.modules.length), label: outline.modules.length === 1 ? "module out now" : "modules out now" },
+    { value: String(lessons.length), label: "short lessons" },
+    { value: String(hours), label: hours === 1 ? "hour of lessons" : "hours of lessons" },
+  ];
+  return (
+    <dl className="m-0 mt-4 hidden grid-cols-3 border-t border-border pt-5 tablet:grid">
+      {facts.map((fact, i) => (
+        <div key={fact.label} className={`flex flex-col-reverse gap-1 ${i > 0 ? "border-l border-border pl-5" : ""}`}>
+          <dt className="t-meta text-muted">{fact.label}</dt>
+          <dd className="display m-0 text-[32px] leading-none font-bold tabular-nums">{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 

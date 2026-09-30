@@ -81,7 +81,7 @@ export function Certificate({ text, lightTokens, logoSrc, unfinished }: Props) {
 
   if (!finished) {
     return (
-      <div className="flex flex-col gap-4 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+      <div className="flex flex-col gap-4 rounded-2xl border border-border p-(--pad)">
         <p className="display m-0 text-[22px] leading-[1.25] font-[650]">Not quite yet.</p>
         <p className="m-0">
           You&apos;ve done {doneCount} of {formatCount(text.requires.length, "lesson")}. Finish them all and your
@@ -110,7 +110,7 @@ export function Certificate({ text, lightTokens, logoSrc, unfinished }: Props) {
           onChange={(event) => setName(event.target.value)}
           autoComplete="name"
           placeholder="Your name"
-          className="w-full max-w-[420px] rounded-[14px] border-[1.5px] border-border bg-surface px-4 py-3 text-[19px] text-fg"
+          className="w-full max-w-[420px] rounded-xl border border-border bg-surface px-4 py-3 text-[19px] text-fg"
         />
         <p className="t-meta m-0 text-muted">
           Your name stays on this device, so it&apos;s ready for your next certificate. It&apos;s never sent anywhere.
@@ -122,7 +122,7 @@ export function Certificate({ text, lightTokens, logoSrc, unfinished }: Props) {
       <div
         ref={sheet}
         style={light}
-        className="certificate relative box-border flex aspect-[297/210] w-full flex-col justify-between overflow-hidden rounded-[6px] border-[1.5px] border-border bg-bg p-[5%] text-fg print:aspect-auto print:h-full print:w-full print:rounded-none"
+        className="certificate relative box-border flex aspect-[297/210] w-full flex-col justify-between overflow-hidden rounded-[6px] border border-border bg-bg p-[5%] text-fg print:aspect-auto print:h-full print:w-full print:rounded-none"
       >
         <div className="flex items-start justify-between gap-4">
           <Image src={logoSrc} alt="Code for All" width={401} height={126} unoptimized className="h-auto w-[22%] max-w-[260px]" />

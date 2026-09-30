@@ -182,7 +182,7 @@ export default function HelpPage() {
           </p>
         </header>
 
-        <nav aria-label="Questions on this page" className="rounded-[20px] bg-tint p-(--pad)">
+        <nav aria-label="Questions on this page" className="rounded-2xl bg-tint p-(--pad)">
           <ul className="m-0 flex list-none flex-col gap-1.5 p-0">
             {questions.map((item) => (
               <li key={item.id}>

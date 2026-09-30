@@ -132,7 +132,7 @@ function Marker({ part, number }: { part: Part; number: number }) {
 /** The page the three files make: a heading, a line of text and a button being clicked. */
 function MockPage() {
   return (
-    <div className="mx-auto w-full max-w-[280px] overflow-hidden rounded-[14px] bg-surface shadow-[0_14px_34px_color-mix(in_srgb,var(--accent)_16%,transparent)] dark:shadow-none dark:ring-1 dark:ring-border desktop:absolute desktop:top-[76px] desktop:left-[240px] desktop:w-[200px]">
+    <div className="mx-auto w-full max-w-[280px] overflow-hidden rounded-xl bg-surface shadow-[0_14px_34px_color-mix(in_srgb,var(--accent)_16%,transparent)] dark:shadow-none dark:ring-1 dark:ring-border desktop:absolute desktop:top-[76px] desktop:left-[240px] desktop:w-[200px]">
       <div className="flex h-[26px] items-center gap-[5px] border-b border-border bg-surface2 px-2.5">
         <span className="size-[7px] rounded-full bg-pip" />
         <span className="size-[7px] rounded-full bg-pip" />
@@ -147,7 +147,7 @@ function MockPage() {
         </div>
         <span className="text-[14px] leading-[1.4] text-muted">Get news about our next session.</span>
         <div className="relative mt-2.5 flex items-center gap-2">
-          <span className="inline-flex h-[38px] items-center rounded-[10px] bg-accent px-5 text-[15px] font-bold text-on-accent">
+          <span className="inline-flex h-[38px] items-center rounded-lg bg-accent px-5 text-[15px] font-bold text-on-accent">
             Sign up
           </span>
           <span className="desktop:hidden">

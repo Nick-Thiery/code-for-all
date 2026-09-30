@@ -7,7 +7,7 @@ const labels: Record<Kind, string> = { tip: "Tip", headsup: "Heads up", tryit: "
 
 const boxes: Record<Kind, string> = {
   tip: "bg-tint",
-  headsup: "border-[1.5px] border-border bg-surface2",
+  headsup: "border border-border bg-surface2",
   tryit: "border-2 border-dashed border-deco bg-surface",
 };
 
@@ -21,7 +21,7 @@ export function Callout({ kind = "tip", children }: { kind?: Kind; children: Rea
   return (
     <aside
       aria-label={label}
-      className={`flex flex-col gap-2 rounded-[14px] px-[22px] py-[18px] text-fg [&_p]:m-0 ${boxes[kind] ?? boxes.tip}`}
+      className={`flex flex-col gap-2 rounded-xl px-[22px] py-[18px] text-fg [&_p]:m-0 ${boxes[kind] ?? boxes.tip}`}
     >
       <span className="flex items-center gap-2">
         <CalloutIcon kind={kind} />

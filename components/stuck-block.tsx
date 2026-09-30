@@ -17,7 +17,7 @@ export function StuckBlock({ children, open: initiallyOpen = false }: { children
   const id = useId();
 
   return (
-    <div className="overflow-hidden rounded-[14px] border-[1.5px] border-border bg-surface text-fg print:hidden">
+    <div className="overflow-hidden rounded-xl border border-border bg-surface text-fg print:hidden">
       <button
         type="button"
         aria-expanded={open}
@@ -31,7 +31,7 @@ export function StuckBlock({ children, open: initiallyOpen = false }: { children
         </span>
         <span
           aria-hidden="true"
-          className="grid size-[34px] flex-none place-items-center rounded-full border-[1.5px] border-border text-[20px] leading-none font-bold text-accent"
+          className="grid size-[34px] flex-none place-items-center rounded-full border border-border text-[20px] leading-none font-bold text-accent"
         >
           {open ? "−" : "+"}
         </span>

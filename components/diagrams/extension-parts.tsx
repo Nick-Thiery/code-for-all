@@ -34,7 +34,7 @@ export function ExtensionPartsDiagram() {
           </div>
           <div className="relative px-3 pt-3 pb-4">
             {/* The popup, hanging from the icon. */}
-            <div className="absolute top-1 right-3 z-10 w-[168px] rounded-xl border-[1.5px] border-accent bg-surface p-2.5 shadow-[0_8px_22px_color-mix(in_srgb,var(--accent)_16%,transparent)]">
+            <div className="absolute top-1 right-3 z-10 w-[168px] rounded-xl border border-accent bg-surface p-2.5 shadow-[0_8px_22px_color-mix(in_srgb,var(--accent)_16%,transparent)]">
               <div className="flex items-center justify-between">
                 <span className="text-[13px] font-extrabold text-fg">Highlighter</span>
                 <NumberHex n={2} size={22} />
