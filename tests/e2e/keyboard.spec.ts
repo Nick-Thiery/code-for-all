@@ -53,6 +53,7 @@ const pages = [
   { name: "Check your skills", path: "/module-5/check-your-skills" },
   { name: "Run a session", path: "/run-it" },
   { name: "the glossary", path: "/glossary" },
+  { name: "the quizzes page", path: "/quizzes" },
 ];
 
 for (const { name, path } of pages) {

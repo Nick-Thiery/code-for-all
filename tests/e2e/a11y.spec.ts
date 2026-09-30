@@ -20,6 +20,7 @@ const pages: { name: string; path: string }[] = [
   { name: "Module complete", path: "/module-1/complete" },
   { name: "Run a session", path: "/run-it" },
   { name: "the glossary", path: "/glossary" },
+  { name: "the quizzes page", path: "/quizzes" },
   { name: "privacy", path: "/privacy" },
   { name: "access", path: "/access" },
   { name: "help", path: "/help" },

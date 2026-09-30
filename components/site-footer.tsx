@@ -22,6 +22,7 @@ export function SiteFooter({ firstLesson }: { firstLesson: string | null }) {
       links: [
         ...(firstLesson ? [{ href: firstLesson, label: "Start lesson 1" }] : []),
         { href: "/#contents", label: "Contents" },
+        { href: "/quizzes", label: "Quizzes" },
         { href: "/glossary", label: "Glossary" },
         { href: "/help", label: "Help" },
       ],

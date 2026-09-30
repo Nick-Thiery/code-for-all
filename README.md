@@ -255,6 +255,7 @@ app/[module]/page.tsx           /module-N: Coming soon for a module that isn't o
 app/run-it/page.tsx           Run a session: the facilitator kit, for adults
 app/run-it/[kit]/             printable kit pages (/run-it/script/module-3)
 content/facilitator.yml       run sheets for the kit (read by lib/facilitator.ts)
+app/quizzes/page.tsx          every quiz in one place, with last scores (components/quiz-list.tsx)
 app/glossary/page.tsx         glossary, built from every <KeyTerm> (lib/glossary.ts)
 app/privacy/page.tsx          privacy, for parents and schools
 app/access/page.tsx           how hands-on access works, and the device guide (#devices)
