@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Honeycomb } from "@/components/honeycomb";
+import { Icon } from "@/components/icons";
 import { dismissCelebration, useCelebration } from "@/lib/celebration";
 import { moduleCertificateHref, moduleCompleteHref } from "@/lib/outline";
 
@@ -40,7 +41,7 @@ export function ModuleCelebration() {
         <div
           key={celebration.key}
           ref={card}
-          className="pointer-events-auto flex w-full max-w-[400px] items-center gap-4 rounded-[20px] border-[1.5px] border-border bg-surface p-4 shadow-[0_18px_44px_color-mix(in_srgb,var(--accent)_16%,transparent)] dark:shadow-none"
+          className="pointer-events-auto flex w-full max-w-[420px] items-center gap-4 rounded-md border-2 border-line bg-surface p-4 shadow-h8"
           style={{ animation: "cfaRise 300ms ease both" }}
         >
           <div className="w-[84px] flex-none [&>svg]:h-auto [&>svg]:w-full">
@@ -48,7 +49,7 @@ export function ModuleCelebration() {
           </div>
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <span className="eyebrow">Module {celebration.module} complete</span>
-            <span className="display text-[19px] leading-[1.25] font-bold">You finished {celebration.title}.</span>
+            <span className="display text-[22px] leading-[1.12]">You finished {celebration.title}.</span>
             <span className="flex flex-wrap gap-x-4">
               <Link href={moduleCertificateHref(celebration.module)} onClick={dismissCelebration} className="text-link min-h-9 text-[16px]">
                 Get your certificate →
@@ -62,9 +63,9 @@ export function ModuleCelebration() {
             type="button"
             onClick={dismissCelebration}
             aria-label="Close"
-            className="grid size-11 flex-none cursor-pointer place-items-center self-start rounded-full border-0 bg-transparent text-[20px] text-muted hover:bg-surface2 hover:text-fg"
+            className="grid size-11 flex-none cursor-pointer place-items-center self-start rounded border-2 border-line bg-paper text-ink hover:bg-marigold hover:text-on-marigold"
           >
-            <span aria-hidden="true">✕</span>
+            <Icon name="cross" size={16} stroke={3} />
           </button>
         </div>
       )}

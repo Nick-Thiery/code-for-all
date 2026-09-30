@@ -34,7 +34,7 @@ export function ApiDoorDiagram() {
         <div
           className={`${diagramCard} col-span-3 overflow-hidden desktop:col-span-1 desktop:col-start-1 desktop:row-span-4 desktop:row-start-1 desktop:self-center`}
         >
-          <div className="flex h-6 items-center gap-[5px] border-b border-border bg-surface2 px-2.5" aria-hidden="true">
+          <div className="flex h-6 items-center gap-[5px] border-b border-line bg-surface2 px-2.5" aria-hidden="true">
             <span className="size-[7px] rounded-full bg-pip" />
             <span className="size-[7px] rounded-full bg-pip" />
             <span className="size-[7px] rounded-full bg-pip" />
@@ -44,7 +44,7 @@ export function ApiDoorDiagram() {
               <span className={`${diagramLabel} text-muted`}>Your site</span>
               <span className="text-[15px] leading-[1.35] text-fg">Singapore right now</span>
             </div>
-            <span className="font-display text-[34px] leading-none font-extrabold text-accent">31.2°C</span>
+            <span className="font-serif text-[32px] leading-none font-semibold text-accent">31.2°C</span>
           </div>
         </div>
 
@@ -62,7 +62,7 @@ export function ApiDoorDiagram() {
 
         {/* The door */}
         <div className="col-start-1 row-start-4 flex min-h-[132px] flex-col items-center rounded-t-full rounded-b-lg bg-accent pt-6 desktop:col-start-3 desktop:row-span-4 desktop:row-start-1 desktop:h-[228px] desktop:self-center desktop:pt-9">
-          <span className="font-display text-[20px] leading-none font-extrabold text-on-accent desktop:text-[24px]">API</span>
+          <span className="font-display [font-stretch:85%] text-[20px] leading-none font-extrabold text-on-accent desktop:text-[24px]">API</span>
           <span
             aria-hidden="true"
             className="mt-auto mr-3 mb-[42%] size-3 self-end rounded-full bg-deco dark:bg-on-accent desktop:size-3.5 desktop:mr-4"
@@ -80,7 +80,7 @@ export function ApiDoorDiagram() {
         </svg>
 
         {/* What's behind the door */}
-        <div className="col-start-3 row-start-4 flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-pip p-3.5 text-center desktop:col-start-5 desktop:row-span-4 desktop:row-start-1 desktop:self-center desktop:py-6">
+        <div className="col-start-3 row-start-4 flex flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-pip p-3.5 text-center desktop:col-start-5 desktop:row-span-4 desktop:row-start-1 desktop:self-center desktop:py-6">
           <svg
             width="40"
             height="40"
@@ -94,7 +94,7 @@ export function ApiDoorDiagram() {
               strokeLinejoin="round"
             />
           </svg>
-          <span className="font-display text-[17px] leading-[1.2] font-extrabold text-fg">Weather service</span>
+          <span className="font-serif text-[19px] leading-[1.2] font-semibold text-fg">Weather service</span>
           <span className="text-[14px] leading-[1.4] text-muted">You never see the inside, and you don’t have to.</span>
         </div>
       </div>
@@ -104,7 +104,7 @@ export function ApiDoorDiagram() {
 
 function Message({ label, className, children }: { label: string; className: string; children: ReactNode }) {
   return (
-    <div className={`${diagramCard} flex min-w-0 flex-col gap-1 rounded-xl px-3 py-2.5 desktop:mx-3 ${className}`}>
+    <div className={`${diagramCard} flex min-w-0 flex-col gap-1 rounded-md px-3 py-2.5 desktop:mx-3 ${className}`}>
       <span className={`${diagramLabel} text-accent`}>{label}</span>
       {children}
     </div>

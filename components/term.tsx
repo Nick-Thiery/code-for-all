@@ -18,14 +18,16 @@ export function Term({ def, href, children }: { def: string; href?: string; chil
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="inline cursor-pointer rounded border-0 bg-transparent px-0.5 font-[inherit] font-bold text-fg underline decoration-accent decoration-dotted decoration-2 underline-offset-[5px]"
+        className="inline cursor-pointer rounded-[3px] border-0 bg-transparent px-0.5 font-[inherit] font-bold text-fg underline decoration-accent decoration-dotted decoration-2 underline-offset-[5px] hover:bg-marigold hover:text-on-marigold aria-expanded:bg-marigold aria-expanded:text-on-marigold"
       >
         {children}
       </button>
       {open && (
         <>
           {" "}
-          <span className="rounded-md bg-tint px-2 py-0.5 [box-decoration-break:clone]">
+          {/* The popover: it opens in the line, so it can never cover the text
+              or fall off a phone's screen. */}
+          <span className="on-surface my-1.5 inline-block rounded border-2 border-line px-3 py-1.5 align-middle font-sans text-[16px] leading-[1.45] font-normal tracking-normal normal-case not-italic shadow-h4">
             {typeof children === "string" && <strong>{capitalise(children)}:</strong>} {def}
             {href && (
               <>

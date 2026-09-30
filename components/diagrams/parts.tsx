@@ -9,13 +9,13 @@ import type { ReactNode } from "react";
 import { diagramCard, diagramLabel, FlowArrow } from "@/components/diagram";
 import { Hex } from "@/components/hex";
 
-/** A numbered hexagon in the accent colour. */
+/** A numbered hexagon in the accent colour, with an ink edge. */
 export function NumberHex({ n, size = 30 }: { n: number | string; size?: number }) {
   const h = Math.round(size * 1.13);
   return (
     <span className="relative flex flex-none items-center justify-center" style={{ width: size, height: h }}>
-      <Hex width={size} height={h} shape="fill-accent" className="absolute inset-0" />
-      <span className="relative font-display text-[14px] leading-none font-extrabold text-on-accent">{n}</span>
+      <Hex width={size} height={h} shape="fill-accent stroke-line stroke-[1.5]" className="absolute inset-0" />
+      <span className="relative font-display [font-stretch:85%] text-[14px] leading-none font-extrabold text-on-accent">{n}</span>
     </span>
   );
 }
@@ -38,9 +38,9 @@ export function Card({
 }) {
   const look =
     tone === "tint"
-      ? "rounded-2xl bg-tint ring-1 ring-accent/20"
+      ? "on-marigold rounded-md border-2 border-line"
       : tone === "dashed"
-        ? "rounded-2xl border-2 border-dashed border-pip"
+        ? "rounded-md border-2 border-dashed border-line bg-paper2"
         : diagramCard;
   return (
     <div className={`${look} flex min-w-0 flex-col gap-2 p-3.5 ${className}`}>
@@ -48,7 +48,7 @@ export function Card({
         <div className="flex items-center gap-2.5">
           {n !== undefined && <NumberHex n={n} />}
           {icon}
-          {title && <span className="font-display text-[17px] leading-[1.2] font-extrabold text-fg">{title}</span>}
+          {title && <span className="font-serif text-[18px] leading-[1.2] font-semibold text-fg">{title}</span>}
         </div>
       )}
       {children}
@@ -70,10 +70,10 @@ export function Label({ children, className = "text-muted" }: { children: ReactN
 export function Window({ title, className = "", children }: { title?: string; className?: string; children: ReactNode }) {
   return (
     <div className={`${diagramCard} overflow-hidden ${className}`}>
-      <div className="flex h-7 items-center gap-1.5 border-b border-border bg-surface2 px-2.5" aria-hidden="true">
-        <span className="size-[7px] rounded-full bg-pip" />
-        <span className="size-[7px] rounded-full bg-pip" />
-        <span className="size-[7px] rounded-full bg-pip" />
+      <div className="flex h-7 items-center gap-1.5 border-b-2 border-line bg-paper px-2.5" aria-hidden="true">
+        <span className="box-border size-[9px] rounded-full border-[1.5px] border-line bg-tomato" />
+        <span className="box-border size-[9px] rounded-full border-[1.5px] border-line bg-marigold" />
+        <span className="box-border size-[9px] rounded-full border-[1.5px] border-line bg-sky" />
         {title && <span className="ml-1.5 truncate text-[13px] font-bold text-muted">{title}</span>}
       </div>
       {children}
@@ -84,12 +84,12 @@ export function Window({ title, className = "", children }: { title?: string; cl
 /** A pill: "Vercel: live", "main". */
 export function Chip({ children, tone = "surface" }: { children: ReactNode; tone?: "surface" | "accent" | "deco" }) {
   const look = {
-    surface: "bg-surface text-fg ring-1 ring-border",
+    surface: "bg-surface text-fg",
     accent: "bg-accent text-on-accent",
     deco: "bg-deco text-on-deco",
   }[tone];
   return (
-    <span className={`inline-flex h-[30px] items-center gap-1.5 rounded-full px-3 text-[14px] leading-none font-bold whitespace-nowrap ${look}`}>
+    <span className={`box-border inline-flex h-[30px] items-center gap-1.5 rounded border-2 border-line px-3 text-[14px] leading-none font-bold whitespace-nowrap ${look}`}>
       {children}
     </span>
   );
@@ -112,7 +112,7 @@ export function Flow({ children, className = "" }: { children: ReactNode[]; clas
 /** A grey placeholder line, for "text" in a mock page. */
 export function Line({ w = "100%", tone = "track" }: { w?: string; tone?: "track" | "accent" | "deco" }) {
   const bg = { track: "bg-track", accent: "bg-accent", deco: "bg-deco" }[tone];
-  return <span className={`block h-2 rounded-full ${bg}`} style={{ width: w }} aria-hidden="true" />;
+  return <span className={`block h-2 rounded-[2px] ${bg}`} style={{ width: w }} aria-hidden="true" />;
 }
 
 /** Simple line icons, 24×24, stroked in the current colour. */

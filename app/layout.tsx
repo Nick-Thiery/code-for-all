@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Atkinson_Hyperlegible_Mono } from "next/font/google";
+import { Archivo, Atkinson_Hyperlegible_Mono, Newsreader } from "next/font/google";
 import { ModuleCelebration } from "@/components/module-celebration";
 import { OfflineNotice } from "@/components/offline-notice";
 import { ServiceWorker } from "@/components/service-worker";
@@ -9,7 +9,7 @@ import { getOutline } from "@/lib/lessons";
 import { getLogoFiles } from "@/lib/logo";
 import { allowIndexing, site, siteUrl } from "@/lib/site";
 import { themeScript } from "@/lib/theme";
-import { lightTokens } from "@/lib/tokens";
+import { darkTokens, lightTokens } from "@/lib/tokens";
 import "./globals.css";
 
 // Body text: Atkinson Hyperlegible Next, designed by the Braille Institute
@@ -19,19 +19,36 @@ import "./globals.css";
 // preloaded below.
 const ATKINSON_LATIN = "/fonts/atkinson-next-latin.v1.woff2";
 
+// Display: Archivo with its width axis, for the condensed headlines, numerals,
+// kickers and buttons (font-stretch 62% to 88%). Always set in capitals.
+// next/font downloads it at build time and serves it from this site.
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  axes: ["wdth"],
+  display: "swap",
+  // The fallback is set much wider than condensed Archivo, so don't pretend to match it.
+  adjustFontFallback: false,
+});
+
+// Serif: Newsreader, upright and italic, with its optical-size axis. Card
+// titles, questions, the lede and dek, captions and pull quotes.
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  display: "swap",
+});
+
 // Prompts, code and commands.
 const atkinsonMono = Atkinson_Hyperlegible_Mono({
   variable: "--font-atkinson-mono",
   subsets: ["latin"],
   adjustFontFallback: false,
   fallback: ["ui-monospace", "monospace"],
+  preload: false,
 });
-
-// Headings: Recursive with its "casual" axis turned halfway up. Self-hosted
-// from public/fonts, cut down to the weights (600 to 800) and casual range
-// (0 to 0.6) the site uses: 65 KB instead of 109 KB. Same arrangement as
-// Atkinson above.
-const RECURSIVE_LATIN = "/fonts/recursive-casual-latin.v1.woff2";
 
 export const metadata: Metadata = {
   metadataBase: siteUrl(),
@@ -45,11 +62,11 @@ export const metadata: Metadata = {
 };
 
 // The browser's own bars match the page background in each theme (the
-// --bg tokens in globals.css).
+// --paper tokens in globals.css).
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: lightTokens().bg },
-    { media: "(prefers-color-scheme: dark)", color: "#0E1116" },
+    { media: "(prefers-color-scheme: light)", color: lightTokens().paper },
+    { media: "(prefers-color-scheme: dark)", color: darkTokens().paper },
   ],
 };
 
@@ -62,17 +79,16 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={atkinsonMono.variable}
+      className={`${archivo.variable} ${newsreader.variable} ${atkinsonMono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link rel="preload" href={ATKINSON_LATIN} as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href={RECURSIVE_LATIN} as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body className="flex min-h-dvh flex-col bg-bg text-fg antialiased">
         <a
           href="#main"
-          className="sr-only rounded-xl bg-accent print:hidden px-4 py-2 font-bold text-on-accent focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-10"
+          className="stamp sr-only px-4 py-2.5 text-[15px] print:hidden focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
         >
           Skip to content
         </a>
@@ -81,7 +97,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <main id="main" className="flex-1">
           {children}
         </main>
-        <SiteFooter logo={getLogoFiles()} />
+        <SiteFooter firstLesson={outline.modules[0]?.lessons[0]?.href ?? null} />
         <ModuleCelebration />
         <ServiceWorker />
       </body>

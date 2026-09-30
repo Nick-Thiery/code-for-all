@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type ReactNode, type RefObject } from "react";
-import { Hex, HEX_POINTS } from "@/components/hex";
+import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
+import { Icon } from "@/components/icons";
 import {
   PROMPT_MAX,
   PROMPT_NEAR,
@@ -177,19 +177,13 @@ export function PromptPractice({ taskId, hint, children }: Props) {
         : "";
 
   return (
-    <section aria-labelledby={`${id}-label`} data-task-id={taskId} className="flex flex-col gap-5 text-left text-fg print:hidden">
-      <div className="overflow-hidden rounded-[20px] border-[1.5px] border-border bg-surface">
-        <div className="flex flex-col gap-2.5 bg-tint p-(--pad)">
-          <div className="flex items-center gap-2">
-            <Hex width={18} height={20} shape="fill-deco" />
-            <span
-              id={`${id}-label`}
-              className="font-display text-[16px] leading-none font-bold tracking-[.06em] text-accent uppercase [font-variation-settings:'CASL'_0.6]"
-            >
-              Practice
-            </span>
-          </div>
-          <div className="display text-(length:--task) leading-[1.3] font-semibold [&_p]:m-0">
+    <section aria-labelledby={`${id}-label`} data-task-id={taskId} className="blk flex flex-col gap-6 text-left text-fg print:hidden">
+      <div className="card overflow-hidden">
+        <div className="flex flex-col gap-3 border-b-2 border-line p-(--pad)">
+          <span id={`${id}-label`} className="eyebrow">
+            Practice
+          </span>
+          <div className="font-serif text-(length:--task) leading-[1.15] font-semibold tracking-[-.01em] [&_p]:m-0">
             {children ?? (
               <p>
                 Task <code>{taskId}</code>
@@ -202,17 +196,17 @@ export function PromptPractice({ taskId, hint, children }: Props) {
                 type="button"
                 aria-expanded={hintOpen}
                 onClick={() => setHintOpen((open) => !open)}
-                className="min-h-11 cursor-pointer self-start border-0 bg-transparent p-0 font-[inherit] text-[17px] font-bold text-accent underline underline-offset-4"
+                className="min-h-11 cursor-pointer self-start border-0 bg-transparent p-0 font-[inherit] text-[17px] font-bold text-accent underline decoration-2 underline-offset-4"
               >
                 {hintOpen ? "Hide hint" : "Need a hint?"}
               </button>
-              {hintOpen && <p className="-mt-1.5 mb-0">{hint}</p>}
+              {hintOpen && <p className="-mt-1.5 mb-0 text-[17px] leading-[1.5]">{hint}</p>}
             </>
           )}
         </div>
 
         <div className="flex flex-col gap-3 p-(--pad)">
-          <label htmlFor={`${id}-prompt`} className="text-[18px] font-bold">
+          <label htmlFor={`${id}-prompt`} className="kicker">
             Your prompt
           </label>
           <textarea
@@ -225,15 +219,15 @@ export function PromptPractice({ taskId, hint, children }: Props) {
             rows={6}
             placeholder="Write your prompt here..."
             aria-describedby={`${id}-count ${id}-msg`}
-            className="box-border min-h-[180px] w-full resize-y rounded-xl border-2 border-border bg-surface p-4 font-mono text-[17px] leading-[1.6] text-fg"
+            className="field min-h-[180px] w-full resize-y p-4 font-mono text-[17px] leading-[1.6]"
           />
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-[16px] leading-[1.5]">
-            <span id={`${id}-msg`} aria-live="polite" className="flex-[1_1_220px] font-bold text-accent">
+            <span id={`${id}-msg`} aria-live="polite" className="flex-[1_1_220px] font-bold text-fg">
               {limitMessage}
             </span>
             <span
               id={`${id}-count`}
-              className={`ml-auto tabular-nums ${near ? "font-bold text-accent" : "text-muted"}`}
+              className={`ml-auto tabular-nums ${near ? "font-bold text-fg" : "text-muted"}`}
             >
               {length.toLocaleString("en-US")} / {PROMPT_MAX.toLocaleString("en-US")}
             </span>
@@ -256,22 +250,20 @@ export function PromptPractice({ taskId, hint, children }: Props) {
       {status.kind === "loading" && (
         <div
           role="status"
-          className="flex items-center gap-[18px] rounded-[20px] border-[1.5px] border-border bg-surface p-(--pad)"
+          className="card flex items-center gap-[18px] p-(--pad)"
           style={{ animation: "cfaRise 300ms ease both" }}
         >
           <div aria-hidden="true" className="flex flex-none gap-1.5">
             {[0, 200, 400].map((delay) => (
-              <Hex
+              <span
                 key={delay}
-                width={18}
-                height={20}
-                shape="fill-deco"
+                className="box-border block size-4 rounded-[3px] border-2 border-line bg-marigold"
                 style={{ animation: `cfaBreathe 1.4s ease-in-out ${delay}ms infinite` }}
               />
             ))}
           </div>
           <div>
-            <p className="display m-0 text-[22px] leading-[1.3] font-semibold">Reading your prompt...</p>
+            <p className="display m-0 text-[24px] leading-[1.2]">Reading your prompt...</p>
             <p className="t-meta mt-0.5 mb-0 text-muted">This usually takes a few seconds.</p>
           </div>
         </div>
@@ -310,12 +302,14 @@ function NoticeCard({
 }) {
   return (
     <div
-      className="flex items-start gap-4 rounded-[20px] border-[1.5px] border-border bg-surface p-(--pad)"
+      className="card flex items-start gap-4 p-(--pad)"
       style={{ animation: "cfaRise 360ms ease both" }}
     >
-      <Hex width={28} height={30} shape="fill-none stroke-deco stroke-2" className="mt-0.5 flex-none" />
+      <span aria-hidden="true" className="mt-1 box-border grid size-9 flex-none place-items-center rounded border-2 border-line bg-marigold text-on-marigold">
+        <Icon name="question" size={20} stroke={2.6} />
+      </span>
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-        <h3 ref={headlineRef} tabIndex={-1} className="display m-0 text-[22px] leading-[1.3] font-semibold">
+        <h3 ref={headlineRef} tabIndex={-1} className="display m-0 text-[24px] leading-[1.2]">
           {notice.title}
         </h3>
         <p className="m-0">{notice.body}</p>
@@ -369,19 +363,17 @@ function Feedback({
   return (
     <article
       aria-labelledby={`${id}-head`}
-      className="flex flex-col gap-6 rounded-[20px] border-[1.5px] border-border bg-surface p-(--pad)"
+      className="card flex flex-col gap-6 p-(--pad)"
     >
-      <header className="flex flex-col gap-2">
+      <header className="flex flex-col gap-2.5">
         <div className="flex items-center gap-2.5">
-          <p className="kicker m-0">Feedback on your prompt</p>
+          <p className="eyebrow m-0">Feedback on your prompt</p>
           {allNailed && (
             <span aria-hidden="true" className="flex gap-[3px]">
               {[700, 820, 940].map((delay) => (
-                <Hex
+                <span
                   key={delay}
-                  width={13}
-                  height={14}
-                  shape="fill-deco"
+                  className="box-border block size-3.5 rounded-[2px] border-2 border-line bg-marigold"
                   style={{ animation: `cfaPop 500ms ${delay}ms both` }}
                 />
               ))}
@@ -392,7 +384,7 @@ function Feedback({
           id={`${id}-head`}
           ref={headlineRef}
           tabIndex={-1}
-          className="display m-0 text-(length:--head) leading-[1.25] font-[650] outline-offset-[6px]"
+          className="display m-0 text-(length:--head) leading-[1.12] outline-offset-[6px]"
           style={{ animation: "cfaRise 400ms ease both" }}
         >
           {result.headline}
@@ -401,10 +393,10 @@ function Feedback({
 
       {improved.length > 0 && (
         <div
-          className="flex flex-col gap-1.5 rounded-[14px] bg-tint px-5 py-4"
+          className="on-sky flex flex-col gap-1.5 rounded-md border-2 border-line px-5 py-4"
           style={{ animation: "cfaRise 400ms 100ms ease both" }}
         >
-          <p className="display m-0 text-[16px] font-bold">Since your last try</p>
+          <p className="kicker m-0">Since your last try</p>
           {improved.map(({ i, from, to }) => (
             <div key={i} className="flex min-h-10 flex-wrap items-center gap-x-3 gap-y-1">
               <span className="sr-only">
@@ -414,12 +406,7 @@ function Feedback({
               <span aria-hidden="true" className="inline-flex items-center gap-2 text-muted">
                 <span className="flex gap-[3px]">
                   {[0, 1].map((k) => (
-                    <Hex
-                      key={k}
-                      width={16}
-                      height={18}
-                      shape={from > k ? "fill-muted stroke-muted stroke-2" : "fill-none stroke-pip stroke-2"}
-                    />
+                    <span key={k} className={`box-border block size-4 rounded-[3px] border-2 border-line ${from > k ? "bg-muted" : ""}`} />
                   ))}
                 </span>
                 {SCORE_WORDS[from]}
@@ -439,26 +426,15 @@ function Feedback({
                 <span className="flex gap-[3px]">
                   {[0, 1].map((k) =>
                     to > k && from <= k ? (
-                      <span key={k} className="relative block h-6 w-[22px]">
-                        <svg
-                          width="22"
-                          height="24"
-                          viewBox="0 0 24 26"
-                          className="ripple absolute inset-0"
+                      <span key={k} className="relative block size-[22px]">
+                        <span
+                          className="ripple absolute inset-0 box-border rounded-[3px] border-2 border-marigold"
                           style={{ animation: "cfaRing 1s 900ms ease-out both" }}
-                        >
-                          <polygon points={HEX_POINTS} className="fill-none stroke-deco stroke-2" />
-                        </svg>
-                        <Hex
-                          width={22}
-                          height={24}
-                          shape="fill-accent stroke-accent stroke-2"
-                          className="absolute inset-0"
-                          style={{ animation: "cfaPop 550ms 750ms cubic-bezier(.3,1.4,.5,1) both" }}
                         />
+                        <Pip on className="absolute inset-0" style={{ animation: "cfaPop 550ms 750ms cubic-bezier(.3,1.4,.5,1) both" }} />
                       </span>
                     ) : (
-                      <Hex key={k} width={22} height={24} shape={pipShape(to > k)} />
+                      <Pip key={k} on={to > k} />
                     ),
                   )}
                 </span>
@@ -469,34 +445,34 @@ function Feedback({
         </div>
       )}
 
-      <div role="list" aria-label="Your scores" className="flex flex-col border-t border-border">
+      <div role="list" aria-label="Your scores" className="flex flex-col border-t-2 border-line">
         {result.scores.map((score, i) => (
           <div
             key={i}
             role="listitem"
-            className="flex flex-wrap items-center gap-x-4 border-b border-border py-2.5"
+            className="flex flex-wrap items-center gap-x-4 border-b-2 border-line py-2.5"
             style={{ animation: `cfaRise 420ms cubic-bezier(.2,.7,.2,1) ${150 + i * 100}ms both` }}
           >
             <button
               type="button"
               aria-expanded={open[i]}
               onClick={() => setOpen((o) => o.map((v, j) => (j === i ? !v : v)))}
-              className="flex min-h-11 flex-[1_1_140px] cursor-pointer items-center gap-2.5 border-0 bg-transparent p-0 text-left font-[inherit] text-[19px] leading-[1.3] font-bold text-fg"
+              className="flex min-h-11 flex-[1_1_140px] cursor-pointer items-center gap-2.5 border-0 bg-transparent p-0 text-left font-serif text-[22px] leading-[1.2] font-semibold text-fg"
             >
               {SKILLS[i].name}
               <span
                 aria-hidden="true"
-                className="grid size-[22px] flex-none place-items-center rounded-full border-[1.5px] border-muted text-[13px] leading-none text-muted"
+                className="grid size-[22px] flex-none place-items-center rounded-full border-2 border-line font-sans text-[13px] leading-none font-bold text-fg"
               >
                 ?
               </span>
             </button>
             <div className="flex items-center gap-3">
               <span aria-hidden="true" className="flex gap-1">
-                <Hex width={22} height={24} shape={pipShape(score >= 1)} />
-                <Hex width={22} height={24} shape={pipShape(score >= 2)} />
+                <Pip on={score >= 1} />
+                <Pip on={score >= 2} />
               </span>
-              <span className="min-w-[7.2em] text-[19px] font-bold">{SCORE_WORDS[score as Score]}</span>
+              <span className="min-w-[7.2em] text-[18px] font-bold">{SCORE_WORDS[score as Score]}</span>
             </div>
             {open[i] && <p className="mt-0 mb-1.5 basis-full text-[17px] leading-[1.5] text-muted">{SKILLS[i].meaning}</p>}
           </div>
@@ -504,14 +480,14 @@ function Feedback({
       </div>
 
       <div className="flex flex-col gap-3">
-        <h4 className="display m-0 text-[20px] leading-[1.3] font-bold">
+        <h4 className="display m-0 text-[24px] leading-[1.2]">
           {fix.kind === "stretch" ? "Want a challenge?" : "One thing to try"}
         </h4>
         {fix.kind === "quote" && (
-          <div className="flex flex-col gap-3 rounded-[14px] border-[1.5px] border-border px-5 py-[18px]">
-            <div className="flex flex-col items-start gap-1.5">
-              <span className="kicker tracking-[.03em]">From your prompt</span>
-              <mark className="rounded-lg bg-tint px-2.5 py-1 font-mono text-[18px] leading-[1.5] text-fg">
+          <div className="card-flat flex flex-col gap-3 px-5 py-[18px]">
+            <div className="flex flex-col items-start gap-2">
+              <span className="kicker">From your prompt</span>
+              <mark className="part-mark part-scope font-serif text-[21px] leading-[1.5] text-fg">
                 “{quoteFromPrompt(prompt, fix.quote)}”
               </mark>
             </div>
@@ -524,9 +500,9 @@ function Feedback({
           </div>
         )}
         {fix.kind === "missing" && (
-          <div className="flex flex-col gap-3 rounded-[14px] border-[1.5px] border-border px-5 py-[18px]">
-            <span className="kicker tracking-[.03em]">Something to add</span>
-            <div className="flex items-start gap-2.5 rounded-[10px] border-2 border-dashed border-deco px-3.5 py-2.5">
+          <div className="card-flat flex flex-col gap-3 px-5 py-[18px]">
+            <span className="kicker">Something to add</span>
+            <div className="flex items-start gap-2.5 rounded border-2 border-dashed border-line bg-surface px-3.5 py-2.5">
               <span aria-hidden="true" className="text-[22px] leading-[1.3] font-bold text-accent">
                 +
               </span>
@@ -538,8 +514,8 @@ function Feedback({
           </div>
         )}
         {fix.kind === "stretch" && (
-          <div className="flex items-start gap-3 rounded-[14px] bg-tint px-5 py-[18px]">
-            <Hex width={20} height={22} shape="fill-none stroke-accent stroke-[2.5]" className="mt-1 flex-none" />
+          <div className="on-sky flex items-start gap-3 rounded-md border-2 border-line px-5 py-[18px]">
+            <Icon name="pencil" size={22} stroke={2.2} className="mt-1 text-accent" />
             <p className="m-0">{fix.text}</p>
           </div>
         )}
@@ -548,22 +524,24 @@ function Feedback({
       <div className="flex flex-col gap-2.5">
         <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
           <div>
-            <h4 className="display m-0 text-[20px] leading-[1.3] font-bold">{result.rewriteLabel}</h4>
-            <p className="t-meta mt-0.5 mb-0 text-muted">New parts are underlined.</p>
+            <h4 className="display m-0 text-[24px] leading-[1.2]">{result.rewriteLabel}</h4>
+            <p className="t-meta mt-1 mb-0 text-muted">New parts are underlined.</p>
           </div>
-          <button type="button" onClick={copy} className="btn btn-small min-w-24 text-[17px]">
-            {copied ? "✓ Copied" : "Copy"}
+          <button type="button" onClick={copy} className="btn btn-small min-w-[104px]">
+            <Icon name={copied ? "check" : "copy"} size={17} stroke={copied ? 3 : 2.2} />
+            {copied ? "Copied" : "Copy"}
           </button>
         </div>
         <span aria-live="polite" className="sr-only">
           {copied ? "Copied to clipboard" : ""}
         </span>
-        <div className="rounded-xl border-[1.5px] border-border bg-surface2 px-[18px] py-4 font-mono text-[17px] leading-[1.7] [overflow-wrap:anywhere] whitespace-pre-wrap">
+        <div className="index-card shadow-h4 desktop:shadow-h5">
+          <div className="index-card-body pt-4 text-fg">
           {result.rewrite.map((part, index) =>
             part.added ? (
               <mark
                 key={index}
-                className="rounded-[3px] bg-tint px-0.5 py-px text-fg underline decoration-accent decoration-2 underline-offset-4"
+                className="part-mark part-spec text-fg"
               >
                 {part.text}
               </mark>
@@ -571,10 +549,11 @@ function Feedback({
               <span key={index}>{part.text}</span>
             ),
           )}
+          </div>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 border-t border-border pt-5">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 border-t-2 border-line pt-5">
         <button type="button" onClick={onTryAgain} className="btn btn-primary">
           Try again
         </button>
@@ -584,8 +563,14 @@ function Feedback({
   );
 }
 
-function pipShape(on: boolean) {
-  return on ? "fill-accent stroke-accent stroke-2" : "fill-none stroke-pip stroke-2";
+/** One of the two squares beside a score: filled when earned. */
+function Pip({ on, className = "", style }: { on: boolean; className?: string; style?: CSSProperties }) {
+  return (
+    <span
+      className={`box-border block size-[22px] rounded-[3px] border-2 border-line ${on ? "bg-accent" : "bg-surface"} ${className}`}
+      style={style}
+    />
+  );
 }
 
 /** The learner's own words, with their capitals, when the quote is in their prompt. */

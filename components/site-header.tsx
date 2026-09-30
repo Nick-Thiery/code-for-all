@@ -3,70 +3,125 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Hex } from "@/components/hex";
+import { type CSSProperties, useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
+import { Icon } from "@/components/icons";
 import type { LogoFiles } from "@/lib/logo";
-import { type Outline, type OutlineLesson, lessonLabel, resumeTarget } from "@/lib/outline";
+import { type Outline, type OutlineLesson, type OutlineModule, lessonLabel, moduleTrackHref, resumeTarget } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
 import { THEME_CHANGE_EVENT, THEME_STORAGE_KEY, type Theme, applyTheme, readSavedTheme } from "@/lib/theme";
 
 // One header for every page. The URL decides the rest: which nav item is
-// current, whether to show lesson progress, and whether to show the
-// "pick up where you left off" bar.
+// current, whether it's the lesson top bar (back to the course, the module's
+// lessons as segments, "Lesson 2 of 6"), and whether to show the "pick up
+// where you left off" bar.
+
+const NAV = [
+  { href: "/", label: "Course", key: "course" },
+  { href: "/run-it", label: "Run a session", key: "run" },
+  { href: "/help", label: "Help", key: "help" },
+] as const;
+
 export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFiles }) {
   const pathname = usePathname();
   const { completed, ready } = useCompletedLessons();
+  useThemeEffects();
 
   const lesson = outline.modules.flatMap((module) => module.lessons).find((l) => l.href === pathname);
-  const active = pathname === "/" || pathname.startsWith("/module-") ? "course" : pathname.startsWith("/run-it") ? "run" : null;
+  const lessonModule = lesson && outline.modules.find((module) => module.number === lesson.module);
+  const active =
+    pathname === "/" || pathname.startsWith("/module-")
+      ? "course"
+      : pathname.startsWith("/run-it")
+        ? "run"
+        : pathname.startsWith("/help")
+          ? "help"
+          : null;
 
   // Not on the home page, whose hero has its own Continue button, and not
-  // in lessons, where the lesson row already shows where you are.
+  // in lessons, where the top bar already shows where you are.
   const resume = ready ? resumeTarget(outline, completed) : null;
   const showResume = resume !== null && pathname !== "/" && !lesson;
 
-  return (
-    <header className="border-b border-border bg-bg text-[16px] leading-[1.4] text-fg print:hidden">
-      <div className="mx-auto flex min-h-[68px] max-w-[1200px] items-center gap-3 px-(--gut)">
-        <Logo files={logo} />
-        {lesson && (
-          <div className="ml-3 hidden min-h-9 items-center gap-3 border-l border-border pl-5 desktop:flex">
-            <span className="font-bold whitespace-nowrap">
-              Module {lesson.module} · Lesson {lesson.number} of {moduleLength(outline, lesson)}
-            </span>
-            <LessonPips outline={outline} lesson={lesson} completed={completed} ready={ready} size="desktop" />
-          </div>
-        )}
-        <div className="flex-1" />
-        <nav aria-label="Main" className="flex items-center gap-1">
-          <NavLink href="/" current={active === "course"}>
-            Course
-          </NavLink>
-          <NavLink href="/run-it" current={active === "run"} prefetch={false}>
-            Run a session
-          </NavLink>
-        </nav>
-        <ThemeToggle />
-      </div>
+  // The phone menu: closed again whenever the page changes, and by Escape.
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuId = useId();
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setMenuOpen(false);
+      menuButton.current?.focus();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
 
-      {lesson && (
-        <div className="flex min-h-10 items-center justify-between gap-3 border-t border-border px-(--gut) desktop:hidden">
-          <span className="text-[15px] font-bold">
-            Lesson {lesson.number} of {moduleLength(outline, lesson)}
-          </span>
-          <LessonPips outline={outline} lesson={lesson} completed={completed} ready={ready} size="mobile" />
+  const menu = { open: menuOpen, id: menuId, ref: menuButton, toggle: () => setMenuOpen((open) => !open) };
+
+  return (
+    <header className="border-b-2 border-line bg-bg text-fg print:hidden">
+      {lesson && lessonModule ? (
+        <LessonBar lesson={lesson} module={lessonModule} completed={completed} ready={ready} menu={menu} />
+      ) : (
+        <div className="px-(--gut) max-nav:pr-4">
+          <div className="mx-auto flex h-[62px] max-w-[1200px] items-center justify-between gap-3 nav:h-[76px]">
+            <Wordmark files={logo} />
+            <div className="flex items-center gap-2">
+              <nav aria-label="Main" className="mr-0.5 hidden items-center gap-1.5 nav:flex">
+                {NAV.map((item) => (
+                  <NavLink key={item.key} href={item.href} current={active === item.key} prefetch={item.key === "course" ? undefined : false}>
+                    {item.label}
+                  </NavLink>
+                ))}
+              </nav>
+              <ThemeToggle />
+              <MenuButton menu={menu} className="nav:hidden" label />
+            </div>
+          </div>
         </div>
       )}
 
+      {/* The menu behind the MENU button: phones, and tablets on a lesson. */}
+      <nav
+        id={menuId}
+        aria-label="Main"
+        hidden={!menuOpen}
+        className={`border-t-2 border-line bg-paper2 px-(--gut) pb-3 ${lesson ? "desktop:hidden" : "nav:hidden"}`}
+      >
+        <ul className="m-0 flex list-none flex-col p-0">
+          {NAV.map((item) => (
+            <li key={item.key} className="border-b-2 border-line">
+              <Link
+                href={item.href}
+                prefetch={item.key === "course" ? undefined : false}
+                aria-current={!lesson && active === item.key ? "page" : undefined}
+                className="kicker flex min-h-14 items-center justify-between gap-3 text-[15px] no-underline decoration-marigold decoration-4 underline-offset-8 hover:text-accent aria-[current=page]:underline"
+              >
+                {item.label}
+                <Icon name="arrow-right" size={18} stroke={2.6} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+        {lesson && (
+          <div className="flex min-h-14 items-center justify-between gap-3 pt-3">
+            <span className="kicker text-[15px]">Light or dark</span>
+            <ThemeToggle />
+          </div>
+        )}
+      </nav>
+
       {showResume && (
-        <div className="border-t border-border bg-tint">
-          <div className="mx-auto max-w-[1200px] px-(--gut)">
+        <div className="on-sky border-t-2 border-line px-(--gut)">
+          <div className="mx-auto max-w-[1200px]">
             <Link
               href={resume.href}
               className="flex min-h-12 flex-wrap items-center gap-x-2 py-1.5 text-[17px] text-fg no-underline hover:text-fg"
             >
               <span>Pick up where you left off:</span>
-              <strong className="text-accent underline underline-offset-4">
+              <strong className="underline decoration-2 underline-offset-4">
                 {lessonLabel(outline, resume)} <span aria-hidden="true">→</span>
               </strong>
             </Link>
@@ -77,34 +132,48 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
   );
 }
 
-function moduleLength(outline: Outline, lesson: OutlineLesson) {
-  return outline.modules.find((module) => module.number === lesson.module)?.lessons.length ?? 0;
+type Menu = { open: boolean; id: string; ref: React.RefObject<HTMLButtonElement | null>; toggle: () => void };
+
+/** MENU on phones. With `label` it's the marigold button; without, just the square icon. */
+function MenuButton({ menu, label = false, className = "" }: { menu: Menu; label?: boolean; className?: string }) {
+  return (
+    <button
+      ref={menu.ref}
+      type="button"
+      aria-expanded={menu.open}
+      aria-controls={menu.id}
+      aria-label={label ? undefined : menu.open ? "Close menu" : "Open menu"}
+      onClick={menu.toggle}
+      className={`flex h-11 flex-none cursor-pointer items-center justify-center gap-2 rounded border-2 border-line font-display text-[14px] font-extrabold tracking-[.1em] text-ink uppercase [font-stretch:85%] ${
+        label ? "bg-marigold px-3 text-on-marigold" : "w-11 bg-transparent"
+      } ${className}`}
+    >
+      <Icon name={menu.open ? "cross" : "menu"} size={label ? 16 : 18} stroke={2.8} />
+      {label && "Menu"}
+    </button>
+  );
 }
 
-function Logo({ files }: { files: LogoFiles }) {
-  // The artwork is 401×126; shown 44px tall. Below 600px, only its hexagon shows.
-  // Unoptimised, so the browser gets the exact file: the light and dark
-  // versions must differ only in colour.
+function Wordmark({ files }: { files: LogoFiles }) {
+  // The logo artwork is 401×126: a hexagon, then "CODE For All". Only its
+  // hexagon shows here (the first 100 of its 401 pixels), and the name is
+  // set beside it in Archivo. Unoptimised, so the browser gets the exact
+  // file: the light and dark versions must differ only in colour.
   const image = (src: string) => (
-    <Image
-      src={src}
-      alt=""
-      width={401}
-      height={126}
-      priority
-      unoptimized
-      className="block h-11 w-auto max-w-none"
-    />
+    <Image src={src} alt="" width={401} height={126} priority unoptimized className="block h-full w-auto max-w-none" />
   );
   return (
     <Link
       href="/"
       aria-label="Code for All home"
-      className="flex min-h-11 flex-none items-center rounded-lg no-underline"
+      className="flex min-h-11 flex-none items-center gap-2.5 rounded text-fg no-underline hover:text-fg nav:gap-3"
     >
-      <span className="block h-11 w-[35px] overflow-hidden tablet:w-auto">
-        <span className="dark:hidden">{image(files.light)}</span>
-        <span className="hidden dark:block">{image(files.dark)}</span>
+      <span className="block h-[30px] w-[24px] flex-none overflow-hidden nav:h-9 nav:w-[29px]">
+        <span className="block h-full dark:hidden">{image(files.light)}</span>
+        <span className="hidden h-full dark:block">{image(files.dark)}</span>
+      </span>
+      <span className="font-display text-[24px] leading-none font-extrabold tracking-[.01em] whitespace-nowrap uppercase [font-stretch:72%] nav:text-[28px]">
+        Code for All
       </span>
     </Link>
   );
@@ -127,8 +196,10 @@ function NavLink({
       href={href}
       prefetch={prefetch}
       aria-current={current ? "page" : undefined}
-      className={`flex min-h-11 items-center rounded-[10px] px-2.5 font-bold whitespace-nowrap no-underline ${
-        current ? "bg-tint text-accent hover:text-accent" : "text-fg hover:bg-surface2 hover:text-fg"
+      className={`flex h-11 items-center rounded border-2 px-3.5 font-display text-[16px] font-bold tracking-[.08em] whitespace-nowrap uppercase no-underline [font-stretch:88%] ${
+        current
+          ? "border-line bg-marigold text-on-marigold hover:text-on-marigold"
+          : "border-transparent text-fg hover:border-line hover:text-fg"
       }`}
     >
       {children}
@@ -136,64 +207,127 @@ function NavLink({
   );
 }
 
-// Lesson pips: filled = done · tinted with a thick ring = this lesson ·
-// grey outline = not started. Always next to "Lesson 2 of 7".
-function LessonPips({
-  outline,
+/**
+ * The lesson top bar: back to the course, the module, one segment per lesson
+ * and "Lesson 2 of 6". From 960px it also has Help and the theme switch; below
+ * that they're behind the menu button.
+ */
+function LessonBar({
   lesson,
+  module,
   completed,
   ready,
-  size,
+  menu,
 }: {
-  outline: Outline;
   lesson: OutlineLesson;
+  module: OutlineModule;
   completed: Set<string>;
   ready: boolean;
-  size: "desktop" | "mobile";
+  menu: Menu;
 }) {
-  const lessons = outline.modules.find((module) => module.number === lesson.module)?.lessons ?? [];
-  const small = size === "desktop" ? [14, 15] : [13, 14];
-  const big = size === "desktop" ? [19, 21] : [17, 19];
-  const justFinished = useJustFinished(completed.has(lesson.id), ready);
-
+  const total = module.lessons.length;
+  const back = (
+    <Link
+      href={moduleTrackHref(module.number)}
+      className="kicker flex h-11 flex-none items-center gap-2 px-2 text-[14px] no-underline hover:text-accent desktop:px-0 desktop:text-[15px]"
+    >
+      <Icon name="arrow-left" size={18} stroke={2.6} />
+      Course
+    </Link>
+  );
   return (
-    <span aria-hidden="true" className="flex items-center gap-1">
-      {lessons.map((l) => {
-        const done = completed.has(l.id);
-        if (l.id === lesson.id) {
-          return done ? (
-            <Hex
-              key={l.id}
-              width={big[0]}
-              height={big[1]}
-              shape="fill-accent stroke-accent stroke-2"
-              style={justFinished ? { animation: "cfaPop 450ms cubic-bezier(.3,1.4,.5,1) both" } : undefined}
-            />
-          ) : (
-            <Hex key={l.id} width={big[0]} height={big[1]} shape="fill-tint stroke-accent stroke-3" />
-          );
-        }
-        return done ? (
-          <Hex key={l.id} width={small[0]} height={small[1]} shape="fill-accent stroke-accent stroke-2" />
-        ) : (
-          <Hex key={l.id} width={small[0]} height={small[1]} shape="fill-none stroke-pip stroke-2" />
-        );
-      })}
-    </span>
+    <>
+      {/* Phones and tablets. */}
+      <div className="flex h-[60px] items-center justify-between gap-2 pr-4 pl-3 desktop:hidden">
+        {back}
+        <div className="flex min-w-0 flex-1 items-center justify-end gap-2.5">
+          <Segments module={module} lesson={lesson} completed={completed} ready={ready} compact />
+          <span aria-hidden="true" className="kicker flex-none text-[13px] tracking-[.08em] tabular-nums">
+            {lesson.number}/{total}
+          </span>
+          <MenuButton menu={menu} />
+        </div>
+      </div>
+      {/* Desktop. */}
+      <div className="hidden h-[68px] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-5 px-10 desktop:grid">
+        <div className="flex min-w-0 items-center gap-[18px]">
+          {back}
+          <span aria-hidden="true" className="h-[26px] w-0.5 flex-none bg-line" />
+          <span className="eyebrow truncate">
+            Module {module.number}
+            <span className="max-wide:hidden"> · {module.title}</span>
+          </span>
+        </div>
+        <div className="flex items-center gap-3.5">
+          <Segments module={module} lesson={lesson} completed={completed} ready={ready} />
+          <span className="kicker text-[14px] tracking-[.1em] whitespace-nowrap">
+            Lesson {lesson.number} of {total}
+          </span>
+        </div>
+        <div className="flex items-center justify-end gap-2">
+          <nav aria-label="Main">
+            <NavLink href="/help" current={false} prefetch={false}>
+              Help
+            </NavLink>
+          </nav>
+          <ThemeToggle />
+        </div>
+      </div>
+    </>
   );
 }
 
-/** True once `done` flips to true while the page is open, so the pip pops then and not on load. */
-function useJustFinished(done: boolean, ready: boolean) {
-  const previous = useRef<boolean | null>(null);
-  const [popped, setPopped] = useState(false);
-  useEffect(() => {
-    if (!ready) return;
-    if (previous.current === false && done) setPopped(true);
-    if (!done) setPopped(false);
-    previous.current = done;
-  }, [done, ready]);
-  return popped;
+// One segment per lesson: navy = done · marigold and blinking = this lesson ·
+// empty = not started. Then a Quiz chip, if the module has a quiz. Finishing
+// this lesson fills its segment. To a screen reader it's one sentence.
+function Segments({
+  module,
+  lesson,
+  completed,
+  ready,
+  compact = false,
+}: {
+  module: OutlineModule;
+  lesson: OutlineLesson;
+  completed: Set<string>;
+  ready: boolean;
+  compact?: boolean;
+}) {
+  const done = ready ? module.lessons.filter((l) => completed.has(l.id)).length : 0;
+  const label = `Lesson ${lesson.number} of ${module.lessons.length}.${ready ? ` ${done} of ${module.lessons.length} done.` : ""}`;
+  return (
+    <div
+      role="img"
+      aria-label={label}
+      className={`flex items-center ${compact ? "min-w-0 flex-1 justify-end gap-1" : "gap-1.5"}`}
+    >
+      {module.lessons.map((l, index) => {
+        const isDone = ready && completed.has(l.id);
+        const current = l.id === lesson.id;
+        return (
+          <span
+            key={l.id}
+            className={`box-border flex overflow-hidden rounded-[3px] border-2 border-line ${
+              compact ? "h-3 max-w-[22px] min-w-2.5 flex-[1_1_22px]" : "h-3.5 w-11"
+            } ${current && !isDone ? "bg-marigold" : "bg-paper"}`}
+            style={current && !isDone ? { animation: "cvBlink 1.6s ease-in-out 1.2s infinite" } : undefined}
+          >
+            {isDone && (
+              <span
+                className="flex-1 origin-left bg-accent"
+                style={{ animation: `cvGrow .35s ease-out ${(0.2 + index * 0.15).toFixed(2)}s both` } as CSSProperties}
+              />
+            )}
+          </span>
+        );
+      })}
+      {module.quiz && !compact && (
+        <span className="ml-1 box-border flex h-[22px] items-center rounded-full border-2 border-line px-2 font-display text-[11px] leading-none font-extrabold tracking-[.1em] uppercase [font-stretch:85%]">
+          Quiz
+        </span>
+      )}
+    </div>
+  );
 }
 
 function subscribeTheme(onChange: () => void) {
@@ -212,13 +346,8 @@ function subscribeTheme(onChange: () => void) {
   };
 }
 
-function ThemeToggle() {
-  const theme = useSyncExternalStore<Theme | null>(
-    subscribeTheme,
-    () => (document.documentElement.dataset.theme === "dark" ? "dark" : "light"),
-    () => null,
-  );
-
+/** The theme's page-wide behaviour, run once by the header whichever switches it shows. */
+function useThemeEffects() {
   // Print in light colours, whatever the theme; put the theme back afterwards.
   useEffect(() => {
     let before: string | undefined;
@@ -253,7 +382,15 @@ function ThemeToggle() {
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
   }, []);
+}
 
+/** The square light/dark switch. */
+function ThemeToggle() {
+  const theme = useSyncExternalStore<Theme | null>(
+    subscribeTheme,
+    () => (document.documentElement.dataset.theme === "dark" ? "dark" : "light"),
+    () => null,
+  );
   const next: Theme = theme === "dark" ? "light" : "dark";
 
   return (
@@ -261,19 +398,12 @@ function ThemeToggle() {
       type="button"
       onClick={() => applyTheme(next, { save: true })}
       aria-label={theme ? `Switch to ${next} mode` : "Switch between light and dark mode"}
-      className="flex min-h-11 min-w-11 flex-none cursor-pointer items-center justify-center gap-2 rounded-xl border-[1.5px] border-border bg-transparent px-2.5 font-bold text-fg hover:border-accent"
+      className="flex size-11 flex-none cursor-pointer items-center justify-center rounded border-2 border-line bg-transparent text-fg hover:bg-marigold hover:text-on-marigold"
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="8.5" className="fill-none stroke-current stroke-2" />
-        <path d="M12 3.5a8.5 8.5 0 0 1 0 17z" className="fill-current" />
-      </svg>
-      {/* The label names where the button takes you. CSS picks it, so it's
-          right before hydration too. Both share one grid cell, so the button
-          is the same width in either theme. */}
-      <span className="hidden tablet:grid">
-        <span className="[grid-area:1/1] dark:invisible">Dark</span>
-        <span className="invisible [grid-area:1/1] dark:visible">Light</span>
-      </span>
+      {/* The icon shows where the button takes you. CSS picks it, so it's
+          right before hydration too. */}
+      <Icon name="moon" size={19} stroke={2} className="dark:hidden" />
+      <Icon name="sun" size={19} stroke={2} className="hidden dark:block" />
     </button>
   );
 }

@@ -9,9 +9,9 @@ export function DraftNotice({ children }: { children: ReactNode }) {
   return (
     <aside
       aria-label="Draft notice"
-      className="flex flex-col gap-1 rounded-[14px] border-2 border-dashed border-pip px-5 py-4 text-muted [&_p]:m-0"
+      className="flex flex-col gap-1.5 rounded-md border-2 border-dashed border-line bg-paper2 px-5 py-4 text-muted [&_p]:m-0"
     >
-      <span className="kicker">Draft: to be rewritten</span>
+      <span className="kicker text-muted">Draft: to be rewritten</span>
       <div className="flex flex-col gap-2">{children}</div>
     </aside>
   );

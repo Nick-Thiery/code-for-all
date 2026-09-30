@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Callout } from "@/components/callout";
-import { Hex, HexCheck } from "@/components/hex";
+import { Icon } from "@/components/icons";
+import { PageBody, PageHeader } from "@/components/page-header";
 import { getOutline } from "@/lib/lessons";
 import { allLessons } from "@/lib/outline";
 import { practiceCopy } from "@/lib/site";
@@ -52,21 +53,17 @@ export default async function AccessPage({ searchParams }: Props) {
   const handsOn = lessons.filter((lesson) => lesson.requiresAccount);
 
   return (
-    <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-12 tablet:pb-(--sec)">
-        <header className="flex flex-col gap-3.5">
-          <span className="eyebrow">Hands-on lessons</span>
-          <h1 className="t-h1 m-0">How hands-on access works</h1>
-          <p className="t-lead m-0">
-            {handsOn.length === 1 ? "One lesson has" : "Some lessons have"} a hands-on part that uses a tool like Lovable or
-            Claude Code.
-            Access for those parts is set up for you through a Code for All session, or by a teacher running one.
-            Everything else on Code for All works without it.
-          </p>
-        </header>
-
-        <section className="flex flex-col gap-3.5 rounded-[20px] border-[1.5px] border-border p-(--pad)">
-          <h2 className="t-h3 m-0">Works without it</h2>
+    <article>
+      <PageHeader kicker="Hands-on lessons" title="How hands-on access works">
+        <p>
+          {handsOn.length === 1 ? "One lesson has" : "Some lessons have"} a hands-on part that uses a tool like Lovable or
+          Claude Code. Access for those parts is set up for you through a Code for All session, or by a teacher running
+          one. Everything else on Code for All works without it.
+        </p>
+      </PageHeader>
+      <PageBody className="gap-6">
+        <section className="card flex flex-col gap-3.5 p-(--pad)">
+          <h2 className="t-block m-0">Works without it</h2>
           <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
             {[
               "Reading every lesson, including the hands-on ones",
@@ -74,43 +71,37 @@ export default async function AccessPage({ searchParams }: Props) {
               "Saving your progress on this device",
             ].map((item) => (
               <li key={item} className="flex items-start gap-3">
-                <Hex width={22} height={24} shape="fill-accent" className="mt-[3px] flex-none">
-                  <HexCheck className="stroke-on-accent stroke-[2.4]" />
-                </Hex>
+                <Tick ok />
                 <span>{item}</span>
               </li>
             ))}
           </ul>
         </section>
 
-        <h2 id="devices" className="t-h2 mt-6 mb-0 scroll-mt-6">
+        <h2 id="devices" className="t-h2 mt-10 mb-0 scroll-mt-6">
           Which device do you have?
         </h2>
         <p className="m-0">
           Reading, practice and quizzes work on anything with a browser. The building parts depend on your device.
         </p>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,200px),1fr))] gap-4">
+        <div className="my-2 grid grid-cols-[repeat(auto-fit,minmax(min(100%,210px),1fr))] gap-5 wide:-mr-[310px]">
           {devices.map((device) => (
             <section
               key={device.name}
               aria-labelledby={`device-${device.id}`}
-              className="flex flex-col gap-2 rounded-[20px] border-[1.5px] border-border p-5"
+              className="card flex flex-col gap-3 p-5 shadow-h5 desktop:shadow-h6"
             >
-              <h3 id={`device-${device.id}`} className="display m-0 text-[21px] leading-[1.3] font-bold">
+              <h3 id={`device-${device.id}`} className="display m-0 text-[23px] leading-[1.15]">
                 {device.name}
               </h3>
               <ul className="m-0 flex list-none flex-col gap-2 p-0 text-[17px] leading-[1.5]">
                 {device.points.map((point) => (
                   <li key={point.text} className="flex items-start gap-2.5">
-                    <Hex
-                      width={18}
-                      height={20}
-                      shape={point.ok ? "fill-accent" : "fill-none stroke-pip stroke-2"}
-                      className="mt-[5px] flex-none"
-                    >
-                      {point.ok && <HexCheck className="stroke-on-accent stroke-[2.6]" />}
-                    </Hex>
-                    <span>{point.text}</span>
+                    <Tick ok={point.ok} small />
+                    <span>
+                      <span className="sr-only">{point.ok ? "Works: " : "Doesn't work: "}</span>
+                      {point.text}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -130,7 +121,7 @@ export default async function AccessPage({ searchParams }: Props) {
           working offline, and you can add the site to your home screen like an app.
         </p>
 
-        <h2 id="cost" className="t-h2 mt-6 mb-0 scroll-mt-6">
+        <h2 id="cost" className="t-h2 mt-10 mb-0 scroll-mt-6">
           What does it cost?
         </h2>
         <p className="m-0">
@@ -139,20 +130,20 @@ export default async function AccessPage({ searchParams }: Props) {
           stop: you&apos;re on the wrong page or the wrong plan. Ask in your session, or <Link href="/help">get help</Link>.
         </p>
 
-        <h2 className="t-h2 mt-6 mb-0">Which tools need access?</h2>
+        <h2 className="t-h2 mt-10 mb-0">Which tools need access?</h2>
         <p className="m-0">
           The hands-on parts use Lovable, Claude and Claude Code, GitHub, Vercel and Supabase. Each lesson that needs
           one says so at the top, and each hands-on section is marked &ldquo;Hands-on: needs access&rdquo;.
         </p>
 
-        <h2 className="t-h2 mt-6 mb-0">Why do some lessons need access?</h2>
+        <h2 className="t-h2 mt-10 mb-0">Why do some lessons need access?</h2>
         <p className="m-0">
           These tools do real work for you, like building a site or putting it online, and they need an account
           behind them to do it. In a session, that&apos;s taken care of for you, which is why the hands-on parts are
           done with a session.
         </p>
 
-        <h2 className="t-h2 mt-6 mb-0">How do I get access?</h2>
+        <h2 className="t-h2 mt-10 mb-0">How do I get access?</h2>
         <p className="m-0">
           Through a Code for All session, or through a teacher or group that runs one. They set everything up, so you
           don&apos;t need to sign up for Lovable or Claude yourself. A few later lessons use GitHub, Vercel and
@@ -166,23 +157,37 @@ export default async function AccessPage({ searchParams }: Props) {
           </p>
         </Callout>
 
-        <h2 className="t-h2 mt-6 mb-0">No access yet?</h2>
+        <h2 className="t-h2 mt-10 mb-0">No access yet?</h2>
         <p className="m-0">
           That&apos;s okay. Read the hands-on parts anyway so you know every step. When you get access, you&apos;ll be
           ready to go.
         </p>
 
-        <div className="mt-2 flex flex-wrap gap-3">
+        <div className="mt-4 flex flex-wrap gap-4">
           {cameFrom && (
             <Link href={cameFrom.href} className="btn btn-primary">
-              <span aria-hidden="true">←</span> Back to Lesson {cameFrom.number}
+              <Icon name="arrow-left" size={20} stroke={2.6} /> Back to Lesson {cameFrom.number}
             </Link>
           )}
           <Link href="/" className={cameFrom ? "btn btn-secondary" : "btn btn-primary"}>
             Go to the course
           </Link>
         </div>
-      </article>
-    </div>
+      </PageBody>
+    </article>
+  );
+}
+
+/** A square with a tick for "works", or a cross for "doesn't". */
+function Tick({ ok, small = false }: { ok: boolean; small?: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`box-border grid flex-none place-items-center rounded-[3px] border-2 border-line ${
+        small ? "mt-[3px] size-5" : "mt-0.5 size-6 desktop:mt-1"
+      } ${ok ? "bg-accent text-on-accent" : "bg-surface text-fg"}`}
+    >
+      <Icon name={ok ? "check" : "cross"} size={small ? 12 : 15} stroke={3.4} />
+    </span>
   );
 }

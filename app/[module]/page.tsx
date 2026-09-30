@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { Hex } from "@/components/hex";
+import { PageBody, PageHeader } from "@/components/page-header";
 import { getModule, getModules, getPlannedModule, getSkillsChecks, parseModuleParam } from "@/lib/lessons";
 import { moduleTrackHref, quizHref, skillsCheckHref } from "@/lib/outline";
 
@@ -42,31 +42,29 @@ export default async function ModulePage({ params }: Props) {
   const skillsCheck = before && skills.pages.some((page) => page.after === before.number) ? before.number : null;
 
   return (
-    <div className="px-(--gut)">
-      <div className="mx-auto flex max-w-[720px] flex-col gap-8 py-12 tablet:py-(--sec)">
-        <div className="flex flex-col items-center gap-[18px] text-center">
-          <ComingSoonHoneycomb />
-          <span className="eyebrow">Module {number} · Coming soon</span>
-          <h1 className="t-h1 m-0">{planned.title}</h1>
-          <p className="m-0 max-w-[28em]">{planned.summary} We&apos;re writing this module now.</p>
-          <p className="t-meta m-0 max-w-[28em] text-muted">
-            There&apos;s nothing to sign up for. Just check back. Your progress stays saved on this device.
-          </p>
-        </div>
-
+    <article>
+      <PageHeader tone="navy" kicker={`Module ${number} · Coming soon`} title={planned.title}>
+        <p>{planned.summary} We&apos;re writing this module now.</p>
+        <p className="mt-3 font-sans text-[16px] leading-[1.5] text-muted desktop:text-[17px]">
+          There&apos;s nothing to sign up for. Just check back. Your progress stays saved on this device.
+        </p>
+      </PageHeader>
+      <PageBody className="gap-10 desktop:gap-14">
         {planned.planned.length > 0 && (
-          <section aria-labelledby="covers" className="flex flex-col gap-3 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+          <section aria-labelledby="covers" className="flex flex-col gap-4">
             <h2 id="covers" className="t-h3 m-0">
               What this module will cover
             </h2>
-            <ol className="m-0 flex list-none flex-col gap-2 p-0">
+            <ol className="m-0 flex list-none flex-col border-b-2 border-dashed border-line p-0">
               {planned.planned.map((title, index) => (
-                <li key={title} className="flex items-center gap-3">
-                  <span className="relative flex h-[30px] w-[26px] flex-none items-center justify-center">
-                    <Hex width={26} height={30} shape="fill-none stroke-pip stroke-2 [stroke-dasharray:4_3]" className="absolute inset-0" />
-                    <span className="relative text-[13px] leading-none font-bold text-muted">{index + 1}</span>
+                <li key={title} className="flex items-center gap-4 border-t-2 border-dashed border-line py-3">
+                  <span
+                    aria-hidden="true"
+                    className="box-border grid size-9 flex-none place-items-center rounded border-2 border-dashed border-line font-display text-[17px] leading-none font-extrabold text-muted [font-stretch:85%]"
+                  >
+                    {index + 1}
                   </span>
-                  <span>{title}</span>
+                  <span className="font-serif text-[21px] leading-[1.2] font-semibold desktop:text-[24px]">{title}</span>
                 </li>
               ))}
             </ol>
@@ -75,8 +73,11 @@ export default async function ModulePage({ params }: Props) {
         )}
 
         {(planned.waiting || before) && (
-          <section aria-labelledby="wait" className="flex flex-col gap-3 rounded-[20px] bg-tint p-(--pad)">
-            <h2 id="wait" className="t-h3 m-0">
+          <section
+            aria-labelledby="wait"
+            className="on-sky flex flex-col gap-3.5 rounded-md border-2 border-line p-(--pad) shadow-h6 desktop:shadow-h8"
+          >
+            <h2 id="wait" className="t-block m-0">
               While you wait
             </h2>
             {planned.waiting && <p className="m-0">{planned.waiting}</p>}
@@ -107,40 +108,10 @@ export default async function ModulePage({ params }: Props) {
           </section>
         )}
 
-        <div className="flex justify-center">
-          <Link href="/" className="btn btn-primary">
-            Back to the course
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ComingSoonHoneycomb() {
-  const ring = [
-    "-25,-69.3 -2.5,-56.3 -2.5,-30.3 -25,-17.3 -47.5,-30.3 -47.5,-56.3",
-    "25,-69.3 47.5,-56.3 47.5,-30.3 25,-17.3 2.5,-30.3 2.5,-56.3",
-    "50,-26 72.5,-13 72.5,13 50,26 27.5,13 27.5,-13",
-    "25,17.3 47.5,30.3 47.5,56.3 25,69.3 2.5,56.3 2.5,30.3",
-    "-25,17.3 -2.5,30.3 -2.5,56.3 -25,69.3 -47.5,56.3 -47.5,30.3",
-    "-50,-26 -27.5,-13 -27.5,13 -50,26 -72.5,13 -72.5,-13",
-  ];
-  return (
-    <svg width="170" height="162" viewBox="-80 -76 160 152" aria-hidden="true" className="mb-2">
-      {ring.map((points) => (
-        <polygon
-          key={points}
-          points={points}
-          strokeLinejoin="round"
-          className="fill-none stroke-pip stroke-2 [stroke-dasharray:5_4]"
-        />
-      ))}
-      <polygon
-        points="0,-26 22.5,-13 22.5,13 0,26 -22.5,13 -22.5,-13"
-        strokeLinejoin="round"
-        className="fill-tint stroke-deco stroke-[2.5]"
-      />
-    </svg>
+        <Link href="/" className="btn btn-primary self-start">
+          Back to the course
+        </Link>
+      </PageBody>
+    </article>
   );
 }

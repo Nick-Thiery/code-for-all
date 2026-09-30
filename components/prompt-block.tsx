@@ -1,41 +1,24 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
+import { CopyButton } from "@/components/copy-button";
 
 /**
- * A prompt to copy and paste into an AI tool, exactly as written. In MDX,
- * use a fenced block with the language "prompt" (see code-block.tsx):
+ * A prompt to copy and paste into an AI tool, exactly as written, on an
+ * index card: ruled lines, a tomato margin and a Copy button. In MDX, use a
+ * fenced block with the language "prompt" (see code-block.tsx):
  *
  *   ```prompt title="Strong"
  *   Role: You are an expert educational web designer...
  *   ```
  */
 export function PromptBlock({ text, title }: { text: string; title?: string }) {
-  const [copied, setCopied] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
-  useEffect(() => () => clearTimeout(timer.current), []);
-
-  function copy() {
-    navigator.clipboard?.writeText(text).catch(() => {});
-    setCopied(true);
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => setCopied(false), 2000);
-  }
-
+  // A few lines get the big card; a long prompt gets smaller type, so it stays one card.
+  const short = text.length <= 220 && !text.includes("\n");
   return (
-    <figure className="m-0 flex flex-col gap-2.5 break-inside-avoid">
-      <figcaption className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
-        <span className="kicker">{title ? `Prompt: ${title}` : "Prompt"}</span>
-        <button type="button" onClick={copy} className="btn btn-small min-w-24 text-[17px] print:hidden">
-          {copied ? "✓ Copied" : "Copy"}
-        </button>
+    <figure className={`blk index-card -rotate-[0.6deg] break-inside-avoid print:rotate-0 ${short ? "index-card-short" : ""}`}>
+      <figcaption className="index-card-head">
+        <span className="eyebrow">{title ? `Prompt: ${title}` : "Prompt"}</span>
+        <CopyButton text={text} />
       </figcaption>
-      <span aria-live="polite" className="sr-only">
-        {copied ? "Copied to clipboard" : ""}
-      </span>
-      <div className="rounded-xl border-[1.5px] border-border bg-surface2 px-[18px] py-4 font-mono text-[17px] leading-[1.7] [overflow-wrap:anywhere] whitespace-pre-wrap">
-        {text}
-      </div>
+      <div className="index-card-body">{text}</div>
     </figure>
   );
 }

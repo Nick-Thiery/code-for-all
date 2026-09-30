@@ -47,7 +47,7 @@ export function MasteryHex({
 }) {
   if (level === "mastered") {
     return (
-      <Hex width={width} height={height} shape="fill-accent stroke-accent stroke-[1.5]" className={className}>
+      <Hex width={width} height={height} shape="fill-accent stroke-line stroke-[1.5]" className={className}>
         <HexCheck className="stroke-on-accent stroke-[2.6]" />
       </Hex>
     );
@@ -56,7 +56,7 @@ export function MasteryHex({
     <Hex
       width={width}
       height={height}
-      shape={level === "not-started" ? "fill-surface stroke-pip stroke-[1.5]" : "fill-surface stroke-accent stroke-[1.5]"}
+      shape={level === "not-started" ? "fill-surface stroke-pip stroke-[1.5]" : "fill-surface stroke-line stroke-[1.5]"}
       className={className}
     >
       {level !== "not-started" && <polygon points={FILL_POINTS[level]} className="fill-accent" />}
@@ -91,7 +91,7 @@ export function HowLevelsWork() {
       >
         How levels work
       </button>
-      <ul id={id} hidden={!open} className="t-meta m-0 list-disc flex-col gap-1.5 pl-5 [&:not([hidden])]:flex">
+      <ul id={id} hidden={!open} className="t-meta m-0 mt-1 list-disc flex-col gap-1.5 pl-5 [&:not([hidden])]:flex">
         <li>
           When you finish a quiz, every lesson it asked about moves. Get all its questions right and it goes up a level.
           Miss one and it goes down a level.

@@ -23,12 +23,12 @@ export function ConsoleDrawing() {
           <Line w="40%" tone="accent" />
           <Line w="70%" />
           <div className="mt-1 flex flex-wrap items-center gap-2">
-            <span className="h-8 w-[46%] rounded-md border border-border bg-bg" />
+            <span className="h-8 w-[46%] rounded-md border border-line bg-bg" />
             <span className="inline-flex h-8 items-center rounded-md bg-accent px-3 text-[13px] font-bold text-on-accent">Sign up</span>
           </div>
         </div>
-        <div className="border-t-2 border-border bg-surface2">
-          <div className="flex items-center gap-1 border-b border-border px-2 pt-1.5">
+        <div className="border-t-2 border-line bg-surface2">
+          <div className="flex items-center gap-1 border-b border-line px-2 pt-1.5">
             {["Elements", "Console", "Sources"].map((tab) => (
               <span
                 key={tab}
@@ -39,10 +39,10 @@ export function ConsoleDrawing() {
             ))}
             {/* The step markers are real content, so they're outside aria-hidden. */}
           </div>
-          <div className="flex items-start gap-2 px-3 py-2.5 font-mono text-[13px] leading-[1.5]">
-            <span className="mt-0.5 size-3 flex-none rounded-full bg-(--part-style-ink)" aria-hidden="true" />
-            <span className="min-w-0 flex-1 text-(--part-style-ink)">{ERROR}</span>
-            <span className="flex-none text-muted underline">script.js:12</span>
+          <div className="flex items-start gap-2 bg-tomato-tint px-3 py-2.5 font-mono text-[13px] leading-[1.5] text-ink">
+            <span className="mt-0.5 box-border size-3 flex-none rounded-full border-2 border-line bg-tomato" aria-hidden="true" />
+            <span className="min-w-0 flex-1 font-bold">{ERROR}</span>
+            <span className="flex-none underline">script.js:12</span>
           </div>
         </div>
       </Window>

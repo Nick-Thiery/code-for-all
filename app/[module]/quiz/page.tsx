@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ModuleQuiz } from "@/components/module-quiz";
+import { PageBody, PageHeader } from "@/components/page-header";
 import { PrevNext } from "@/components/prev-next";
-import { formatCount } from "@/lib/format";
 import { getModule, getModules, getSkillsCheckFor, parseModuleParam } from "@/lib/lessons";
 import { moduleCompleteHref, moduleTrackHref, quizId, skillsCheckHref } from "@/lib/outline";
 
@@ -33,25 +33,23 @@ export default async function QuizPage({ params }: Props) {
   const skillsCheck = await getSkillsCheckFor(mod.number);
 
   return (
-    <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-12 tablet:pb-(--sec)">
-        <header className="mb-2 flex flex-col gap-3.5">
-          <p className="t-meta m-0 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-muted">
-            <span className="font-bold text-fg">{formatCount(mod.quiz.length, "question")}</span>
-            <span aria-hidden="true" className="hidden tablet:inline">
-              ·
-            </span>
-            <Link href={moduleTrackHref(mod.number)} className="basis-full font-bold tablet:basis-auto">
-              Module {mod.number}: {mod.title}
-            </Link>
-          </p>
-          <h1 className="t-h1 m-0">Module {mod.number} quiz</h1>
-          <p className="t-lead m-0">
-            Questions on this module&apos;s lessons. It&apos;s just for you: get a lesson&apos;s questions right and it
-            levels up, and if you get one wrong, you&apos;ll see which lesson explains it.
-          </p>
-        </header>
-
+    <article>
+      <PageHeader
+        tone="sky"
+        kicker={
+          <Link href={moduleTrackHref(mod.number)} className="no-underline hover:underline">
+            Module {mod.number} · {mod.title}
+          </Link>
+        }
+        title={`Module ${mod.number} quiz`}
+        sticker={{ big: String(mod.quiz.length), small: mod.quiz.length === 1 ? "question" : "questions" }}
+      >
+        <p>
+          Questions on this module&apos;s lessons. It&apos;s just for you: get a lesson&apos;s questions right and it
+          levels up, and if you get one wrong, you&apos;ll see which lesson explains it.
+        </p>
+      </PageHeader>
+      <PageBody className="gap-10 desktop:gap-14">
         <ModuleQuiz
           id={quizId(mod.number)}
           label="Quiz"
@@ -63,18 +61,16 @@ export default async function QuizPage({ params }: Props) {
           }
         />
 
-        <div className="mt-6">
-          <PrevNext
-            label={`Module ${mod.number}`}
-            previous={{ label: `Previous · Lesson ${last.number}`, title: last.title, href: last.href }}
-            next={{
-              label: `You've finished Module ${mod.number}`,
-              title: "See what's next",
-              href: moduleCompleteHref(mod.number),
-            }}
-          />
-        </div>
-      </article>
-    </div>
+        <PrevNext
+          label={`Module ${mod.number}`}
+          previous={{ label: `Previous · Lesson ${last.number}`, title: last.title, href: last.href }}
+          next={{
+            label: `You've finished Module ${mod.number}`,
+            title: "See what's next",
+            href: moduleCompleteHref(mod.number),
+          }}
+        />
+      </PageBody>
+    </article>
   );
 }

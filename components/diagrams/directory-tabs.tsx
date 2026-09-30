@@ -40,7 +40,7 @@ export function DirectoryTabsDiagram() {
       caption="The Directory's three tabs. A plugin is a bundle: skills, connectors and more in one install. Simplified drawing, not a screenshot."
     >
       <div className={`${diagramCard} mx-auto max-w-[560px] overflow-hidden`}>
-        <div className="flex h-8 items-center gap-2 border-b border-border bg-surface2 px-3" aria-hidden="true">
+        <div className="flex h-8 items-center gap-2 border-b border-line bg-surface2 px-3" aria-hidden="true">
           <span className="size-[8px] rounded-full bg-pip" />
           <span className="size-[8px] rounded-full bg-pip" />
           <span className="size-[8px] rounded-full bg-pip" />
@@ -51,13 +51,13 @@ export function DirectoryTabsDiagram() {
           {TABS.map((tab, index) => (
             <div
               key={tab.name}
-              className={`grid grid-cols-[minmax(92px,auto)_minmax(0,1fr)] gap-x-3 gap-y-1 rounded-xl p-2.5 ${
+              className={`grid grid-cols-[minmax(92px,auto)_minmax(0,1fr)] gap-x-3 gap-y-1 rounded-md p-2.5 ${
                 index === TABS.length - 1 ? "bg-tint" : ""
               }`}
             >
               <span
                 className={`inline-flex h-8 items-center self-start rounded-full px-3 text-[14px] font-bold ${
-                  index === TABS.length - 1 ? "bg-accent text-on-accent" : "border-[1.5px] border-border text-fg"
+                  index === TABS.length - 1 ? "bg-accent text-on-accent" : "border-2 border-line text-fg"
                 }`}
               >
                 {tab.name}

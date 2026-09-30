@@ -53,7 +53,7 @@ function BranchName({ children }: { children: ReactNode }) {
 
 function MainName() {
   return (
-    <span className="font-display text-[17px] leading-tight font-extrabold text-accent dark:text-fg">main</span>
+    <span className="font-serif text-[19px] leading-tight font-semibold text-accent dark:text-fg">main</span>
   );
 }
 

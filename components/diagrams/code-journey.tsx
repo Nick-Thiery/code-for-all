@@ -38,19 +38,19 @@ export function CodeJourneyDiagram() {
                 )}
               </div>
             )}
-            <div className="flex min-w-0 flex-1 flex-col gap-2 rounded-2xl bg-surface p-3.5 ring-1 ring-border">
+            <div className="flex min-w-0 flex-1 flex-col gap-2 rounded-md bg-surface p-3.5 border-2 border-line">
               <span className="flex items-center gap-2">
-                <span className="grid size-10 flex-none place-items-center rounded-full bg-tint">
+                <span className="grid size-10 flex-none place-items-center rounded-full border-2 border-line bg-sky">
                   <Icon name={place.icon} />
                 </span>
-                <span className="font-display text-[17px] leading-[1.2] font-extrabold text-fg">{place.name}</span>
+                <span className="font-serif text-[19px] leading-[1.2] font-semibold text-fg">{place.name}</span>
               </span>
               <Note className="text-muted">{place.what}</Note>
               <div className="flex flex-col gap-1.5">
                 {place.terms.map((term) => {
                   const [word, rest] = term.split(": ");
                   return (
-                    <span key={term} className="rounded-xl bg-surface2 px-2.5 py-1 text-[14px] leading-[1.4] ring-1 ring-border">
+                    <span key={term} className="rounded-md bg-surface2 px-2.5 py-1 text-[14px] leading-[1.4] border-2 border-line">
                       <span className="font-bold text-accent">{word}</span>
                       {rest && <span className="text-muted"> {rest}</span>}
                     </span>

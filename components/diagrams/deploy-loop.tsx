@@ -23,8 +23,8 @@ export function DeployLoopDiagram() {
     <Diagram alt={ALT} caption="Once Vercel is connected: change, push, rebuild, live. Then round again. You never upload anything.">
       <div className="relative grid gap-2.5 tablet:grid-cols-2">
         {STEPS.map((step, index) => (
-          <div key={step.title} className="flex items-center gap-3 rounded-2xl bg-surface p-3 ring-1 ring-border">
-            <span className="grid size-11 flex-none place-items-center rounded-full bg-tint">
+          <div key={step.title} className="flex items-center gap-3 rounded-md bg-surface p-3 border-2 border-line">
+            <span className="grid size-11 flex-none place-items-center rounded-full border-2 border-line bg-sky">
               <Icon name={step.icon} />
             </span>
             <span className="flex min-w-0 flex-col">

@@ -46,7 +46,7 @@ export function SkillRecipeDiagram() {
             {SHELF.map((skill) => (
               <div
                 key={skill.name}
-                className={`flex flex-col gap-1 rounded-xl p-2.5 ${skill.picked ? "bg-tint ring-2 ring-accent" : "bg-surface ring-1 ring-border opacity-80"}`}
+                className={`flex flex-col gap-1 rounded-md p-2.5 ${skill.picked ? "on-marigold border-2 border-line" : "bg-surface border-2 border-line opacity-80"}`}
               >
                 <span className="flex items-center justify-between gap-2">
                   <code className="font-mono text-[14px] font-semibold [overflow-wrap:anywhere] text-fg">{skill.name}/SKILL.md</code>

@@ -60,9 +60,9 @@ function Step({
       <div className="flex items-center gap-2.5">
         <span className="relative flex h-[34px] w-[30px] flex-none items-center justify-center">
           <Hex width={30} height={34} shape="fill-accent" className="absolute inset-0" />
-          <span className="relative font-display text-[15px] leading-none font-extrabold text-on-accent">{number}</span>
+          <span className="relative font-display [font-stretch:85%] text-[15px] leading-none font-extrabold text-on-accent">{number}</span>
         </span>
-        <span className="font-display text-[21px] leading-[1.2] font-extrabold text-fg">{title}</span>
+        <span className="font-serif text-[23px] leading-[1.2] font-semibold text-fg">{title}</span>
       </div>
       <div className="flex items-center gap-3.5 desktop:flex-col desktop:items-stretch desktop:gap-2.5">
         <p className="m-0 min-w-0 flex-1 text-[15px] leading-[1.45] text-fg desktop:order-2 desktop:flex-none">
@@ -127,10 +127,10 @@ function LaunchPicture() {
         <circle cx="38" cy="24" r="3" className="fill-accent" />
         <rect x="18" y="46" width="62" height="12" rx="4" className="fill-fg" />
         <rect x="18" y="66" width="56" height="7" rx="3.5" className="fill-track" />
-        <rect x="18" y="86" width="60" height="28" rx="6" className="fill-(--part-role)" />
-        <rect x="84" y="86" width="60" height="28" rx="6" className="fill-(--part-goal)" />
+        <rect x="18" y="86" width="60" height="28" rx="4" className="fill-sky" />
+        <rect x="84" y="86" width="60" height="28" rx="4" className="fill-marigold" />
       </svg>
-      <span className="absolute top-[37%] right-[7%] -translate-y-1/2 rounded-full bg-accent px-1.5 text-[13px] leading-[1.45] font-bold tracking-[.06em] text-on-accent">
+      <span className="absolute top-[37%] right-[7%] -translate-y-1/2 rounded-[3px] border-2 border-line bg-marigold px-1.5 text-[13px] leading-[1.45] font-bold tracking-[.06em] text-on-marigold">
         LIVE
       </span>
     </>

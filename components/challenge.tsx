@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Hex } from "@/components/hex";
 
 /**
  * The module's homework, at the end of its last lesson. In MDX:
@@ -12,18 +11,15 @@ export function Challenge({ title, children }: { title: string; children: ReactN
   return (
     <section
       aria-labelledby="challenge-heading"
-      className="overflow-hidden rounded-[20px] border-2 border-accent bg-surface text-fg"
+      className="blk on-marigold flex flex-col gap-4 rounded-md border-2 border-line px-[22px] pt-6 pb-[26px] shadow-h6 desktop:gap-5 desktop:px-[34px] desktop:pt-[30px] desktop:pb-[34px] desktop:shadow-h8"
     >
-      <div className="flex flex-col gap-2 bg-accent p-(--pad) text-on-accent">
-        <span className="flex items-center gap-2">
-          <Hex width={16} height={18} shape="fill-on-accent" />
-          <span className="eyebrow leading-none text-on-accent">Challenge</span>
-        </span>
-        <h2 id="challenge-heading" className="t-h3 m-0">
+      <div className="flex flex-col gap-2.5">
+        <span className="eyebrow">Challenge</span>
+        <h2 id="challenge-heading" className="t-block m-0">
           {title}
         </h2>
       </div>
-      <div className="flex flex-col gap-3 p-(--pad) [&_p]:m-0">{children}</div>
+      <div className="flex flex-col gap-3.5 [&_p]:m-0">{children}</div>
     </section>
   );
 }

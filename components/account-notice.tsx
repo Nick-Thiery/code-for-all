@@ -1,24 +1,24 @@
 import Link from "next/link";
+import { Icon } from "@/components/icons";
 
-/** Top of a lesson with `requiresAccount: true`. */
+/** Top of a lesson with `requiresAccount: true` that has no "You'll need" box. */
 export function AccountNotice({ lessonId }: { lessonId: string }) {
   return (
-    <div role="note" className="flex items-start gap-4 rounded-2xl bg-tint px-[22px] py-[18px]">
-      <svg width="26" height="28" viewBox="0 0 24 26" aria-hidden="true" className="mt-[3px] flex-none">
-        <polygon
-          points="12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5"
-          strokeLinejoin="round"
-          className="fill-none stroke-accent stroke-[2.2]"
-        />
-        <text x="12" y="17.8" textAnchor="middle" className="fill-accent font-sans text-[12px] font-bold">
-          i
-        </text>
-      </svg>
-      <div className="flex flex-col gap-0.5">
-        <Link href={`/access?from=${encodeURIComponent(lessonId)}`} className="text-link -my-2.5">
-          Hands-on: needs access
-        </Link>
-        <p className="m-0">This lesson has a hands-on part. You can read the whole lesson without access.</p>
+    <div className="rail-block flex flex-col gap-3.5">
+      <span className="rail-label">Before you start</span>
+      <div
+        role="note"
+        className="on-marigold flex items-start gap-4 rounded-md border-2 border-line px-[22px] py-5 shadow-h6 desktop:px-8 desktop:py-6 desktop:shadow-h8"
+      >
+        <span className="on-surface box-border grid size-12 flex-none place-items-center rounded-md border-2 border-line text-accent">
+          <Icon name="laptop" size={28} stroke={1.9} />
+        </span>
+        <div className="flex flex-col gap-0.5">
+          <Link href={`/access?from=${encodeURIComponent(lessonId)}`} className="text-link -my-2">
+            Hands-on: needs access
+          </Link>
+          <p className="m-0">This lesson has a hands-on part. You can read the whole lesson without access.</p>
+        </div>
       </div>
     </div>
   );

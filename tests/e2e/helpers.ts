@@ -69,6 +69,31 @@ export async function readStorage<T>(page: Page, key: string): Promise<T | null>
   return raw === null ? null : (JSON.parse(raw) as T);
 }
 
+/**
+ * Wait until the page's entrance animations are over, so checks see each
+ * element as it ends up, not half faded in. It scrolls down the page first,
+ * so the blocks that animate when scrolled to have played too. Loops that
+ * never end (the ticker, the blinking segment) are left alone.
+ */
+export async function settled(page: Page) {
+  await page.evaluate(async () => {
+    const finished = () =>
+      Promise.all(
+        document
+          .getAnimations()
+          .filter((animation) => animation.effect?.getComputedTiming().iterations !== Infinity)
+          .map((animation) => animation.finished.catch(() => {})),
+      );
+    for (let y = 0; y < document.documentElement.scrollHeight; y += 400) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve, 40)));
+    }
+    await finished();
+    window.scrollTo(0, 0);
+    await finished();
+  });
+}
+
 /** Light or dark, applied before first paint like a saved choice would be. */
 export async function useTheme(page: Page, theme: "light" | "dark") {
   await seedStorage(page, { "cfa:theme": theme });

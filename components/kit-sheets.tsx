@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { CourseLink } from "@/components/kit-course-link";
 import { KitMdx } from "@/components/kit-mdx";
 import { PrintButton, PrintSetup } from "@/components/kit-print";
-import { Hex } from "@/components/hex";
+import { Icon } from "@/components/icons";
 import { KIT_PAGES, kitHref, type KitLesson, type KitPage, type RunSheet } from "@/lib/facilitator";
 import { moduleHref } from "@/lib/outline";
 
@@ -30,18 +30,18 @@ export function KitShell({
   return (
     <div className="px-(--gut) print:px-0">
       <PrintSetup />
-      <div className="mx-auto flex max-w-[820px] flex-col gap-12 pt-(--hy) pb-12 tablet:pb-(--sec) print:max-w-none print:gap-0 print:p-0 print:text-[10.5pt] print:leading-[1.45]">
-        <header className="flex flex-col gap-4 print:hidden">
-          <Link href="/run-it#kit" className="text-link gap-1.5 self-start text-[17px]">
-            <span aria-hidden="true">←</span> Run a session
+      <div className="mx-auto flex max-w-[820px] flex-col gap-14 pt-(--hy) pb-16 desktop:pb-[120px] print:max-w-none print:gap-0 print:p-0 print:text-[10.5pt] print:leading-[1.45]">
+        <header className="flex flex-col gap-5 border-b-2 border-line pb-10 print:hidden">
+          <Link href="/run-it#kit" className="kicker flex min-h-11 items-center gap-2 self-start no-underline hover:text-accent">
+            <Icon name="arrow-left" size={18} stroke={2.6} /> Run a session
           </Link>
           <span className="eyebrow">Session kit</span>
           <h1 className="t-h1 m-0">{current === null ? info.title : `${info.title}: Module ${current}`}</h1>
-          <p className="t-lead m-0 text-muted">
+          <p className="t-lead m-0">
             {info.description}{" "}
             {current === null ? "Printed, each module starts on a new page." : null}
           </p>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-4">
             <PrintButton label={current === null ? "Print all modules" : `Print Module ${current}`} />
             {current !== null && (
               <Link href={kitHref(page)} className="btn btn-secondary">
@@ -49,16 +49,16 @@ export function KitShell({
               </Link>
             )}
           </div>
-          <nav aria-label={`${info.title} for one module`} className="flex flex-col gap-2">
+          <nav aria-label={`${info.title} for one module`} className="flex flex-col gap-3">
             <span className="kicker">{current === null ? "Or open one module" : "Modules"}</span>
-            <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+            <ul className="m-0 flex list-none flex-wrap gap-3 p-0">
               {modules.map((mod) => (
                 <li key={mod.number}>
                   <Link
                     href={kitHref(page, mod.number)}
                     aria-current={mod.number === current ? "page" : undefined}
                     title={`Module ${mod.number}: ${mod.title}`}
-                    className={`btn btn-small px-3.5 ${mod.number === current ? "bg-accent text-on-accent hover:bg-accent hover:text-on-accent" : ""}`}
+                    className={`btn btn-small px-3.5 ${mod.number === current ? "bg-marigold text-on-marigold hover:text-on-marigold" : ""}`}
                   >
                     Module {mod.number}
                   </Link>
@@ -79,7 +79,7 @@ function Sheet({ id, dense = false, children }: { id: string; dense?: boolean; c
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={`flex scroll-mt-6 flex-col gap-6 border-t-[1.5px] border-border pt-12 print:border-0 print:pt-0 print:break-before-page print:first-of-type:break-before-auto ${
+      className={`flex scroll-mt-6 flex-col gap-6 border-t-2 border-line pt-12 first-of-type:border-t-0 first-of-type:pt-0 print:border-0 print:pt-0 print:break-before-page print:first-of-type:break-before-auto ${
         dense ? "print:gap-2.5 print:text-[9pt] print:leading-[1.3]" : "print:gap-4"
       }`}
     >
@@ -95,7 +95,7 @@ function SheetHeader({ id, label, title, summary }: { id: string; label: string;
       <h2 id={`${id}-title`} className="t-h2 m-0 print:text-[18pt]">
         {title}
       </h2>
-      {summary && <p className="t-lead m-0 text-muted print:text-[10.5pt]">{summary}</p>}
+      {summary && <p className="t-lead m-0 print:font-sans print:text-[10.5pt]">{summary}</p>}
     </header>
   );
 }
@@ -105,7 +105,10 @@ function Bullets({ items }: { items: string[] }) {
     <ul className="m-0 flex list-none flex-col gap-1.5 p-0 print:gap-0.5">
       {items.map((item, index) => (
         <li key={index} className="flex items-start gap-2.5">
-          <Hex width={12} height={13} shape="fill-deco" className="mt-[0.45em] flex-none print:mt-[0.3em]" />
+          <span
+            aria-hidden="true"
+            className="mt-[0.5em] box-border block size-[11px] flex-none border-2 border-line bg-marigold print:mt-[0.35em] print:size-[6pt] print:border print:[print-color-adjust:exact]"
+          />
           <span>{item}</span>
         </li>
       ))}
@@ -116,7 +119,7 @@ function Bullets({ items }: { items: string[] }) {
 function OutOfDate({ problems }: { problems: string[] }) {
   if (problems.length === 0) return null;
   return (
-    <div role="note" className="rounded-[14px] border-2 border-dashed border-pip px-5 py-4 print:hidden">
+    <div role="note" className="rounded-md border-2 border-dashed border-line bg-paper2 px-5 py-4 print:hidden">
       <p className="m-0 font-bold">This run sheet needs updating</p>
       <p className="t-meta mt-1 mb-2 text-muted">The lessons have changed since it was written. Fix these in content/facilitator.yml:</p>
       <Bullets items={problems} />
@@ -127,7 +130,7 @@ function OutOfDate({ problems }: { problems: string[] }) {
 function ChallengeBox({ sheet }: { sheet: RunSheet }) {
   if (!sheet.challenge) return null;
   return (
-    <div className="flex flex-col gap-2 rounded-[20px] border-2 border-accent p-(--pad) break-inside-avoid print:gap-1 print:rounded-[10px] print:px-3 print:py-2.5">
+    <div className="on-marigold flex flex-col gap-2.5 rounded-md border-2 border-line p-(--pad) break-inside-avoid shadow-h6 print:gap-1 print:bg-transparent print:px-3 print:py-2.5 print:shadow-none">
       <span className="eyebrow print:text-[9pt]">Challenge</span>
       <h3 className="t-h3 m-0 print:text-[13pt]">{sheet.challenge.title}</h3>
       <KitMdx snippet={sheet.challenge} />
@@ -163,7 +166,7 @@ export function ScriptSheet({ sheet, sessionMinutes }: { sheet: RunSheet; sessio
   return (
     <Sheet id={id}>
       <SheetHeader id={id} label={`Facilitator script · Module ${mod.number}`} title={mod.title} summary={mod.summary} />
-      <dl className="m-0 grid grid-cols-[auto_minmax(0,1fr)] gap-x-5 gap-y-2 rounded-[20px] border-[1.5px] border-border px-5 py-4 print:rounded-[10px] print:px-3 print:py-2">
+      <dl className="m-0 grid grid-cols-[auto_minmax(0,1fr)] gap-x-5 gap-y-2 rounded-md border-2 border-line bg-surface px-5 py-4 print:bg-transparent print:px-3 print:py-2">
         <dt className="font-bold text-muted">Session</dt>
         <dd className="m-0">
           {sessionMinutes} minutes. The timings below are suggestions: change them to suit your group.
@@ -195,14 +198,14 @@ export function ScriptSheet({ sheet, sessionMinutes }: { sheet: RunSheet; sessio
           return (
             <li
               key={index}
-              className={`grid grid-cols-1 gap-x-5 gap-y-2 border-t border-border py-5 tablet:grid-cols-[100px_minmax(0,1fr)] print:grid-cols-[84px_minmax(0,1fr)] print:py-3 ${lastStep ? "border-b" : ""}`}
+              className={`grid grid-cols-1 gap-x-5 gap-y-2 border-t-2 border-line py-5 tablet:grid-cols-[100px_minmax(0,1fr)] print:grid-cols-[84px_minmax(0,1fr)] print:border-t print:py-3 ${lastStep ? "border-b-2 print:border-b" : ""}`}
             >
               <span className="font-mono text-[16px] leading-[1.9] whitespace-nowrap text-muted print:text-[10pt] print:leading-[1.5]">
                 {step.from}–{step.to} min
               </span>
               <div className="flex min-w-0 flex-col gap-3 print:gap-1.5">
                 <div className="flex flex-col gap-0.5">
-                  <h3 className="display m-0 text-[21px] leading-[1.35] font-[650] print:text-[12.5pt]">{step.title}</h3>
+                  <h3 className="display m-0 text-[24px] leading-[1.2] print:text-[12.5pt]">{step.title}</h3>
                   {step.lessons.length > 0 && (
                     <p className="t-meta m-0 text-muted print:text-[9.5pt]">
                       {step.lessons.map((lesson, i) => (
@@ -272,8 +275,8 @@ export function ScriptSheet({ sheet, sessionMinutes }: { sheet: RunSheet; sessio
 function Aside({ label, accent = false, children }: { label: string; accent?: boolean; children: ReactNode }) {
   return (
     <div
-      className={`flex flex-col gap-1 rounded-[14px] border-[1.5px] px-4 py-3 break-inside-avoid print:rounded-[8px] print:px-3 print:py-2 ${
-        accent ? "border-accent" : "border-border"
+      className={`flex flex-col gap-1 rounded border-2 border-line px-4 py-3 break-inside-avoid print:border print:bg-transparent print:px-3 print:py-2 ${
+        accent ? "on-sky" : "bg-paper2"
       }`}
     >
       <span className="kicker print:text-[9pt]">{label}</span>
@@ -304,7 +307,7 @@ export function HandoutSheet({ sheet }: { sheet: RunSheet }) {
         <div className="gap-8 tablet:columns-2 print:columns-2 print:gap-6">
           {mod.lessons.map((lesson) => (
             <div key={lesson.id} className="mb-4 flex flex-col gap-1.5 break-inside-avoid print:mb-1.5 print:gap-0.5">
-              <h4 className="m-0 text-[17px] leading-[1.4] font-bold print:text-[10pt]">
+              <h4 className="m-0 font-serif text-[20px] leading-[1.25] font-semibold print:font-sans print:text-[10pt] print:font-bold">
                 {lesson.number}. {lesson.title}
               </h4>
               <Bullets items={lesson.recap.length > 0 ? lesson.recap : [lesson.summary]} />
@@ -341,7 +344,7 @@ function Tick({ children }: { children: ReactNode }) {
     <li className="flex items-start gap-3 break-inside-avoid">
       <span
         aria-hidden="true"
-        className="mt-[0.2em] box-border size-[20px] flex-none rounded-[5px] border-2 border-fg print:size-[12pt] print:rounded-[3px] print:border-[1.5px]"
+        className="mt-[0.2em] box-border size-[22px] flex-none rounded-[3px] border-2 border-line bg-surface print:size-[12pt] print:border-[1.5px] print:bg-transparent"
       />
       <span className="min-w-0">{children}</span>
     </li>

@@ -17,7 +17,7 @@ export function CantCanDiagram() {
       <div className="grid gap-3 tablet:grid-cols-2">
         <Window title="Your site now">
           <div className="flex flex-col gap-3 p-3.5">
-            <span className="font-display text-[20px] leading-[1.2] font-extrabold text-fg">Hi, stranger.</span>
+            <span className="font-serif text-[22px] leading-[1.2] font-semibold text-fg">Hi, stranger.</span>
             <Row bad>Who are you? I forgot.</Row>
             <Box label="Weather" value="??" />
             <Row bad>I only know my own files.</Row>
@@ -27,7 +27,7 @@ export function CantCanDiagram() {
         </Window>
         <Window title="With APIs and authentication">
           <div className="flex flex-col gap-3 p-3.5">
-            <span className="font-display text-[20px] leading-[1.2] font-extrabold text-fg">Hi, James.</span>
+            <span className="font-serif text-[22px] leading-[1.2] font-semibold text-fg">Hi, James.</span>
             <Row>I remember you.</Row>
             <Box label="Singapore" value="31.2°C" live />
             <Row>Live, from a weather service.</Row>
@@ -51,9 +51,9 @@ function Row({ bad = false, children }: { bad?: boolean; children: string }) {
 
 function Box({ label, value, live = false }: { label: string; value: string; live?: boolean }) {
   return (
-    <span className={`flex items-center justify-between rounded-xl px-3 py-2 ${live ? "bg-tint" : "bg-surface2"}`}>
+    <span className={`flex items-center justify-between rounded-md px-3 py-2 ${live ? "bg-tint" : "bg-surface2"}`}>
       <Label className={live ? "text-accent" : "text-muted"}>{label}</Label>
-      <span className={`font-display text-[22px] leading-none font-extrabold ${live ? "text-accent" : "text-muted"}`}>{value}</span>
+      <span className={`font-serif text-[24px] leading-none font-semibold ${live ? "text-accent" : "text-muted"}`}>{value}</span>
     </span>
   );
 }

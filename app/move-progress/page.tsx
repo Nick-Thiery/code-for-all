@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Callout } from "@/components/callout";
 import { MoveProgress } from "@/components/move-progress";
+import { PageBody, PageHeader } from "@/components/page-header";
 
 export const metadata: Metadata = {
   title: "Move my progress",
@@ -11,16 +12,14 @@ export const metadata: Metadata = {
 
 export default function MoveProgressPage() {
   return (
-    <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-8 pt-(--hy) pb-(--sec)">
-        <header className="flex flex-col gap-3.5">
-          <span className="eyebrow">No account needed</span>
-          <h1 className="t-h1 m-0">Move my progress</h1>
-          <p className="t-lead m-0">
-            Your progress is saved on this device only. To carry on somewhere else, like going from a school laptop
-            to your phone, take a code with you and load it there.
-          </p>
-        </header>
+    <article>
+      <PageHeader kicker="No account needed" title="Move my progress">
+        <p>
+          Your progress is saved on this device only. To carry on somewhere else, like going from a school laptop to
+          your phone, take a code with you and load it there.
+        </p>
+      </PageHeader>
+      <PageBody className="gap-10 desktop:gap-14">
 
         <Callout kind="headsup">
           <p>
@@ -31,7 +30,7 @@ export default function MoveProgressPage() {
         </Callout>
 
         <MoveProgress />
-      </article>
-    </div>
+      </PageBody>
+    </article>
   );
 }

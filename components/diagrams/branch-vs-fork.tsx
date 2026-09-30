@@ -15,8 +15,8 @@ export function BranchVsForkDiagram() {
   return (
     <Diagram alt={ALT} caption="A fork is your own separate copy. A branch is your own lane inside the repo you share.">
       <div className="grid gap-3 tablet:grid-cols-2">
-        <div className="flex flex-col gap-2 rounded-2xl bg-surface/60 p-3 dark:bg-surface2/60">
-          <span className="font-display text-[17px] leading-[1.2] font-extrabold text-fg">Fork</span>
+        <div className="flex flex-col gap-2 rounded-md border-2 border-line bg-paper p-3">
+          <span className="font-serif text-[19px] leading-[1.2] font-semibold text-fg">Fork</span>
           <div className="flex flex-col items-stretch gap-1.5 tablet:flex-row tablet:items-center">
             <Repo owner="someone else's account" name="their-project" />
             <span className="flex items-center justify-center gap-1 tablet:flex-col">
@@ -29,9 +29,9 @@ export function BranchVsForkDiagram() {
           </div>
           <Note className="text-muted">Two repos. Yours is completely separate from the original.</Note>
         </div>
-        <div className="flex flex-col gap-2 rounded-2xl bg-surface/60 p-3 dark:bg-surface2/60">
-          <span className="font-display text-[17px] leading-[1.2] font-extrabold text-fg">Branch</span>
-          <div className="rounded-xl bg-surface p-3 ring-1 ring-border">
+        <div className="flex flex-col gap-2 rounded-md border-2 border-line bg-paper p-3">
+          <span className="font-serif text-[19px] leading-[1.2] font-semibold text-fg">Branch</span>
+          <div className="rounded-md bg-surface p-3 border-2 border-line">
             <Label>the team&apos;s repo</Label>
             <div className="relative mt-2 h-[84px]" aria-hidden="true">
               <svg viewBox="0 0 300 84" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible fill-none">
@@ -51,7 +51,7 @@ export function BranchVsForkDiagram() {
 
 function Repo({ owner, name, mine = false }: { owner: string; name: string; mine?: boolean }) {
   return (
-    <div className={`flex min-w-0 flex-1 flex-col gap-1 rounded-xl p-3 ${mine ? "bg-tint ring-2 ring-accent" : "bg-surface ring-1 ring-border"}`}>
+    <div className={`flex min-w-0 flex-1 flex-col gap-1 rounded-md p-3 ${mine ? "on-marigold border-2 border-line" : "bg-surface border-2 border-line"}`}>
       <Label>{owner}</Label>
       <code className="font-mono text-[14px] font-semibold text-fg">{name}</code>
     </div>

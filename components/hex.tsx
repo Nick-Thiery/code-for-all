@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 
-// The pointy-top hexagon every mark on the site is built from (viewBox 24×26).
+// The logo's pointy-top hexagon (viewBox 24×26): mastery levels and the
+// numbered markers in diagrams are built from it.
 export const HEX_POINTS = "12,1.5 22.5,7.5 22.5,18.5 12,24.5 1.5,18.5 1.5,7.5";
 
 type Props = {

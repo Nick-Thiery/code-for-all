@@ -35,8 +35,8 @@ export function FourJobsDiagram() {
           <div key={job.kind} className="flex flex-col gap-2">
             <Label className="text-accent">{job.kind}</Label>
             {job.items.map((item) => (
-              <div key={item.prompt} className="flex items-center gap-3 rounded-2xl bg-surface p-3 ring-1 ring-border">
-                <span className="grid size-11 flex-none place-items-center rounded-full bg-tint">
+              <div key={item.prompt} className="flex items-center gap-3 rounded-md bg-surface p-3 border-2 border-line">
+                <span className="grid size-11 flex-none place-items-center rounded-full border-2 border-line bg-sky">
                   <Icon name={item.icon} />
                 </span>
                 <span className="font-mono text-[14px] leading-[1.45] text-fg">{item.prompt}</span>

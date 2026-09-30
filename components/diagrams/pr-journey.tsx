@@ -26,15 +26,15 @@ export function PrJourneyDiagram() {
         {STEPS.map((step, index) => (
           <li key={step.title} className="relative flex items-start gap-3">
             <NumberHex n={index + 1} />
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl bg-surface p-3 ring-1 ring-border">
-              <span className="grid size-9 flex-none place-items-center rounded-full bg-tint">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1 rounded-md bg-surface p-3 border-2 border-line">
+              <span className="grid size-9 flex-none place-items-center rounded-full border-2 border-line bg-sky">
                 <Icon name={step.icon} size={20} />
               </span>
               <span className="flex min-w-0 flex-1 flex-col">
                 <span className="text-[15px] leading-[1.3] font-bold text-fg">{step.title}</span>
                 <Note className="text-[14px] text-muted">{step.what}</Note>
               </span>
-              <span className={`rounded-full px-2.5 text-[13px] leading-[1.7] font-bold ${step.you ? "bg-accent text-on-accent" : "bg-surface2 text-muted ring-1 ring-border"}`}>
+              <span className={`rounded-full px-2.5 text-[13px] leading-[1.7] font-bold ${step.you ? "bg-accent text-on-accent" : "bg-surface2 text-muted border-2 border-line"}`}>
                 {step.you ? "you" : index === 4 ? "automatic" : "a teammate"}
               </span>
             </div>

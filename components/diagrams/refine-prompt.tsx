@@ -25,7 +25,7 @@ export function RefinePromptDiagram() {
     <Diagram alt={ALT} caption="A rough prompt in, a sharper prompt out. Claude adds what, who and how it looks.">
       <div className="flex flex-col items-stretch gap-2.5 tablet:flex-row tablet:items-center">
         <Card title="Rough prompt" className="tablet:flex-1">
-          <Note className="rounded-lg bg-surface2 px-2.5 py-2 font-mono text-[14px]">{ROUGH}</Note>
+          <Note className="rounded bg-surface2 px-2.5 py-2 font-mono text-[14px]">{ROUGH}</Note>
           <Note className="text-muted">Vague. Lovable would guess the rest.</Note>
         </Card>
         <FlowArrow />

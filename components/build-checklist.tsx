@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { Hex, HexCheck } from "@/components/hex";
+import { Icon } from "@/components/icons";
 import type { ChecklistGroup } from "@/lib/quiz";
 import { setChecklistItem, useChecklist } from "@/lib/quiz-results";
 
@@ -15,9 +15,9 @@ export function BuildChecklist({ id, groups }: { id: string; groups: ChecklistGr
   const { ticked, ready } = useChecklist(id);
 
   return (
-    <div className="flex flex-col gap-7">
+    <div className="flex flex-col gap-8">
       {groups.map((group, g) => (
-        <section key={group.criterion} aria-labelledby={`${uid}-${g}`} className="flex flex-col gap-3">
+        <section key={group.criterion} aria-labelledby={`${uid}-${g}`} className="flex flex-col gap-3.5">
           <h3 id={`${uid}-${g}`} className="t-h3 m-0">
             {group.criterion}
           </h3>
@@ -26,7 +26,7 @@ export function BuildChecklist({ id, groups }: { id: string; groups: ChecklistGr
               const on = ticked.has(item.id);
               return (
                 <li key={item.id}>
-                  <label className="flex min-h-14 cursor-pointer items-center gap-4 rounded-[14px] border-[1.5px] border-border bg-surface px-[18px] py-3 text-fg hover:border-accent has-[:disabled]:cursor-default has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-accent">
+                  <label className="flex min-h-14 cursor-pointer items-center gap-4 rounded-md border-2 border-line bg-surface px-[18px] py-3 text-fg hover:bg-paper-hover has-[:checked]:bg-sky has-[:disabled]:cursor-default has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-focus">
                     <input
                       type="checkbox"
                       className="sr-only"
@@ -34,14 +34,13 @@ export function BuildChecklist({ id, groups }: { id: string; groups: ChecklistGr
                       disabled={!ready}
                       onChange={(event) => setChecklistItem(id, item.id, event.target.checked)}
                     />
-                    <span aria-hidden="true" className="flex-none">
-                      {on ? (
-                        <Hex width={26} height={28} shape="fill-accent stroke-accent stroke-2" className="block">
-                          <HexCheck className="stroke-on-accent stroke-[2.6]" />
-                        </Hex>
-                      ) : (
-                        <Hex width={26} height={28} shape="fill-surface stroke-accent stroke-2" className="block" />
-                      )}
+                    <span
+                      aria-hidden="true"
+                      className={`box-border grid size-7 flex-none place-items-center rounded border-2 border-line ${
+                        on ? "bg-accent text-on-accent" : "bg-surface"
+                      }`}
+                    >
+                      {on && <Icon name="check" size={17} stroke={3.4} />}
                     </span>
                     <span>{item.text}</span>
                   </label>

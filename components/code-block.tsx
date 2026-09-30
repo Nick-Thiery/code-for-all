@@ -49,15 +49,15 @@ export function CodeBlock({ code, language, title }: { code: string; language?: 
   const languageName = lang ? (LANGUAGE_NAMES[lang] ?? lang.toUpperCase()) : undefined;
 
   return (
-    <figure className="m-0 overflow-hidden rounded-xl border-[1.5px] border-border bg-surface2 text-fg">
-      <figcaption className="flex items-center justify-between gap-3 border-b border-border py-1.5 pr-1.5 pl-4 text-[15px] leading-[1.5] text-muted">
+    <figure className="blk overflow-hidden rounded-md border-2 border-line bg-surface2 text-fg shadow-h6 desktop:shadow-h8">
+      <figcaption className="flex items-center justify-between gap-3 border-b-2 border-line py-2 pr-3 pl-4 text-[15px] leading-[1.5] text-muted">
         <span className="font-mono">{title}</span>
-        <span className="flex items-center gap-3">
-          {languageName && languageName !== title && <span>{languageName}</span>}
+        <span className="flex items-center gap-3.5">
+          {languageName && languageName !== title && <span className="kicker text-[13px] text-muted">{languageName}</span>}
           <CopyButton text={code} />
         </span>
       </figcaption>
-      <ScrollArea fade="var(--surface2)" className="py-3.5" hintClassName="border-t border-border px-4 py-2 text-muted">
+      <ScrollArea className="py-3.5" hintClassName="border-t border-hairline px-4 py-2 text-muted">
         <pre className="m-0">
           <code className="grid grid-cols-[auto_1fr] gap-x-4 font-mono text-[16px] leading-[1.8]">
             {lines.map((line, index) => (

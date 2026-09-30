@@ -1,96 +1,109 @@
 @import "tailwindcss";
 
 /*
-  Design tokens.
+  Design tokens: the Cover design.
 
-  The first block is pasted verbatim from the spec sheet in
-  design/Code for All Website.dc.html (section 9, "Drop-in CSS"). It is the
-  single source of colour and size tokens. Don't edit it here without
-  changing the design file too.
+  The first block is pasted verbatim from the "Tokens" section of
+  design/cover/SPEC.md. It is the single source of colour tokens. Don't edit
+  it here without changing the spec too. lib/tokens.ts reads the light values
+  from it (for the share image, the manifest and the certificate), so it must
+  stay the first ":root" block in this file.
 */
 
-/* ---- Spec sheet: drop-in CSS (verbatim) ---- */
+/* ---- Cover spec: tokens (verbatim) ---- */
 :root {
-  --bg:#FFFFFF; --surface:#FFFFFF; --surface2:#F4F6F8; --text:#15202B; --muted:#4A5563;
-  --border:#D2D8DF; --pip:#9AA4AF; --track:#DDE3E9; --accent:#00487E; --on-accent:#FFFFFF;
-  --deco:#47B3FF; --tint:#E6F4FF; --dis-bg:#E8EBEE; --dis-text:#5E6773;
-  --c-tag:#00487E; --c-attr:#6A3D9A; --c-str:#146C43; --c-com:#5E6773; --term-bg:#15202B; --term-border:#15202B;
-  --gut:16px; --pad:18px; --hero:40px; --h1:34px; --h2:26px; --h3:21px; --lead:19px; --hy:32px; --sec:64px;
+  /* Cover palette */
+  --paper:#F4EFE6; --paper2:#FFFBF2; --paper-hover:#EAE3D5; --surface:#FFFFFF;
+  --ink:#111820; --ink2:#3A424B; --muted:#4E5660;
+  --navy:#00487E; --navy-deep:#002E52; --on-navy:#F4EFE6; --on-navy-muted:#A9DBFF; --on-navy-soft:#C4DCF0; --rule-on-navy:#2E6FA6;
+  --marigold:#F5B83D; --marigold-deep:#D99A1E; --on-marigold:#111820;
+  --sky:#A9DBFF; --tomato:#E4572E; --tomato-tint:#FFC7B4;
+  --block-ink:#111820; --on-block-ink:#F4EFE6;   /* heads-up callout, footer */
+  --line:#111820;          /* 2px borders and rules */
+  --hairline:#D9D1C2;      /* light dividers inside cards */
+  --shadow:#111820;        /* hard offset shadows */
+  --ruled:#CFE2F2;         /* index-card lines */
+  /* Prompt parts (lesson 1.4 ladder, part labels) */
+  --part-scope:rgba(245,184,61,.5);  --part-scope-line:#D99A1E;
+  --part-spec:rgba(71,179,255,.32);  --part-spec-line:#1D86D8;
+  --part-ctx:rgba(228,87,46,.2);     --part-ctx-line:#D2502A;
+  /* Aliases for existing components */
+  --bg:var(--paper); --surface2:var(--paper2); --text:var(--ink); --border:var(--line);
+  --accent:var(--navy); --on-accent:#FFFFFF; --tint:var(--sky); --deco:var(--marigold);
 }
 [data-theme="dark"] {
-  --bg:#0E1116; --surface:#141920; --surface2:#1B212A; --text:#E7EBF0; --muted:#A9B3BF;
-  --border:#2E3743; --pip:#5F6B78; --track:#2A333E; --accent:#47B3FF; --on-accent:#0E1116;
-  --tint:#0B2A45; --dis-bg:#232A33; --dis-text:#8E98A4;
-  --c-tag:#47B3FF; --c-attr:#C9A7FF; --c-str:#7ED9A6; --c-com:#97A1AD; --term-bg:#06080B; --term-border:#2E3743;
+  --paper:#10161D; --paper2:#17202A; --paper-hover:#1F2A36; --surface:#1A232D;
+  --ink:#F1EBDF; --ink2:#D2CBBE; --muted:#A7B0BA;
+  --navy:#0B3A63; --navy-deep:#082C4B; --on-navy:#F1EBDF; --on-navy-muted:#9CCBF0; --on-navy-soft:#C4DCF0; --rule-on-navy:#2A5A85;
+  --marigold:#F5B83D; --marigold-deep:#E3A92B; --on-marigold:#111820;
+  --sky:#173F5F; --tomato:#F07A55; --tomato-tint:#4A2A22;
+  --block-ink:#070B0F; --on-block-ink:#F1EBDF;
+  --line:#E9E2D4; --hairline:#2E3945; --shadow:rgba(241,235,223,.22); --ruled:#27384A;
+  --accent:#7CC8FF; --on-accent:#10161D;
 }
-@media (min-width:600px) {
-  :root { --gut:24px; --h1:40px; }
-}
-@media (min-width:960px) {
-  :root { --gut:40px; --pad:28px; --hero:64px; --h1:46px; --h2:32px; --h3:24px; --lead:21px; --hy:64px; --sec:96px; }
-}
-/* Theme: set data-theme on html from localStorage, else prefers-color-scheme, before first paint */
-/* ---- End of spec sheet CSS ---- */
+/* ---- End of spec tokens ---- */
 
 /*
-  Additions. Values the design uses that the drop-in CSS leaves out. Each
-  one is taken from the design file, as noted.
+  Additions: values the site needs that the spec's block leaves out.
 */
 :root {
-  /* Practice card task and feedback headline sizes. Every frame in the
-     design sets these (24/21 and 26/23), but the drop-in CSS omits them. */
-  --task: 21px;
-  --head: 23px;
-  /* Terminal block text. The spec's colour table says "Text #F2F5F8, '$'
-     and label #A9B3BF, same in both themes"; CommandBlock also uses #2E3743
-     for its divider and button hover. */
-  --term-text: #F2F5F8;
-  --term-muted: #A9B3BF;
-  --term-rule: #2E3743;
-  /* Text on a --deco fill: the </> in the Module complete honeycomb. Same in
-     both themes because --deco is. */
-  --on-deco: #0E1116;
+  /* Names older components use that the alias line above doesn't cover. */
+  --pip: var(--muted);
+  --track: var(--hairline);
+  --dis-bg: var(--paper-hover);
+  --dis-text: var(--muted);
+  --on-deco: var(--on-marigold);
+
+  /* Text on the colour blocks that the spec gives no name. The dim numerals
+     of a module that isn't out yet (3.2:1 on navy) are for 24px and up only. */
+  --on-navy-dim: #6E9CC2;
+  --on-block-ink-muted: #C9CFD6;
+  --on-marigold-muted: #3A424B;
+
+  /* The focus ring. Colour blocks swap it for one that shows on them. */
+  --focus: var(--accent);
+  /* The page's own values of the tokens colour blocks re-point, so a white
+     card sitting on a block can take them back (.on-surface). */
+  --base-accent: var(--accent);
+  --base-on-accent: var(--on-accent);
+  --base-hairline: var(--hairline);
+
+  /* Code colours, kept from the design before Cover (spec: "Keep the code
+     colours"). Terminal text is the same in both themes. */
+  --c-tag:#00487E; --c-attr:#6A3D9A; --c-str:#146C43; --c-com:#5E6773;
+  --term-bg:#15202B;
+  --term-text:#F2F5F8; --term-muted:#A9B3BF; --term-rule:#2E3743;
+
   /* The QR code on "Move my progress" (components/qr-code.tsx): always dark
-     on light, in both themes, so a phone camera reads it first time. Same
-     values as the light --bg and --text. */
-  --qr-bg: #FFFFFF;
-  --qr-ink: #15202B;
+     on light, in both themes, so a phone camera reads it first time. */
+  --qr-bg:#FFFFFF; --qr-ink:#111820;
+
+  /* Sizes. Page gutter, card padding, page top padding, section padding. */
+  --gut:20px; --pad:22px; --hy:40px; --sec:64px;
+  /* Practice card task and feedback headline. */
+  --task:24px; --head:26px;
   color-scheme: light;
 }
 [data-theme="dark"] {
+  --c-tag:#47B3FF; --c-attr:#C9A7FF; --c-str:#7ED9A6; --c-com:#97A1AD;
+  --term-bg:#06080B;
+  /* On a dark card the spec's 50% marigold highlight leaves cream text at
+     4.2:1. 34% gives 6:1. */
+  --part-scope:rgba(245,184,61,.34);
   color-scheme: dark;
 }
-
-/* The seven parts of the strong prompt (the prompt ladder in lesson 1.4,
-   components/prompt-ladder.tsx): a label fill, its text, and the row
-   highlight. Light values from the "Prompt ladder" design board; dark values
-   keep each hue with the same contrast. */
-:root {
-  --part-role: #DCEBFA; --part-role-ink: #00487E; --part-role-row: #F1F7FD;
-  --part-goal: #DDF3E8; --part-goal-ink: #14532D; --part-goal-row: #F0FAF5;
-  --part-audience: #FFF1CC; --part-audience-ink: #6B4E00; --part-audience-row: #FFF9E8;
-  --part-pages: #ECE4FF; --part-pages-ink: #3B2A7A; --part-pages-row: #F6F2FF;
-  --part-style: #FCE4EF; --part-style-ink: #7A1F4B; --part-style-row: #FEF3F8;
-  --part-output: #D9F2F2; --part-output-ink: #0F5257; --part-output-row: #EFF9F9;
-  --part-features: #E9EDF2; --part-features-ink: #33404D; --part-features-row: #F5F7F9;
+@media (min-width:600px) {
+  :root { --gut:32px; --pad:28px; --hy:56px; --sec:88px; }
 }
-[data-theme="dark"] {
-  --part-role: #12314F; --part-role-ink: #A8D4FF; --part-role-row: #10202F;
-  --part-goal: #123A29; --part-goal-ink: #9BE3BD; --part-goal-row: #0F221A;
-  --part-audience: #3D300A; --part-audience-ink: #F7D57E; --part-audience-row: #221C0C;
-  --part-pages: #2C2352; --part-pages-ink: #CFC0FF; --part-pages-row: #1C1830;
-  --part-style: #45182E; --part-style-ink: #F7B0CE; --part-style-row: #26141D;
-  --part-output: #10393C; --part-output-ink: #8FE0E0; --part-output-row: #0F2324;
-  --part-features: #2B333E; --part-features-ink: #CDD5DE; --part-features-row: #1A2027;
-}
-@media (min-width: 960px) {
-  :root { --task: 24px; --head: 26px; }
+@media (min-width:960px) {
+  :root { --gut:40px; --pad:32px; --hy:72px; --sec:120px; --task:30px; --head:32px; }
 }
 
 /* Body text: Atkinson Hyperlegible Next, self-hosted (public/fonts): the
    files Google Fonts serves, unchanged. Only the upright latin file is
    preloaded (app/layout.tsx); the italic and latin-ext files download on
-   the pages that use them. */
+   the pages that use them. Archivo (display), Newsreader (serif) and the mono
+   font come from next/font in app/layout.tsx. */
 @font-face {
   font-family: "Atkinson Hyperlegible Next";
   font-style: normal;
@@ -123,39 +136,51 @@
   src: url("/fonts/atkinson-next-italic-latin-ext.v1.woff2") format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-
-/* Headings: Recursive, self-hosted (public/fonts) and cut down to the weights
-   and casual range the site uses. See app/layout.tsx. Only the latin file is
-   preloaded; latin-ext loads if a page needs one of its characters. */
-@font-face {
-  font-family: "Recursive";
-  font-style: normal;
-  font-weight: 600 800;
-  font-display: swap;
-  src: url("/fonts/recursive-casual-latin.v1.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Recursive";
-  font-style: normal;
-  font-weight: 600 800;
-  font-display: swap;
-  src: url("/fonts/recursive-casual-latin-ext.v1.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
 :root {
   --font-atkinson: "Atkinson Hyperlegible Next";
-  --font-recursive: "Recursive";
 }
 
 /* Only the tokens above exist as Tailwind colours: no palette to reach for. */
 @theme inline {
   --color-*: initial;
-  --color-bg: var(--bg);
+  --color-paper: var(--paper);
+  --color-paper2: var(--paper2);
+  --color-paper-hover: var(--paper-hover);
   --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink2: var(--ink2);
+  --color-muted: var(--muted);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-on-navy: var(--on-navy);
+  --color-on-navy-muted: var(--on-navy-muted);
+  --color-on-navy-soft: var(--on-navy-soft);
+  --color-on-navy-dim: var(--on-navy-dim);
+  --color-rule-on-navy: var(--rule-on-navy);
+  --color-marigold: var(--marigold);
+  --color-marigold-deep: var(--marigold-deep);
+  --color-on-marigold: var(--on-marigold);
+  --color-on-marigold-muted: var(--on-marigold-muted);
+  --color-sky: var(--sky);
+  --color-tomato: var(--tomato);
+  --color-tomato-tint: var(--tomato-tint);
+  --color-block-ink: var(--block-ink);
+  --color-on-block-ink: var(--on-block-ink);
+  --color-on-block-ink-muted: var(--on-block-ink-muted);
+  --color-line: var(--line);
+  --color-hairline: var(--hairline);
+  --color-hard: var(--shadow);
+  --color-ruled: var(--ruled);
+  --color-part-scope: var(--part-scope);
+  --color-part-scope-line: var(--part-scope-line);
+  --color-part-spec: var(--part-spec);
+  --color-part-spec-line: var(--part-spec-line);
+  --color-part-ctx: var(--part-ctx);
+  --color-part-ctx-line: var(--part-ctx-line);
+  /* The aliases. */
+  --color-bg: var(--bg);
   --color-surface2: var(--surface2);
   --color-fg: var(--text);
-  --color-muted: var(--muted);
   --color-border: var(--border);
   --color-pip: var(--pip);
   --color-track: var(--track);
@@ -166,12 +191,12 @@
   --color-tint: var(--tint);
   --color-dis-bg: var(--dis-bg);
   --color-dis-text: var(--dis-text);
+  --color-focus: var(--focus);
   --color-c-tag: var(--c-tag);
   --color-c-attr: var(--c-attr);
   --color-c-str: var(--c-str);
   --color-c-com: var(--c-com);
   --color-term-bg: var(--term-bg);
-  --color-term-border: var(--term-border);
   --color-term-text: var(--term-text);
   --color-term-muted: var(--term-muted);
   --color-term-rule: var(--term-rule);
@@ -182,12 +207,28 @@
 
   --font-sans: var(--font-atkinson), system-ui, sans-serif;
   --font-mono: var(--font-atkinson-mono), ui-monospace, monospace;
-  --font-display: var(--font-recursive), system-ui, sans-serif;
+  /* Archivo: headlines, numerals, kickers, labels and buttons. Always caps. */
+  --font-display: var(--font-archivo), "Arial Narrow", "Helvetica Neue", system-ui, sans-serif;
+  /* Newsreader: card titles, questions, lede and dek, captions, pull quotes. */
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
 
-  /* The spec's breakpoints: mobile < 600 ≤ tablet < 960 ≤ desktop. */
+  /* Hard offset shadows only: no blur anywhere. The number is the offset. */
+  --shadow-*: initial;
+  --shadow-h2: 2px 2px 0 var(--shadow);
+  --shadow-h3: 3px 3px 0 var(--shadow);
+  --shadow-h4: 4px 4px 0 var(--shadow);
+  --shadow-h5: 5px 5px 0 var(--shadow);
+  --shadow-h6: 6px 6px 0 var(--shadow);
+  --shadow-h8: 8px 8px 0 var(--shadow);
+  --shadow-h10: 10px 10px 0 var(--shadow);
+
+  /* Phone < 600 ≤ tablet < 960 ≤ desktop; the lesson's three columns start
+     at 1280 ("wide"), and the header's full nav at 720 ("nav"). */
   --breakpoint-*: initial;
   --breakpoint-tablet: 600px;
+  --breakpoint-nav: 720px;
   --breakpoint-desktop: 960px;
+  --breakpoint-wide: 1280px;
 }
 
 /* `dark:` follows data-theme, which the head script always sets. */
@@ -201,8 +242,14 @@
 
   body {
     font-family: var(--font-sans);
-    font-size: 19px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.55;
+  }
+  @media (min-width: 960px) {
+    body {
+      font-size: 20px;
+      line-height: 1.6;
+    }
   }
 
   /* Links are underlined unless they're clearly a control (nav, buttons,
@@ -210,7 +257,8 @@
   a {
     color: var(--accent);
     text-decoration-line: underline;
-    text-underline-offset: 3px;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
   }
 
   a:hover {
@@ -218,16 +266,17 @@
   }
 
   ::selection {
-    background: var(--tint);
-    color: var(--text);
+    background: var(--marigold);
+    color: var(--on-marigold);
   }
 
   :focus-visible {
-    outline: 3px solid var(--accent);
+    outline: 3px solid var(--focus);
     outline-offset: 3px;
   }
 
-  textarea::placeholder {
+  textarea::placeholder,
+  input::placeholder {
     color: var(--muted);
     opacity: 1;
   }
@@ -245,134 +294,344 @@
 }
 
 @layer components {
-  /* Recursive, casual axis halfway up. Weight is set per use. */
-  .display {
-    font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
+  /*
+    Colour blocks. Each one sets its background and re-points the text tokens
+    (--text, --muted, --accent, --border) at colours that work on it, so
+    whatever sits inside (links, kickers, `text-muted`) is readable without
+    knowing which block it's on. Marigold and ink blocks
+    stay the same in dark mode; sky and navy flip.
+  */
+  .on-navy {
+    background: var(--navy);
+    color: var(--on-navy);
+    --text: var(--on-navy);
+    --muted: var(--on-navy-soft);
+    --accent: var(--marigold);
+    --on-accent: var(--on-marigold);
+    --border: var(--on-navy);
+    --hairline: var(--rule-on-navy);
+  }
+  .on-marigold {
+    background: var(--marigold);
+    color: var(--on-marigold);
+    --text: var(--on-marigold);
+    --muted: var(--on-marigold-muted);
+    --accent: var(--navy);
+    --on-accent: var(--on-navy);
+    --border: var(--on-marigold);
+    --hairline: var(--on-marigold);
+  }
+  .on-sky {
+    background: var(--sky);
+    color: var(--ink);
+    --text: var(--ink);
+    --muted: var(--ink2);
+    --hairline: color-mix(in srgb, var(--ink) 18%, transparent);
+  }
+  .on-ink {
+    background: var(--block-ink);
+    color: var(--on-block-ink);
+    --text: var(--on-block-ink);
+    --muted: var(--on-block-ink-muted);
+    --accent: var(--marigold);
+    --on-accent: var(--on-marigold);
+    --border: var(--on-block-ink);
+    --hairline: color-mix(in srgb, var(--on-block-ink) 28%, transparent);
+  }
+  /* A white card sitting on a colour block goes back to the page's own text colours. */
+  .on-surface {
+    background: var(--surface);
+    color: var(--ink);
+    --text: var(--ink);
+    --muted: var(--ink2);
+    --border: var(--line);
+    --accent: var(--base-accent);
+    --on-accent: var(--base-on-accent);
+    --hairline: var(--base-hairline);
   }
 
-  /* Type scale (spec sheet, desktop / mobile via the size tokens). */
-  .t-hero {
+  /* The focus ring is drawn just outside an element, on whatever is behind
+     it. So a block sets the ring's colour for the things inside it, not for
+     itself: a navy card on the paper page keeps the page's ring. */
+  .on-navy *,
+  .on-ink * {
+    --focus: var(--marigold);
+  }
+  .on-marigold * {
+    --focus: var(--on-marigold);
+  }
+  .on-sky *,
+  .on-surface * {
+    --focus: var(--base-accent);
+  }
+
+  /* ---- Type ---- */
+
+  /* Archivo headline: condensed, heavy, always caps. Size is set per use. */
+  .head {
     font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
-    font-weight: 750;
-    font-size: var(--hero);
-    line-height: 1.04;
+    font-stretch: 66%;
+    font-weight: 800;
+    line-height: 0.88;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+  }
+  /* Archivo numerals: step numbers, odometers, stats. */
+  .numeral {
+    font-family: var(--font-display);
+    font-stretch: 62%;
+    font-weight: 900;
+    line-height: 0.8;
+    font-variant-numeric: lining-nums;
+  }
+  /* Newsreader, for card titles and questions. Weight is set per use. */
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 600;
     letter-spacing: -0.01em;
   }
+
+  /* The type scale. Fluid between a 390px phone and a 1440px desktop. */
+  .t-hero {
+    font-family: var(--font-display);
+    font-stretch: 66%;
+    font-weight: 800;
+    line-height: 0.86;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    font-size: clamp(60px, calc(60px + 68 * (100vw - 390px) / 1050), 128px);
+  }
+  /* A page title. Lessons and quizzes size theirs by length (.title-*). */
   .t-h1 {
     font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
-    font-weight: 700;
-    font-size: var(--h1);
-    line-height: 1.12;
+    font-stretch: 66%;
+    font-weight: 800;
+    line-height: 0.88;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    font-size: clamp(56px, calc(56px + 48 * (100vw - 390px) / 1050), 104px);
   }
   .t-h2 {
     font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
-    font-weight: 650;
-    font-size: var(--h2);
-    line-height: 1.2;
+    font-stretch: 66%;
+    font-weight: 800;
+    line-height: 0.9;
+    text-transform: uppercase;
+    font-size: clamp(40px, calc(40px + 24 * (100vw - 390px) / 1050), 64px);
   }
   .t-h3 {
-    font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
-    font-weight: 650;
-    font-size: var(--h3);
-    line-height: 1.25;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    font-size: clamp(26px, calc(26px + 8 * (100vw - 390px) / 1050), 34px);
   }
+  /* A section heading the size of a lesson's own `##` headings. */
+  .t-section {
+    font-family: var(--font-display);
+    font-stretch: 66%;
+    font-weight: 800;
+    line-height: 0.88;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    font-size: clamp(60px, calc(60px + 36 * (100vw - 390px) / 1050), 96px);
+  }
+  /* A figure's caption: Newsreader italic. */
+  .fig-caption {
+    max-width: 760px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(19px, calc(19px + 3 * (100vw - 390px) / 1050), 22px);
+    line-height: 1.45;
+    color: var(--ink2);
+  }
+  /* A block's own heading ("You'll need", "What you learned"): Archivo, smaller. */
+  .t-block {
+    font-family: var(--font-display);
+    font-stretch: 66%;
+    font-weight: 800;
+    line-height: 0.92;
+    text-transform: uppercase;
+    font-size: clamp(38px, calc(38px + 8 * (100vw - 390px) / 1050), 46px);
+  }
+  /* Lede and dek. */
   .t-lead {
-    font-size: var(--lead);
-    line-height: 1.5;
+    font-family: var(--font-serif);
+    font-size: clamp(22px, calc(22px + 7 * (100vw - 390px) / 1050), 29px);
+    line-height: 1.36;
   }
   .t-meta {
     font-size: 16px;
     line-height: 1.5;
   }
 
-  /* Eyebrow and callout label: Recursive 700 · 15 · caps · +0.06em · CASL 0.6 */
+  /* Kicker: Archivo caps, tracked out. `.eyebrow` is the same in the accent colour. */
+  .kicker,
   .eyebrow {
     font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.6;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 1.2;
-    letter-spacing: 0.06em;
+    font-stretch: 85%;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 1.35;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+    color: var(--text);
+  }
+  .eyebrow {
+    color: var(--accent);
+  }
+  @media (min-width: 960px) {
+    .kicker,
+    .eyebrow {
+      font-size: 15px;
+    }
+  }
+  /* The italic line above a section title. */
+  .overline-serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(21px, calc(21px + 7 * (100vw - 390px) / 1050), 28px);
+    line-height: 1.2;
     color: var(--accent);
   }
 
-  /* Overline (spec name): Atkinson Next 700 · 15 · +0.04em. Not called
-     .overline, which is Tailwind's text-decoration utility. */
-  .kicker {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: var(--muted);
+  /*
+    A lesson or page title sized by its length, so it never runs past three
+    lines (lib/format.ts, titleSize, which knows each step's phone size: keep
+    the two in step). The longer the title, the smaller the step.
+  */
+  .title-1,
+  .title-2,
+  .title-3,
+  .title-4,
+  .title-5 {
+    font-family: var(--font-display);
+    font-stretch: 66%;
+    font-weight: 800;
+    line-height: 0.88;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
   }
+  /* The one italic accent in a headline: Newsreader, lower case, in the accent colour. */
+  .title-italic {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-stretch: 100%;
+    font-size: 1.02em;
+    letter-spacing: -0.03em;
+    text-transform: none;
+    color: var(--accent);
+  }
+  .title-1 { font-size: clamp(72px, calc(72px + 46 * (100vw - 390px) / 1050), 118px); }
+  .title-2 { font-size: clamp(60px, calc(60px + 44 * (100vw - 390px) / 1050), 104px); }
+  .title-3 { font-size: clamp(50px, calc(50px + 38 * (100vw - 390px) / 1050), 88px); }
+  .title-4 { font-size: clamp(42px, calc(42px + 30 * (100vw - 390px) / 1050), 72px); }
+  .title-5 { font-size: clamp(36px, calc(36px + 24 * (100vw - 390px) / 1050), 60px); }
 
-  /* Buttons. Hero 56/20 · primary 52/19 · secondary 52/18 · small 44/16. */
+  /* ---- Buttons ---- */
+
+  /* Archivo caps, a 2px ink border and a hard shadow. They lift on hover and
+     press in when tapped. Hero 64 · primary 56 · secondary 52 · small 44. */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     box-sizing: border-box;
-    border-radius: 12px;
-    font-family: inherit;
-    font-weight: 700;
+    border: 2px solid var(--line);
+    border-radius: 6px;
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
   }
   .btn-primary,
   .btn-hero {
-    min-height: 52px;
-    padding: 0 28px;
-    border: 0;
-    background: var(--accent);
-    color: var(--on-accent);
+    min-height: 56px;
+    padding: 8px 26px;
+    background: var(--marigold);
+    color: var(--on-marigold);
+    box-shadow: 5px 5px 0 var(--shadow);
     font-size: 19px;
   }
   .btn-hero {
-    min-height: 56px;
-    padding: 12px 28px;
+    min-height: 60px;
+    padding: 10px 28px;
+    box-shadow: 6px 6px 0 var(--shadow);
     font-size: 20px;
-    line-height: 1.3;
     text-align: center;
+  }
+  @media (min-width: 960px) {
+    .btn-hero {
+      min-height: 64px;
+      padding: 10px 30px;
+      font-size: 21px;
+    }
   }
   .btn-primary:hover,
   .btn-hero:hover {
-    color: var(--on-accent);
-    filter: brightness(1.15);
+    color: var(--on-marigold);
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 var(--shadow);
   }
   .btn-secondary {
     min-height: 52px;
-    padding: 0 24px;
-    border: 2px solid var(--accent);
-    background: transparent;
-    color: var(--accent);
-    font-size: 18px;
+    padding: 8px 22px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 4px 4px 0 var(--shadow);
+    font-size: 17px;
   }
   .btn-small {
     min-height: 44px;
-    padding: 0 18px;
-    border: 2px solid var(--accent);
-    background: transparent;
-    color: var(--accent);
-    font-size: 16px;
+    padding: 4px 16px;
+    border-radius: 4px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 3px 3px 0 var(--shadow);
+    font-size: 15px;
+    letter-spacing: 0.08em;
   }
   .btn-secondary:hover,
   .btn-small:hover {
-    background: var(--tint);
-    color: var(--accent);
+    color: var(--ink);
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--shadow);
   }
-  /* Disabled: dashed, never just faded. */
+  /* The ink button on a marigold block: "Get the session kit". */
+  .btn-ink {
+    min-height: 60px;
+    padding: 10px 28px;
+    background: var(--block-ink);
+    color: var(--on-block-ink);
+    box-shadow: 6px 6px 0 var(--navy);
+    font-size: 19px;
+  }
+  .btn-ink:hover {
+    color: var(--on-block-ink);
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 var(--navy);
+  }
+  .btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--shadow);
+  }
+  /* Disabled: dashed and flat, never just faded. */
   .btn:disabled,
   .btn[aria-disabled="true"] {
-    border: 2px dashed var(--border);
+    border: 2px dashed var(--muted);
     background: var(--dis-bg);
     color: var(--dis-text);
-    filter: none;
+    box-shadow: none;
+    transform: none;
     cursor: not-allowed;
   }
 
@@ -383,146 +642,425 @@
     align-items: center;
     align-self: flex-start;
     font-weight: 700;
-    text-underline-offset: 4px;
+    text-underline-offset: 5px;
   }
 
-  /* Chips */
+  /* ---- Chips ---- */
+
+  /* A small bordered tag: a lesson's level, a status. */
   .chip {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 3px 10px;
-    border: 1.5px solid var(--border);
-    border-radius: 999px;
+    padding: 2px 9px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
     background: var(--surface);
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 700;
     line-height: 1.4;
-    color: var(--muted);
+    color: var(--ink);
+  }
+  /* The marigold stamp: START HERE, HANDS-ON TASK, VIDEO. */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 10px;
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    background: var(--marigold);
+    color: var(--on-marigold);
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-decoration: none;
   }
   .chip-label {
     align-self: flex-start;
-    padding: 0 10px;
-    border-radius: 999px;
-    background: var(--tint);
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.6;
-    color: var(--accent);
+    padding: 3px 9px;
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    background: var(--sky);
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  /* ---- Cards and rails ---- */
+
+  /* The bordered card: 2px ink, a small radius, a hard shadow. */
+  .card {
+    box-sizing: border-box;
+    border: 2px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    box-shadow: 6px 6px 0 var(--shadow);
+  }
+  @media (min-width: 960px) {
+    .card {
+      box-shadow: 8px 8px 0 var(--shadow);
+    }
+  }
+  /* The same without the shadow: a quiet box for notes and lists. */
+  .card-flat {
+    box-sizing: border-box;
+    border: 2px solid var(--line);
+    border-radius: 6px;
+    background: var(--paper2);
+  }
+
+  /* A text field. */
+  .field {
+    box-sizing: border-box;
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--ink);
   }
 
   /*
-    Lesson body: everything that comes out of an MDX file.
-    Reading flow: 24 between blocks · +24 above H2 · +8 above H3.
+    The article grid (spec: "Shape and layout"). From 1280px a lesson is three
+    columns, rail 166 · main 684 · side 270 with 40px gaps: .with-rail is the
+    main column, pushed right to leave the rail. Inside it, .rail-label hangs
+    a block's label in the rail and .wide runs a figure across main and side.
+    (A key term on its own floats into the side column: see .key-term below.)
+    Below 1280 it's one column, labels sit above their block and side notes
+    sit inline.
   */
+  .with-rail {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+  .rail-block {
+    position: relative;
+  }
+  .rail-label {
+    display: block;
+    margin: 0;
+    padding-top: 10px;
+    border-top: 2px solid var(--line);
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 1.35;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .rail-label small {
+    font-size: inherit;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  /* A block inside another block (a video in the Challenge) has no rail to hang its label in. */
+  .rail-block .rail-block > .rail-label,
+  .prose > :not(.rail-block) .rail-label {
+    display: none;
+  }
+  @media (min-width: 1280px) {
+    .with-rail {
+      max-width: 684px;
+      margin-right: 0;
+      margin-left: 206px;
+    }
+    .rail-label {
+      position: absolute;
+      top: 0;
+      left: -206px;
+      width: 166px;
+      padding-top: 12px;
+      font-size: 14px;
+    }
+    .rail-label small {
+      display: block;
+    }
+    .wide,
+    .prose > .wide {
+      clear: both;
+      margin-right: -310px;
+    }
+  }
+
+  /*
+    Lesson body: everything that comes out of an MDX file. It's a plain block
+    flow, so side notes can float beside it and margins collapse.
+  */
+  .prose {
+    display: flow-root;
+    counter-reset: fig;
+  }
   .prose > * {
     margin: 0;
   }
   .prose > * + * {
-    margin-top: 24px;
+    margin-top: 26px;
   }
+  /* Blocks (cards, callouts, figures, code) get more room than paragraphs. */
+  .prose > .blk {
+    margin-block: 40px;
+  }
+  .prose > .blk:first-child {
+    margin-top: 0;
+  }
+  .prose > .blk:last-child {
+    margin-bottom: 0;
+  }
+  @media (min-width: 960px) {
+    .prose > * + * {
+      margin-top: 30px;
+    }
+    .prose > .blk {
+      margin-block: 56px;
+    }
+  }
+
+  /* The first paragraph of a lesson: a Newsreader lede with an Archivo drop
+     cap. (.lesson-body is a lesson's own .prose; the session kit's snippets
+     are .prose too, and get neither this nor the big step numbers.) */
+  .lesson-body > p:first-child {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, calc(22px + 5 * (100vw - 390px) / 1050), 27px);
+    line-height: 1.52;
+  }
+  .lesson-body > p:first-child::first-letter {
+    float: left;
+    margin: 6px 8px 0 -2px;
+    font-family: var(--font-display);
+    font-stretch: 62%;
+    font-weight: 900;
+    font-size: clamp(118px, calc(118px + 30 * (100vw - 390px) / 1050), 148px);
+    line-height: 0.74;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  /* Room for the drop cap when the first paragraph is a single line. */
+  .lesson-body > p:first-child {
+    min-height: 96px;
+  }
+  @media (min-width: 960px) {
+    .lesson-body > p:first-child {
+      min-height: 120px;
+    }
+  }
+  .lesson-body > p:first-child + * {
+    clear: left;
+  }
+
   .prose > h2 {
-    margin-top: 48px;
+    margin-top: 56px;
+    font-family: var(--font-display);
+    font-stretch: 66%;
+    font-weight: 800;
+    font-size: clamp(60px, calc(60px + 36 * (100vw - 390px) / 1050), 96px);
+    line-height: 0.88;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
   }
+  /* A heading with a long word steps down so it fits a phone (lib/format.ts, headingSize). */
+  .prose > h2.heading-2 { font-size: clamp(50px, calc(50px + 34 * (100vw - 390px) / 1050), 84px); }
+  .prose > h2.heading-3 { font-size: clamp(42px, calc(42px + 30 * (100vw - 390px) / 1050), 72px); }
+  .prose > h2.heading-4 { font-size: clamp(36px, calc(36px + 24 * (100vw - 390px) / 1050), 60px); }
   .prose > h3 {
-    margin-top: 32px;
-    font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
-    font-weight: 700;
-    font-size: var(--h3);
-    line-height: 1.3;
+    margin-top: 40px;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(26px, calc(26px + 8 * (100vw - 390px) / 1050), 34px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
   }
-  .prose > h2 {
-    font-family: var(--font-display);
-    font-variation-settings: "CASL" 0.5;
-    font-weight: 650;
-    font-size: var(--h2);
-    line-height: 1.2;
+  @media (min-width: 960px) {
+    .prose > h2 {
+      margin-top: 80px;
+    }
+    .prose > h3 {
+      margin-top: 48px;
+    }
   }
   /* A hands-on chip sits right above its section heading. */
   .prose > .hands-on {
-    margin-top: 48px;
+    margin-top: 56px;
   }
-  .prose > .hands-on + h2 {
-    margin-top: 10px;
-  }
-  /* On phones, sections sit a little closer together. */
-  @media (max-width: 599.98px) {
-    .prose > h2,
+  @media (min-width: 960px) {
     .prose > .hands-on {
-      margin-top: 40px;
+      margin-top: 80px;
     }
   }
-  /* Figures get a little extra room. */
-  .prose > figure {
-    margin-block: 8px;
-  }
-  .prose > * + figure {
-    margin-top: 32px;
-  }
-  .prose > figure + * {
-    margin-top: 32px;
+  .prose > .hands-on + h2 {
+    margin-top: 14px;
   }
 
   .prose strong {
     font-weight: 700;
   }
 
-  /* Bullets: 14×15 sky hexagons. */
+  /* Bullets: small marigold squares with an ink edge. */
   .prose ul {
     list-style: none;
     padding: 0;
   }
   .prose ul > li {
     position: relative;
-    padding-left: 26px;
+    padding-left: 28px;
   }
   .prose ul > li::before {
     content: "";
     position: absolute;
-    left: 0;
-    top: 0.5em;
-    width: 14px;
-    height: 15px;
-    background: var(--deco);
-    clip-path: polygon(50% 5.8%, 93.75% 28.8%, 93.75% 71.2%, 50% 94.2%, 6.25% 71.2%, 6.25% 28.8%);
+    left: 2px;
+    top: 0.52em;
+    box-sizing: border-box;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--line);
+    background: var(--marigold);
   }
   .prose ol {
     padding-left: 1.4em;
     list-style: decimal;
   }
   .prose ol > li::marker {
-    font-weight: 700;
+    font-weight: 800;
     color: var(--accent);
   }
   .prose li + li,
   .prose li > ul,
   .prose li > ol {
-    margin-top: 8px;
+    margin-top: 10px;
   }
 
+  /*
+    Steps: a lesson's own numbered lists. Big Archivo numerals (in the rail
+    from 1280px) and a 2px rule between steps.
+  */
+  .lesson-body > ol {
+    list-style: none;
+    padding: 0;
+    border-bottom: 2px solid var(--line);
+    counter-reset: step;
+  }
+  .lesson-body > ol > li {
+    position: relative;
+    box-sizing: border-box;
+    min-height: 106px;
+    margin: 0;
+    padding: 20px 0 22px 66px;
+    border-top: 2px solid var(--line);
+    counter-increment: step;
+  }
+  .lesson-body > ol > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 22px;
+    width: 48px;
+    text-align: right;
+    font-family: var(--font-display);
+    font-stretch: 62%;
+    font-weight: 900;
+    font-size: 80px;
+    line-height: 0.8;
+    color: var(--accent);
+    animation: cvRise 0.6s ease-out 0.2s both;
+  }
+  .lesson-body > ol > li:nth-child(2)::before { animation-delay: 0.35s; }
+  .lesson-body > ol > li:nth-child(3)::before { animation-delay: 0.5s; }
+  .lesson-body > ol > li:nth-child(n + 4)::before { animation-delay: 0.65s; }
+  /* Two-digit steps are narrower, so they still fit beside the text. */
+  .lesson-body > ol > li:nth-child(n + 10)::before {
+    font-size: 60px;
+    top: 26px;
+  }
+  .lesson-body > ol > li > :first-child {
+    margin-top: 0;
+  }
+  .lesson-body > ol > li > * + * {
+    margin-top: 14px;
+  }
+  @media (min-width: 1280px) {
+    .lesson-body > ol {
+      margin-left: -206px;
+    }
+    .lesson-body > ol > li {
+      min-height: 160px;
+      padding: 30px 0 32px 206px;
+    }
+    .lesson-body > ol > li::before,
+    .lesson-body > ol > li:nth-child(n + 10)::before {
+      top: 28px;
+      width: 166px;
+      font-size: 128px;
+    }
+  }
+  /* A list that carries on from an earlier one: "4." after a figure. */
+  .lesson-body > ol[start="2"] { counter-reset: step 1; }
+  .lesson-body > ol[start="3"] { counter-reset: step 2; }
+  .lesson-body > ol[start="4"] { counter-reset: step 3; }
+  .lesson-body > ol[start="5"] { counter-reset: step 4; }
+  .lesson-body > ol[start="6"] { counter-reset: step 5; }
+  .lesson-body > ol[start="7"] { counter-reset: step 6; }
+  .lesson-body > ol[start="8"] { counter-reset: step 7; }
+  .lesson-body > ol[start="9"] { counter-reset: step 8; }
+  .lesson-body > ol[start="10"] { counter-reset: step 9; }
+  .lesson-body > ol[start="11"] { counter-reset: step 10; }
+  .lesson-body > ol[start="12"] { counter-reset: step 11; }
+
+  /* A key term on its own goes to the side column from 1280px, beside the
+     text that uses it. Two or more in a row stay in the main column: a
+     column of cards beside nothing would run past the text. */
+  .prose > .key-term {
+    margin-block: 32px;
+  }
+  @media (min-width: 1280px) {
+    .prose > .key-term:not(.key-term + .key-term):not(:has(+ .key-term)) {
+      float: right;
+      clear: right;
+      width: 270px;
+      margin: 6px -310px 28px 0;
+    }
+  }
+
+  /* A pull quote: a marigold rule and Newsreader italic. */
   .prose blockquote {
-    border-left: 4px solid var(--border);
-    padding-left: 18px;
-    color: var(--muted);
+    padding-top: 16px;
+    border-top: 6px solid var(--marigold);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(26px, calc(26px + 6 * (100vw - 390px) / 1050), 32px);
+    line-height: 1.15;
+    color: var(--accent);
   }
 
   .prose :where(p, li, td, th, h2, h3, blockquote) > code {
     font-family: var(--font-mono);
     font-size: 0.88em;
     background: var(--surface2);
+    border: 1px solid var(--hairline);
     border-radius: 4px;
-    padding: 0.1em 0.3em;
+    padding: 0.06em 0.3em;
+  }
+  .prose > h2 > code {
+    text-transform: none;
   }
 
   .prose hr {
     border: 0;
-    border-top: 1px solid var(--border);
+    border-top: 2px solid var(--line);
   }
 
   .prose img {
     max-width: 100%;
     height: auto;
-    border-radius: 14px;
   }
 
   .prose table {
@@ -534,16 +1072,349 @@
   .prose th,
   .prose td {
     text-align: left;
-    padding: 8px 16px 8px 0;
-    border-bottom: 1px solid var(--border);
+    padding: 10px 18px 10px 0;
+    border-bottom: 2px solid var(--line);
   }
   .prose th {
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Figures number themselves down the lesson: "FIG. 1" in the rail. */
+  .fig-label {
+    counter-increment: fig;
+  }
+  .fig-label::before {
+    content: "Fig. " counter(fig);
+  }
+
+  /* ---- Odometer: numbers that roll to their digits ---- */
+  .odo {
+    display: inline-flex;
+    line-height: 1;
+  }
+  .odo-col {
+    display: block;
+    height: 1em;
+    overflow: hidden;
+  }
+  .odo-strip {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    /* The end state: the strip resting on its digit. */
+    transform: translateY(var(--to));
+  }
+  .odo-strip > span {
+    display: block;
+    height: 1em;
+  }
+
+  /* ---- The index card: prompts and saved work ---- */
+  .index-card {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    box-shadow: 6px 6px 0 var(--shadow);
+    --margin: 36px;
+    --rule: 34px;
+  }
+  /* The tomato margin line. */
+  .index-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--margin);
+    width: 2px;
+    background: color-mix(in srgb, var(--tomato) 55%, transparent);
+    pointer-events: none;
+  }
+  .index-card-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+    padding: 14px 16px 12px calc(var(--margin) + 16px);
+    border-bottom: 2px solid var(--tomato);
+  }
+  /* The ruled lines follow the text's line-height, so every line sits on one. */
+  .index-card-body {
+    margin: 0;
+    padding: 9px 18px 20px calc(var(--margin) + 16px);
+    font-family: var(--font-serif);
+    font-size: 19px;
+    line-height: var(--rule);
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    background-image: repeating-linear-gradient(
+      180deg,
+      transparent 0 calc(var(--rule) - 1px),
+      var(--ruled) calc(var(--rule) - 1px) var(--rule)
+    );
+    background-position: 0 3px;
+  }
+  .index-card-short {
+    --rule: 38px;
+  }
+  .index-card-short .index-card-body {
+    font-size: 21px;
+  }
+  @media (min-width: 960px) {
+    .index-card {
+      box-shadow: 8px 8px 0 var(--shadow);
+      --margin: 60px;
+      --rule: 38px;
+    }
+    .index-card-head {
+      padding: 18px 24px 16px calc(var(--margin) + 28px);
+    }
+    .index-card-body {
+      padding: 12px 30px 26px calc(var(--margin) + 28px);
+      font-size: 21px;
+      background-position: 0 5px;
+    }
+    .index-card-short {
+      --rule: 46px;
+    }
+    .index-card-short .index-card-body {
+      font-size: 26px;
+    }
+  }
+
+  /* A part of a prompt, highlighted: a tint with a line under it. */
+  .part-mark {
+    padding: 2px 0;
+    color: inherit;
+    background-color: transparent;
+    background-image: linear-gradient(var(--part), var(--part));
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    box-shadow: inset 0 -3px 0 var(--part-line);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    transition: opacity 0.2s ease;
+  }
+  .part-scope { --part: var(--part-scope); --part-line: var(--part-scope-line); --part-chip: var(--marigold); --part-chip-ink: var(--on-marigold); }
+  .part-spec { --part: var(--part-spec); --part-line: var(--part-spec-line); --part-chip: var(--sky); --part-chip-ink: var(--ink); }
+  .part-ctx { --part: var(--part-ctx); --part-line: var(--part-ctx-line); --part-chip: var(--tomato-tint); --part-chip-ink: var(--ink); }
+  /* Pointing at (or tabbing to) a part's label dims every other part. */
+  .parts:has(.part-label:hover) .part-mark,
+  .parts:has(.part-label:focus-visible) .part-mark {
+    opacity: 0.25;
+  }
+  .parts .part-row:has(.part-label:hover) .part-mark,
+  .parts .part-row:has(.part-label:focus-visible) .part-mark {
+    opacity: 1;
+  }
+  .part-label {
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    background: var(--part-chip);
+    color: var(--part-chip-ink);
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    line-height: 1.25;
+    text-transform: uppercase;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  button.part-label:hover,
+  button.part-label:focus-visible,
+  button.part-label[aria-pressed="true"] {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--shadow);
+  }
+
+  /* ---- Small moving parts ---- */
+
+  /* The square plus on a fold-out: the icon turns, the box doesn't. */
+  .plus-box {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    box-sizing: border-box;
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    background: var(--paper);
+    color: var(--ink);
+    transition: background-color 0.2s ease;
+  }
+  .plus-box svg {
+    transition: transform 0.25s ease;
+  }
+  :is(button, summary):hover > .plus-box,
+  :is(button[aria-expanded="true"], details[open] > summary) > .plus-box {
+    background: var(--marigold);
+    color: var(--on-marigold);
+  }
+  :is(button[aria-expanded="true"], details[open] > summary) > .plus-box svg {
+    transform: rotate(45deg);
+  }
+
+  /* A link or button styled as a card lifts like a button does. */
+  .lift {
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .lift:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 11px 11px 0 var(--shadow);
+  }
+  .lift .lift-arrow {
+    transition: transform 0.2s ease;
+  }
+  .lift:hover .lift-arrow {
+    transform: translateX(6px);
+  }
+
+  /* Halftone dots on a navy block: the video card. */
+  .halftone {
+    background-image: radial-gradient(color-mix(in srgb, var(--on-navy-muted) 20%, transparent) 1.6px, transparent 1.8px);
+    background-size: 18px 18px;
+  }
+
+  /* CODE FOR ALL across the foot of the page, sized to fill its width
+     exactly: at Archivo 900, 62% wide, the words are 5em long. */
+  .footer-wordmark {
+    container-type: inline-size;
+    overflow: hidden;
+  }
+  .footer-wordmark > span {
+    display: block;
+    font-family: var(--font-display);
+    font-stretch: 62%;
+    font-weight: 900;
+    font-size: calc(100cqw / 5);
+    line-height: 0.78;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* A round marigold sticker, stuck on at an angle. */
+  .sticker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 2px solid var(--line);
+    border-radius: 50%;
+    background: var(--marigold);
+    color: var(--on-marigold);
+    box-shadow: 4px 4px 0 var(--shadow);
+    transform: rotate(12deg);
   }
 }
 
-/* Motion (spec sheet). Every animation uses `both`, so with motion off
-   each element simply shows its final state. */
+/*
+  Motion (spec: "Motion"). CSS only. Each element's resting style is its end
+  state and every animation runs from something else to it with `both`, so
+  if an animation never runs, nothing is missing.
+
+  Entrances above the fold run on load. Further down the page they wait for
+  components/reveal.tsx: a block that starts off screen is "armed" (held at
+  its start), then plays once when it scrolls in. A block that's already in
+  view when the page loads just stays as it is.
+*/
+@keyframes cvUp {
+  from { transform: translateY(106%); }
+  to { transform: none; }
+}
+@keyframes cvFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes cvRise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cvFan {
+  from { opacity: 0; transform: translate(0, 46px) rotate(0deg); }
+  to { opacity: 1; transform: translate(var(--x), var(--y)) rotate(var(--r)); }
+}
+@keyframes cvSpin {
+  from { opacity: 0; transform: rotate(-220deg) scale(0.3); }
+  to { opacity: 1; transform: rotate(12deg) scale(1); }
+}
+@keyframes cvTicker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes cvOdo {
+  from { transform: translateY(0); }
+  to { transform: translateY(var(--to)); }
+}
+@keyframes cvGrow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes cvBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+@keyframes cvSwipe {
+  from { background-size: 0% 100%; }
+  to { background-size: 100% 100%; }
+}
+
+/* On load. */
+.a-fade { animation: cvFade 0.8s ease-out var(--d, 0s) both; }
+.a-rise { animation: cvRise 0.8s ease-out var(--d, 0s) both; }
+.a-up { animation: cvUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s) both; }
+.a-spin { animation: cvSpin 1s cubic-bezier(0.2, 0.8, 0.2, 1.2) var(--d, 0s) both; }
+.a-odo .odo-strip { animation: cvOdo var(--t, 1.6s) cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0.15s) both; }
+/* A headline word sliding up out of its own mask. */
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* Room for the tops of italic letters and the tails of commas. */
+  padding: 0.07em 0.04em 0.09em 0;
+  margin: -0.07em -0.04em -0.09em 0;
+}
+.mask > span {
+  display: inline-block;
+  animation: cvUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0.15s) both;
+}
+
+/* When scrolled to (components/reveal.tsx). */
+[data-reveal="armed"] .r-rise {
+  opacity: 0;
+  transform: translateY(28px);
+}
+[data-reveal="play"] .r-rise {
+  animation: cvRise 0.75s ease-out var(--d, 0s) both;
+}
+[data-reveal="armed"] .odo-strip {
+  transform: translateY(0);
+}
+[data-reveal="play"] .odo-strip {
+  animation: cvOdo var(--t, 1.6s) cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0.2s) both;
+}
+[data-reveal="armed"] .r-swipe {
+  background-size: 0% 100%;
+}
+[data-reveal="play"] .r-swipe {
+  animation: cvSwipe 0.7s ease-out var(--d, 0s) both;
+}
+
+/* Feedback moments: a tick popping in, a row sliding in (practice, quizzes, the recap). */
 @keyframes cfaRise {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }
@@ -582,6 +1453,26 @@
   .ripple {
     display: none;
   }
+  /* Nothing waits off screen for an animation that won't run. */
+  [data-reveal="armed"] .r-rise {
+    opacity: 1;
+    transform: none;
+  }
+  [data-reveal="armed"] .odo-strip {
+    transform: translateY(var(--to));
+  }
+  [data-reveal="armed"] .r-swipe {
+    background-size: 100% 100%;
+  }
+  /* Hover and press states still change, just without sliding there. */
+  .btn:hover,
+  .btn:active,
+  .lift:hover,
+  button.part-label:hover,
+  button.part-label:focus-visible,
+  button.part-label[aria-pressed="true"] {
+    transform: none;
+  }
 }
 
 /* Printing. Components hide their own controls with print:hidden; these are
@@ -616,5 +1507,47 @@
   figure,
   pre {
     break-inside: avoid;
+  }
+  /* Browsers leave backgrounds off paper. A navy or ink block would then be
+     cream text on white, so on paper those blocks take the page's own
+     colours: dark text, and whatever sits on them too. */
+  .on-navy,
+  .on-ink {
+    background: transparent;
+    --text: var(--ink);
+    --muted: var(--ink2);
+    --accent: var(--base-accent);
+    --on-accent: var(--base-on-accent);
+    --border: var(--line);
+    --hairline: var(--base-hairline);
+  }
+  .on-navy,
+  .on-navy *,
+  .on-ink,
+  .on-ink * {
+    color: var(--ink) !important;
+  }
+  /* Small filled marks (a tick's square, a done segment) mean something, so they keep their fill. */
+  .bg-accent {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* Paper shows every block as it ends up: nothing mid-animation, nothing
+     left waiting off screen, nothing tilted. */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  [data-reveal] .r-rise {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  [data-reveal] .odo-strip {
+    transform: translateY(var(--to)) !important;
+  }
+  [data-reveal] .r-swipe {
+    background-size: 100% 100% !important;
   }
 }

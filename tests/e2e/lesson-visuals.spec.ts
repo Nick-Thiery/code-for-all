@@ -40,7 +40,8 @@ test.describe("Every lesson has a visual", () => {
     test(`Module ${mod}: each lesson has a diagram, figure, drawing or video`, async ({ page }) => {
       for (const lesson of lessonsOf(mod)) {
         await page.goto(lesson.href);
-        const visuals = page.locator("figure[data-diagram], .prose img, .prose iframe");
+        // A video is a card ([data-video]) until play is pressed; only then is it an iframe.
+        const visuals = page.locator("figure[data-diagram], .prose img, .prose iframe, .prose [data-video]");
         const count = await visuals.count();
         if (NO_VISUAL_ON_PURPOSE.has(lesson.id)) {
           if (lesson.id === "module-1/the-art-of-prompting") {

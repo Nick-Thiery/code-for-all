@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useId, useState } from "react";
-import { Hex, HexCheck } from "@/components/hex";
+import { Icon } from "@/components/icons";
 import { LevelChip, ModuleMastery } from "@/components/mastery";
-import { formatAbout, formatCount } from "@/lib/format";
+import { formatAbout, formatCount, numberWord } from "@/lib/format";
 import { type Levels, levelOf } from "@/lib/mastery";
 import {
   type Outline,
   type OutlineLesson,
   type OutlineModule,
+  type OutlinePhase,
   type OutlineQuiz,
   allLessons,
   courseCertificateHref,
@@ -19,11 +20,13 @@ import {
 import { useCompletedLessons } from "@/lib/progress";
 import { type QuizResult, useMastery, useQuizResults } from "@/lib/quiz-results";
 
-// The homepage course section (design: "Course grid · desktop" and "Course
-// list · phone"). A "pick up where you left off" card, then every module by
-// phase. From tablet up, module cards are buttons that choose which module's
-// lessons show below them; on phones, each module opens and closes in place.
-// The learner's current module is chosen at first; /#module-N picks another.
+// The homepage's Contents (design/cover: a magazine contents page on navy).
+// A "pick up where you left off" card, then every module by phase: big
+// italic numbers, titles and lesson counts, Check your skills in marigold
+// italic, and a stamp on a phase that isn't out yet. From 960px the modules
+// are buttons that choose which module's lessons show below them; under that,
+// each module opens and closes in place. The learner's current module is
+// chosen at first; /#module-N picks another.
 //
 // Progress comes from lib/progress.ts and lib/quiz-results.ts, unchanged.
 // Lesson rows also show each lesson's mastery level, and the chosen module
@@ -78,7 +81,7 @@ export function CourseGrid({ outline }: { outline: Outline }) {
   }, [outline]);
 
   // Once progress has loaded and the chosen module has rendered, bring it
-  // into view: the lesson panel from tablet up, the opened module on phones.
+  // into view: the lesson panel from 960px, the opened module below that.
   // Scrolling waits a frame, so the list changes size while it's still off
   // screen and nothing jumps in view.
   useEffect(() => {
@@ -104,58 +107,71 @@ export function CourseGrid({ outline }: { outline: Outline }) {
   };
 
   const selectedModule = outline.modules.find((m) => m.number === selected) ?? outline.modules[0];
+  const moduleCount = outline.phases.reduce((sum, phase) => sum + phase.modules.length, 0);
+  const columns = splitInTwo(outline.phases);
 
   return (
-    <div className="flex flex-col gap-8 tablet:gap-12">
+    <div className="flex flex-col gap-[30px] desktop:gap-14">
+      <div className="flex flex-col gap-2 desktop:flex-row desktop:items-end desktop:justify-between desktop:gap-10">
+        <div className="flex flex-col gap-2 desktop:gap-2.5">
+          <span className="overline-serif text-on-navy-muted">
+            {numberWord(moduleCount)} modules in {numberWord(outline.phases.length).toLowerCase()} phases
+          </span>
+          <h2 id={`${uid}-title`} className="t-hero m-0">
+            Contents
+          </h2>
+        </div>
+        <p className="m-0 mt-1.5 text-[14px] leading-[1.4] text-on-navy-muted desktop:mt-0 desktop:pb-3.5 desktop:font-display desktop:text-[15px] desktop:font-bold desktop:tracking-[.14em] desktop:uppercase desktop:[font-stretch:85%]">
+          Your progress saves on this device<span className="desktop:hidden">.</span>
+        </p>
+      </div>
+
       <ContinueCard outline={outline} progress={progress} resume={resume} />
 
-      <section aria-labelledby={`${uid}-title`} className="flex flex-col gap-5">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-          <h2 id={`${uid}-title`} className="t-h1 m-0">
-            Your course
-          </h2>
-          <p className="t-meta m-0 text-muted">
-            <span className="tablet:hidden">Tap a module to see its lessons</span>
-            <span className="hidden tablet:inline">Pick a module to see its lessons</span>
-          </p>
-        </div>
+      <section aria-labelledby={`${uid}-title`} className="flex flex-col gap-5 desktop:gap-7">
+        <p className="m-0 text-[16px] leading-[1.5] text-muted desktop:text-[17px]">
+          <span className="desktop:hidden">Tap a module to see its lessons</span>
+          <span className="hidden desktop:inline">Pick a module to see its lessons</span>
+        </p>
 
-        {/* Tablet and up: the grid of module cards, then the chosen module. */}
-        <div className="hidden grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-4 tablet:grid desktop:grid-cols-5">
-          {outline.phases.map((phase) => (
-            <div
-              key={phase.number}
-              style={{ "--span": Math.min(phase.modules.length, 5) } as React.CSSProperties}
-              className="col-span-full grid grid-cols-subgrid gap-4 desktop:col-span-(--span)"
-            >
-              <PhaseLabel number={phase.number} title={phase.title} className="col-span-full pt-2" />
-              {phase.modules.map((m) => {
-                const mod = outline.modules.find((x) => x.number === m.number);
-                return mod && m.released ? (
-                  <ModuleCard
-                    key={m.number}
-                    mod={mod}
-                    progress={progress}
-                    current={m.number === currentModule}
-                    selected={m.number === selected}
-                    controls={panelId}
-                    onPick={() => setPicked(m.number)}
-                  />
-                ) : (
-                  <ComingSoonCard key={m.number} number={m.number} title={m.title} />
-                );
-              })}
+        {/* 960px and up: two columns of modules, then the chosen module's lessons. */}
+        <div className="hidden grid-cols-2 items-start gap-x-20 desktop:grid">
+          {columns.map((phases, column) => (
+            <div key={column} className="flex flex-col gap-[26px]">
+              {phases.map((phase) => (
+                <div key={phase.number} className="flex flex-col">
+                  <PhaseLabel phase={phase} />
+                  {phase.modules.map((m) => {
+                    const mod = outline.modules.find((x) => x.number === m.number);
+                    return mod && m.released ? (
+                      <div key={m.number} className="flex flex-col">
+                        <ModuleRow
+                          mod={mod}
+                          progress={progress}
+                          current={m.number === currentModule}
+                          selected={m.number === selected}
+                          controls={panelId}
+                          onPick={() => setPicked(m.number)}
+                        />
+                        {mod.skillsCheck && <SkillsCheckLink check={mod.skillsCheck} module={mod.number} />}
+                      </div>
+                    ) : (
+                      <ComingSoonRow key={m.number} number={m.number} title={m.title} labelled={phase.modules.some((x) => x.released)} />
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           ))}
         </div>
         {selectedModule && <ModulePanel id={panelId} mod={selectedModule} progress={progress} />}
 
-        {/* Phones: one list, each module opens in place. */}
-        <div className="flex flex-col gap-6 tablet:hidden">
+        {/* Below 960px: one list, each module opens in place. */}
+        <div className="flex flex-col gap-[22px] desktop:hidden">
           {outline.phases.map((phase) => (
-            <div key={phase.number} className="flex flex-col gap-2.5">
-              <PhaseLabel number={phase.number} title={phase.title} />
-              <ul className="m-0 flex list-none flex-col gap-2 p-0">
+            <div key={phase.number} className="flex flex-col">
+              <PhaseLabel phase={phase} />
+              <ul className="m-0 flex list-none flex-col p-0">
                 {phase.modules.map((m) => {
                   const mod = outline.modules.find((x) => x.number === m.number);
                   return mod && m.released ? (
@@ -170,7 +186,7 @@ export function CourseGrid({ outline }: { outline: Outline }) {
                     />
                   ) : (
                     <li key={m.number}>
-                      <ComingSoonCard number={m.number} title={m.title} compact />
+                      <ComingSoonRow number={m.number} title={m.title} labelled={phase.modules.some((x) => x.released)} />
                     </li>
                   );
                 })}
@@ -182,6 +198,23 @@ export function CourseGrid({ outline }: { outline: Outline }) {
     </div>
   );
 }
+
+/** Phases dealt into two columns of about the same length, keeping their order. */
+function splitInTwo(phases: OutlinePhase[]): OutlinePhase[][] {
+  const total = phases.reduce((sum, phase) => sum + phase.modules.length, 0);
+  const left: OutlinePhase[] = [];
+  const right: OutlinePhase[] = [];
+  let count = 0;
+  for (const phase of phases) {
+    if (right.length === 0 && (left.length === 0 || count + phase.modules.length <= total / 2)) {
+      left.push(phase);
+      count += phase.modules.length;
+    } else right.push(phase);
+  }
+  return right.length > 0 ? [left, right] : [left];
+}
+
+const twoDigits = (n: number) => String(n).padStart(2, "0");
 
 function ContinueCard({
   outline,
@@ -213,21 +246,21 @@ function ContinueCard({
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-[20px] bg-tint p-[18px] tablet:flex-row tablet:flex-wrap tablet:items-center tablet:gap-x-8 tablet:gap-y-4 tablet:rounded-3xl tablet:px-8 tablet:py-[26px]">
-      <div className="flex min-w-0 flex-col gap-1 tablet:flex-[1_1_300px]">
-        <span className="eyebrow text-[14px] tracking-[.1em]">{eyebrow}</span>
+    <div className="on-surface flex flex-col gap-4 rounded-md border-2 border-line bg-paper p-[22px] shadow-h6 desktop:flex-row desktop:flex-wrap desktop:items-center desktop:gap-x-10 desktop:px-8 desktop:py-7 desktop:shadow-h8">
+      <div className="flex min-w-0 flex-col gap-1.5 desktop:flex-[1_1_300px]">
+        <span className="eyebrow">{eyebrow}</span>
         {where && <span className="t-meta text-muted">{where}</span>}
-        <span className="display text-[24px] leading-[1.2] font-extrabold tablet:text-[28px]">{title}</span>
+        <span className="font-serif text-[28px] leading-[1.08] font-medium tracking-[-.01em] desktop:text-[36px]">{title}</span>
       </div>
-      <div className="flex flex-col gap-2 tablet:w-[280px]">
-        <span className="t-meta font-bold text-muted">
+      <div className="flex flex-col gap-2 desktop:w-[280px]">
+        <span className="t-meta font-bold">
           {progress.startedCourse
             ? `${doneCount} of ${formatCount(lessons.length, "lesson")} done`
             : `${formatCount(lessons.length, "lesson")} out so far`}
         </span>
-        <span aria-hidden="true" className="block h-2.5 overflow-hidden rounded-full bg-surface">
+        <span aria-hidden="true" className="box-border block h-3.5 overflow-hidden rounded-[3px] border-2 border-line bg-surface">
           <span
-            className="block h-full rounded-full bg-accent"
+            className="block h-full bg-accent"
             style={{ width: `${lessons.length ? (100 * doneCount) / lessons.length : 0}%` }}
           />
         </span>
@@ -237,24 +270,30 @@ function ContinueCard({
         </Link>
       </div>
       {cta && (
-        <Link href={cta.href} className="btn btn-primary tablet:min-h-14 tablet:px-7">
-          {cta.label} <span aria-hidden="true">→</span>
+        <Link href={cta.href} className="btn btn-primary">
+          {cta.label} <Icon name="arrow-right" size={20} stroke={2.6} />
         </Link>
       )}
     </div>
   );
 }
 
-function PhaseLabel({ number, title, className = "" }: { number: number; title: string; className?: string }) {
+/** The phase's kicker under a cream rule. A phase with nothing out yet gets the stamp. */
+function PhaseLabel({ phase }: { phase: OutlinePhase }) {
+  const opening = phase.modules.every((m) => !m.released);
   return (
-    <h3 className={`eyebrow m-0 flex items-center gap-3 text-[14px] tracking-[.12em] ${className}`}>
-      Phase {number} · {title}
-      <span aria-hidden="true" className="h-px flex-1 bg-border" />
+    <h3 className="relative m-0 border-t-4 border-on-navy pt-2.5 pb-3 font-display text-[13px] leading-[1.35] font-extrabold tracking-[.12em] text-marigold uppercase [font-stretch:85%] desktop:pt-3 desktop:pb-3.5 desktop:text-[16px]">
+      Phase {phase.number} · {phase.title}
+      {opening && (
+        <span className="mt-2 block w-fit -rotate-3 rounded border-[2.5px] border-marigold px-3 py-1.5 text-[13px] desktop:absolute desktop:top-[18px] desktop:right-0 desktop:mt-0 desktop:-rotate-[4deg] desktop:text-[14px]">
+          Opening soon
+        </span>
+      )}
     </h3>
   );
 }
 
-/** Where a module stands, for its card and its row on phones. */
+/** Where a module stands, for its row. */
 function moduleStatus(mod: OutlineModule, progress: Progress, current: boolean) {
   const total = mod.lessons.length;
   const count = mod.lessons.filter((lesson) => progress.done.has(lesson.id)).length;
@@ -264,7 +303,12 @@ function moduleStatus(mod: OutlineModule, progress: Progress, current: boolean) 
   return { count, label: "Not started", started: false, finished: false };
 }
 
-function ModuleCard({
+const ROW = "flex w-full items-baseline gap-3.5 border-0 border-b border-rule-on-navy bg-transparent py-3 text-left font-[inherit] desktop:gap-[22px] desktop:py-3.5";
+const ROW_NUMBER = "w-[42px] flex-none font-serif text-[36px] leading-[.9] italic desktop:w-16 desktop:text-[54px]";
+const ROW_TITLE = "min-w-0 flex-1 font-serif text-[22px] leading-[1.2] font-medium desktop:text-[30px] desktop:leading-[1.15]";
+
+/** A module in the contents, from 960px: a button that shows its lessons in the panel. */
+function ModuleRow({
   mod,
   progress,
   current,
@@ -281,102 +325,66 @@ function ModuleCard({
 }) {
   const status = moduleStatus(mod, progress, current);
   return (
-    <button
-      type="button"
-      aria-pressed={selected}
-      aria-controls={controls}
-      onClick={onPick}
-      className={`flex min-h-[188px] cursor-pointer flex-col items-start gap-2 rounded-[18px] border-[1.5px] p-4 text-left font-[inherit] text-fg ${
-        selected ? "border-accent bg-tint shadow-[0_0_0_3px_var(--accent)]" : "border-border bg-surface hover:border-accent"
-      }`}
-    >
-      <MiniHoneycomb mod={mod} progress={progress} />
-      <span className="text-[15px] leading-[1.3] font-bold text-muted">Module {mod.number}</span>
-      <span className="display text-[18px] leading-[1.2] font-extrabold">{mod.title}</span>
-      <StatusLabel status={status} className="mt-auto" />
+    <button type="button" aria-pressed={selected} aria-controls={controls} onClick={onPick} className={`${ROW} group cursor-pointer text-fg`}>
+      <span aria-hidden="true" className={`${ROW_NUMBER} ${selected ? "text-marigold" : "text-on-navy-muted"}`}>
+        {twoDigits(mod.number)}
+      </span>
+      <span className="sr-only">Module {mod.number}: </span>
+      <span
+        className={`${ROW_TITLE} decoration-2 underline-offset-[6px] group-hover:underline ${selected ? "underline decoration-marigold" : ""}`}
+      >
+        {mod.title}
+      </span>
+      <RowStatus mod={mod} status={status} />
+      {selected && <Icon name="arrow-down" size={18} stroke={2.6} className="self-center text-marigold" />}
     </button>
   );
 }
 
-function StatusLabel({
-  status,
-  className = "",
-}: {
-  status: ReturnType<typeof moduleStatus>;
-  className?: string;
-}) {
+/** The right-hand end of a module's row: a stamp if it's the one to start, its progress, or its lesson count. */
+function RowStatus({ mod, status }: { mod: OutlineModule; status: ReturnType<typeof moduleStatus> }) {
+  if (!status.started && status.label !== "Not started") {
+    return <span className="stamp flex-none self-center max-desktop:px-2 max-desktop:text-[11px]">{status.label}</span>;
+  }
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 text-[15px] leading-[1.3] font-bold ${status.started ? "text-accent" : "text-muted"} ${className}`}
-    >
-      {status.finished && <DoneBadge />}
-      {status.label}
+    <span className="flex flex-none items-center gap-1.5 self-center text-[13px] leading-[1.3] whitespace-nowrap text-muted desktop:text-[15px]">
+      {status.finished && <Icon name="check" size={16} stroke={3} className="text-marigold" />}
+      {status.started ? status.label : formatCount(mod.lessons.length, "lesson")}
     </span>
   );
 }
 
-function DoneBadge() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" className="flex-none">
-      <circle cx="12" cy="12" r="11" className="fill-accent" />
-      <path
-        d="M7 12.5l3.2 3.2L17 9"
-        fill="none"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="stroke-on-accent"
-      />
-    </svg>
-  );
-}
-
-/** One small hexagon per lesson: filled when done, ringed for the next one. */
-function MiniHoneycomb({ mod, progress, small = false }: { mod: OutlineModule; progress: Progress; small?: boolean }) {
-  return (
-    <span aria-hidden="true" className="flex flex-wrap gap-[3px]">
-      {mod.lessons.map((lesson) => {
-        const shape = progress.done.has(lesson.id)
-          ? "fill-accent stroke-accent stroke-[1.6]"
-          : lesson.id === progress.nextId
-            ? "fill-surface stroke-accent stroke-2"
-            : "fill-surface stroke-pip stroke-[1.4]";
-        return <Hex key={lesson.id} width={small ? 12 : 14} height={small ? 13 : 15} shape={shape} />;
-      })}
-    </span>
-  );
-}
-
-function ComingSoonCard({ number, title, compact = false }: { number: number; title: string; compact?: boolean }) {
+/** Check your skills, in marigold italic, after the module it follows. */
+function SkillsCheckLink({ check, module }: { check: OutlineQuiz; module: number }) {
+  const range = module === 1 ? "Module 1" : `Modules 1 to ${module}`;
   return (
     <Link
-      href={moduleHref(number)}
-      className={`flex flex-col items-start gap-2 rounded-[18px] border-[1.5px] border-dashed border-border text-fg no-underline hover:border-accent hover:text-fg ${
-        compact ? "min-h-16 px-3.5 py-2.5" : "min-h-[188px] p-4"
-      }`}
+      href={check.href}
+      className="flex min-h-[54px] items-center pl-14 font-serif text-[19px] leading-[1.2] text-marigold italic no-underline decoration-2 underline-offset-[6px] hover:text-marigold hover:underline desktop:min-h-[62px] desktop:pl-[86px] desktop:text-[24px]"
     >
-      {!compact && (
-        <Hex width={14} height={15} shape="fill-none stroke-pip stroke-[1.4] [stroke-dasharray:2_2]" />
-      )}
-      <span className="text-[15px] leading-[1.3] font-bold text-muted">
-        Module {number}
-        {compact && " · Coming soon"}
-      </span>
-      <span className="display text-[18px] leading-[1.2] font-extrabold text-muted">{title}</span>
-      {!compact && (
-        <span className="mt-auto inline-flex items-center gap-1.5 text-[15px] leading-[1.3] font-bold text-muted">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" className="flex-none">
-            <rect x="5" y="11" width="14" height="10" rx="2" className="fill-none stroke-current stroke-[2.4]" />
-            <path d="M8 11V8a4 4 0 0 1 8 0v3" className="fill-none stroke-current stroke-[2.4]" />
-          </svg>
-          Coming soon
-        </span>
-      )}
+      Check your skills: {range}
     </Link>
   );
 }
 
-/** The chosen module's lessons, under the grid (tablet and up). */
+/** A module that isn't out yet: dimmed, and a link to its Coming soon page. */
+function ComingSoonRow({ number, title, labelled }: { number: number; title: string; labelled: boolean }) {
+  return (
+    <Link href={moduleHref(number)} className={`${ROW} group text-on-navy-soft no-underline hover:text-on-navy`}>
+      <span aria-hidden="true" className={`${ROW_NUMBER} text-on-navy-dim`}>
+        {twoDigits(number)}
+      </span>
+      <span className="sr-only">Module {number}: </span>
+      <span className={`${ROW_TITLE} decoration-2 underline-offset-[6px] group-hover:underline`}>{title}</span>
+      {/* When the whole phase is on its way, its stamp says so for every row. */}
+      <span className={labelled ? "flex-none self-center text-[13px] whitespace-nowrap desktop:text-[15px]" : "sr-only"}>
+        {labelled ? "Coming soon" : " (coming soon)"}
+      </span>
+    </Link>
+  );
+}
+
+/** The chosen module's lessons, under the contents (960px and up): a paper card on the navy. */
 function ModulePanel({ id, mod, progress }: { id: string; mod: OutlineModule; progress: Progress }) {
   const doneCount = mod.lessons.filter((lesson) => progress.done.has(lesson.id)).length;
   const minutes = mod.lessons.reduce((sum, lesson) => sum + lesson.duration, 0);
@@ -385,12 +393,12 @@ function ModulePanel({ id, mod, progress }: { id: string; mod: OutlineModule; pr
       id={id}
       role="region"
       aria-labelledby={`${id}-title`}
-      className="hidden scroll-mt-6 flex-wrap gap-x-12 gap-y-6 rounded-3xl border-[1.5px] border-border bg-surface2 p-(--pad) tablet:flex desktop:p-8"
+      className="on-surface hidden scroll-mt-6 gap-x-12 rounded-md border-2 border-line bg-paper p-8 shadow-h8 desktop:flex"
     >
-      <div className="flex flex-[1_1_260px] flex-col gap-3 desktop:max-w-[300px]">
-        <h3 id={`${id}-title`} className="m-0 flex flex-col gap-1">
-          <span className="t-meta font-bold text-muted">Module {mod.number}</span>
-          <span className="display text-[30px] leading-[1.15] font-extrabold">{mod.title}</span>
+      <div className="flex w-[300px] flex-none flex-col gap-3">
+        <h3 id={`${id}-title`} className="m-0 flex flex-col gap-2">
+          <span className="eyebrow">Module {mod.number}</span>
+          <span className="font-serif text-[40px] leading-[1.04] font-medium tracking-[-.02em]">{mod.title}</span>
         </h3>
         <p className="m-0 text-[18px] leading-[1.5]">{mod.summary}</p>
         <p className="t-meta m-0 text-muted">
@@ -400,7 +408,7 @@ function ModulePanel({ id, mod, progress }: { id: string; mod: OutlineModule; pr
         {mod.lessons.some((lesson) => lesson.requiresAccount) && <HandsOnNote className="mt-3" />}
         <ModuleMastery lessons={mod.lessons} className="mt-3" />
       </div>
-      <ol className="m-0 flex min-w-0 flex-[999_1_420px] list-none flex-col gap-1.5 p-0">
+      <ol className="m-0 flex min-w-0 flex-1 list-none flex-col border-b-2 border-line p-0">
         {mod.lessons.map((lesson) => (
           <LessonRow key={lesson.id} lesson={lesson} progress={progress} />
         ))}
@@ -413,7 +421,7 @@ function ModulePanel({ id, mod, progress }: { id: string; mod: OutlineModule; pr
   );
 }
 
-/** A module on phones: a button that opens its lessons in place. */
+/** A module below 960px: a button that opens its lessons in place. */
 function PhoneModule({
   id,
   mod,
@@ -432,56 +440,44 @@ function PhoneModule({
   const status = moduleStatus(mod, progress, current);
   const lessonsId = `${id}-lessons`;
   return (
-    <li
-      id={id}
-      className={`scroll-mt-4 rounded-2xl border-[1.5px] ${open ? "border-accent bg-surface" : "border-border"}`}
-    >
+    <li id={id} className="scroll-mt-4">
       <h4 className="m-0">
-        <button
-          type="button"
-          aria-expanded={open}
-          aria-controls={lessonsId}
-          onClick={onToggle}
-          className="flex min-h-16 w-full cursor-pointer items-center gap-3 rounded-2xl bg-transparent px-3.5 py-2.5 text-left font-[inherit] text-fg"
-        >
-          <span className="flex min-w-0 flex-1 flex-col gap-1">
-            {open && <MiniHoneycomb mod={mod} progress={progress} small />}
-            <span className="text-[14px] leading-[1.3] font-bold text-muted">
-              Module {mod.number}
-              {open && status.started && !status.finished && ` · ${status.label}`}
-            </span>
-            <span className="display text-[18px] leading-[1.2] font-extrabold">{mod.title}</span>
+        <button type="button" aria-expanded={open} aria-controls={lessonsId} onClick={onToggle} className={`${ROW} cursor-pointer text-fg`}>
+          <span aria-hidden="true" className={`${ROW_NUMBER} ${open ? "text-marigold" : "text-on-navy-muted"}`}>
+            {twoDigits(mod.number)}
           </span>
-          {!open && (status.finished || status.started) && <StatusLabel status={status} />}
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            className={`flex-none fill-none stroke-[2.5] ${open ? "rotate-180 stroke-accent" : "stroke-muted"}`}
-          >
-            <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <span className="sr-only">Module {mod.number}: </span>
+          <span className={ROW_TITLE}>{mod.title}</span>
+          <RowStatus mod={mod} status={status} />
+          <Icon
+            name="arrow-down"
+            size={18}
+            stroke={2.6}
+            className={`self-center transition-transform ${open ? "rotate-180 text-marigold" : "text-on-navy-muted"}`}
+          />
         </button>
       </h4>
-      <div id={lessonsId} hidden={!open} className="px-2 pb-2.5">
-        <ol className="m-0 flex list-none flex-col gap-0.5 p-0">
-          {mod.lessons.map((lesson) => (
-            <LessonRow key={lesson.id} lesson={lesson} progress={progress} compact />
-          ))}
-          {mod.quiz && <QuizRow quiz={mod.quiz} module={mod.number} result={progress.results[mod.quiz.id]} compact />}
-          {mod.skillsCheck && (
-            <SkillsCheckRow
-              check={mod.skillsCheck}
-              module={mod.number}
-              result={progress.results[mod.skillsCheck.id]}
-              compact
-            />
-          )}
-        </ol>
-        {mod.lessons.some((lesson) => lesson.requiresAccount) && <HandsOnNote className="mx-2 mt-2" onSurface />}
-        <ModuleMastery lessons={mod.lessons} className="mx-2 mt-3" />
+      <div id={lessonsId} hidden={!open} className="pt-3 pb-5">
+        <div className="on-surface rounded-md border-2 border-line bg-paper px-3.5 pt-1 pb-4 shadow-h5">
+          <ol className="m-0 flex list-none flex-col border-b-2 border-line p-0">
+            {mod.lessons.map((lesson) => (
+              <LessonRow key={lesson.id} lesson={lesson} progress={progress} compact />
+            ))}
+            {mod.quiz && <QuizRow quiz={mod.quiz} module={mod.number} result={progress.results[mod.quiz.id]} compact />}
+            {mod.skillsCheck && (
+              <SkillsCheckRow
+                check={mod.skillsCheck}
+                module={mod.number}
+                result={progress.results[mod.skillsCheck.id]}
+                compact
+              />
+            )}
+          </ol>
+          {mod.lessons.some((lesson) => lesson.requiresAccount) && <HandsOnNote className="mt-4" />}
+          <ModuleMastery lessons={mod.lessons} className="mt-4" />
+        </div>
       </div>
+      {mod.skillsCheck && <SkillsCheckLink check={mod.skillsCheck} module={mod.number} />}
     </li>
   );
 }
@@ -515,16 +511,16 @@ function Row({
 }) {
   return (
     <li
-      className={`relative flex items-center rounded-[14px] has-[.row-link:focus-visible]:outline-3 has-[.row-link:focus-visible]:outline-offset-3 has-[.row-link:focus-visible]:outline-accent ${
-        compact ? "min-h-12 gap-3 px-2 py-1" : "min-h-14 gap-4 px-3.5 py-1.5"
-      } ${highlight ? "bg-tint" : "hover:bg-surface"}`}
+      className={`relative flex items-center border-t-2 border-line first:border-t-0 has-[.row-link:focus-visible]:outline-3 has-[.row-link:focus-visible]:-outline-offset-3 has-[.row-link:focus-visible]:outline-focus ${
+        compact ? "min-h-14 gap-3 px-1.5 py-2" : "min-h-16 gap-4 px-3 py-2.5"
+      } ${highlight ? "bg-sky" : "hover:bg-paper-hover"}`}
     >
-      <RowHex shape={shape} compact={compact} />
+      <RowMark shape={shape} compact={compact} />
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
         <Link
           href={href}
-          className={`row-link font-bold text-fg no-underline after:absolute after:inset-0 after:rounded-[14px] hover:text-fg focus-visible:outline-none ${
-            compact ? "text-[17px] leading-[1.3]" : "display text-[19px] leading-[1.3]"
+          className={`row-link font-serif font-semibold text-fg no-underline after:absolute after:inset-0 hover:text-fg focus-visible:outline-none ${
+            compact ? "text-[19px] leading-[1.2]" : "text-[22px] leading-[1.2]"
           }`}
         >
           <span className="sr-only">{srPrefix}</span>
@@ -538,12 +534,10 @@ function Row({
       </span>
       {action &&
         (compact ? (
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" className="flex-none fill-none stroke-accent stroke-[2.5]">
-            <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <Icon name="arrow-right" size={20} stroke={2.6} className="text-fg" />
         ) : (
           // Looks like a button; a click lands on the row's link underneath.
-          <span aria-hidden="true" className="btn btn-primary min-h-11 flex-none px-5 text-[16px]">
+          <span aria-hidden="true" className="btn btn-primary min-h-11 flex-none px-4 text-[15px] shadow-h3">
             {action}
           </span>
         ))}
@@ -573,7 +567,7 @@ function LessonRow({ lesson, progress, compact = false }: { lesson: OutlineLesso
             {compact && next && <span aria-hidden="true"> · {progress.startedCourse ? "up next" : "start here"}</span>}
           </span>
           {lesson.requiresAccount && <LaptopIcon label="Hands-on: needs access" />}
-          {lesson.hasPractice && <span className="font-bold text-accent">Includes practice</span>}
+          {lesson.hasPractice && <span className="font-bold text-fg">Includes practice</span>}
           {/* On phones (compact rows) the level chip gets its own line, so the row isn't cramped. */}
           {level !== "not-started" &&
             (compact ? (
@@ -658,31 +652,26 @@ function SkillsCheckRow({
   );
 }
 
-// accent fill + check = done · accent ring = next · grey ring = not started.
-function RowHex({ shape, compact }: { shape: RowShape; compact: boolean }) {
-  const hex = {
-    done: "fill-accent stroke-accent stroke-[1.5]",
-    "quiz-done": "fill-accent stroke-accent stroke-[1.5]",
-    next: "fill-surface stroke-accent stroke-2",
-    todo: "fill-surface stroke-pip stroke-[1.5]",
-    quiz: "fill-surface stroke-pip stroke-[1.5]",
-    check: "fill-tint stroke-accent stroke-[1.5]",
+// A square at the start of each row. Filled with a tick = done · marigold
+// with the number = next · outlined with the number = not started.
+function RowMark({ shape, compact }: { shape: RowShape; compact: boolean }) {
+  const look = {
+    done: "bg-accent text-on-accent",
+    "quiz-done": "bg-accent text-on-accent",
+    next: "bg-marigold text-on-marigold",
+    todo: "bg-surface text-muted",
+    quiz: "bg-surface text-muted",
+    check: "bg-surface text-fg",
   }[shape.state];
-  const text = shape.state === "next" ? "text-accent" : "text-muted";
-  const size = compact ? "h-8 w-7" : "h-[38px] w-[34px]";
+  const ticked = shape.state === "done" || shape.state === "quiz-done" || shape.state === "check";
   return (
-    <span aria-hidden="true" className={`relative block flex-none ${size}`}>
-      <Hex width={compact ? 28 : 34} height={compact ? 32 : 38} shape={hex} className="block">
-        {(shape.state === "done" || shape.state === "quiz-done") && <HexCheck className="stroke-on-accent stroke-[2.4]" />}
-        {shape.state === "check" && <HexCheck className="stroke-accent stroke-2" />}
-      </Hex>
-      {(shape.state === "next" || shape.state === "todo" || shape.state === "quiz") && (
-        <span
-          className={`absolute inset-0 grid place-items-center font-sans leading-none font-bold tabular-nums ${text} ${compact ? "text-[14px]" : "text-[16px]"}`}
-        >
-          {shape.mark}
-        </span>
-      )}
+    <span
+      aria-hidden="true"
+      className={`box-border grid flex-none place-items-center rounded border-2 border-line font-display leading-none font-extrabold tabular-nums [font-stretch:85%] ${look} ${
+        compact ? "size-8 text-[15px]" : "size-9 text-[17px]"
+      }`}
+    >
+      {ticked ? <Icon name="check" size={compact ? 16 : 18} stroke={3.2} /> : shape.mark}
     </span>
   );
 }
@@ -701,13 +690,10 @@ function LaptopIcon({ label }: { label: string }) {
 }
 
 /** The one explanation of the laptop icon, next to the lessons it marks. */
-function HandsOnNote({ className = "", onSurface = false }: { className?: string; onSurface?: boolean }) {
+function HandsOnNote({ className = "" }: { className?: string }) {
   return (
-    <p className={`m-0 flex items-start gap-2.5 rounded-xl ${onSurface ? "bg-surface2" : "bg-surface"} px-3.5 py-3 text-[16px] leading-[1.45] ${className}`}>
-      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" className="mt-px flex-none text-accent">
-        <rect x="4" y="5" width="16" height="11" rx="1.5" className="fill-none stroke-current stroke-2" />
-        <path d="M2 19h20" strokeLinecap="round" className="fill-none stroke-current stroke-2" />
-      </svg>
+    <p className={`m-0 flex items-start gap-2.5 rounded border-2 border-line bg-surface px-3.5 py-3 text-[16px] leading-[1.45] ${className}`}>
+      <Icon name="laptop" size={22} stroke={2} className="mt-px text-accent" />
       <span>
         Hands-on: needs a laptop and access. <Link href="/access">How access works</Link>
       </span>
