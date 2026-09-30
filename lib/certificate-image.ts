@@ -62,10 +62,16 @@ export async function drawCertificate(
 ): Promise<Blob> {
   const c = coloursOf(element);
   const { body, display, serif } = fontsOf(element);
-  await Promise.all([
-    document.fonts.load(`italic 600 80px ${serif}`),
-    document.fonts.load(`800 extra-condensed 40px ${display}`),
-    document.fonts.load(`800 semi-condensed 20px ${display}`),
+  // Only the web fonts themselves (the first family in each list). The lists
+  // also name next/font's fallbacks, which stand in for Arial and Times New
+  // Roman; on a device without those installed, asking for them fails. And
+  // a font that won't load must never stop the image: it's drawn with the
+  // next family in the list instead.
+  const first = (families: string) => families.split(",")[0];
+  await Promise.allSettled([
+    document.fonts.load(`italic 600 80px ${first(serif)}`),
+    document.fonts.load(`800 extra-condensed 40px ${first(display)}`),
+    document.fonts.load(`800 semi-condensed 20px ${first(display)}`),
     document.fonts.load('400 30px "Atkinson Hyperlegible Next"'),
     document.fonts.load('700 30px "Atkinson Hyperlegible Next"'),
   ]);
