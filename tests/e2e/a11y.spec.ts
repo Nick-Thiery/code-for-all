@@ -16,7 +16,6 @@ const pages: { name: string; path: string }[] = [
   { name: "a diagram lesson", path: diagramLesson.href },
   { name: "a module quiz", path: "/module-1/quiz" },
   { name: "Check your skills", path: "/module-5/check-your-skills" },
-  { name: "a module page (coming soon)", path: "/module-9" },
   { name: "Module complete", path: "/module-1/complete" },
   { name: "Run a session", path: "/run-it" },
   { name: "the glossary", path: "/glossary" },

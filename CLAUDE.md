@@ -18,7 +18,7 @@ A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App 
 - MDX reads `<` and `{` as code: put them in backticks or a code block.
 - Images go in `public/lessons/module-N/`.
 - Quizzes: `content/module-N/quiz.yml`, 6 to 8 multiple-choice questions, each with `question`, `options` (3 or 4), `answer` (the exact text of the right option), `explanation` and `lesson` (the slug in that module that teaches it). The build validates them. Shown at `/module-N/quiz` by the `ModuleQuiz` component (components/module-quiz.tsx), after the last lesson. Each answer moves the tested lesson's mastery level (Khan Academy-style; rules in `lib/mastery.ts`, shown on the course grid's lesson rows and module panel via components/mastery.tsx): module quizzes go up to Proficient, only Check your skills reaches Mastered. Questions come from that module's lessons only; prefer situations over definitions; no trivia or "all of the above".
-- `content/check-your-skills.yml`: the Check your skills pages (after Modules 5 and 8): a mixed quiz from earlier modules' quiz files (8 spread over Modules 1 to N, or a page's own `draw` list), plus an unscored build checklist from the final-project rubric. Reserved lesson slugs: `complete`, `quiz`, `check-your-skills`.
+- `content/check-your-skills.yml`: the Check your skills pages (after Modules 5, 8 and 10): a mixed quiz from earlier modules' quiz files (8 spread over Modules 1 to N, or a page's own `draw` list), plus an unscored build checklist from the final-project rubric. Reserved lesson slugs: `complete`, `quiz`, `check-your-skills`.
 
 ## Lesson components (registered in components/mdx-components.tsx)
 

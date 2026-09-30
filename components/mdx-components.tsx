@@ -20,6 +20,16 @@ import { EthicsCardsDiagram } from "@/components/diagrams/ethics-cards";
 import { ExtensionPartsDiagram } from "@/components/diagrams/extension-parts";
 import { FourJobsDiagram } from "@/components/diagrams/four-jobs";
 import { GalleryCompareDiagram } from "@/components/diagrams/gallery-compare";
+import {
+  DemoPlanDiagram,
+  DnsDiagram,
+  GettingUsersDiagram,
+  PlanBoardDiagram,
+  ProjectPathsDiagram,
+  RequirementsDiagram,
+  RubricDiagram,
+  SeoDiagram,
+} from "@/components/diagrams/module-9-10";
 import { PrJourneyDiagram } from "@/components/diagrams/pr-journey";
 import { PromptLoopDiagram } from "@/components/diagrams/prompt-loop";
 import { PushVsPrDiagram } from "@/components/diagrams/push-vs-pr";
@@ -83,7 +93,15 @@ export const mdxComponents: MDXComponents = {
   ExtensionPartsDiagram,
   FourJobsDiagram,
   GalleryCompareDiagram,
+  DemoPlanDiagram,
+  DnsDiagram,
+  GettingUsersDiagram,
+  PlanBoardDiagram,
   PrJourneyDiagram,
+  ProjectPathsDiagram,
+  RequirementsDiagram,
+  RubricDiagram,
+  SeoDiagram,
   PromptLoopDiagram,
   PushVsPrDiagram,
   RefinePromptDiagram,

@@ -343,3 +343,57 @@ modules:
       - title: Quiz and Challenge
         minutes: 10
         do: Learners try the module quiz. Then set the Challenge.
+
+  - module: 9
+    prepare:
+      - "A board for ideas: Miro, another online whiteboard, or sticky notes and a wall."
+      - "Somewhere shared for each project's master doc and task sheets: Google Drive, or the learners' own notes if they work alone."
+      - "The one-line project ideas learners wrote at the end of Module 7, if you collected them."
+    steps:
+      - minutes: 10
+        lessons: [what-is-dns, domains-and-deployment]
+        do: "Explain DNS as the phonebook of the internet, then the two deployment routes. Say clearly that nobody needs to buy a domain: a free Vercel address is fine."
+        note: The slide videos (DNS, buying a domain, deploying to AWS) are still to be linked; show them from the deck if you have them.
+      - minutes: 10
+        lessons: [search-engine-optimisation]
+        do: Go through the four parts of SEO. Ask which one a learner can change today.
+      - minutes: 10
+        lessons: [getting-users]
+        do: "Go through the channels. Point out which cost money, and that the free ones come first."
+      - minutes: 15
+        lessons: [choosing-your-project, project-requirements]
+        do: Learners pick business-forward or social impact and check their idea against the six requirements. Use the CheckYourself questions as a group.
+        group: "In the original class, learners split into groups of 3 here. The site says work alone or with friends; if you form groups, do it now."
+      - minutes: 35
+        lessons: [plan-and-get-to-work]
+        do: Learners sort their ideas on the board, write their project brief and start the prototype of the hardest part.
+        group: "In the original class, each group set up a shared Google Drive with a master doc and task sheets. Groups can do the same here."
+      - title: Quiz and Challenge
+        minutes: 10
+        do: "Learners try the module quiz. Then set the Challenge: the brief, then a prototype that proves the hardest part works."
+
+  - module: 10
+    tools:
+      - GitHub
+      - Vercel
+    prepare:
+      - "Every learner's prototype from the Module 9 Challenge, pushed to a repo that's connected to Vercel."
+      - "A screen recorder on each laptop (most have one built in), and somewhere to share the recordings."
+      - "Decide the pitching order if you run demos live, and who gives feedback."
+    steps:
+      - minutes: 20
+        lessons: [ship-it]
+        do: Learners deploy their project and check it on a phone and a laptop, in a private window.
+      - minutes: 10
+        lessons: [what-a-finished-project-looks-like]
+        do: "Go through the five things a finished project has. Learners tick what's true on the Check your skills page and note what's left."
+      - minutes: 40
+        lessons: [show-your-work]
+        do: Learners record their 5-minute demo, or pitch live. Everyone answers the three feedback questions for at least one other project.
+        group: "In the original class, every group pitched to the room in turn, followed by general feedback. Live pitches work here too: five minutes each, then the three questions from the lesson."
+      - minutes: 10
+        lessons: [next-steps]
+        do: "Close the course: what they can do now, the tutors' message, and the last piece of homework, getting more users."
+      - title: Quiz and Check your skills
+        minutes: 10
+        do: Learners try the module quiz and the final Check your skills page.
