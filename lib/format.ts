@@ -3,6 +3,14 @@ export function formatCount(n: number, word: string) {
   return `${n} ${word}${n === 1 ? "" : "s"}`;
 }
 
+/** An ISO date as "28 September 2026", or "an earlier visit" if it can't be read. */
+export function formatDate(iso: string) {
+  const date = new Date(iso);
+  return Number.isNaN(date.getTime())
+    ? "an earlier visit"
+    : date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+}
+
 /** 15 -> "15 minutes", 90 -> "1 hour 30 minutes" */
 export function formatMinutes(minutes: number) {
   const hours = Math.floor(minutes / 60);

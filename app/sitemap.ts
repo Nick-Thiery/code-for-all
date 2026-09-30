@@ -17,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...(module.quiz ? [quizHref(module.number)] : []),
       ...(skills.pages.some((page) => page.after === module.number) ? [skillsCheckHref(module.number)] : []),
     ]),
+    "/quizzes",
     "/access",
     "/run-it",
     ...kitPages.flatMap((page) => [kitHref(page), ...kit.sheets.map((sheet) => kitHref(page, sheet.module.number))]),

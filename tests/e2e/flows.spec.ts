@@ -122,7 +122,12 @@ test.describe("Quizzes", () => {
     await expect(page.getByRole("heading", { name: `Last time, you got ${total - 1} of ${total}.` })).toBeVisible();
 
     await page.goto("/#module-1");
-    await expect(visible(page.getByText(`Last try: ${total - 1} of ${total}`))).toBeVisible();
+    await expect(visible(page.getByText(`Last score: ${total - 1} of ${total}`))).toBeVisible();
+
+    // The same result, from the same store, on /quizzes.
+    await page.goto("/quizzes");
+    const card = page.getByRole("listitem", { name: /^Module 1:/ });
+    await expect(card.getByText(`Last score: ${total - 1} of ${total}`)).toBeVisible();
   });
 
   test("Check your skills: the mixed quiz and the checklist both work and are kept", async ({ page }) => {

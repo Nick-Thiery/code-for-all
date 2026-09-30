@@ -7,6 +7,7 @@ import { MasteryHex } from "@/components/mastery";
 import { LEVELS, LEVEL_NAMES, type Level, type LevelChange, atModuleCeiling, levelOf } from "@/lib/mastery";
 import { drawMixed, shuffle, type DrawGroup, type QuizLesson, type QuizQuestion } from "@/lib/quiz";
 import { saveMastery, saveQuizResult, useMastery, useQuizResults } from "@/lib/quiz-results";
+import { formatDate } from "@/lib/format";
 
 type Props = {
   /** Where the last result is saved: "module-1/quiz". */
@@ -498,9 +499,3 @@ function describe({ level, change }: SkillRow) {
   return `Missed a question · ${rise < 0 ? "down to" : rise > 0 ? "now" : "still"} ${name}`;
 }
 
-function formatDate(iso: string) {
-  const date = new Date(iso);
-  return Number.isNaN(date.getTime())
-    ? "an earlier visit"
-    : date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-}

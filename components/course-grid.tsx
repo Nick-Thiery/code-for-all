@@ -129,10 +129,15 @@ export function CourseGrid({ outline }: { outline: Outline }) {
       <ContinueCard outline={outline} progress={progress} resume={resume} />
 
       <section aria-labelledby={`${uid}-title`} className="flex flex-col gap-5 desktop:gap-7">
-        <p className="m-0 text-[16px] leading-[1.5] text-muted desktop:text-[17px]">
-          <span className="desktop:hidden">Tap a module to see its lessons</span>
-          <span className="hidden desktop:inline">Pick a module to see its lessons</span>
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
+          <p className="m-0 text-[16px] leading-[1.5] text-muted desktop:text-[17px]">
+            <span className="desktop:hidden">Tap a module to see its lessons</span>
+            <span className="hidden desktop:inline">Pick a module to see its lessons</span>
+          </p>
+          <Link href="/quizzes" prefetch={false} className="text-link gap-1.5 text-[16px] desktop:text-[17px] print:hidden">
+            See all quizzes <Icon name="arrow-right" size={18} stroke={2.6} />
+          </Link>
+        </div>
 
         {/* 960px and up: two columns of modules, then the chosen module's lessons. */}
         <div className="hidden grid-cols-2 items-start gap-x-20 desktop:grid">
@@ -583,6 +588,12 @@ function LessonRow({ lesson, progress, compact = false }: { lesson: OutlineLesso
   );
 }
 
+/**
+ * The module quiz, after its lessons: a card rather than a plain row, so it
+ * stands out, with its question count and last score (lib/quiz-results.ts,
+ * the same result the quiz page and /quizzes show). Like a row, the title
+ * link stretches over the whole card.
+ */
 function QuizRow({
   quiz,
   module,
@@ -595,23 +606,45 @@ function QuizRow({
   compact?: boolean;
 }) {
   return (
-    <Row
-      href={quiz.href}
-      shape={{ state: result ? "quiz-done" : "quiz", mark: "?" }}
-      srPrefix={result ? "Taken: " : ""}
-      title={`Module ${module} quiz`}
-      compact={compact}
-      meta={
-        <>
-          <span>{formatCount(quiz.questions, "question")}</span>
-          {result && (
+    <li className={`border-t-2 border-line first:border-t-0 ${compact ? "py-3" : "py-4"}`}>
+      <div
+        className={`card-flat relative flex items-center shadow-h3 hover:bg-paper-hover has-[.row-link:focus-visible]:outline-3 has-[.row-link:focus-visible]:outline-offset-2 has-[.row-link:focus-visible]:outline-focus ${
+          compact ? "min-h-16 gap-3 px-2.5 py-3" : "min-h-[76px] gap-4 px-3.5 py-3"
+        }`}
+      >
+        <RowMark shape={{ state: result ? "quiz-done" : "quiz", mark: "?" }} compact={compact} />
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <Link
+            href={quiz.href}
+            className={`row-link font-serif font-semibold text-fg no-underline after:absolute after:inset-0 hover:text-fg focus-visible:outline-none ${
+              compact ? "text-[19px] leading-[1.2]" : "text-[22px] leading-[1.2]"
+            }`}
+          >
+            <span className="sr-only">{result ? "Taken: " : ""}</span>
+            Module {module} quiz
+          </Link>
+          <span
+            className={`flex flex-wrap items-center gap-x-2.5 gap-y-1 leading-[1.4] text-muted ${compact ? "text-[15px]" : "text-[16px]"}`}
+          >
+            <span>{formatCount(quiz.questions, "question")}</span>
             <span className="font-bold text-fg">
-              Last try: {result.correct} of {result.total}
+              {result ? `Last score: ${result.correct} of ${result.total}` : "Not taken yet"}
             </span>
-          )}
-        </>
-      }
-    />
+          </span>
+        </span>
+        {compact ? (
+          <Icon name="arrow-right" size={20} stroke={2.6} className="text-fg" />
+        ) : (
+          // Looks like a button; a click lands on the card's link underneath.
+          <span
+            aria-hidden="true"
+            className={`btn ${result ? "btn-small" : "btn-primary min-h-11 px-4 text-[15px] shadow-h3"} flex-none print:hidden`}
+          >
+            {result ? "Retake" : "Start quiz"}
+          </span>
+        )}
+      </div>
+    </li>
   );
 }
 
@@ -643,7 +676,7 @@ function SkillsCheckRow({
           </span>
           {result && (
             <span className="font-bold text-fg">
-              Last try: {result.correct} of {result.total}
+              Last score: {result.correct} of {result.total}
             </span>
           )}
         </>

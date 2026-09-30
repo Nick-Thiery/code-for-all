@@ -17,6 +17,7 @@ import { THEME_CHANGE_EVENT, THEME_STORAGE_KEY, type Theme, applyTheme, readSave
 
 const NAV = [
   { href: "/", label: "Course", key: "course" },
+  { href: "/quizzes", label: "Quizzes", key: "quizzes" },
   { href: "/run-it", label: "Run a session", key: "run" },
   { href: "/help", label: "Help", key: "help" },
 ] as const;
@@ -31,11 +32,13 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
   const active =
     pathname === "/" || pathname.startsWith("/module-")
       ? "course"
-      : pathname.startsWith("/run-it")
-        ? "run"
-        : pathname.startsWith("/help")
-          ? "help"
-          : null;
+      : pathname.startsWith("/quizzes")
+        ? "quizzes"
+        : pathname.startsWith("/run-it")
+          ? "run"
+          : pathname.startsWith("/help")
+            ? "help"
+            : null;
 
   // Not on the home page, whose hero has its own Continue button, and not
   // in lessons, where the top bar already shows where you are.
