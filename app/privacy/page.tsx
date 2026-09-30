@@ -77,7 +77,7 @@ export default function PrivacyPage() {
 
         <section
           aria-labelledby="short-version"
-          className="flex flex-col gap-3.5 rounded-[20px] border-[1.5px] border-border p-(--pad)"
+          className="flex flex-col gap-3.5 rounded-2xl border border-border p-(--pad)"
         >
           <h2 id="short-version" className="t-h3 m-0">
             The short version

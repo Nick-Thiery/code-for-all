@@ -46,7 +46,7 @@ export function PrevNext({ label = "Lessons", previous, next, markDone }: Props)
         <Link
           href={previous.href}
           rel={previous.lesson ? "prev" : undefined}
-          className="flex min-h-24 flex-[1_1_240px] items-center gap-4 rounded-2xl border-[1.5px] border-border px-[22px] py-[18px] text-fg no-underline hover:bg-surface2 hover:text-fg"
+          className="flex min-h-24 flex-[1_1_240px] items-center gap-4 rounded-2xl border border-border px-[22px] py-[18px] text-fg no-underline hover:bg-surface2 hover:text-fg"
         >
           <span aria-hidden="true" className="text-[22px] text-muted">
             ←

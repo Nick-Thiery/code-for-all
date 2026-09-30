@@ -65,7 +65,7 @@ export default async function AccessPage({ searchParams }: Props) {
           </p>
         </header>
 
-        <section className="flex flex-col gap-3.5 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+        <section className="flex flex-col gap-3.5 rounded-2xl border border-border p-(--pad)">
           <h2 className="t-h3 m-0">Works without it</h2>
           <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
             {[
@@ -94,7 +94,7 @@ export default async function AccessPage({ searchParams }: Props) {
             <section
               key={device.name}
               aria-labelledby={`device-${device.id}`}
-              className="flex flex-col gap-2 rounded-[20px] border-[1.5px] border-border p-5"
+              className="flex flex-col gap-2 rounded-2xl border border-border p-5"
             >
               <h3 id={`device-${device.id}`} className="display m-0 text-[21px] leading-[1.3] font-bold">
                 {device.name}

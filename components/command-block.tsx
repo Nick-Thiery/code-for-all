@@ -14,12 +14,12 @@ export function CommandBlock({ children }: { children: ReactNode }) {
   const command = textOf(children).trim();
 
   return (
-    <div className="overflow-hidden rounded-xl border-[1.5px] border-term-border bg-term-bg text-term-text">
+    <div className="overflow-hidden rounded-xl border border-term-border bg-term-bg text-term-text">
       <div className="flex items-center justify-between gap-3 border-b border-term-rule py-1.5 pr-1.5 pl-[18px]">
         <span className="text-[15px] font-bold tracking-[.03em] text-term-muted">Terminal</span>
         <CopyButton
           text={command}
-          className="min-h-11 min-w-[100px] cursor-pointer rounded-[10px] border-2 border-term-text bg-transparent px-4 font-[inherit] text-[16px] font-bold text-term-text hover:bg-term-rule focus-visible:outline-deco focus-visible:outline-offset-2"
+          className="min-h-11 min-w-[100px] cursor-pointer rounded-lg border-2 border-term-text bg-transparent px-4 font-[inherit] text-[16px] font-bold text-term-text hover:bg-term-rule focus-visible:outline-deco focus-visible:outline-offset-2"
         />
       </div>
       <ScrollArea

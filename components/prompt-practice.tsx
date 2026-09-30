@@ -178,13 +178,13 @@ export function PromptPractice({ taskId, hint, children }: Props) {
 
   return (
     <section aria-labelledby={`${id}-label`} data-task-id={taskId} className="flex flex-col gap-5 text-left text-fg print:hidden">
-      <div className="overflow-hidden rounded-[20px] border-[1.5px] border-border bg-surface">
+      <div className="overflow-hidden rounded-2xl border border-border bg-surface">
         <div className="flex flex-col gap-2.5 bg-tint p-(--pad)">
           <div className="flex items-center gap-2">
             <Hex width={18} height={20} shape="fill-deco" />
             <span
               id={`${id}-label`}
-              className="font-display text-[16px] leading-none font-bold tracking-[.06em] text-accent uppercase [font-variation-settings:'CASL'_0.6]"
+              className="eyebrow leading-none"
             >
               Practice
             </span>
@@ -256,7 +256,7 @@ export function PromptPractice({ taskId, hint, children }: Props) {
       {status.kind === "loading" && (
         <div
           role="status"
-          className="flex items-center gap-[18px] rounded-[20px] border-[1.5px] border-border bg-surface p-(--pad)"
+          className="flex items-center gap-[18px] rounded-2xl border border-border bg-surface p-(--pad)"
           style={{ animation: "cfaRise 300ms ease both" }}
         >
           <div aria-hidden="true" className="flex flex-none gap-1.5">
@@ -310,7 +310,7 @@ function NoticeCard({
 }) {
   return (
     <div
-      className="flex items-start gap-4 rounded-[20px] border-[1.5px] border-border bg-surface p-(--pad)"
+      className="flex items-start gap-4 rounded-2xl border border-border bg-surface p-(--pad)"
       style={{ animation: "cfaRise 360ms ease both" }}
     >
       <Hex width={28} height={30} shape="fill-none stroke-deco stroke-2" className="mt-0.5 flex-none" />
@@ -369,7 +369,7 @@ function Feedback({
   return (
     <article
       aria-labelledby={`${id}-head`}
-      className="flex flex-col gap-6 rounded-[20px] border-[1.5px] border-border bg-surface p-(--pad)"
+      className="flex flex-col gap-6 rounded-2xl border border-border bg-surface p-(--pad)"
     >
       <header className="flex flex-col gap-2">
         <div className="flex items-center gap-2.5">
@@ -401,7 +401,7 @@ function Feedback({
 
       {improved.length > 0 && (
         <div
-          className="flex flex-col gap-1.5 rounded-[14px] bg-tint px-5 py-4"
+          className="flex flex-col gap-1.5 rounded-xl bg-tint px-5 py-4"
           style={{ animation: "cfaRise 400ms 100ms ease both" }}
         >
           <p className="display m-0 text-[16px] font-bold">Since your last try</p>
@@ -486,7 +486,7 @@ function Feedback({
               {SKILLS[i].name}
               <span
                 aria-hidden="true"
-                className="grid size-[22px] flex-none place-items-center rounded-full border-[1.5px] border-muted text-[13px] leading-none text-muted"
+                className="grid size-[22px] flex-none place-items-center rounded-full border border-muted text-[13px] leading-none text-muted"
               >
                 ?
               </span>
@@ -508,7 +508,7 @@ function Feedback({
           {fix.kind === "stretch" ? "Want a challenge?" : "One thing to try"}
         </h4>
         {fix.kind === "quote" && (
-          <div className="flex flex-col gap-3 rounded-[14px] border-[1.5px] border-border px-5 py-[18px]">
+          <div className="flex flex-col gap-3 rounded-xl border border-border px-5 py-[18px]">
             <div className="flex flex-col items-start gap-1.5">
               <span className="kicker tracking-[.03em]">From your prompt</span>
               <mark className="rounded-lg bg-tint px-2.5 py-1 font-mono text-[18px] leading-[1.5] text-fg">
@@ -524,9 +524,9 @@ function Feedback({
           </div>
         )}
         {fix.kind === "missing" && (
-          <div className="flex flex-col gap-3 rounded-[14px] border-[1.5px] border-border px-5 py-[18px]">
+          <div className="flex flex-col gap-3 rounded-xl border border-border px-5 py-[18px]">
             <span className="kicker tracking-[.03em]">Something to add</span>
-            <div className="flex items-start gap-2.5 rounded-[10px] border-2 border-dashed border-deco px-3.5 py-2.5">
+            <div className="flex items-start gap-2.5 rounded-lg border-2 border-dashed border-deco px-3.5 py-2.5">
               <span aria-hidden="true" className="text-[22px] leading-[1.3] font-bold text-accent">
                 +
               </span>
@@ -538,7 +538,7 @@ function Feedback({
           </div>
         )}
         {fix.kind === "stretch" && (
-          <div className="flex items-start gap-3 rounded-[14px] bg-tint px-5 py-[18px]">
+          <div className="flex items-start gap-3 rounded-xl bg-tint px-5 py-[18px]">
             <Hex width={20} height={22} shape="fill-none stroke-accent stroke-[2.5]" className="mt-1 flex-none" />
             <p className="m-0">{fix.text}</p>
           </div>
@@ -558,7 +558,7 @@ function Feedback({
         <span aria-live="polite" className="sr-only">
           {copied ? "Copied to clipboard" : ""}
         </span>
-        <div className="rounded-xl border-[1.5px] border-border bg-surface2 px-[18px] py-4 font-mono text-[17px] leading-[1.7] [overflow-wrap:anywhere] whitespace-pre-wrap">
+        <div className="rounded-xl border border-border bg-surface2 px-[18px] py-4 font-mono text-[17px] leading-[1.7] [overflow-wrap:anywhere] whitespace-pre-wrap">
           {result.rewrite.map((part, index) =>
             part.added ? (
               <mark

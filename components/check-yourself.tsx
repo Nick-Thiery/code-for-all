@@ -18,7 +18,7 @@ export function CheckYourself({ children }: { children: ReactNode }) {
   return (
     <section
       aria-label="Check yourself"
-      className="flex flex-col gap-4 rounded-[20px] border-[1.5px] border-border bg-surface p-(--pad) text-fg"
+      className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-(--pad) text-fg"
     >
       <div className="flex flex-col gap-1">
         <span className="flex items-center gap-2">
@@ -58,7 +58,7 @@ export function Question({ q, number, children }: QuestionProps) {
       >
         {open ? "Hide answer" : "Show answer"}
       </button>
-      <div id={id} hidden={!open} className="rounded-[14px] bg-tint px-[18px] py-3.5 [&_p]:m-0 [&:not([hidden])]:flex [&:not([hidden])]:flex-col [&:not([hidden])]:gap-2">
+      <div id={id} hidden={!open} className="rounded-xl bg-tint px-[18px] py-3.5 [&_p]:m-0 [&:not([hidden])]:flex [&:not([hidden])]:flex-col [&:not([hidden])]:gap-2">
         {children}
       </div>
     </div>

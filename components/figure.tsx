@@ -29,7 +29,7 @@ export function Figure({ src, alt, width, height, caption }: Props) {
         type="button"
         onClick={() => dialog.current?.showModal()}
         aria-label={`Enlarge image: ${alt}`}
-        className="group flex w-fit max-w-full cursor-zoom-in flex-col items-end gap-2 rounded-[14px] border-0 bg-transparent p-0 text-left"
+        className="group flex w-fit max-w-full cursor-zoom-in flex-col items-end gap-2 rounded-xl border-0 bg-transparent p-0 text-left"
       >
         <Image
           src={src}
@@ -38,11 +38,11 @@ export function Figure({ src, alt, width, height, caption }: Props) {
           height={height}
           sizes={`(min-width: 760px) ${Math.min(width, 720)}px, 100vw`}
           // Narrower than the reading column? Show it at its own size rather than stretched and soft.
-          className={`h-auto rounded-[14px] border-[1.5px] border-border ${width >= 720 ? "w-full" : "w-auto max-w-full"}`}
+          className={`h-auto rounded-xl border border-border ${width >= 720 ? "w-full" : "w-auto max-w-full"}`}
         />
         <span
           aria-hidden="true"
-          className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-border bg-surface px-2.5 py-1 text-[14px] font-bold text-fg group-hover:border-accent print:hidden"
+          className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-2.5 py-1 text-[14px] font-bold text-fg group-hover:border-accent print:hidden"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" className="fill-none stroke-current stroke-[2.5]">
             <circle cx="10.5" cy="10.5" r="6.5" />

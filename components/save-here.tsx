@@ -25,7 +25,7 @@ export function SaveHere({
   const { text, ready } = useSavedWork(id);
 
   return (
-    <div className="flex flex-col gap-3 rounded-[20px] border-2 border-dashed border-deco bg-surface p-(--pad) print:hidden">
+    <div className="flex flex-col gap-3 rounded-2xl border-2 border-dashed border-deco bg-surface p-(--pad) print:hidden">
       <div className="flex flex-col gap-1">
         <span className="kicker">Save it here</span>
         <label htmlFor={fieldId} className="text-[18px] font-bold">

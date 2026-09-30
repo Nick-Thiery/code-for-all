@@ -32,7 +32,7 @@ export function Diagram({ alt, caption, enlargeWidth, children }: Props) {
 
   return (
     <figure data-diagram className="m-0 flex flex-col gap-3 break-inside-avoid">
-      <div role="img" aria-label={alt} className="overflow-hidden rounded-[20px] bg-tint p-4 tablet:p-5">
+      <div role="img" aria-label={alt} className="overflow-hidden rounded-2xl bg-tint p-4 tablet:p-5">
         {children}
       </div>
       <figcaption className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
@@ -42,7 +42,7 @@ export function Diagram({ alt, caption, enlargeWidth, children }: Props) {
             type="button"
             onClick={() => dialog.current?.showModal()}
             aria-label={`Enlarge diagram: ${caption}`}
-            className="inline-flex min-h-11 cursor-zoom-in items-center gap-1.5 rounded-full border-[1.5px] border-border bg-surface px-3 text-[15px] font-bold text-fg hover:border-accent tablet:hidden print:hidden"
+            className="inline-flex min-h-11 cursor-zoom-in items-center gap-1.5 rounded-full border border-border bg-surface px-3 text-[15px] font-bold text-fg hover:border-accent tablet:hidden print:hidden"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" className="fill-none stroke-current stroke-[2.5]">
               <circle cx="10.5" cy="10.5" r="6.5" />
@@ -71,7 +71,7 @@ export function Diagram({ alt, caption, enlargeWidth, children }: Props) {
               </button>
             </div>
             <div className="min-h-0 flex-1 overflow-auto bg-surface2 p-(--gut)">
-              <div aria-hidden="true" className="rounded-[20px] bg-tint p-5" style={{ width: enlargeWidth }}>
+              <div aria-hidden="true" className="rounded-2xl bg-tint p-5" style={{ width: enlargeWidth }}>
                 {children}
               </div>
             </div>

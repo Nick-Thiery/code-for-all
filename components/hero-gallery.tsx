@@ -17,8 +17,6 @@ export function HeroGallery() {
     >
       <svg viewBox="0 0 580 600" aria-hidden="true" className={s.backdrop}>
         <polygon points="290,210 429,290 429,450 290,530 151,450 151,290" className={s.bigHex} />
-        <polygon points="560,-10 603,15 603,65 560,90 517,65 517,15" className={s.cornerHex} />
-        <polygon points="40,560 57.3,570 57.3,590 40,600 22.7,590 22.7,570" className={s.dotHex} />
       </svg>
 
       <div className={`${s.card} ${s.quiz}`}>

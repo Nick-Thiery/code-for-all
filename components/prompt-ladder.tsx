@@ -57,7 +57,7 @@ export function LadderPrompt({
 }) {
   const better = level.toLowerCase() === "better";
   return (
-    <section className="flex min-w-0 flex-col gap-3 rounded-[20px] border-[1.5px] border-border p-[18px] break-inside-avoid">
+    <section className="flex min-w-0 flex-col gap-3 rounded-2xl border border-border p-[18px] break-inside-avoid">
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <h2
           className={`m-0 inline-flex h-7 items-center rounded-full px-3 text-[14px] font-extrabold tracking-[.08em] uppercase ${
@@ -136,7 +136,7 @@ export function StrongPrompt({ parts, level = "Strong" }: { parts: Part[]; level
               {/* Phones: the chosen part's explanation opens right under it. (The
                   panel below says the same for screen readers.) */}
               {on && (
-                <p aria-hidden="true" className="m-0 rounded-[10px] bg-term-bg px-3.5 py-3 text-[17px] leading-[1.5] text-term-text tablet:hidden print:hidden">
+                <p aria-hidden="true" className="m-0 rounded-lg bg-term-bg px-3.5 py-3 text-[17px] leading-[1.5] text-term-text tablet:hidden print:hidden">
                   <strong>{part.name}</strong> {part.does}
                 </p>
               )}
@@ -152,7 +152,7 @@ export function StrongPrompt({ parts, level = "Strong" }: { parts: Part[]; level
       <div
         id={`${uid}-explain`}
         aria-live="polite"
-        className="max-tablet:sr-only flex gap-3.5 rounded-[14px] bg-term-bg px-[18px] py-4 print:hidden"
+        className="max-tablet:sr-only flex gap-3.5 rounded-xl bg-term-bg px-[18px] py-4 print:hidden"
       >
         <span
           aria-hidden="true"

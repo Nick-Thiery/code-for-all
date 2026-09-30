@@ -67,7 +67,7 @@ export default async function AboutPage() {
         <p className="m-0">
           The lessons are adapted from LaunchLab, the club&apos;s live course. LaunchLab is planned like this:
         </p>
-        <dl className="m-0 grid grid-cols-[auto_minmax(0,1fr)] gap-x-[18px] gap-y-3 rounded-[20px] border-[1.5px] border-border px-(--pad) py-5 text-[17px] leading-[1.5]">
+        <dl className="m-0 grid grid-cols-[auto_minmax(0,1fr)] gap-x-[18px] gap-y-3 rounded-2xl border border-border px-(--pad) py-5 text-[17px] leading-[1.5]">
           {facts.map(({ label, value }) => (
             <div key={label} className="contents">
               <dt className="font-bold text-muted">{label}</dt>

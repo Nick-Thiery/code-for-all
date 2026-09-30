@@ -49,7 +49,7 @@ export function CodeBlock({ code, language, title }: { code: string; language?: 
   const languageName = lang ? (LANGUAGE_NAMES[lang] ?? lang.toUpperCase()) : undefined;
 
   return (
-    <figure className="m-0 overflow-hidden rounded-xl border-[1.5px] border-border bg-surface2 text-fg">
+    <figure className="m-0 overflow-hidden rounded-xl border border-border bg-surface2 text-fg">
       <figcaption className="flex items-center justify-between gap-3 border-b border-border py-1.5 pr-1.5 pl-4 text-[15px] leading-[1.5] text-muted">
         <span className="font-mono">{title}</span>
         <span className="flex items-center gap-3">

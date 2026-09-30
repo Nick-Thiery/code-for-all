@@ -127,8 +127,9 @@ function NavLink({
       href={href}
       prefetch={prefetch}
       aria-current={current ? "page" : undefined}
-      className={`flex min-h-11 items-center rounded-[10px] px-2.5 font-bold whitespace-nowrap no-underline ${
-        current ? "bg-tint text-accent hover:text-accent" : "text-fg hover:bg-surface2 hover:text-fg"
+      // The current page is underlined where the header meets the page, like a tab.
+      className={`relative flex min-h-11 items-center rounded-lg px-2.5 font-bold whitespace-nowrap no-underline after:absolute after:inset-x-2.5 after:-bottom-3 after:h-[3px] after:rounded-full ${
+        current ? "text-accent after:bg-accent hover:text-accent" : "text-fg hover:text-accent"
       }`}
     >
       {children}
@@ -261,7 +262,7 @@ function ThemeToggle() {
       type="button"
       onClick={() => applyTheme(next, { save: true })}
       aria-label={theme ? `Switch to ${next} mode` : "Switch between light and dark mode"}
-      className="flex min-h-11 min-w-11 flex-none cursor-pointer items-center justify-center gap-2 rounded-xl border-[1.5px] border-border bg-transparent px-2.5 font-bold text-fg hover:border-accent"
+      className="flex min-h-11 min-w-11 flex-none cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-transparent px-2.5 font-bold text-fg hover:border-accent"
     >
       <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
         <circle cx="12" cy="12" r="8.5" className="fill-none stroke-current stroke-2" />

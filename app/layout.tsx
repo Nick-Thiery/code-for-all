@@ -27,9 +27,9 @@ const atkinsonMono = Atkinson_Hyperlegible_Mono({
   fallback: ["ui-monospace", "monospace"],
 });
 
-// Headings: Recursive with its "casual" axis turned halfway up. Self-hosted
-// from public/fonts, cut down to the weights (600 to 800) and casual range
-// (0 to 0.6) the site uses: 65 KB instead of 109 KB. Same arrangement as
+// Headings: Recursive at the linear end of its "casual" axis (CASL 0; the
+// hero gallery's sample projects use 0.5). Self-hosted from public/fonts, cut
+// down to the weights (600 to 800) and casual range (0 to 0.6) the site uses: 65 KB instead of 109 KB. Same arrangement as
 // Atkinson above.
 const RECURSIVE_LATIN = "/fonts/recursive-casual-latin.v1.woff2";
 

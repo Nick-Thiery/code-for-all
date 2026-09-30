@@ -280,7 +280,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
         <div aria-live="polite">
           {run.checked &&
             (wasRight ? (
-              <div className="flex flex-col gap-2 rounded-[14px] bg-tint px-[18px] py-4" style={{ animation: "cfaRise 300ms ease both" }}>
+              <div className="flex flex-col gap-2 rounded-xl bg-tint px-[18px] py-4" style={{ animation: "cfaRise 300ms ease both" }}>
                 <p className="display m-0 flex items-center gap-2.5 text-[21px] leading-[1.3] font-[650]">
                   <ResultHex right />
                   That&apos;s right.
@@ -289,7 +289,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
               </div>
             ) : (
               <div
-                className="flex flex-col gap-2 rounded-[14px] border-[1.5px] border-border px-[18px] py-4"
+                className="flex flex-col gap-2 rounded-xl border border-border px-[18px] py-4"
                 style={{ animation: "cfaRise 300ms ease both" }}
               >
                 <p className="display m-0 flex items-center gap-2.5 text-[21px] leading-[1.3] font-[650]">
@@ -328,7 +328,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
   return (
     <section
       aria-labelledby={`${uid}-label`}
-      className="overflow-hidden rounded-[20px] border-[1.5px] border-border bg-surface text-fg"
+      className="overflow-hidden rounded-2xl border border-border bg-surface text-fg"
     >
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 bg-tint px-(--pad) py-4">
         <span className="flex items-center gap-2">
@@ -374,7 +374,7 @@ function Option({
         : "border-border text-muted";
 
   return (
-    <label className={`flex min-h-14 items-center gap-3.5 rounded-[14px] border-[1.5px] px-4 py-3 ${look}`}>
+    <label className={`flex min-h-14 items-center gap-3.5 rounded-xl border-[1.5px] px-4 py-3 ${look}`}>
       <input
         type="radio"
         name={name}

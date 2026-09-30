@@ -147,7 +147,7 @@ export function MoveProgress() {
               On this device: <strong>{describe(here)}</strong>. Get it onto another device in any of these ways.
             </p>
             <ol className="m-0 flex list-none flex-col gap-4 p-0">
-              <li className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+              <li className="flex flex-col gap-2.5 rounded-2xl border border-border p-(--pad)">
                 <h3 className="t-h3 m-0">1. Copy the code</h3>
                 <p className="t-meta m-0 text-muted">Paste it into a message to yourself, then into the box below on the other device.</p>
                 <label htmlFor={`${uid}-code`} className="sr-only">
@@ -159,11 +159,11 @@ export function MoveProgress() {
                   value={code ?? "Making your code…"}
                   rows={3}
                   onFocus={(event) => event.currentTarget.select()}
-                  className="w-full resize-none rounded-[14px] border-[1.5px] border-border bg-surface2 px-4 py-3 font-mono text-[15px] leading-[1.5] text-fg [overflow-wrap:anywhere]"
+                  className="w-full resize-none rounded-xl border border-border bg-surface2 px-4 py-3 font-mono text-[15px] leading-[1.5] text-fg [overflow-wrap:anywhere]"
                 />
                 {code && <CopyButton text={code} className="btn btn-primary self-start" />}
               </li>
-              <li className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+              <li className="flex flex-col gap-2.5 rounded-2xl border border-border p-(--pad)">
                 <h3 className="t-h3 m-0">2. Scan the QR code</h3>
                 <p className="t-meta m-0 text-muted">
                   Point the other device&apos;s camera at it. It opens this page there with your code already filled in.
@@ -174,7 +174,7 @@ export function MoveProgress() {
                   <p className="m-0 text-muted">Making your QR code…</p>
                 )}
               </li>
-              <li className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+              <li className="flex flex-col gap-2.5 rounded-2xl border border-border p-(--pad)">
                 <h3 className="t-h3 m-0">3. Save a file</h3>
                 <p className="t-meta m-0 text-muted">
                   A small text file with your code in it. Move it however you like, then choose it below on the other
@@ -206,7 +206,7 @@ export function MoveProgress() {
             spellCheck={false}
             autoCapitalize="off"
             autoCorrect="off"
-            className="w-full resize-y rounded-[14px] border-[1.5px] border-border bg-surface px-4 py-3 font-mono text-[15px] leading-[1.5] text-fg [overflow-wrap:anywhere]"
+            className="w-full resize-y rounded-xl border border-border bg-surface px-4 py-3 font-mono text-[15px] leading-[1.5] text-fg [overflow-wrap:anywhere]"
           />
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <button type="submit" disabled={pasted.trim() === ""} className="btn btn-primary">
@@ -227,14 +227,14 @@ export function MoveProgress() {
 
         <div ref={resultRef} tabIndex={-1} aria-live="polite" className="outline-offset-[6px]">
           {loading.kind === "problem" && (
-            <div className="flex flex-col gap-2 rounded-[14px] border-[1.5px] border-border px-[18px] py-4">
+            <div className="flex flex-col gap-2 rounded-xl border border-border px-[18px] py-4">
               <p className="display m-0 text-[21px] leading-[1.3] font-[650]">That code didn&apos;t work.</p>
               <p className="m-0">{PROBLEMS[loading.problem]}</p>
             </div>
           )}
 
           {loading.kind === "ready" && (
-            <div className="flex flex-col gap-4 rounded-[20px] bg-tint p-(--pad)">
+            <div className="flex flex-col gap-4 rounded-2xl bg-tint p-(--pad)">
               <div className="flex flex-col gap-1">
                 <p className="display m-0 text-[21px] leading-[1.3] font-[650]">
                   This code has {describe(loading.snapshot)}
@@ -273,7 +273,7 @@ export function MoveProgress() {
           )}
 
           {loading.kind === "loaded" && (
-            <div className="flex flex-col gap-3 rounded-[20px] bg-tint p-(--pad)">
+            <div className="flex flex-col gap-3 rounded-2xl bg-tint p-(--pad)">
               <p className="display m-0 flex items-center gap-2.5 text-[21px] leading-[1.3] font-[650]">
                 <Hex width={26} height={28} shape="fill-accent stroke-accent stroke-2" className="flex-none">
                   <HexCheck className="stroke-on-accent stroke-[2.6]" />

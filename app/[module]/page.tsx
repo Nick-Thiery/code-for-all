@@ -55,7 +55,7 @@ export default async function ModulePage({ params }: Props) {
         </div>
 
         {planned.planned.length > 0 && (
-          <section aria-labelledby="covers" className="flex flex-col gap-3 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+          <section aria-labelledby="covers" className="flex flex-col gap-3 rounded-2xl border border-border p-(--pad)">
             <h2 id="covers" className="t-h3 m-0">
               What this module will cover
             </h2>
@@ -75,7 +75,7 @@ export default async function ModulePage({ params }: Props) {
         )}
 
         {(planned.waiting || before) && (
-          <section aria-labelledby="wait" className="flex flex-col gap-3 rounded-[20px] bg-tint p-(--pad)">
+          <section aria-labelledby="wait" className="flex flex-col gap-3 rounded-2xl bg-tint p-(--pad)">
             <h2 id="wait" className="t-h3 m-0">
               While you wait
             </h2>

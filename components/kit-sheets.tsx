@@ -116,7 +116,7 @@ function Bullets({ items }: { items: string[] }) {
 function OutOfDate({ problems }: { problems: string[] }) {
   if (problems.length === 0) return null;
   return (
-    <div role="note" className="rounded-[14px] border-2 border-dashed border-pip px-5 py-4 print:hidden">
+    <div role="note" className="rounded-xl border-2 border-dashed border-pip px-5 py-4 print:hidden">
       <p className="m-0 font-bold">This run sheet needs updating</p>
       <p className="t-meta mt-1 mb-2 text-muted">The lessons have changed since it was written. Fix these in content/facilitator.yml:</p>
       <Bullets items={problems} />
@@ -127,7 +127,7 @@ function OutOfDate({ problems }: { problems: string[] }) {
 function ChallengeBox({ sheet }: { sheet: RunSheet }) {
   if (!sheet.challenge) return null;
   return (
-    <div className="flex flex-col gap-2 rounded-[20px] border-2 border-accent p-(--pad) break-inside-avoid print:gap-1 print:rounded-[10px] print:px-3 print:py-2.5">
+    <div className="flex flex-col gap-2 rounded-2xl border-2 border-accent p-(--pad) break-inside-avoid print:gap-1 print:rounded-lg print:px-3 print:py-2.5">
       <span className="eyebrow print:text-[9pt]">Challenge</span>
       <h3 className="t-h3 m-0 print:text-[13pt]">{sheet.challenge.title}</h3>
       <KitMdx snippet={sheet.challenge} />
@@ -163,7 +163,7 @@ export function ScriptSheet({ sheet, sessionMinutes }: { sheet: RunSheet; sessio
   return (
     <Sheet id={id}>
       <SheetHeader id={id} label={`Facilitator script · Module ${mod.number}`} title={mod.title} summary={mod.summary} />
-      <dl className="m-0 grid grid-cols-[auto_minmax(0,1fr)] gap-x-5 gap-y-2 rounded-[20px] border-[1.5px] border-border px-5 py-4 print:rounded-[10px] print:px-3 print:py-2">
+      <dl className="m-0 grid grid-cols-[auto_minmax(0,1fr)] gap-x-5 gap-y-2 rounded-2xl border border-border px-5 py-4 print:rounded-lg print:px-3 print:py-2">
         <dt className="font-bold text-muted">Session</dt>
         <dd className="m-0">
           {sessionMinutes} minutes. The timings below are suggestions: change them to suit your group.
@@ -272,7 +272,7 @@ export function ScriptSheet({ sheet, sessionMinutes }: { sheet: RunSheet; sessio
 function Aside({ label, accent = false, children }: { label: string; accent?: boolean; children: ReactNode }) {
   return (
     <div
-      className={`flex flex-col gap-1 rounded-[14px] border-[1.5px] px-4 py-3 break-inside-avoid print:rounded-[8px] print:px-3 print:py-2 ${
+      className={`flex flex-col gap-1 rounded-xl border px-4 py-3 break-inside-avoid print:rounded-[8px] print:px-3 print:py-2 ${
         accent ? "border-accent" : "border-border"
       }`}
     >
@@ -341,7 +341,7 @@ function Tick({ children }: { children: ReactNode }) {
     <li className="flex items-start gap-3 break-inside-avoid">
       <span
         aria-hidden="true"
-        className="mt-[0.2em] box-border size-[20px] flex-none rounded-[5px] border-2 border-fg print:size-[12pt] print:rounded-[3px] print:border-[1.5px]"
+        className="mt-[0.2em] box-border size-[20px] flex-none rounded-[5px] border-2 border-fg print:size-[12pt] print:rounded-[3px] print:border"
       />
       <span className="min-w-0">{children}</span>
     </li>
