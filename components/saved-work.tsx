@@ -32,29 +32,29 @@ export function SavedWork({
   const saved = ready && text.trim() !== "";
 
   return (
-    <div className="flex flex-col gap-3 rounded-[20px] border-[1.5px] border-border bg-surface p-(--pad)">
-      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-        <div className="flex flex-col gap-0.5">
-          <span className="kicker">{saved ? "Saved on this device" : "From an earlier lesson"}</span>
-          <span className="text-[18px] font-bold">
-            {saved ? `Here's ${what}.` : `Nothing saved yet: ${what} isn't on this device.`}
-          </span>
+    <div className="blk rail-block flex flex-col gap-4">
+      <span className="rail-label">Saved work</span>
+      <div className="index-card -rotate-[0.6deg] break-inside-avoid print:rotate-0">
+        <div className="index-card-head">
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <span className="eyebrow">{saved ? "Saved on this device" : "From an earlier lesson"}</span>
+            <span className="text-[16px] leading-[1.4] text-muted">
+              {saved ? `Here's ${what}.` : `Nothing saved yet: ${what} isn't on this device.`}
+            </span>
+          </div>
+          <CopyButton text={saved ? text : sample} />
         </div>
-        <CopyButton text={saved ? text : sample} className="btn btn-small min-w-24 print:hidden" />
+        <pre className="index-card-body text-fg">{saved ? text : sample}</pre>
       </div>
-      {!saved && (
-        <p className="m-0">
-          If you wrote it on another device, or in your notes, paste it in yourself. Otherwise{" "}
-          <Link href={from}>go back to {fromLabel}</Link> and write it, or start from this sample:
-        </p>
-      )}
-      <pre className="m-0 rounded-xl border-[1.5px] border-border bg-surface2 px-[18px] py-4 font-mono text-[16px] leading-[1.6] whitespace-pre-wrap [overflow-wrap:anywhere] text-fg">
-        {saved ? text : sample}
-      </pre>
-      {saved && (
+      {saved ? (
         <p className="t-meta m-0 text-muted">
           Want to change it? <Link href={from}>Go back to {fromLabel}</Link>. It stays in this browser and is never sent
           anywhere.
+        </p>
+      ) : (
+        <p className="t-meta m-0">
+          If you wrote it on another device, or in your notes, paste it in yourself. Otherwise{" "}
+          <Link href={from}>go back to {fromLabel}</Link> and write it, or start from this sample.
         </p>
       )}
     </div>

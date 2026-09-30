@@ -47,7 +47,7 @@ export function LoginDiagram() {
             >
               <path d="M9 2v16M3 12l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <div className="overflow-hidden rounded-lg border-[1.5px] border-accent">
+            <div className="overflow-hidden rounded border-2 border-accent">
               <div className={`${diagramLabel} bg-accent px-2.5 py-1 text-on-accent`}>User table</div>
               <div className="grid grid-cols-2 gap-2 px-2.5 py-1.5 font-mono text-[13px] leading-[1.4]">
                 <span>james@…</span>
@@ -75,9 +75,9 @@ export function LoginDiagram() {
             </svg>
             Email and password match
           </p>
-          <div className="mt-1.5 flex w-full max-w-[190px] -rotate-4 flex-col items-center gap-1 self-center rounded-2xl bg-deco px-2 py-3.5 text-center text-on-deco shadow-[0_8px_18px_color-mix(in_srgb,var(--accent)_18%,transparent)] dark:shadow-none">
+          <div className="mt-1.5 flex w-full max-w-[190px] -rotate-4 flex-col items-center gap-1 self-center rounded-md border-2 border-line bg-deco px-2 py-3.5 text-center text-on-deco shadow-h4">
             <span className={diagramLabel}>Token</span>
-            <span className="font-display text-[18px] leading-[1.2] font-extrabold">“this is James”</span>
+            <span className="font-serif text-[20px] leading-[1.2] font-semibold">“this is James”</span>
             <span className="text-[13px] leading-[1.3]">expires on its own</span>
           </div>
         </Step>
@@ -85,9 +85,9 @@ export function LoginDiagram() {
         <DownThenRight />
 
         <Step title="Log out" note="The token is thrown away. The site stops recognising you.">
-          <div className="mt-1.5 flex w-full max-w-[190px] flex-col items-center gap-1 self-center rounded-2xl border-2 border-dashed border-pip px-2 py-3.5 text-center text-muted">
+          <div className="mt-1.5 flex w-full max-w-[190px] flex-col items-center gap-1 self-center rounded-md border-2 border-dashed border-pip px-2 py-3.5 text-center text-muted">
             <span className={diagramLabel}>Token</span>
-            <span className="font-display text-[18px] leading-[1.2] font-extrabold line-through">
+            <span className="font-serif text-[20px] leading-[1.2] font-semibold line-through">
               “this is James”
             </span>
           </div>
@@ -109,7 +109,7 @@ export function LoginDiagram() {
 function Step({ title, note, children }: { title: string; note: string; children: ReactNode }) {
   return (
     <div className={`${diagramCard} flex min-w-0 flex-1 flex-col gap-2.5 p-4`}>
-      <span className="font-display text-[21px] leading-[1.2] font-extrabold">{title}</span>
+      <span className="font-serif text-[23px] leading-[1.2] font-semibold">{title}</span>
       {children}
       <span className="mt-auto pt-1 text-[15px] leading-[1.4] text-muted">{note}</span>
     </div>
@@ -119,7 +119,7 @@ function Step({ title, note, children }: { title: string; note: string; children
 /** One line of the sign-up form. */
 function Field({ children }: { children: ReactNode }) {
   return (
-    <span className="flex min-h-[30px] items-center rounded-lg border-[1.5px] border-border px-2.5 py-1 text-[14px] leading-[1.3] text-muted">
+    <span className="flex min-h-[30px] items-center rounded border-2 border-line px-2.5 py-1 text-[14px] leading-[1.3] text-muted">
       {children}
     </span>
   );

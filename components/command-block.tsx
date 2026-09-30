@@ -14,16 +14,17 @@ export function CommandBlock({ children }: { children: ReactNode }) {
   const command = textOf(children).trim();
 
   return (
-    <div className="overflow-hidden rounded-xl border-[1.5px] border-term-border bg-term-bg text-term-text">
-      <div className="flex items-center justify-between gap-3 border-b border-term-rule py-1.5 pr-1.5 pl-[18px]">
-        <span className="text-[15px] font-bold tracking-[.03em] text-term-muted">Terminal</span>
+    <div className="blk overflow-hidden rounded-md border-2 border-line bg-term-bg text-term-text shadow-h6 desktop:shadow-h8">
+      <div className="flex items-center justify-between gap-3 border-b-2 border-term-rule py-2 pr-3 pl-[18px]">
+        <span className="font-display text-[14px] font-extrabold tracking-[.12em] text-term-muted uppercase [font-stretch:85%]">
+          Terminal
+        </span>
         <CopyButton
           text={command}
-          className="min-h-11 min-w-[100px] cursor-pointer rounded-[10px] border-2 border-term-text bg-transparent px-4 font-[inherit] text-[16px] font-bold text-term-text hover:bg-term-rule focus-visible:outline-deco focus-visible:outline-offset-2"
+          className="flex min-h-11 min-w-[104px] cursor-pointer items-center justify-center gap-2 rounded border-2 border-term-text bg-transparent px-4 font-display text-[15px] font-extrabold tracking-[.08em] text-term-text uppercase [font-stretch:85%] hover:bg-term-rule focus-visible:outline-offset-2 focus-visible:outline-marigold"
         />
       </div>
       <ScrollArea
-        fade="var(--term-bg)"
         className="flex gap-3 p-[18px] font-mono text-[18px] leading-[1.5]"
         hintClassName="border-t border-term-rule px-[18px] py-2 text-term-muted"
       >

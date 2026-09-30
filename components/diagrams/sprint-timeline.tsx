@@ -26,8 +26,8 @@ export function SprintTimelineDiagram() {
         {STEPS.map((step, index) => (
           <li key={step.title} className="relative flex gap-3 tablet:flex-1 tablet:flex-col tablet:items-start">
             <NumberHex n={index + 1} />
-            <div className="flex min-w-0 flex-col gap-1 rounded-2xl bg-surface p-3 ring-1 ring-border tablet:w-full dark:ring-border">
-              <span className="flex items-center gap-2 font-display text-[16px] leading-[1.2] font-extrabold text-fg">
+            <div className="flex min-w-0 flex-col gap-1 rounded-md bg-surface p-3 border-2 border-line tablet:w-full">
+              <span className="flex items-center gap-2 font-serif text-[18px] leading-[1.2] font-semibold text-fg">
                 <Icon name={step.icon} size={20} />
                 {step.title}
               </span>

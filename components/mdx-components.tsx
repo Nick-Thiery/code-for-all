@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
+import { isValidElement, type ReactNode } from "react";
 import { Callout } from "@/components/callout";
 import { Challenge } from "@/components/challenge";
 import { CheckYourself, Question } from "@/components/check-yourself";
@@ -46,9 +47,24 @@ import { Screenshot } from "@/components/screenshot";
 import { StuckBlock, StuckItem } from "@/components/stuck-block";
 import { TermLookup } from "@/components/term-lookup";
 import { VideoEmbed } from "@/components/video-embed";
+import { headingSize } from "@/lib/format";
+
+/** The text of a heading's children, for sizing it. */
+function textOf(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (isValidElement<{ children?: ReactNode }>(node)) return textOf(node.props.children);
+  return "";
+}
 
 // Everything here can be used in any lesson without an import.
 export const mdxComponents: MDXComponents = {
+  // A `##` heading is set big; one with a long word steps down a size so it fits a phone.
+  h2: ({ children, className = "", ...props }) => (
+    <h2 {...props} className={`${headingSize(textOf(children))} ${className}`.trim()}>
+      {children}
+    </h2>
+  ),
   // Internal links get client-side navigation.
   a: ({ href = "", ...props }) =>
     href.startsWith("/") ? <Link href={href} {...props} /> : <a href={href} {...props} />,

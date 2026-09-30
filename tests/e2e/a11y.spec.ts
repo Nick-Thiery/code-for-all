@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
-import { lessonsOf, useTheme } from "./helpers";
+import { lessonsOf, settled, useTheme } from "./helpers";
 
 // axe-core on every kind of page, in light and dark. Serious and critical
 // findings fail the test; anything milder is attached to the report and
@@ -37,8 +37,9 @@ for (const theme of ["light", "dark"] as const) {
         await useTheme(page, theme);
         await page.goto(path);
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-        // Let client-only parts (progress, quiz questions) settle.
+        // Let client-only parts (progress, quiz questions) and entrance animations settle.
         await page.waitForLoadState("networkidle");
+        await settled(page);
 
         const results = await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"])

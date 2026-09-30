@@ -33,7 +33,7 @@ export function CoursePathDiagram() {
           {PHASES.map((phase, index) => (
             <Card key={phase.name} className="gap-2.5">
               <Label className="text-accent">Phase {index + 1}</Label>
-              <span className="font-display text-[17px] leading-[1.2] font-extrabold text-fg">{phase.name}</span>
+              <span className="font-serif text-[19px] leading-[1.2] font-semibold text-fg">{phase.name}</span>
               <div className="flex flex-wrap gap-1.5" aria-hidden="true">
                 {phase.modules.map((n) => (
                   <span key={n} className="relative flex h-[30px] w-[27px] items-center justify-center">
@@ -46,16 +46,16 @@ export function CoursePathDiagram() {
             </Card>
           ))}
         </div>
-        <div className="flex flex-col gap-2.5 rounded-2xl bg-surface/60 p-3 tablet:flex-row tablet:items-stretch dark:bg-surface2/60">
+        <div className="flex flex-col gap-2.5 rounded-md border-2 border-line bg-paper p-3 tablet:flex-row tablet:items-stretch">
           {LOOP.map((step, index) => (
             <div key={step.name} className="contents">
               {index > 0 && <FlowArrow />}
               <div className="flex min-w-0 flex-1 items-center gap-3">
-                <span className="grid size-11 flex-none place-items-center rounded-full bg-tint">
+                <span className="grid size-11 flex-none place-items-center rounded-full border-2 border-line bg-sky">
                   <Icon name={step.icon} />
                 </span>
                 <span className="flex flex-col">
-                  <span className="font-display text-[17px] leading-[1.2] font-extrabold text-fg">{step.name}</span>
+                  <span className="font-serif text-[19px] leading-[1.2] font-semibold text-fg">{step.name}</span>
                   <span className="text-[14px] leading-[1.4] text-muted">{step.what}</span>
                 </span>
               </div>

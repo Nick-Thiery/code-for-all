@@ -34,7 +34,8 @@ async function answerQuiz(page: Page, pick: (index: number) => "right" | "wrong"
     await quiz.getByRole("button", { name: "Check answer" }).click();
     const nextButton = quiz.getByRole("button", { name: /Next question|See how you did/ });
     await expect(nextButton).toBeVisible();
-    const last = (await nextButton.innerText()).includes("See how you did");
+    // Buttons are set in capitals by the stylesheet, so compare without case.
+    const last = /see how you did/i.test(await nextButton.innerText());
     await nextButton.click();
     if (last) break;
   }

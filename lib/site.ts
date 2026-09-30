@@ -9,6 +9,8 @@ export const site = {
   description:
     "A free course for beginners. Learn how AI tools work, then use one to build your own website.",
   madeBy: "Made by students at Code for All, a service club at Singapore American School.",
+  /** The line across the top of the home page's cover, and in a lesson's footer. */
+  issueLine: "Free course · Ages 13 to 16 · Singapore",
   contactEmail: CONTACT_EMAIL,
   contactHref: `mailto:${CONTACT_EMAIL}`,
 };

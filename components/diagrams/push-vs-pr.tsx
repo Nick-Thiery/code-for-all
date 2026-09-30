@@ -43,9 +43,9 @@ export function PushVsPrDiagram() {
 
 function Lane({ name, when, children }: { name: string; when: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-2 rounded-2xl bg-surface/60 p-3 dark:bg-surface2/60">
+    <div className="flex flex-col gap-2 rounded-md border-2 border-line bg-paper p-3">
       <span className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-        <span className="font-display text-[17px] leading-[1.2] font-extrabold text-fg">{name}</span>
+        <span className="font-serif text-[19px] leading-[1.2] font-semibold text-fg">{name}</span>
         <Label>{when}</Label>
       </span>
       <div className="flex flex-col gap-2.5 tablet:flex-row tablet:items-stretch">{children}</div>

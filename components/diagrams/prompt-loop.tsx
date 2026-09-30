@@ -42,7 +42,7 @@ export function PromptLoopDiagram() {
 
 function MiniPage({ better }: { better: boolean }) {
   return (
-    <div className="flex flex-col gap-1.5 rounded-lg border border-border bg-bg p-2" aria-hidden="true">
+    <div className="flex flex-col gap-1.5 rounded border border-line bg-bg p-2" aria-hidden="true">
       {better ? (
         <>
           <div className="flex items-center justify-between">
@@ -51,9 +51,9 @@ function MiniPage({ better }: { better: boolean }) {
           </div>
           <Line w="70%" />
           <div className="mt-1 grid grid-cols-3 gap-1">
-            <span className="h-6 rounded bg-(--part-audience)" />
-            <span className="h-6 rounded bg-(--part-goal)" />
-            <span className="h-6 rounded bg-(--part-pages)" />
+            <span className="h-6 rounded bg-marigold" />
+            <span className="h-6 rounded bg-sky" />
+            <span className="h-6 rounded bg-tomato-tint" />
           </div>
         </>
       ) : (

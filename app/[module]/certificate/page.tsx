@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Certificate } from "@/components/certificate";
+import { PageBody, PageHeader } from "@/components/page-header";
 import type { CertificateText } from "@/lib/certificate";
 import { getModule, getModules, parseModuleParam } from "@/lib/lessons";
 import { getLogoFiles } from "@/lib/logo";
@@ -41,17 +42,19 @@ export default async function ModuleCertificatePage({ params }: Props) {
   };
 
   return (
-    <div className="px-(--gut) print:px-0">
-      <article className="mx-auto flex max-w-[1000px] flex-col gap-6 pt-(--hy) pb-(--sec) print:max-w-none print:gap-0 print:p-0">
-        <header className="flex flex-col gap-3.5 print:hidden">
-          <p className="t-meta m-0">
-            <Link href={moduleTrackHref(mod.number)} className="font-bold">
-              Module {mod.number}: {mod.title}
-            </Link>
-          </p>
-          <h1 className="t-h1 m-0">Your Module {mod.number} certificate</h1>
-          <p className="t-lead m-0">Something to show for finishing every lesson in this module.</p>
-        </header>
+    <article>
+      <PageHeader
+        kicker={
+          <Link href={moduleTrackHref(mod.number)} className="no-underline hover:underline">
+            Module {mod.number} · {mod.title}
+          </Link>
+        }
+        title={`Your Module ${mod.number} certificate`}
+        printHidden
+      >
+        <p>Something to show for finishing every lesson in this module.</p>
+      </PageHeader>
+      <PageBody wide className="max-w-[1000px] gap-6 print:max-w-none print:gap-0">
         <Certificate
           text={text}
           lightTokens={lightTokens()}
@@ -61,7 +64,7 @@ export default async function ModuleCertificatePage({ params }: Props) {
         <p className="m-0 print:hidden">
           <Link href={moduleCompleteHref(mod.number)}>Back to Module {mod.number} complete</Link>
         </p>
-      </article>
-    </div>
+      </PageBody>
+    </article>
   );
 }

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
 import { Honeycomb } from "@/components/honeycomb";
+import { Icon } from "@/components/icons";
+import { PageBody, PageHeader } from "@/components/page-header";
 import { getModule, getModules, getPlannedModule, getSkillsChecks, parseModuleParam } from "@/lib/lessons";
 import { courseCertificateHref, moduleCertificateHref, moduleHref, skillsCheckHref } from "@/lib/outline";
 
@@ -37,79 +40,81 @@ export default async function ModuleCompletePage({ params }: Props) {
   // The last module that's out: finishing it can mean finishing the course.
   const isLast = (await getModules()).every((m) => m.number <= mod.number);
 
-  return (
-    <div className="px-(--gut)">
-      <div className="mx-auto flex max-w-[760px] flex-col items-center gap-5 pt-(--hy) pb-12 tablet:pb-(--sec) text-center">
-        <Honeycomb lessons={mod.lessons.length} />
-        <span className="eyebrow">Module {mod.number} complete</span>
-        <h1 className="t-hero m-0 leading-[1.05]">You finished {mod.title}.</h1>
-        <p className="t-lead m-0 max-w-[30em]">{mod.summary}</p>
+  const range = mod.number === 1 ? "Module 1" : `Modules 1 to ${mod.number}`;
 
-        <div className="mt-6 grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-4 text-left">
-          <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-border p-6">
-            <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Show someone what you made</h2>
-            <p className="m-0">Explaining how you made it is the best way to remember it.</p>
+  return (
+    <article>
+      <PageHeader
+        tone="navy"
+        above={
+          <div className="mb-7 max-w-[220px] desktop:mb-9 desktop:max-w-[300px]">
+            <Honeycomb lessons={mod.lessons.length} />
           </div>
-          <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-border p-6">
-            <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Get your certificate</h2>
+        }
+        kicker={`Module ${mod.number} complete`}
+        title={`You finished ${mod.title}.`}
+      >
+        <p>{mod.summary}</p>
+      </PageHeader>
+      <PageBody wide className="gap-10 desktop:gap-14">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-6 desktop:gap-8">
+          <Card title="Show someone what you made">
+            <p className="m-0">Explaining how you made it is the best way to remember it.</p>
+          </Card>
+          <Card title="Get your certificate">
             <p className="m-0">
               {isLast
                 ? "One for this module, and one for the whole course now that you've finished every module that's out."
                 : "Your name, the module and the date, to print or save as an image."}
             </p>
-            <Link href={moduleCertificateHref(mod.number)} className="text-link">
-              Module {mod.number} certificate →
-            </Link>
-            {isLast && (
-              <Link href={courseCertificateHref} className="text-link">
-                Course certificate →
-              </Link>
-            )}
-          </div>
+            <CardLink href={moduleCertificateHref(mod.number)}>Module {mod.number} certificate</CardLink>
+            {isLast && <CardLink href={courseCertificateHref}>Course certificate</CardLink>}
+          </Card>
           {hasSkillsCheck && (
-            <div className="flex flex-col gap-1.5 rounded-[20px] border-[1.5px] border-accent p-6">
-              <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Check your skills</h2>
-              <p className="m-0">
-                A mixed quiz on {mod.number === 1 ? "Module 1" : `Modules 1 to ${mod.number}`}, and a checklist for your
-                final project.
-              </p>
-              <Link href={skillsCheckHref(mod.number)} className="text-link">
-                Check your skills →
-              </Link>
-            </div>
+            <Card title="Check your skills" tone="on-sky">
+              <p className="m-0">A mixed quiz on {range}, and a checklist for your final project.</p>
+              <CardLink href={skillsCheckHref(mod.number)}>Check your skills</CardLink>
+            </Card>
           )}
           {planned && (
-            <div className="flex flex-col gap-1.5 rounded-[20px] bg-tint p-6">
+            <Card title={next ? `Up next: Module ${nextNumber}` : `Module ${nextNumber} is on the way`} tone="on-marigold">
               {next ? (
                 <>
-                  <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">Up next: Module {nextNumber}</h2>
                   <p className="m-0">
                     {next.title}. {next.summary}
                   </p>
-                  <Link href={next.lessons[0].href} className="text-link">
-                    Start Module {nextNumber} →
-                  </Link>
+                  <CardLink href={next.lessons[0].href}>Start Module {nextNumber}</CardLink>
                 </>
               ) : (
                 <>
-                  <h2 className="display m-0 text-[22px] leading-[1.25] font-[650]">
-                    Module {nextNumber} is on the way
-                  </h2>
-                  <p className="m-0">
-                    {planned.title}. Your progress stays saved on this device.
-                  </p>
-                  <Link href={moduleHref(nextNumber)} className="text-link">
-                    See what&apos;s coming →
-                  </Link>
+                  <p className="m-0">{planned.title}. Your progress stays saved on this device.</p>
+                  <CardLink href={moduleHref(nextNumber)}>See what&apos;s coming</CardLink>
                 </>
               )}
-            </div>
+            </Card>
           )}
         </div>
-        <Link href="/" className="text-link self-center">
+        <Link href="/" className="text-link">
           Back to the course
         </Link>
-      </div>
+      </PageBody>
+    </article>
+  );
+}
+
+function Card({ title, tone = "on-surface", children }: { title: string; tone?: string; children: ReactNode }) {
+  return (
+    <div className={`${tone} flex flex-col gap-2.5 rounded-md border-2 border-line p-6 shadow-h6 desktop:p-7 desktop:shadow-h8`}>
+      <h2 className="t-h3 m-0">{title}</h2>
+      {children}
     </div>
+  );
+}
+
+function CardLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link href={href} className="text-link gap-1.5">
+      {children} <Icon name="arrow-right" size={17} stroke={2.6} />
+    </Link>
   );
 }

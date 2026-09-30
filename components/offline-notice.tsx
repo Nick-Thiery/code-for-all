@@ -20,7 +20,7 @@ export function OfflineNotice() {
   return (
     <div role="status" className="print:hidden">
       {offline && (
-        <p className="m-0 border-b border-border bg-surface2 px-(--gut) py-2 text-center text-[16px] leading-[1.4] text-fg">
+        <p className="on-marigold m-0 border-b-2 border-line px-(--gut) py-2 text-center text-[16px] leading-[1.4] font-bold">
           {OFFLINE_MESSAGE}
         </p>
       )}

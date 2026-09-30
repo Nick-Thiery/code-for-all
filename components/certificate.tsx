@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
-import { Hex } from "@/components/hex";
+import { Icon } from "@/components/icons";
 import { PrintButton, PrintSetup } from "@/components/kit-print";
 import { formatCount } from "@/lib/format";
 import {
@@ -81,14 +81,14 @@ export function Certificate({ text, lightTokens, logoSrc, unfinished }: Props) {
 
   if (!finished) {
     return (
-      <div className="flex flex-col gap-4 rounded-[20px] border-[1.5px] border-border p-(--pad)">
-        <p className="display m-0 text-[22px] leading-[1.25] font-[650]">Not quite yet.</p>
+      <div className="card flex flex-col gap-4 p-(--pad)">
+        <p className="t-h3 m-0">Not quite yet.</p>
         <p className="m-0">
           You&apos;ve done {doneCount} of {formatCount(text.requires.length, "lesson")}. Finish them all and your
           certificate appears here.
         </p>
         <Link href={unfinished.href} className="btn btn-primary self-start">
-          {unfinished.label} <span aria-hidden="true">→</span>
+          {unfinished.label} <Icon name="arrow-right" size={20} stroke={2.6} />
         </Link>
       </div>
     );
@@ -98,7 +98,7 @@ export function Certificate({ text, lightTokens, logoSrc, unfinished }: Props) {
     <div className="flex flex-col gap-6">
       <PrintSetup />
       <div className="flex flex-col gap-2 print:hidden">
-        <label htmlFor={`${uid}-name`} className="font-bold">
+        <label htmlFor={`${uid}-name`} className="kicker">
           The name to print
         </label>
         <input
@@ -110,7 +110,7 @@ export function Certificate({ text, lightTokens, logoSrc, unfinished }: Props) {
           onChange={(event) => setName(event.target.value)}
           autoComplete="name"
           placeholder="Your name"
-          className="w-full max-w-[420px] rounded-[14px] border-[1.5px] border-border bg-surface px-4 py-3 text-[19px] text-fg"
+          className="field w-full max-w-[420px] px-4 py-3 text-[19px]"
         />
         <p className="t-meta m-0 text-muted">
           Your name stays on this device, so it&apos;s ready for your next certificate. It&apos;s never sent anywhere.
@@ -122,13 +122,14 @@ export function Certificate({ text, lightTokens, logoSrc, unfinished }: Props) {
       <div
         ref={sheet}
         style={light}
-        className="certificate relative box-border flex aspect-[297/210] w-full flex-col justify-between overflow-hidden rounded-[6px] border-[1.5px] border-border bg-bg p-[5%] text-fg print:aspect-auto print:h-full print:w-full print:rounded-none"
+        className="certificate relative box-border flex aspect-[297/210] w-full flex-col justify-between overflow-hidden rounded-md border-2 border-border bg-bg p-[5%] text-fg shadow-h8 [container-type:inline-size] print:aspect-auto print:h-full print:w-full print:rounded-none print:shadow-none"
       >
         <div className="flex items-start justify-between gap-4">
           <Image src={logoSrc} alt="Code for All" width={401} height={126} unoptimized className="h-auto w-[22%] max-w-[260px]" />
+          {/* One segment per lesson, like the lesson top bar with every lesson done. */}
           <span aria-hidden="true" className="flex flex-wrap justify-end gap-[0.4em] text-[clamp(8px,1.6cqw,16px)]">
             {Array.from({ length: Math.min(text.lessons, 12) }, (_, i) => (
-              <Hex key={i} width={22} height={24} shape="fill-deco" className="h-[1.5em] w-auto" />
+              <span key={i} className="box-border block h-[1em] w-[2.2em] rounded-[3px] border-2 border-border bg-deco" />
             ))}
           </span>
         </div>
@@ -136,20 +137,22 @@ export function Certificate({ text, lightTokens, logoSrc, unfinished }: Props) {
         <div className="flex flex-col gap-[0.6em] text-[clamp(9px,1.85cqw,22px)]">
           <span className="eyebrow text-[0.8em] leading-none">Certificate of completion</span>
           <span className="text-muted">This certifies that</span>
-          <span className="display text-[clamp(20px,6cqw,72px)] leading-[1.05] font-[750] [overflow-wrap:anywhere]">{shownName}</span>
+          <span className="font-serif text-[clamp(20px,6.4cqw,76px)] leading-[1.02] font-semibold tracking-[-.02em] italic [overflow-wrap:anywhere]">
+            {shownName}
+          </span>
           <span className="text-muted">finished {text.kicker} of Code for All</span>
-          <span className="display mt-[0.3em] text-[1.8em] leading-[1.15] font-bold">{text.title}</span>
+          <span className="head mt-[0.3em] text-[2.1em] leading-[.95]">{text.title}</span>
           <span>{text.line}</span>
         </div>
 
         <div className="flex items-end justify-between gap-8 text-[clamp(7px,1.3cqw,15px)]">
           <span className="flex flex-col gap-[0.3em]">
-            <span className="text-[0.9em] font-bold tracking-[.06em] text-muted uppercase">Date</span>
+            <span className="kicker text-[0.85em] text-muted">Date</span>
             <span className="text-[1.3em] font-bold">{date}</span>
           </span>
           <span className="max-w-[46%] text-[0.9em] leading-[1.45] text-muted">{SMALL_PRINT}</span>
         </div>
-        <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[1.2%] min-h-[6px] bg-accent" />
+        <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[1.6%] min-h-[6px] border-t-2 border-border bg-deco" />
       </div>
 
       <div className="flex flex-wrap items-center gap-3 print:hidden">

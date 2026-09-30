@@ -30,7 +30,7 @@ export async function LessonBody({ lesson }: { lesson: Lesson }) {
     );
   }
 
-  return <div className="prose">{body}</div>;
+  return <div className="prose lesson-body">{body}</div>;
 }
 
 type CodeNode = { type: string; meta?: string | null; data?: Record<string, unknown>; children?: CodeNode[] };

@@ -95,7 +95,7 @@ export function Honeycomb({ lessons }: { lessons: number }) {
     >
       <polygon
         points={hexPoints(logo)}
-        className="ripple fill-none stroke-deco stroke-3"
+        className="ripple fill-none stroke-marigold stroke-3"
         style={{
           transformBox: "fill-box",
           transformOrigin: "center",
@@ -104,27 +104,17 @@ export function Honeycomb({ lessons }: { lessons: number }) {
       />
       {lessonCells.map((cell, index) => (
         <g key={index} style={pop(200 + 100 * index)}>
-          <polygon points={hexPoints(cell)} className="fill-accent" />
+          <polygon points={hexPoints(cell)} strokeLinejoin="round" className="fill-accent stroke-line stroke-2" />
           <text x={cell.x} y={cell.y + 6} textAnchor="middle" className="fill-on-accent font-sans text-[16px] font-bold">
             {index + 1}
           </text>
         </g>
       ))}
       <g style={pop(logoAt, 600)}>
-        {/* In dark mode --accent and --deco are the same sky blue, so the logo
-            switches to a tinted hex with a sky outline to stand apart from the
-            solid lesson hexes. */}
-        <polygon
-          points={hexPoints(logo)}
-          strokeLinejoin="round"
-          className="fill-deco dark:fill-tint dark:stroke-deco dark:stroke-2"
-        />
-        <text
-          x={logo.x}
-          y={logo.y + 5.5}
-          textAnchor="middle"
-          className="fill-on-deco font-mono text-[15px] font-bold dark:fill-deco"
-        >
+        {/* The logo's cell is paper with an ink edge, so it stands apart from
+            the solid lesson cells on any background. */}
+        <polygon points={hexPoints(logo)} strokeLinejoin="round" className="fill-surface stroke-line stroke-2" />
+        <text x={logo.x} y={logo.y + 5.5} textAnchor="middle" className="fill-ink font-mono text-[15px] font-bold">
           &lt;/&gt;
         </text>
       </g>

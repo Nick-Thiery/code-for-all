@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Hex } from "@/components/hex";
+import { Icon } from "@/components/icons";
 import { PrintSetup } from "@/components/kit-print";
+import { PageHeader } from "@/components/page-header";
 import { KIT_PAGES, getKit, kitHref, type KitPage, type RunSheet } from "@/lib/facilitator";
 import { formatCount } from "@/lib/format";
 import { getOutline } from "@/lib/lessons";
@@ -29,46 +30,42 @@ export default async function RunItPage() {
     .filter((mod) => mod.handsOn.length > 0);
 
   return (
-    <div className="px-(--gut)">
+    <article>
       {/* Prints in light colours, even in dark mode. */}
       <PrintSetup />
-      <div className="mx-auto flex max-w-[1120px] flex-col gap-12 pt-(--hy) tablet:gap-[72px] pb-12 tablet:pb-(--sec)">
-        <section className="flex flex-wrap items-start gap-x-16 gap-y-8">
-          <div className="flex max-w-[660px] flex-[1_1_460px] flex-col gap-4">
-            <span className="eyebrow leading-[1.3]">For teachers, volunteers and club leaders</span>
-            <h1 className="t-h1 m-0">Run a Code for All session</h1>
-            <p className="t-lead m-0">
-              Code for All is a free, self-paced course where 13 to 16 year olds learn to build with AI tools. Learners
-              can do it alone at home, and it works even better in a group. Everything you need to run a session is
-              here.
-            </p>
-          </div>
-          <dl className="m-0 box-border grid max-w-[400px] flex-[1_1_280px] grid-cols-[auto_minmax(0,1fr)] gap-x-[18px] gap-y-3 rounded-[20px] border-[1.5px] border-border px-6 py-5 text-[17px] leading-[1.5]">
-            <dt className="font-bold text-muted">Who</dt>
-            <dd className="m-0">Ages 13 to 16, with mixed skill levels</dd>
-            <dt className="font-bold text-muted">Time</dt>
-            <dd className="m-0">
-              {planned.length} weekly sessions of {kit.sessionMinutes} minutes, one per module
-            </dd>
-            <dt className="font-bold text-muted">Needs</dt>
-            <dd className="m-0">
-              A laptop per learner, internet, and <Link href="/access">accounts for the hands-on lessons</Link>
-            </dd>
-            <dt className="font-bold text-muted">Cost</dt>
-            <dd className="m-0">Free</dd>
-          </dl>
-        </section>
+      <PageHeader tone="marigold" kicker="For teachers, volunteers and club leaders" title="Run a Code for All session">
+        <p>
+          Code for All is a free, self-paced course where 13 to 16 year olds learn to build with AI tools. Learners can
+          do it alone at home, and it works even better in a group. Everything you need to run a session is here.
+        </p>
+      </PageHeader>
+      <div className="px-(--gut)">
+      <div className="mx-auto flex max-w-[1200px] flex-col gap-14 pt-10 pb-16 desktop:gap-24 desktop:pt-[72px] desktop:pb-[120px]">
+        <dl className="card m-0 grid max-w-[820px] grid-cols-[auto_minmax(0,1fr)] gap-x-5 gap-y-3 px-(--pad) py-6 text-[17px] leading-[1.5]">
+          <dt className="kicker pt-[3px] text-[13px] desktop:text-[13px]">Who</dt>
+          <dd className="m-0">Ages 13 to 16, with mixed skill levels</dd>
+          <dt className="kicker pt-[3px] text-[13px] desktop:text-[13px]">Time</dt>
+          <dd className="m-0">
+            {planned.length} weekly sessions of {kit.sessionMinutes} minutes, one per module
+          </dd>
+          <dt className="kicker pt-[3px] text-[13px] desktop:text-[13px]">Needs</dt>
+          <dd className="m-0">
+            A laptop per learner, internet, and <Link href="/access">accounts for the hands-on lessons</Link>
+          </dd>
+          <dt className="kicker pt-[3px] text-[13px] desktop:text-[13px]">Cost</dt>
+          <dd className="m-0">Free</dd>
+        </dl>
 
-        <section id="kit" aria-labelledby="kit-title" className="flex scroll-mt-6 flex-col gap-5">
-          <div className="flex flex-col gap-1">
-            <h2 id="kit-title" className="t-h2 m-0">
+        <section id="kit" aria-labelledby="kit-title" className="flex scroll-mt-6 flex-col gap-6 desktop:gap-8">
+          <div className="flex flex-col gap-3">
+            <h2 id="kit-title" className="t-section m-0">
               The session kit
             </h2>
             <p className="m-0 text-muted">
               Open it online, or print it. Each one covers {range}, with a page per module.
             </p>
           </div>
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,240px),1fr))] gap-4">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-6 desktop:gap-8">
             {printable.map((page) => {
               const info = KIT_PAGES[page];
               return (
@@ -89,9 +86,9 @@ export default async function RunItPage() {
           </div>
         </section>
 
-        <section id="how-it-runs" aria-labelledby="how-title" className="flex max-w-[820px] scroll-mt-6 flex-col gap-6">
-          <div className="flex flex-col gap-3">
-            <h2 id="how-title" className="t-h2 m-0">
+        <section id="how-it-runs" aria-labelledby="how-title" className="flex max-w-[820px] scroll-mt-6 flex-col gap-8">
+          <div className="flex flex-col gap-4">
+            <h2 id="how-title" className="t-section m-0">
               How LaunchLab runs
             </h2>
             <p className="m-0">
@@ -110,14 +107,8 @@ export default async function RunItPage() {
             <ol className="m-0 flex list-none flex-wrap items-center gap-2 p-0">
               {kit.deliverableMarks.map((mark, index) => (
                 <li key={mark} className="flex items-center gap-2">
-                  <span className="rounded-full border-[1.5px] border-accent px-3 py-0.5 text-[17px] font-bold text-accent">
-                    {mark}
-                  </span>
-                  {index < kit.deliverableMarks.length - 1 && (
-                    <span aria-hidden="true" className="text-muted">
-                      →
-                    </span>
-                  )}
+                  <span className="chip text-[16px]">{mark}</span>
+                  {index < kit.deliverableMarks.length - 1 && <Icon name="arrow-right" size={16} stroke={2.6} className="text-muted" />}
                 </li>
               ))}
             </ol>
@@ -157,10 +148,10 @@ export default async function RunItPage() {
               {kit.rubric.criteria.map((criterion, index) => (
                 <li
                   key={criterion.criterion}
-                  className={`flex flex-col gap-2 border-t border-border py-4 ${index === kit.rubric.criteria.length - 1 ? "border-b" : ""}`}
+                  className={`flex flex-col gap-2.5 border-t-2 border-line py-5 ${index === kit.rubric.criteria.length - 1 ? "border-b-2" : ""}`}
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-                    <h4 className="display m-0 text-[21px] leading-[1.35] font-[650]">{criterion.criterion}</h4>
+                    <h4 className="display m-0 text-[24px] leading-[1.2]">{criterion.criterion}</h4>
                     <span className="font-mono text-[16px] text-muted">{kit.rubric.pointsPerCriterion} points</span>
                   </div>
                   <Bullets items={criterion.items} />
@@ -168,7 +159,7 @@ export default async function RunItPage() {
               ))}
             </ol>
             <table className="w-full max-w-[520px] border-collapse text-left text-[17px]">
-              <caption className="mb-2 text-left font-bold">Bands, out of {kit.rubric.total}</caption>
+              <caption className="kicker mb-2 text-left">Bands, out of {kit.rubric.total}</caption>
               <thead className="sr-only">
                 <tr>
                   <th scope="col">Points</th>
@@ -177,7 +168,7 @@ export default async function RunItPage() {
               </thead>
               <tbody>
                 {kit.rubric.bands.map((band) => (
-                  <tr key={band.points} className="border-t border-border last:border-b">
+                  <tr key={band.points} className="border-t-2 border-line last:border-b-2">
                     <th scope="row" className="w-[110px] py-2 pr-4 font-mono text-[16px] font-normal whitespace-nowrap text-muted">
                       {band.points}
                     </th>
@@ -189,9 +180,9 @@ export default async function RunItPage() {
           </div>
         </section>
 
-        <section id="run-sheets" aria-labelledby="run-sheets-title" className="flex max-w-[820px] scroll-mt-6 flex-col gap-5">
-          <div className="flex flex-col gap-3">
-            <h2 id="run-sheets-title" className="t-h2 m-0">
+        <section id="run-sheets" aria-labelledby="run-sheets-title" className="flex max-w-[820px] scroll-mt-6 flex-col gap-6">
+          <div className="flex flex-col gap-4">
+            <h2 id="run-sheets-title" className="t-section m-0">
               Run sheets
             </h2>
             <p className="m-0">
@@ -211,9 +202,9 @@ export default async function RunItPage() {
 
         <section
           aria-labelledby="accounts-title"
-          className="box-border flex max-w-[820px] flex-col gap-3 rounded-[20px] bg-tint p-(--pad)"
+          className="on-sky box-border flex max-w-[820px] flex-col gap-3.5 rounded-md border-2 border-line p-(--pad) shadow-h6 desktop:shadow-h8"
         >
-          <h2 id="accounts-title" className="t-h3 m-0">
+          <h2 id="accounts-title" className="t-block m-0">
             Accounts for the hands-on lessons
           </h2>
           <p className="m-0">
@@ -222,7 +213,7 @@ export default async function RunItPage() {
             personal details. Learners don&apos;t sign up for Lovable or Claude themselves. The GitHub, Vercel and
             Supabase steps, where learners sign in with a GitHub account, are done in a session, with your go-ahead.
           </p>
-          <h3 className="m-0 text-[19px] font-bold">The hands-on lessons</h3>
+          <h3 className="kicker m-0 mt-2">The hands-on lessons</h3>
           <ul className="m-0 flex list-none flex-col gap-2 p-0">
             {handsOnModules.map((mod) => (
               <li key={mod.number}>
@@ -236,18 +227,18 @@ export default async function RunItPage() {
               </li>
             ))}
           </ul>
-          <Link href="/access" className="text-link self-start">
-            How we explain this to learners →
+          <Link href="/access" className="text-link gap-1.5 self-start">
+            How we explain this to learners <Icon name="arrow-right" size={17} stroke={2.6} />
           </Link>
         </section>
 
         <section
           id="contact"
           aria-labelledby="contact-title"
-          className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-border pt-12"
+          className="flex flex-wrap items-center justify-between gap-x-8 gap-y-5 border-t-2 border-line pt-12"
         >
-          <div className="flex flex-[1_1_360px] flex-col gap-1">
-            <h2 id="contact-title" className="t-h2 m-0">
+          <div className="flex flex-[1_1_360px] flex-col gap-3">
+            <h2 id="contact-title" className="t-section m-0">
               Talk to the team
             </h2>
             <p className="m-0">Planning a session, or have a question about the kit? We&apos;d love to hear from you.</p>
@@ -257,7 +248,8 @@ export default async function RunItPage() {
           </a>
         </section>
       </div>
-    </div>
+      </div>
+    </article>
   );
 }
 
@@ -273,12 +265,12 @@ function KitCard({
   children: ReactNode;
 }) {
   return (
-    <article className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-border p-[22px]">
+    <article className="card flex flex-col gap-3 p-6">
       <span className="chip-label">{label}</span>
-      <h3 className="display m-0 text-[22px] leading-[1.25] font-[650]">{title}</h3>
+      <h3 className="t-h3 m-0">{title}</h3>
       <p className="m-0 flex-1 text-[17px] leading-[1.55] text-muted">{description}</p>
       {/* Buttons are hidden on paper. */}
-      <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 print:hidden">{children}</div>
+      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 print:hidden">{children}</div>
     </article>
   );
 }
@@ -288,7 +280,7 @@ function Bullets({ items }: { items: string[] }) {
     <ul className="m-0 flex list-none flex-col gap-2 p-0">
       {items.map((item) => (
         <li key={item} className="flex items-start gap-3">
-          <Hex width={14} height={15} shape="fill-deco" className="mt-2 flex-none" />
+          <span aria-hidden="true" className="mt-[0.5em] box-border block size-3 flex-none border-2 border-line bg-marigold" />
           <span>{item}</span>
         </li>
       ))}
@@ -300,16 +292,10 @@ function RunSheetDetails({ sheet, last }: { sheet: RunSheet; last: boolean }) {
   const mod = sheet.module;
   const groupSteps = sheet.steps.filter((step) => step.group);
   return (
-    <details className={`group border-t border-border ${last ? "border-b" : ""}`}>
-      <summary className="flex min-h-11 cursor-pointer list-none items-start gap-3 py-4 [&::-webkit-details-marker]:hidden">
-        <span
-          aria-hidden="true"
-          className="mt-[3px] flex size-7 flex-none items-center justify-center rounded-full border-[1.5px] border-accent font-bold text-accent transition-transform group-open:rotate-90"
-        >
-          ›
-        </span>
-        <span className="flex flex-col gap-0.5">
-          <span className="display text-[21px] leading-[1.35] font-[650]">
+    <details className={`border-t-2 border-line ${last ? "border-b-2" : ""}`}>
+      <summary className="flex min-h-[76px] cursor-pointer list-none items-center justify-between gap-5 py-3.5 [&::-webkit-details-marker]:hidden">
+        <span className="flex flex-col gap-1">
+          <span className="font-serif text-[22px] leading-[1.2] font-semibold desktop:text-[27px]">
             Module {mod.number}: {mod.title}
           </span>
           <span className="t-meta text-muted">
@@ -318,30 +304,37 @@ function RunSheetDetails({ sheet, last }: { sheet: RunSheet; last: boolean }) {
             {groupSteps.length > 0 ? `, ${formatCount(groupSteps.length, "group version")}` : ""}
           </span>
         </span>
+        <span aria-hidden="true" className="plus-box">
+          <Icon name="plus" size={18} stroke={2.8} />
+        </span>
       </summary>
-      <div className="flex flex-col gap-6 pb-8 tablet:pl-10">
+      <div className="flex flex-col gap-7 pt-2 pb-9">
         <div className="flex flex-col gap-3">
-          <h3 className="m-0 text-[19px] font-bold">Suggested timings</h3>
-          <div aria-hidden="true" className="flex h-3 gap-1 print:hidden">
+          <h3 className="kicker m-0">Suggested timings</h3>
+          <div aria-hidden="true" className="flex h-3.5 gap-1 print:hidden">
             {sheet.steps.map((step, index) => (
-              <span key={index} className="rounded-md bg-accent" style={{ flex: step.minutes }} />
+              <span
+                key={index}
+                className={`box-border rounded-[3px] border-2 border-line ${index % 2 === 0 ? "bg-accent" : "bg-marigold"}`}
+                style={{ flex: step.minutes }}
+              />
             ))}
           </div>
           <ol className="m-0 list-none p-0">
             {sheet.steps.map((step, index) => (
               <li
                 key={index}
-                className="grid grid-cols-1 gap-x-4 border-t border-border py-3 first:border-t-0 tablet:grid-cols-[100px_minmax(0,1fr)]"
+                className="grid grid-cols-1 gap-x-4 border-t border-hairline py-3.5 first:border-t-0 tablet:grid-cols-[100px_minmax(0,1fr)]"
               >
                 <span className="font-mono text-[16px] leading-[1.6] text-muted tablet:leading-[1.9]">
                   {step.from}–{step.to} min
                 </span>
                 <div className="flex min-w-0 flex-col gap-1">
-                  <h4 className="m-0 text-[19px] leading-[1.45] font-bold">{step.title}</h4>
+                  <h4 className="m-0 font-serif text-[21px] leading-[1.3] font-semibold">{step.title}</h4>
                   <p className="m-0">{step.do}</p>
                   {step.group && (
-                    <p className="m-0 mt-1 rounded-[14px] border-[1.5px] border-accent px-4 py-3">
-                      <span className="kicker block">Group version</span>
+                    <p className="on-sky m-0 mt-2 rounded border-2 border-line px-4 py-3">
+                      <span className="kicker mb-1 block">Group version</span>
                       {step.group}
                     </p>
                   )}
@@ -351,7 +344,7 @@ function RunSheetDetails({ sheet, last }: { sheet: RunSheet; last: boolean }) {
           </ol>
         </div>
         <div className="flex flex-col gap-3">
-          <h3 className="m-0 text-[19px] font-bold">What to prepare</h3>
+          <h3 className="kicker m-0">What to prepare</h3>
           <Bullets
             items={[
               ...(sheet.tools.length > 0
@@ -361,7 +354,7 @@ function RunSheetDetails({ sheet, last }: { sheet: RunSheet; last: boolean }) {
             ]}
           />
         </div>
-        <div className="flex flex-wrap items-center gap-2 print:hidden">
+        <div className="flex flex-wrap items-center gap-3 print:hidden">
           {printable.map((page) => (
             <Link key={page} href={kitHref(page, mod.number)} className="btn btn-small">
               {KIT_PAGES[page].title}

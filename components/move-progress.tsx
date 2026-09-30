@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
 import { CopyButton } from "@/components/copy-button";
-import { Hex, HexCheck } from "@/components/hex";
+import { Icon } from "@/components/icons";
 import { QrCode } from "@/components/qr-code";
 import { formatCount } from "@/lib/format";
 import { useMastery } from "@/lib/quiz-results";
@@ -129,8 +129,8 @@ export function MoveProgress() {
   const nothingHere = ready && isEmpty(here);
 
   return (
-    <div className="flex flex-col gap-10">
-      <section aria-labelledby={`${uid}-take`} className="flex flex-col gap-4">
+    <div className="flex flex-col gap-12 desktop:gap-16">
+      <section aria-labelledby={`${uid}-take`} className="flex flex-col gap-5">
         <h2 id={`${uid}-take`} className="t-h2 m-0">
           Take your progress with you
         </h2>
@@ -146,8 +146,8 @@ export function MoveProgress() {
             <p className="m-0">
               On this device: <strong>{describe(here)}</strong>. Get it onto another device in any of these ways.
             </p>
-            <ol className="m-0 flex list-none flex-col gap-4 p-0">
-              <li className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+            <ol className="m-0 flex list-none flex-col gap-6 p-0">
+              <li className="card flex flex-col gap-3 p-(--pad)">
                 <h3 className="t-h3 m-0">1. Copy the code</h3>
                 <p className="t-meta m-0 text-muted">Paste it into a message to yourself, then into the box below on the other device.</p>
                 <label htmlFor={`${uid}-code`} className="sr-only">
@@ -159,11 +159,11 @@ export function MoveProgress() {
                   value={code ?? "Making your code…"}
                   rows={3}
                   onFocus={(event) => event.currentTarget.select()}
-                  className="w-full resize-none rounded-[14px] border-[1.5px] border-border bg-surface2 px-4 py-3 font-mono text-[15px] leading-[1.5] text-fg [overflow-wrap:anywhere]"
+                  className="field w-full resize-none bg-paper2 px-4 py-3 font-mono text-[15px] leading-[1.5] [overflow-wrap:anywhere]"
                 />
                 {code && <CopyButton text={code} className="btn btn-primary self-start" />}
               </li>
-              <li className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+              <li className="card flex flex-col gap-3 p-(--pad)">
                 <h3 className="t-h3 m-0">2. Scan the QR code</h3>
                 <p className="t-meta m-0 text-muted">
                   Point the other device&apos;s camera at it. It opens this page there with your code already filled in.
@@ -174,7 +174,7 @@ export function MoveProgress() {
                   <p className="m-0 text-muted">Making your QR code…</p>
                 )}
               </li>
-              <li className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-border p-(--pad)">
+              <li className="card flex flex-col gap-3 p-(--pad)">
                 <h3 className="t-h3 m-0">3. Save a file</h3>
                 <p className="t-meta m-0 text-muted">
                   A small text file with your code in it. Move it however you like, then choose it below on the other
@@ -189,12 +189,12 @@ export function MoveProgress() {
         )}
       </section>
 
-      <section aria-labelledby={`${uid}-bring`} className="flex flex-col gap-4">
+      <section aria-labelledby={`${uid}-bring`} className="flex flex-col gap-5">
         <h2 id={`${uid}-bring`} className="t-h2 m-0">
           Bring progress to this device
         </h2>
         <form onSubmit={onSubmit} className="flex flex-col gap-3">
-          <label htmlFor={`${uid}-paste`} className="font-bold">
+          <label htmlFor={`${uid}-paste`} className="kicker">
             Paste a code, or the link from a QR code
           </label>
           <textarea
@@ -206,13 +206,13 @@ export function MoveProgress() {
             spellCheck={false}
             autoCapitalize="off"
             autoCorrect="off"
-            className="w-full resize-y rounded-[14px] border-[1.5px] border-border bg-surface px-4 py-3 font-mono text-[15px] leading-[1.5] text-fg [overflow-wrap:anywhere]"
+            className="field w-full resize-y px-4 py-3 font-mono text-[15px] leading-[1.5] [overflow-wrap:anywhere]"
           />
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-3.5">
             <button type="submit" disabled={pasted.trim() === ""} className="btn btn-primary">
               Check the code
             </button>
-            <label className="btn btn-secondary cursor-pointer has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-accent">
+            <label className="btn btn-secondary cursor-pointer has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-focus">
               Or choose the file
               <input
                 ref={fileRef}
@@ -227,16 +227,16 @@ export function MoveProgress() {
 
         <div ref={resultRef} tabIndex={-1} aria-live="polite" className="outline-offset-[6px]">
           {loading.kind === "problem" && (
-            <div className="flex flex-col gap-2 rounded-[14px] border-[1.5px] border-border px-[18px] py-4">
-              <p className="display m-0 text-[21px] leading-[1.3] font-[650]">That code didn&apos;t work.</p>
+            <div className="card-flat flex flex-col gap-2 px-[18px] py-4">
+              <p className="display m-0 text-[24px] leading-[1.2]">That code didn&apos;t work.</p>
               <p className="m-0">{PROBLEMS[loading.problem]}</p>
             </div>
           )}
 
           {loading.kind === "ready" && (
-            <div className="flex flex-col gap-4 rounded-[20px] bg-tint p-(--pad)">
-              <div className="flex flex-col gap-1">
-                <p className="display m-0 text-[21px] leading-[1.3] font-[650]">
+            <div className="on-sky flex flex-col gap-4 rounded-md border-2 border-line p-(--pad) shadow-h6">
+              <div className="flex flex-col gap-2">
+                <p className="display m-0 text-[24px] leading-[1.2]">
                   This code has {describe(loading.snapshot)}
                   {formatDate(loading.snapshot.date) ? `, saved on ${formatDate(loading.snapshot.date)}.` : "."}
                 </p>
@@ -250,7 +250,7 @@ export function MoveProgress() {
                   </p>
                 )}
               </div>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-4">
                 {isEmpty(loading.here) ? (
                   <button type="button" onClick={() => load("replace")} className="btn btn-primary">
                     Load it
@@ -273,15 +273,18 @@ export function MoveProgress() {
           )}
 
           {loading.kind === "loaded" && (
-            <div className="flex flex-col gap-3 rounded-[20px] bg-tint p-(--pad)">
-              <p className="display m-0 flex items-center gap-2.5 text-[21px] leading-[1.3] font-[650]">
-                <Hex width={26} height={28} shape="fill-accent stroke-accent stroke-2" className="flex-none">
-                  <HexCheck className="stroke-on-accent stroke-[2.6]" />
-                </Hex>
+            <div className="on-sky flex flex-col gap-4 rounded-md border-2 border-line p-(--pad) shadow-h6">
+              <p className="display m-0 flex items-center gap-3 text-[24px] leading-[1.2]">
+                <span
+                  aria-hidden="true"
+                  className="box-border grid size-7 flex-none place-items-center rounded-[3px] border-2 border-line bg-accent text-on-accent"
+                >
+                  <Icon name="check" size={17} stroke={3.4} />
+                </span>
                 Done. This device now has {describe(loading.snapshot)}.
               </p>
               <Link href="/" className="btn btn-primary self-start">
-                Go to the course <span aria-hidden="true">→</span>
+                Go to the course <Icon name="arrow-right" size={20} stroke={2.6} />
               </Link>
             </div>
           )}

@@ -25,10 +25,10 @@ export function SaveHere({
   const { text, ready } = useSavedWork(id);
 
   return (
-    <div className="flex flex-col gap-3 rounded-[20px] border-2 border-dashed border-deco bg-surface p-(--pad) print:hidden">
-      <div className="flex flex-col gap-1">
-        <span className="kicker">Save it here</span>
-        <label htmlFor={fieldId} className="text-[18px] font-bold">
+    <div className="blk card flex flex-col gap-3.5 p-(--pad) print:hidden">
+      <div className="flex flex-col gap-1.5">
+        <span className="eyebrow">Save it here</span>
+        <label htmlFor={fieldId} className="font-serif text-[24px] leading-[1.15] font-semibold desktop:text-[28px]">
           {label}
         </label>
       </div>
@@ -41,7 +41,7 @@ export function SaveHere({
         rows={rows}
         placeholder={placeholder}
         aria-describedby={`${fieldId}-note`}
-        className="box-border w-full resize-y rounded-xl border-2 border-border bg-surface p-4 font-mono text-[17px] leading-[1.6] text-fg"
+        className="field w-full resize-y p-4 font-mono text-[17px] leading-[1.6]"
       />
       <p id={`${fieldId}-note`} className="t-meta m-0 text-muted">
         {ready && text.trim() !== "" ? "Saved on this device. " : ""}

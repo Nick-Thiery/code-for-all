@@ -8,7 +8,7 @@ import { Hex } from "@/components/hex";
 // page it controls. Below desktop the lines can't keep their places, so the
 // page sits on top and the cards follow (in a row on tablets, stacked on
 // phones); a numbered hexagon on each card matches one on the page instead.
-// The chip colours are the prompt-part tokens (--part-role and so on).
+// Each file has one of the three block colours: marigold, sky or tomato tint.
 
 const ALT =
   "A small web page in a browser window, with the heading 'Join the club', the line 'Get news about our next session.' " +
@@ -24,19 +24,19 @@ type Part = "role" | "style" | "goal";
 // Tailwind sees every class.
 const PART: Record<Part, { chip: string; hex: string; number: string }> = {
   role: {
-    chip: "bg-(--part-role) text-(--part-role-ink)",
-    hex: "fill-(--part-role) stroke-(--part-role-ink) stroke-[1.5]",
-    number: "text-(--part-role-ink)",
+    chip: "border-2 border-line bg-marigold text-on-marigold",
+    hex: "fill-marigold stroke-line stroke-[1.5]",
+    number: "text-on-marigold",
   },
   style: {
-    chip: "bg-(--part-style) text-(--part-style-ink)",
-    hex: "fill-(--part-style) stroke-(--part-style-ink) stroke-[1.5]",
-    number: "text-(--part-style-ink)",
+    chip: "border-2 border-line bg-sky text-ink",
+    hex: "fill-sky stroke-line stroke-[1.5]",
+    number: "text-ink",
   },
   goal: {
-    chip: "bg-(--part-goal) text-(--part-goal-ink)",
-    hex: "fill-(--part-goal) stroke-(--part-goal-ink) stroke-[1.5]",
-    number: "text-(--part-goal-ink)",
+    chip: "border-2 border-line bg-tomato-tint text-ink",
+    hex: "fill-tomato-tint stroke-line stroke-[1.5]",
+    number: "text-ink",
   },
 };
 
@@ -106,7 +106,7 @@ function FileCard({
         <span className="desktop:hidden">
           <Marker part={part} number={number} />
         </span>
-        <span className={`rounded-lg px-2.5 py-[3px] font-mono text-[14px] leading-[1.4] font-semibold ${PART[part].chip}`}>
+        <span className={`rounded px-2.5 py-[3px] font-mono text-[14px] leading-[1.4] font-semibold ${PART[part].chip}`}>
           {name}
         </span>
       </div>
@@ -122,7 +122,7 @@ function Marker({ part, number }: { part: Part; number: number }) {
   return (
     <span className="relative flex h-[27px] w-[25px] flex-none items-center justify-center">
       <Hex width={25} height={27} shape={PART[part].hex} className="absolute inset-0" />
-      <span className={`relative font-display text-[14px] leading-none font-extrabold ${PART[part].number}`}>
+      <span className={`relative font-display [font-stretch:85%] text-[14px] leading-none font-extrabold ${PART[part].number}`}>
         {number}
       </span>
     </span>
@@ -132,22 +132,22 @@ function Marker({ part, number }: { part: Part; number: number }) {
 /** The page the three files make: a heading, a line of text and a button being clicked. */
 function MockPage() {
   return (
-    <div className="mx-auto w-full max-w-[280px] overflow-hidden rounded-[14px] bg-surface shadow-[0_14px_34px_color-mix(in_srgb,var(--accent)_16%,transparent)] dark:shadow-none dark:ring-1 dark:ring-border desktop:absolute desktop:top-[76px] desktop:left-[240px] desktop:w-[200px]">
-      <div className="flex h-[26px] items-center gap-[5px] border-b border-border bg-surface2 px-2.5">
+    <div className="mx-auto w-full max-w-[280px] overflow-hidden rounded-md border-2 border-line bg-surface shadow-h5 desktop:absolute desktop:top-[76px] desktop:left-[240px] desktop:w-[200px]">
+      <div className="flex h-[26px] items-center gap-[5px] border-b-2 border-line bg-paper px-2.5">
         <span className="size-[7px] rounded-full bg-pip" />
         <span className="size-[7px] rounded-full bg-pip" />
         <span className="size-[7px] rounded-full bg-pip" />
       </div>
       <div className="flex flex-col gap-2.5 px-[18px] pt-5 pb-10 desktop:pb-9">
         <div className="flex items-center gap-2.5">
-          <span className="font-display text-[22px] leading-none font-extrabold text-fg">Join the club</span>
+          <span className="font-serif text-[24px] leading-none font-semibold text-fg">Join the club</span>
           <span className="desktop:hidden">
             <Marker part="role" number={1} />
           </span>
         </div>
         <span className="text-[14px] leading-[1.4] text-muted">Get news about our next session.</span>
         <div className="relative mt-2.5 flex items-center gap-2">
-          <span className="inline-flex h-[38px] items-center rounded-[10px] bg-accent px-5 text-[15px] font-bold text-on-accent">
+          <span className="inline-flex h-[38px] items-center rounded-md bg-accent px-5 text-[15px] font-bold text-on-accent">
             Sign up
           </span>
           <span className="desktop:hidden">

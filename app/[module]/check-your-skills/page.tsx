@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BuildChecklist } from "@/components/build-checklist";
 import { ModuleQuiz } from "@/components/module-quiz";
+import { PageBody, PageHeader } from "@/components/page-header";
 import { type NavTarget, PrevNext } from "@/components/prev-next";
 import { getModule, getModules, getPlannedModule, getSkillsCheck, getSkillsChecks, parseModuleParam } from "@/lib/lessons";
 import { moduleCompleteHref, moduleHref, moduleTrackHref, skillsCheckId } from "@/lib/outline";
@@ -61,25 +62,28 @@ export default async function CheckYourSkillsPage({ params }: Props) {
       : { label: "You're at the end", title: "Back to the course", href: "/" };
 
   return (
-    <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-12 tablet:pb-(--sec)">
-        <header className="mb-2 flex flex-col gap-3.5">
-          <p className="t-meta m-0">
-            <Link href={moduleTrackHref(after)} className="font-bold">
-              After Module {after}: {mod.title}
-            </Link>
-          </p>
-          <h1 className="t-h1 m-0">Check your skills</h1>
-          <p className="t-lead m-0">
-            A mixed quiz on {range(after)}, then a checklist for your final project. Right answers in the quiz can
-            take a lesson all the way to Mastered.
-          </p>
-        </header>
+    <article>
+      <PageHeader
+        tone="sky"
+        kicker={
+          <Link href={moduleTrackHref(after)} className="no-underline hover:underline">
+            After Module {after} · {mod.title}
+          </Link>
+        }
+        title="Check your skills"
+        sticker={count > 0 ? { big: String(count), small: count === 1 ? "question" : "questions" } : undefined}
+      >
+        <p>
+          A mixed quiz on {range(after)}, then a checklist for your final project. Right answers in the quiz can take
+          a lesson all the way to Mastered.
+        </p>
+      </PageHeader>
+      <PageBody className="gap-12 desktop:gap-[72px]">
 
         {/* Not a named landmark: the quiz card inside is already the "Mixed quiz" region. */}
-        <section className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <h2 id="mixed-quiz" className="t-h2 m-0">
+        <section className="flex flex-col gap-5 desktop:gap-7">
+          <div className="flex flex-col gap-3">
+            <h2 id="mixed-quiz" className="t-section m-0">
               Mixed quiz
             </h2>
             <p className="m-0">
@@ -99,9 +103,9 @@ export default async function CheckYourSkillsPage({ params }: Props) {
           )}
         </section>
 
-        <section aria-labelledby="build-checklist" className="mt-6 flex flex-col gap-5">
-          <div className="flex flex-col gap-1.5">
-            <h2 id="build-checklist" className="t-h2 m-0">
+        <section aria-labelledby="build-checklist" className="flex flex-col gap-5 desktop:gap-7">
+          <div className="flex flex-col gap-3">
+            <h2 id="build-checklist" className="t-section m-0">
               Build checklist
             </h2>
             <p className="m-0">
@@ -116,14 +120,12 @@ export default async function CheckYourSkillsPage({ params }: Props) {
           <BuildChecklist id={skillsCheckId(after)} groups={checklist} />
         </section>
 
-        <div className="mt-6">
-          <PrevNext
-            label="Check your skills"
-            previous={{ label: `Back · Module ${after}`, title: `Module ${after} complete`, href: moduleCompleteHref(after) }}
-            next={next}
-          />
-        </div>
-      </article>
-    </div>
+        <PrevNext
+          label="Check your skills"
+          previous={{ label: `Back · Module ${after}`, title: `Module ${after} complete`, href: moduleCompleteHref(after) }}
+          next={next}
+        />
+      </PageBody>
+    </article>
   );
 }

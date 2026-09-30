@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useId, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { Hex, HexCheck } from "@/components/hex";
+import { Icon } from "@/components/icons";
 import { MasteryHex } from "@/components/mastery";
 import { LEVELS, LEVEL_NAMES, type Level, type LevelChange, atModuleCeiling, levelOf } from "@/lib/mastery";
 import { drawMixed, shuffle, type DrawGroup, type QuizLesson, type QuizQuestion } from "@/lib/quiz";
@@ -187,11 +187,9 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
       <div role="status" className="flex items-center gap-4">
         <span aria-hidden="true" className="flex flex-none gap-1.5">
           {[0, 200, 400].map((delay) => (
-            <Hex
+            <span
               key={delay}
-              width={16}
-              height={18}
-              shape="fill-deco"
+              className="box-border block size-4 rounded-[3px] border-2 border-line bg-marigold"
               style={{ animation: `cfaBreathe 1.4s ease-in-out ${delay}ms infinite` }}
             />
           ))}
@@ -219,7 +217,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
         rowsTitle="Your skills"
         footnote={
           capped && (
-            <p className="t-meta m-0 mt-2 text-muted">
+            <p className="t-meta m-0 mt-3 text-muted">
               Proficient is as high as a module quiz goes. A lesson reaches Mastered when you get it right again in{" "}
               <Link href={masterAt.href}>{masterAt.label}</Link>.
             </p>
@@ -237,19 +235,14 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
     const isLast = run.index + 1 === run.items.length;
     const wasRight = run.right[run.index];
     pips = (
+      // One segment per question, like a lesson's top bar: filled = answered, marigold = this one.
       <span aria-hidden="true" className="flex flex-wrap gap-1">
         {run.items.map((item, i) => (
-          <Hex
+          <span
             key={item.question.id}
-            width={13}
-            height={14}
-            shape={
-              i < run.index || (i === run.index && run.checked)
-                ? "fill-accent stroke-accent stroke-2"
-                : i === run.index
-                  ? "fill-tint stroke-accent stroke-3"
-                  : "fill-none stroke-pip stroke-2"
-            }
+            className={`box-border block h-3.5 w-6 rounded-[3px] border-2 border-line ${
+              i < run.index || (i === run.index && run.checked) ? "bg-accent" : i === run.index ? "bg-marigold" : "bg-surface"
+            }`}
           />
         ))}
       </span>
@@ -261,7 +254,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
           {mixed && <span className="font-normal"> · from Module {question.module}</span>}
         </Heading>
         <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
-          <legend className="display mb-4 p-0 text-(length:--task) leading-[1.3] font-semibold">
+          <legend className="mb-5 p-0 font-serif text-(length:--task) leading-[1.15] font-semibold tracking-[-.01em]">
             {question.question}
           </legend>
           {options.map((option) => (
@@ -280,20 +273,20 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
         <div aria-live="polite">
           {run.checked &&
             (wasRight ? (
-              <div className="flex flex-col gap-2 rounded-[14px] bg-tint px-[18px] py-4" style={{ animation: "cfaRise 300ms ease both" }}>
-                <p className="display m-0 flex items-center gap-2.5 text-[21px] leading-[1.3] font-[650]">
-                  <ResultHex right />
+              <div className="on-sky flex flex-col gap-2 rounded-md border-2 border-line px-[18px] py-4" style={{ animation: "cfaRise 300ms ease both" }}>
+                <p className="display m-0 flex items-center gap-2.5 text-[24px] leading-[1.2]">
+                  <ResultMark right />
                   That&apos;s right.
                 </p>
                 <p className="m-0">{question.explanation}</p>
               </div>
             ) : (
               <div
-                className="flex flex-col gap-2 rounded-[14px] border-[1.5px] border-border px-[18px] py-4"
+                className="card-flat flex flex-col gap-2 px-[18px] py-4"
                 style={{ animation: "cfaRise 300ms ease both" }}
               >
-                <p className="display m-0 flex items-center gap-2.5 text-[21px] leading-[1.3] font-[650]">
-                  <ResultHex right={false} />
+                <p className="display m-0 flex items-center gap-2.5 text-[24px] leading-[1.2]">
+                  <ResultMark right={false} />
                   Not quite.
                 </p>
                 <p className="m-0">
@@ -310,7 +303,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
           {run.checked ? (
             <button ref={nextRef} type="button" onClick={next} className="btn btn-primary">
-              {isLast ? "See how you did" : "Next question"} <span aria-hidden="true">→</span>
+              {isLast ? "See how you did" : "Next question"} <Icon name="arrow-right" size={20} stroke={2.6} />
             </button>
           ) : (
             <>
@@ -326,20 +319,10 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
   }
 
   return (
-    <section
-      aria-labelledby={`${uid}-label`}
-      className="overflow-hidden rounded-[20px] border-[1.5px] border-border bg-surface text-fg"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 bg-tint px-(--pad) py-4">
-        <span className="flex items-center gap-2">
-          <Hex width={18} height={20} shape="fill-none stroke-accent stroke-[2.4]">
-            <text x="12" y="17.4" textAnchor="middle" className="fill-accent font-sans text-[12px] font-bold">
-              ?
-            </text>
-          </Hex>
-          <span id={`${uid}-label`} className="eyebrow leading-none">
-            {label}
-          </span>
+    <section aria-labelledby={`${uid}-label`} className="card overflow-hidden text-fg">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b-2 border-line px-(--pad) py-4">
+        <span id={`${uid}-label`} className="eyebrow leading-none">
+          {label}
         </span>
         {pips}
       </div>
@@ -348,7 +331,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
   );
 }
 
-const SUMMARY_HEADING = "display m-0 self-start text-(length:--head) leading-[1.25] font-[650] outline-offset-[6px]";
+const SUMMARY_HEADING = "display m-0 self-start text-(length:--head) leading-[1.12] outline-offset-[6px]";
 
 function Option({
   name,
@@ -365,16 +348,17 @@ function Option({
   isAnswer: boolean;
   onChoose: () => void;
 }) {
+  // Right and wrong are told apart by their words and icons below; the looks only back them up.
   const look = !checked
-    ? "cursor-pointer border-border hover:border-accent has-checked:border-accent has-checked:bg-tint"
+    ? "cursor-pointer border-line bg-surface hover:bg-paper-hover has-checked:bg-sky has-checked:shadow-h4"
     : isAnswer
-      ? "border-accent bg-tint"
+      ? "border-line bg-sky"
       : chosen
-        ? "border-dashed border-muted"
-        : "border-border text-muted";
+        ? "border-dashed border-line bg-paper2"
+        : "border-hairline text-muted";
 
   return (
-    <label className={`flex min-h-14 items-center gap-3.5 rounded-[14px] border-[1.5px] px-4 py-3 ${look}`}>
+    <label className={`flex min-h-14 items-center gap-3.5 rounded-md border-2 px-4 py-3 ${look}`}>
       <input
         type="radio"
         name={name}
@@ -387,14 +371,14 @@ function Option({
       <span className="flex min-w-0 flex-1 flex-col gap-1">
         <span className="[overflow-wrap:anywhere]">{option}</span>
         {checked && isAnswer && (
-          <span className="flex items-center gap-1.5 text-[16px] leading-[1.4] font-bold text-accent">
-            <ResultHex right small />
+          <span className="flex items-center gap-1.5 text-[16px] leading-[1.4] font-bold text-fg">
+            <ResultMark right small />
             {chosen ? "Your answer: right" : "Right answer"}
           </span>
         )}
         {checked && chosen && !isAnswer && (
           <span className="flex items-center gap-1.5 text-[16px] leading-[1.4] font-bold text-fg">
-            <ResultHex right={false} small />
+            <ResultMark right={false} small />
             Your answer
           </span>
         )}
@@ -403,17 +387,17 @@ function Option({
   );
 }
 
-/** Filled hexagon with a tick for right; outlined with a cross for wrong. Words always go with it. */
-function ResultHex({ right, small = false }: { right: boolean; small?: boolean }) {
-  const [w, h] = small ? [16, 18] : [26, 28];
-  return right ? (
-    <Hex width={w} height={h} shape="fill-accent stroke-accent stroke-2" className="flex-none">
-      <HexCheck className="stroke-on-accent stroke-[2.6]" />
-    </Hex>
-  ) : (
-    <Hex width={w} height={h} shape="fill-surface stroke-fg stroke-2" className="flex-none">
-      <path d="M8.6 9.6l6.8 6.8M15.4 9.6l-6.8 6.8" fill="none" strokeLinecap="round" className="stroke-fg stroke-[2.4]" />
-    </Hex>
+/** A filled square with a tick for right; an outlined one with a cross for wrong. Words always go with it. */
+function ResultMark({ right, small = false }: { right: boolean; small?: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`box-border grid flex-none place-items-center rounded-[3px] border-2 border-line ${
+        small ? "size-[18px]" : "size-7"
+      } ${right ? "bg-accent text-on-accent" : "bg-surface text-fg"}`}
+    >
+      <Icon name={right ? "check" : "cross"} size={small ? 11 : 17} stroke={3.4} />
+    </span>
   );
 }
 
@@ -454,7 +438,11 @@ function Summary({
           {allRight && celebrate && (
             <span aria-hidden="true" className="flex gap-[3px]">
               {[300, 420, 540].map((delay) => (
-                <Hex key={delay} width={13} height={14} shape="fill-deco" style={{ animation: `cfaPop 500ms ${delay}ms both` }} />
+                <span
+                  key={delay}
+                  className="box-border block size-3.5 rounded-[2px] border-2 border-line bg-marigold"
+                  style={{ animation: `cfaPop 500ms ${delay}ms both` }}
+                />
               ))}
             </span>
           )}
@@ -466,7 +454,7 @@ function Summary({
 
       {rows.length > 0 && (
         <div className="flex flex-col gap-1">
-          <p className="m-0 font-bold">{rowsTitle}</p>
+          <p className="kicker m-0 mb-1">{rowsTitle}</p>
           <ul className="m-0 flex list-none flex-col gap-1 p-0">
             {rows.map((row) => (
               <li key={row.lesson.id} className="flex items-start gap-3">
@@ -485,10 +473,10 @@ function Summary({
       )}
 
       <Link href={levelsHref} className="text-link gap-1.5">
-        See your lesson levels <span aria-hidden="true">→</span>
+        See your lesson levels <Icon name="arrow-right" size={17} stroke={2.6} />
       </Link>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 border-t border-border pt-5">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 border-t-2 border-line pt-5">
         <button type="button" onClick={onTryAgain} className="btn btn-secondary">
           Try again
         </button>

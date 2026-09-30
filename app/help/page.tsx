@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageBody, PageHeader } from "@/components/page-header";
 import { PromptBlock } from "@/components/prompt-block";
 import { site } from "@/lib/site";
 
@@ -171,22 +172,25 @@ export default function HelpPage() {
   ];
 
   return (
-    <div className="px-(--gut)">
-      <article className="mx-auto flex max-w-[720px] flex-col gap-6 pt-(--hy) pb-12 tablet:pb-(--sec)">
-        <header className="flex flex-col gap-3.5">
-          <span className="eyebrow">Help</span>
-          <h1 className="t-h1 m-0">Stuck? Start here.</h1>
-          <p className="t-lead m-0">
-            Short answers to the things that stop people most often. For the tools and accounts, see{" "}
-            <Link href="/access">how hands-on access works</Link>.
-          </p>
-        </header>
-
-        <nav aria-label="Questions on this page" className="rounded-[20px] bg-tint p-(--pad)">
-          <ul className="m-0 flex list-none flex-col gap-1.5 p-0">
+    <article>
+      <PageHeader kicker="Help" title="Stuck? Start here.">
+        <p>
+          Short answers to the things that stop people most often. For the tools and accounts, see{" "}
+          <Link href="/access">how hands-on access works</Link>.
+        </p>
+      </PageHeader>
+      <PageBody className="gap-10 desktop:gap-14">
+        <nav
+          aria-label="Questions on this page"
+          className="on-sky rounded-md border-2 border-line px-(--pad) py-3 shadow-h6 desktop:shadow-h8"
+        >
+          <ul className="m-0 flex list-none flex-col p-0">
             {questions.map((item) => (
-              <li key={item.id}>
-                <a href={`#${item.id}`} className="inline-flex min-h-11 items-center font-bold">
+              <li key={item.id} className="border-b-2 border-hairline last:border-b-0">
+                <a
+                  href={`#${item.id}`}
+                  className="flex min-h-12 items-center py-1.5 font-serif text-[20px] leading-[1.25] font-semibold text-fg no-underline hover:underline desktop:text-[23px]"
+                >
                   {item.q}
                 </a>
               </li>
@@ -194,16 +198,23 @@ export default function HelpPage() {
           </ul>
         </nav>
 
-        {questions.map((item) => (
-          <section key={item.id} id={item.id} aria-labelledby={`${item.id}-q`} className="flex scroll-mt-6 flex-col gap-3 border-t border-border pt-6">
-            <h2 id={`${item.id}-q`} className="t-h3 m-0">
-              {item.q}
-            </h2>
-            {item.a}
-          </section>
-        ))}
+        <div className="flex flex-col border-b-2 border-line">
+          {questions.map((item) => (
+            <section
+              key={item.id}
+              id={item.id}
+              aria-labelledby={`${item.id}-q`}
+              className="flex scroll-mt-6 flex-col gap-3.5 border-t-2 border-line pt-6 pb-8"
+            >
+              <h2 id={`${item.id}-q`} className="t-h3 m-0">
+                {item.q}
+              </h2>
+              {item.a}
+            </section>
+          ))}
+        </div>
 
-        <div className="mt-2 flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-4">
           <Link href="/access" className="btn btn-primary">
             How hands-on access works
           </Link>
@@ -211,7 +222,7 @@ export default function HelpPage() {
             Glossary
           </Link>
         </div>
-      </article>
-    </div>
+      </PageBody>
+    </article>
   );
 }

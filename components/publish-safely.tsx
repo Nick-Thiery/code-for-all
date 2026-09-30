@@ -7,7 +7,7 @@ import { Callout } from "@/components/callout";
  */
 export function PublishSafely({ testEmail = false }: { testEmail?: boolean }) {
   return (
-    <Callout kind="headsup">
+    <Callout kind="headsup" rail="Safety">
       <p>
         <strong>Before you put anything online:</strong> leave out your full name, your school, your address, your
         phone number and photos of yourself. First name, hobbies and the things you&apos;ve made are plenty.

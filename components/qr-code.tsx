@@ -28,7 +28,7 @@ export function QrCode({ text, label, size = 220 }: { text: string; label: strin
   }, [text]);
 
   if (!matrix) {
-    return <div style={{ width: size, height: size }} className="rounded-xl bg-qr-bg" aria-hidden="true" />;
+    return <div style={{ width: size, height: size }} className="box-content rounded-md border-2 border-line bg-qr-bg" aria-hidden="true" />;
   }
   const quiet = 4;
   const total = matrix.size + quiet * 2;
@@ -40,7 +40,7 @@ export function QrCode({ text, label, size = 220 }: { text: string; label: strin
       height={size}
       viewBox={`0 0 ${total} ${total}`}
       shapeRendering="crispEdges"
-      className="rounded-xl bg-qr-bg"
+      className="box-content rounded-md border-2 border-line bg-qr-bg"
     >
       <rect width={total} height={total} className="fill-qr-bg" />
       <path d={matrix.path} transform={`translate(${quiet} ${quiet})`} className="fill-qr-ink" />

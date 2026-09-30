@@ -151,7 +151,7 @@ Like Khan Academy, every lesson that a quiz question tests has a mastery level: 
 - Any of them wrong: down one level, but never below Attempted.
 - A module quiz can take a lesson up to Proficient. Only a Check your skills quiz can take it to Mastered, so Mastered means the learner still remembers it later, in a mix.
 
-On the home page's course grid, each lesson row shows its level once it has one, and the chosen module shows its mastery % (Familiar counts 50%, Proficient 80%, Mastered 100%, as on Khan Academy) with a "How levels work" note, once a quiz has given one of its lessons a level. The grid's honeycombs still mean lessons finished, not levels. After a quiz, the summary lists each lesson's new level and links back to that module on the grid. A lesson no quiz question points at has no level and isn't counted. A module's lessons can only reach Mastered if a Check your skills page draws questions from that module, so give new modules one. The rules are in `lib/mastery.ts`.
+On the home page's course grid, each lesson row shows its level once it has one, and the chosen module shows its mastery % (Familiar counts 50%, Proficient 80%, Mastered 100%, as on Khan Academy) with a "How levels work" note, once a quiz has given one of its lessons a level. After a quiz, the summary lists each lesson's new level and links back to that module on the grid. A lesson no quiz question points at has no level and isn't counted. A module's lessons can only reach Mastered if a Check your skills page draws questions from that module, so give new modules one. The rules are in `lib/mastery.ts`.
 
 ### Check your skills
 
@@ -210,12 +210,12 @@ These work in any lesson without an import. Module 1 uses most of them.
 | `<PublishSafely />` | The safety reminder for lessons where learners put something online. Add `testEmail` where the lesson uses a test email. |
 | ```` ```prompt title="Strong" ```` | A prompt to paste into an AI tool, exactly as written, with a Copy button. Use it for every exact prompt from the slides. |
 | `<PromptPractice taskId="…" hint="…">…</PromptPractice>` | The practice card. See below. |
-| `<PromptLadder>` `<LadderPrompt level="Bad" prompt="…" leavesOut={[…]}>…</LadderPrompt>` `</PromptLadder>` and `<StrongPrompt parts={[{ name, text, does }, …]} />` | The prompt ladder (lesson 1.4): weaker prompts side by side with a 7-hexagon strength meter and "leaves out" chips, then the strong prompt split into its parts, each with a colour-coded label that shows what that part does. Part names must be one of the seven (Role, Goal, Target audience, Core pages, Design style, Output required, Key features); their colours are the `--part-*` tokens. Copy copies the parts' text joined by line breaks. |
+| `<PromptLadder>` `<LadderPrompt level="Bad" prompt="…" leavesOut={[…]}>…</LadderPrompt>` `</PromptLadder>` and `<StrongPrompt parts={[{ name, text, does }, …]} />` | The prompt ladder (lesson 1.4): weaker prompts side by side with a seven-square strength meter and "leaves out" chips, then the strong prompt split into its parts, each highlighted and with a label that shows what that part does. Part names must be one of the seven (Role, Goal, Target audience, Core pages, Design style, Output required, Key features); they take the three part colours (the `--part-*` tokens) in turn. Copy copies the parts' text joined by line breaks. |
 | `<CheckYourself><Question q="…">answer</Question></CheckYourself>` | A short quiz. Each answer shows when the learner asks for it. |
 | `<Challenge title="…">…</Challenge>` | The module's homework (from the slides). Goes at the end of the module's last lesson. |
 | `<Figure src="/lessons/module-6/x.jpg" alt="…" width={1600} height={770} caption="…" />` | An image, usually cropped from a slide into `public/lessons/module-N/`. `width` and `height` are the file's size in pixels. Readers can tap it to see it full size; images narrower than the column show at their own size. |
 | `<VibeCodingDiagram />` `<ThreeFilesDiagram />` `<BranchLanesDiagram />` `<ApiDoorDiagram />` `<LoginDiagram />` and the others listed in `components/mdx-components.tsx` | The lesson diagrams, one file each in `components/diagrams/` (shared pieces in `parts.tsx`). They are HTML and inline SVG drawn with the design tokens, so they work in dark mode, and each sits in the `Diagram` frame (`components/diagram.tsx`) with a caption and a full text alternative. On phones they reflow (cards stack, arrows turn downwards) instead of shrinking. A diagram that can't reflow can pass `enlargeWidth` to get an Enlarge button on phones. |
-| `<VideoEmbed id="hwP7WQkmECE" title="…" />` | A YouTube video from the slides (youtube-nocookie.com, loads when scrolled near), with a plain link underneath. |
+| `<VideoEmbed id="hwP7WQkmECE" title="…" />` | A YouTube video from the slides. It's a card until the learner presses play; only then does the player load (from youtube-nocookie.com). There's a plain link underneath. |
 | `<Placeholder>What's missing</Placeholder>` | Marks content that's still needed, like a video link. It shows locally and on preview deployments; on the production site (where Vercel sets `VERCEL_ENV` to `production`) it renders nothing, so write the text around it so it reads without it. `npm run content-needed` lists every one, with its lesson, in `docs/content-needed.md`. |
 
 ## Prompt practice
@@ -264,7 +264,7 @@ app/sitemap.ts, app/robots.ts sitemap.xml and robots.txt
 app/opengraph-image.tsx       the share image
 app/not-found.tsx             404
 app/api/practice/route.ts     practice submissions (mock grading)
-components/                   one file per piece of the design (header, footer, track, callouts, ...)
+components/                   one file per piece of the design (header, footer, course grid, callouts, ...)
 components/diagrams/          the lesson diagrams, each in the Diagram frame (components/diagram.tsx)
 lib/lessons.ts                reads, checks and orders modules and lessons
 lib/outline.ts                the course outline the browser gets (no lesson text)
@@ -278,9 +278,10 @@ components/module-quiz.tsx    the quiz card (ModuleQuiz)
 components/mastery.tsx        level hexagons, level chips and a module's mastery % (on the course grid)
 lib/practice*.ts              practice types, mock grading and ?mock= fixtures
 lib/site.ts                   site copy, the contact address and the site URL
-lib/logo.ts                   which logo files the header and footer use
+lib/logo.ts                   which logo files the header uses
 app/globals.css               design tokens, type, buttons, lesson styles
-design/                       the Claude Design export this site is built from
+design/cover/                 the design this site is built from: SPEC.md and four mock pages
+design/                       the design before Cover (kept for reference)
 ```
 
 ## Notes
@@ -289,9 +290,9 @@ design/                       the Claude Design export this site is built from
 - **Saved work** is stored under `cfa:saved-work`, as `{ id: text }`: what a learner types in a `<SaveHere>` box and the draft in each practice card (under its task id). It stays in the browser and is never sent anywhere; a later lesson's `<SavedWork>` shows it back. Clearing a box deletes it.
 - **Quiz results** are stored under `cfa:quiz-results`: for each quiz (`module-1/quiz`, `module-5/check-your-skills`), the last result only (how many right, out of how many, the ids of the lessons to review, and the date). Each lesson's mastery level is stored under `cfa:mastery`, as lesson id to level (`{"module-1/meet-lovable": "proficient"}`); renaming a slug resets that lesson to Not started. Check your skills ticks are stored under `cfa:checklists`, per page. None of them holds anything the learner typed or which answers they picked.
 - **Dark mode** follows the device setting until someone uses the toggle. After that, their choice is remembered in `cfa:theme`.
-- **Design**: the source is `design/Code for All Website.dc.html`, exported from Claude Design; open it in a browser to see every page and the spec sheet. The colour and size tokens at the top of `app/globals.css` are pasted from that spec sheet. Use the tokens (as Tailwind classes like `bg-tint` or `text-accent`, or `var(--accent)`); Tailwind's default colour palette is switched off. Headings are set in Recursive, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.
+- **Design**: the site uses the Cover design: a bold magazine look with big condensed type, colour blocks and hard shadows. The source is `design/cover/`: read `SPEC.md`, and open a mock page in a browser to see it move. The colour tokens at the top of `app/globals.css` are pasted from that spec. Use the tokens (as Tailwind classes like `bg-paper`, `text-navy` or `shadow-h8`, or `var(--navy)`); Tailwind's default colour palette and shadows are switched off. Headlines, numerals, labels and buttons are set in Archivo capitals, card titles and ledes in Newsreader, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.
 - **Contact**: the address is one value in `lib/site.ts`. Every "Contact us" button links to `site.contactHref`.
-- **Logo**: `public/cfa-logo-light.png` (transparent background) and `public/cfa-logo-dark.png` (the same pixels with only the colours changed for dark mode). The header and the footer both use them (the footer a little smaller). If `public/cfa-logo.svg` exists, both use it instead, with `public/cfa-logo-dark.svg` for dark mode if that exists too.
+- **Logo**: `public/cfa-logo-light.png` (transparent background) and `public/cfa-logo-dark.png` (the same pixels with only the colours changed for dark mode). The header shows the logo's hexagon beside the name set in Archivo. If `public/cfa-logo.svg` exists, the header uses it instead, with `public/cfa-logo-dark.svg` for dark mode if that exists too.
 - **Search engines**: the site is hidden from them by default (`robots.txt` disallows everything and every page has a `noindex` meta tag). Set `NEXT_PUBLIC_ALLOW_INDEXING=true` at build time to let them in.
 - **Site URL**: share links and `sitemap.xml` use `NEXT_PUBLIC_SITE_URL` (for example `https://codeforall.example`). On Vercel it falls back to the project's production address; locally, to http://localhost:3000.
 - **Printing**: lessons and kit pages print in light colours without the header, navigation, buttons or practice box. Give any new control `print:hidden`.

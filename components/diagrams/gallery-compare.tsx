@@ -30,7 +30,7 @@ export function GalleryCompareDiagram() {
         </div>
         <ol className="m-0 grid list-none gap-2 p-0 tablet:grid-cols-3">
           {CHANGES.map((change, index) => (
-            <li key={change.what} className="flex items-start gap-2.5 rounded-2xl bg-surface p-3 ring-1 ring-border">
+            <li key={change.what} className="flex items-start gap-2.5 rounded-md bg-surface p-3 border-2 border-line">
               <NumberHex n={index + 1} size={26} />
               <span className="flex flex-col gap-0.5">
                 <span className="text-[15px] leading-[1.3] font-bold text-fg">{change.what}</span>
@@ -53,7 +53,7 @@ function Shot({ src, label, note, marks = false }: { src: string; label: string;
       </span>
       {/* The markers sit half over the image's edge, so they don't hide its words. */}
       <div className={`relative ${marks ? "mx-3" : ""}`}>
-        <div className="overflow-hidden rounded-xl border border-border bg-surface">
+        <div className="overflow-hidden rounded-md border border-line bg-surface">
           <Image src={src} alt="" width={1500} height={960} sizes="(min-width: 600px) 340px, 100vw" className="block h-auto w-full" />
         </div>
         {marks && (

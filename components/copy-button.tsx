@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Icon } from "@/components/icons";
 
-/** "Copy", then "✓ Copied" for two seconds, announced to screen readers. */
-export function CopyButton({ text, className = "btn btn-small min-w-24 text-[17px]" }: { text: string; className?: string }) {
+/** "Copy", then "Copied" with a tick for two seconds, announced to screen readers. */
+export function CopyButton({ text, className = "btn btn-small min-w-[104px]" }: { text: string; className?: string }) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -18,7 +19,8 @@ export function CopyButton({ text, className = "btn btn-small min-w-24 text-[17p
   return (
     <>
       <button type="button" onClick={copy} className={`${className} print:hidden`}>
-        {copied ? "✓ Copied" : "Copy"}
+        <Icon name={copied ? "check" : "copy"} size={17} stroke={copied ? 3 : 2.2} />
+        {copied ? "Copied" : "Copy"}
       </button>
       <span aria-live="polite" className="sr-only">
         {copied ? "Copied to clipboard" : ""}

@@ -20,7 +20,7 @@ export function ChatVsAgentDiagram() {
       <div className="grid gap-3 tablet:grid-cols-2">
         <Card icon={<Icon name="chat" />} title="Chat">
           <Bubble>{ASK}</Bubble>
-          <div className="flex flex-col gap-1.5 rounded-lg bg-surface2 p-2.5">
+          <div className="flex flex-col gap-1.5 rounded bg-surface2 p-2.5">
             <Note className="text-[14px]">Here&apos;s how. Add this to your HTML:</Note>
             <code className="block rounded bg-bg px-2 py-1 font-mono text-[13px] leading-[1.5] text-fg">{"<button>Sign up</button>"}</code>
           </div>
