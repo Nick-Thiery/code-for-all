@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { PageBody, PageHeader } from "@/components/page-header";
+import { contentsHref } from "@/lib/outline";
 
 export function OfflinePage() {
   return (
@@ -17,7 +18,7 @@ export function OfflinePage() {
           <button type="button" onClick={() => window.location.reload()} className="btn btn-primary">
             Try again
           </button>
-          <Link href="/" className="btn btn-secondary">
+          <Link href={contentsHref} className="btn btn-secondary">
             Back to the course
           </Link>
         </div>

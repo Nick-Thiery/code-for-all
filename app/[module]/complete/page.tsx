@@ -6,7 +6,7 @@ import { Honeycomb } from "@/components/honeycomb";
 import { Icon } from "@/components/icons";
 import { PageBody, PageHeader } from "@/components/page-header";
 import { getModule, getModules, getPlannedModule, getSkillsChecks, parseModuleParam } from "@/lib/lessons";
-import { courseCertificateHref, moduleCertificateHref, moduleHref, skillsCheckHref } from "@/lib/outline";
+import { courseCertificateHref, moduleCertificateHref, moduleHref, moduleTrackHref, skillsCheckHref } from "@/lib/outline";
 
 type Props = { params: Promise<{ module: string }> };
 
@@ -94,7 +94,7 @@ export default async function ModuleCompletePage({ params }: Props) {
             </Card>
           )}
         </div>
-        <Link href="/" className="text-link">
+        <Link href={moduleTrackHref(mod.number)} className="text-link">
           Back to the course
         </Link>
       </PageBody>

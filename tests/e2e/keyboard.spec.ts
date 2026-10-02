@@ -48,6 +48,7 @@ async function tabThrough(page: Page, limit = 300): Promise<FocusReport[]> {
 
 const pages = [
   { name: "homepage", path: "/" },
+  { name: "Contents", path: "/contents" },
   { name: "a lesson", path: lessonsOf(1)[3].href },
   { name: "a module quiz", path: "/module-1/quiz" },
   { name: "Check your skills", path: "/module-5/check-your-skills" },
@@ -88,7 +89,7 @@ test("the homepage's Skip to content link appears on focus and works", async ({ 
 
 test("the course grid's module cards work from the keyboard", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "phone", "Module cards are only on tablet and up; phones get the list.");
-  await page.goto("/");
+  await page.goto("/contents");
   const card = page.getByRole("button", { name: /Module 2/ }).first();
   await card.focus();
   await page.keyboard.press("Enter");
@@ -98,7 +99,7 @@ test("the course grid's module cards work from the keyboard", async ({ page }, t
 
 test("a module opens in place from the keyboard on phones", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "phone", "The in-place list is the phone layout.");
-  await page.goto("/");
+  await page.goto("/contents");
   const toggle = page.getByRole("button", { name: /Module 2/ }).locator("visible=true").first();
   await toggle.focus();
   await page.keyboard.press("Enter");

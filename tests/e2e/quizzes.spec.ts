@@ -55,12 +55,12 @@ test.describe("Quizzes page", () => {
     await expect(skills.getByText("Nothing to review")).toBeVisible();
 
     // The course grid's quiz card shows the same score.
-    await page.goto("/#module-2");
+    await page.goto("/contents#module-2");
     await expect(page.locator("text=Last score: 6 of 8").locator("visible=true").first()).toBeVisible();
   });
 
   test("is linked from the header, the footer and the course section", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/contents");
     await expect(page.getByRole("link", { name: "See all quizzes" })).toHaveAttribute("href", "/quizzes");
     await expect(page.getByRole("navigation", { name: "Footer" }).getByRole("link", { name: "Quizzes" })).toHaveAttribute(
       "href",

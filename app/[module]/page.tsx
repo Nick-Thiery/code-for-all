@@ -3,11 +3,11 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { PageBody, PageHeader } from "@/components/page-header";
 import { getModule, getModules, getPlannedModule, getSkillsChecks, parseModuleParam } from "@/lib/lessons";
-import { moduleTrackHref, quizHref, skillsCheckHref } from "@/lib/outline";
+import { contentsHref, moduleTrackHref, quizHref, skillsCheckHref } from "@/lib/outline";
 
 type Props = { params: Promise<{ module: string }> };
 
-// /module-N. A released module lives on the course page, so this goes there.
+// /module-N. A released module lives on the Contents page, so this goes there.
 // A module that's in the course plan but not out yet gets the Coming soon
 // page: what it will cover (its planned lessons from course.yml) and what to
 // do while you wait, pointing back at finished work. Anything else is a 404.
@@ -101,14 +101,14 @@ export default async function ModulePage({ params }: Props) {
                   </li>
                 )}
                 <li>
-                  <Link href={moduleTrackHref(before.number)}>Go back over Module {before.number} on the course page</Link>
+                  <Link href={moduleTrackHref(before.number)}>Go back over Module {before.number} on the Contents page</Link>
                 </li>
               </ul>
             )}
           </section>
         )}
 
-        <Link href="/" className="btn btn-primary self-start">
+        <Link href={contentsHref} className="btn btn-primary self-start">
           Back to the course
         </Link>
       </PageBody>

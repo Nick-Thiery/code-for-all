@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PageBody, PageHeader } from "@/components/page-header";
 import { site } from "@/lib/site";
+import { contentsHref } from "@/lib/outline";
 
 export default function NotFound() {
   return (
@@ -32,7 +33,7 @@ export default function NotFound() {
         <p>The page you&apos;re looking for doesn&apos;t exist, or it has moved. Your progress is safe.</p>
       </PageHeader>
       <PageBody>
-        <Link href="/" className="btn btn-primary self-start">
+        <Link href={contentsHref} className="btn btn-primary self-start">
           Back to the course
         </Link>
       </PageBody>

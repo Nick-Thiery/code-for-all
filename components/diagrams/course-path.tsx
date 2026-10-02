@@ -5,7 +5,7 @@ import { Hex } from "@/components/hex";
 import { Card, Icon, Label, Note, type IconName } from "@/components/diagrams/parts";
 
 // Lesson 1.1: the course path (three phases, ten modules) and the loop each
-// module runs: read, practise, build. Phase names and module counts match
+// module runs: read, practice, build. Phase names and module counts match
 // content/course.yml.
 
 const PHASES = [
@@ -16,18 +16,18 @@ const PHASES = [
 
 const LOOP: { icon: IconName; name: string; what: string }[] = [
   { icon: "book", name: "Read", what: "A short lesson teaches one idea." },
-  { icon: "sparkle", name: "Practise", what: "Try it in a practice box or a quiz." },
+  { icon: "sparkle", name: "Practice", what: "Try it in a practice box or a quiz." },
   { icon: "hammer", name: "Build", what: "A hands-on part, then the module's Challenge." },
 ];
 
 const ALT =
   "The course path: three phases in a row. Build with AI, Modules 1 to 5 (Lovable, Claude Code, Claude Design). " +
   "Developer fundamentals, Modules 6 to 8 (GitHub, Vercel, APIs and logging in). Your final project, Modules 9 and 10 (plan it, ship it, show it). " +
-  "Underneath, the loop every module runs: Read (a short lesson teaches one idea), Practise (try it in a practice box or a quiz), Build (a hands-on part, then the module's Challenge), and back to Read.";
+  "Underneath, the loop every module runs: Read (a short lesson teaches one idea), Practice (try it in a practice box or a quiz), Build (a hands-on part, then the module's Challenge), and back to Read.";
 
 export function CoursePathDiagram() {
   return (
-    <Diagram alt={ALT} caption="Ten modules in three phases, and the loop every module runs: read, practise, build.">
+    <Diagram alt={ALT} caption="Ten modules in three phases, and the loop every module runs: read, practice, build.">
       <div className="flex flex-col gap-4">
         <div className="grid gap-2.5 tablet:grid-cols-3">
           {PHASES.map((phase, index) => (

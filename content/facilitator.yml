@@ -110,7 +110,7 @@ modules:
         note: The original class timed this sprint with a 20-minute countdown on screen.
       - minutes: 15
         lessons: [better-prompts-with-ai]
-        do: Learners practise their message to Claude in the practice box, then send it to Claude with their original prompt at the end.
+        do: Learners practice their message to Claude in the practice box, then send it to Claude with their original prompt at the end.
       - minutes: 20
         lessons: [using-refined-prompts]
         do: Learners check the refined prompt, then paste it into Lovable with the line in front. Remind them to screenshot their first draft before they paste.

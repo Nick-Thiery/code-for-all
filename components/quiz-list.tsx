@@ -7,7 +7,7 @@ import { type Outline, type OutlineQuiz, allLessons, lessonLabel } from "@/lib/o
 import { type QuizResult, useQuizResults } from "@/lib/quiz-results";
 
 // The list on /quizzes: every released module quiz and Check your skills page,
-// grouped by phase like the homepage's Contents. It reads the same outline
+// grouped by phase like the Contents page. It reads the same outline
 // (content/module-N/quiz.yml, content/check-your-skills.yml) and the same
 // saved results (lib/quiz-results.ts) as the quiz pages and the course grid,
 // so a score is the same wherever it's shown. Before results load (and

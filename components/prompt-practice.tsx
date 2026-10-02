@@ -49,7 +49,7 @@ const NOTICES = {
     button: "Try again",
   },
   hourly: {
-    title: "You've practised a lot this hour.",
+    title: "You've practiced a lot this hour.",
     body: "Take a short break and come back in a bit.",
     note: "Your prompt will still be here when you're back.",
   },

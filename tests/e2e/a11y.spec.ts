@@ -11,6 +11,7 @@ const diagramLesson = lessonsOf(1).find((lesson) => lesson.slug === "what-is-vib
 
 const pages: { name: string; path: string }[] = [
   { name: "homepage", path: "/" },
+  { name: "Contents", path: "/contents" },
   { name: "a lesson", path: lessonsOf(1)[0].href },
   { name: "the prompt ladder lesson", path: promptLadderLesson.href },
   { name: "a diagram lesson", path: diagramLesson.href },

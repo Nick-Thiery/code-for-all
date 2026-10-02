@@ -53,7 +53,9 @@ export type Outline = {
 };
 
 export const moduleHref = (module: number) => `/module-${module}`;
-export const moduleTrackHref = (module: number) => `/#module-${module}`;
+/** The Contents page opened on a module's lessons. */
+export const contentsHref = "/contents";
+export const moduleTrackHref = (module: number) => `${contentsHref}#module-${module}`;
 export const moduleCompleteHref = (module: number) => `/module-${module}/complete`;
 export const moduleCertificateHref = (module: number) => `/module-${module}/certificate`;
 export const courseCertificateHref = "/certificate";
