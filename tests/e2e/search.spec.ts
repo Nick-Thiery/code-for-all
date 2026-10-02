@@ -252,7 +252,9 @@ test.describe("Site search", () => {
       await page.keyboard.press(i % 3 === 2 ? "Shift+Tab" : "Tab");
       expect(await page.evaluate(() => !!document.activeElement?.closest("dialog[open]"))).toBe(true);
     }
-    expect(await page.evaluate(() => getComputedStyle(document.documentElement).overflow)).toBe("hidden");
+    // The lock is set and released in an effect just after the dialog opens or closes, so wait for it.
+    const overflow = () => page.evaluate(() => getComputedStyle(document.documentElement).overflow);
+    await expect.poll(overflow).toBe("hidden");
     if (!isPhone(testInfo)) {
       await page.mouse.move(12, 300);
       await page.mouse.wheel(0, 600);
@@ -260,7 +262,8 @@ test.describe("Site search", () => {
       expect(await page.evaluate(() => window.scrollY)).toBe(before);
     }
     await page.keyboard.press("Escape");
-    expect(await page.evaluate(() => getComputedStyle(document.documentElement).overflow)).not.toBe("hidden");
+    await expect(dialog(page)).toBeHidden();
+    await expect.poll(overflow).not.toBe("hidden");
   });
 
   test("sends and saves nothing that's typed", async ({ page }, testInfo) => {
@@ -282,14 +285,20 @@ test.describe("Site search", () => {
     expect(stored).not.toContain("wordle");
   });
 
-  test("says so when the index can't load, and Try again works", async ({ page }, testInfo) => {
-    await page.route("**/search-index.json", (route) => route.abort("internetdisconnected"));
-    await page.goto("/");
-    await (await searchButton(page, testInfo)).click();
-    await expect(dialog(page).getByText("Search couldn't load")).toBeVisible();
-    await page.unroute("**/search-index.json");
-    await dialog(page).getByRole("button", { name: "Try again" }).click();
-    await expect(page.getByRole("combobox", { name: "Search the course" })).toBeFocused();
+  test.describe("without a service worker", () => {
+    // page.route doesn't see a service worker's own fetches, so if the worker
+    // took control first it would fetch the index and get round the block.
+    test.use({ serviceWorkers: "block" });
+
+    test("says so when the index can't load, and Try again works", async ({ page }, testInfo) => {
+      await page.route("**/search-index.json", (route) => route.abort("internetdisconnected"));
+      await page.goto("/");
+      await (await searchButton(page, testInfo)).click();
+      await expect(dialog(page).getByText("Search couldn't load")).toBeVisible();
+      await page.unroute("**/search-index.json");
+      await dialog(page).getByRole("button", { name: "Try again" }).click();
+      await expect(page.getByRole("combobox", { name: "Search the course" })).toBeFocused();
+    });
   });
 });
 
@@ -316,10 +325,10 @@ for (const theme of ["light", "dark"] as const) {
   });
 }
 
-test("the header fits at 375, 768, 960 and 1280, on a page and on a lesson", async ({ page }) => {
+test("the header fits at 320, 375, 768, 960 and 1280, on a page and on a lesson", async ({ page }) => {
   // Module 5 has the most lessons, so the longest row of segments.
   const longest = [5, 6, 1].map((n) => lessonsOf(n)).sort((a, b) => b.length - a.length)[0];
-  for (const width of [375, 768, 960, 1280]) {
+  for (const width of [320, 375, 768, 960, 1280]) {
     await page.setViewportSize({ width, height: 800 });
     for (const path of ["/help", longest[longest.length - 1].href]) {
       await page.goto(path);

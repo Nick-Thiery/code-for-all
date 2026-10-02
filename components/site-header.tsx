@@ -73,10 +73,12 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
       {lesson && lessonModule ? (
         <LessonBar lesson={lesson} module={lessonModule} completed={completed} ready={ready} menu={menu} search={search} />
       ) : (
-        <div className="px-(--gut) max-desktop:pr-4">
-          <div className="mx-auto flex h-[62px] max-w-[1200px] items-center justify-between gap-3 nav:h-[76px]">
+        <div className="px-(--gut) max-desktop:pr-4 max-[375px]:pr-3 max-[375px]:pl-4">
+          {/* Below 375px (the smallest phones, down to 320px) the name is a step
+              smaller and the gaps tighter, so MENU stays on screen. */}
+          <div className="mx-auto flex h-[62px] max-w-[1200px] items-center justify-between gap-3 nav:h-[76px] max-[375px]:gap-2">
             <Wordmark files={logo} />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 max-[375px]:gap-1.5">
               <nav aria-label="Main" className="mr-0.5 hidden items-center gap-1.5 desktop:flex">
                 {NAV.map((item) => (
                   <NavLink key={item.key} href={item.href} current={active === item.key} prefetch={item.key === "contents" ? undefined : false}>
@@ -156,7 +158,7 @@ function MenuButton({ menu, label = false, className = "" }: { menu: Menu; label
       aria-label={label ? undefined : menu.open ? "Close menu" : "Open menu"}
       onClick={menu.toggle}
       className={`flex h-11 flex-none cursor-pointer items-center justify-center gap-2 rounded border-2 border-line font-display text-[14px] font-extrabold tracking-[.1em] text-ink uppercase [font-stretch:85%] ${
-        label ? "bg-marigold px-3 text-on-marigold" : "w-11 bg-transparent"
+        label ? "bg-marigold px-3 text-on-marigold max-[375px]:gap-1.5 max-[375px]:px-2" : "w-11 bg-transparent"
       } ${className}`}
     >
       <Icon name={menu.open ? "cross" : "menu"} size={label ? 16 : 18} stroke={2.8} />
@@ -177,13 +179,13 @@ function Wordmark({ files }: { files: LogoFiles }) {
     <Link
       href="/"
       aria-label="Code for All home"
-      className="flex min-h-11 flex-none items-center gap-2.5 rounded text-fg no-underline hover:text-fg nav:gap-3"
+      className="flex min-h-11 flex-none items-center gap-2.5 rounded text-fg no-underline hover:text-fg nav:gap-3 max-[375px]:gap-2"
     >
       <span className="block h-[30px] w-[24px] flex-none overflow-hidden nav:h-9 nav:w-[29px]">
         <span className="block h-full dark:hidden">{image(files.light)}</span>
         <span className="hidden h-full dark:block">{image(files.dark)}</span>
       </span>
-      <span className="font-display text-[24px] leading-none font-extrabold tracking-[.01em] whitespace-nowrap uppercase [font-stretch:72%] nav:text-[28px]">
+      <span className="font-display text-[24px] leading-none font-extrabold tracking-[.01em] whitespace-nowrap uppercase [font-stretch:72%] nav:text-[28px] max-[375px]:text-[18px]">
         Code for All
       </span>
     </Link>
