@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
 import { expect, test, type Page } from "@playwright/test";
 import { lessonsOf, releasedModules } from "./helpers";
 
@@ -115,3 +118,27 @@ test.describe("Homepage projects", () => {
     for (const name of cards) expect(keyframes).toContain(name);
   });
 });
+
+// Every module in content/course.yml, released or not, with its one-line summary.
+type PlannedModule = { number: number; title: string; summary: string };
+const course = matter(`---\n${fs.readFileSync(path.join(process.cwd(), "content", "course.yml"), "utf8")}\n---\n`).data as {
+  phases: { modules: PlannedModule[] }[];
+};
+const planned = course.phases.flatMap((phase) => phase.modules);
+const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+test("each module's summary shows under its title on /contents", async ({ page }) => {
+  await page.goto("/contents");
+  const released = new Set(releasedModules());
+  for (const { number, title, summary } of planned) {
+    // Released modules are buttons (pressed from 960px, expanded below); Coming soon ones are links.
+    const row = page
+      .getByRole(released.has(number) ? "button" : "link", { name: new RegExp(`^Module ${number}: `) })
+      .locator("visible=true")
+      .first();
+    await expect(row.getByText(summary, { exact: true })).toBeVisible();
+    // A hidden full stop between title and summary, so the name reads as two sentences.
+    await expect(row).toHaveAccessibleName(new RegExp(`^Module ${number}: ${escape(title)}\\s*\\.\\s*${escape(summary)}`));
+  }
+});
+
