@@ -110,6 +110,18 @@
   animation: cvFan 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d) both;
   transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+/* The cards fan out from a pile. Keyframes used here must be in this file:
+   a CSS Module renames both the keyframes and the animations that use them. */
+@keyframes cvFan {
+  from {
+    opacity: 0;
+    transform: translate(0, 46px) rotate(0deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate(var(--x), var(--y)) rotate(var(--r));
+  }
+}
 /* Straightens and lifts. !important, because the entrance animation's end state would win otherwise. */
 .card:hover,
 .card:focus-visible {
@@ -257,6 +269,14 @@
   color: var(--on-marigold);
 }
 /* The names run four times over; sliding by half of that loops without a seam. */
+@keyframes cvTicker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
 .track {
   display: flex;
   flex: none;

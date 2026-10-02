@@ -87,4 +87,31 @@ test.describe("Homepage projects", () => {
       expect(fit.inside, `${fit.name} and its focus ring are all on screen`).toBe(true);
     }
   });
+
+  test("the ticker and the cover's cards use keyframes that exist", async ({ page }) => {
+    await page.goto("/");
+    // A CSS Module renames the animations it uses, so a keyframes rule left
+    // outside it never matches and the element just doesn't move.
+    const { keyframes, ticker, cards } = await page.evaluate(() => {
+      const names: string[] = [];
+      const walk = (rules: CSSRuleList) => {
+        for (const rule of rules) {
+          if (rule instanceof CSSKeyframesRule) names.push(rule.name);
+          if ("cssRules" in rule) walk((rule as CSSGroupingRule).cssRules);
+        }
+      };
+      for (const sheet of document.styleSheets) walk(sheet.cssRules);
+      const strip = document.querySelector("[data-ticker]")!.firstElementChild!;
+      const fan = [...document.querySelectorAll("h1 ~ * a")].filter((a) => getComputedStyle(a).position === "absolute");
+      return {
+        keyframes: names,
+        ticker: getComputedStyle(strip).animationName,
+        cards: fan.map((card) => getComputedStyle(card).animationName),
+      };
+    });
+    expect(ticker).not.toBe("none");
+    expect(keyframes).toContain(ticker);
+    expect(cards.length).toBe(3);
+    for (const name of cards) expect(keyframes).toContain(name);
+  });
 });
