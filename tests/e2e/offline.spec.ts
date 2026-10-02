@@ -11,6 +11,7 @@ const PORT = 3105;
 const BASE = `http://localhost:${PORT}`;
 const [first, lesson] = lessonsOf(1);
 const unopened = lessonsOf(3)[0];
+const wordle = lessonsOf(7).find((l) => /wordle/i.test(l.title))!;
 
 let server: ChildProcess | null = null;
 
@@ -99,6 +100,29 @@ test.describe("offline", () => {
     await page.getByRole("button", { name: "Try again" }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(unopened.title);
     await expect(page.getByRole("status").filter({ hasText: "You're offline" })).toBeHidden();
+  });
+
+  test("search opened once online still works offline", async ({ context, page }) => {
+    test.setTimeout(120_000);
+    await startServer();
+    await page.goto(`${BASE}/help`);
+    await controlled(page);
+    await page.waitForTimeout(1500);
+    const search = async () => {
+      await page.locator("main h1").click();
+      await page.keyboard.press("/");
+      const box = page.getByRole("combobox", { name: "Search the course" });
+      await box.fill("wordle");
+      await expect(page.getByRole("option").first()).toHaveAttribute("href", wordle.href);
+    };
+    await search();
+    await page.waitForLoadState("networkidle");
+
+    stopServer();
+    await context.setOffline(true);
+    await page.goto(`${BASE}/help`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Stuck? Start here.");
+    await search();
   });
 });
 

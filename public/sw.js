@@ -8,8 +8,10 @@
     network first; the copy in the cache is only used when the network fails.
   - Hashed build files (/_next/static/…) never change, so they come from the
     cache first.
-  - Images and fonts come from the cache when they're there, and are fetched
-    again in the background to keep the copy fresh.
+  - Images, fonts and the search index (/search-index.json) come from the
+    cache when they're there, and are fetched again in the background to keep
+    the copy fresh. With the search panel's own script (a /_next/static file),
+    that's all search needs, so once opened online it works offline too.
   - A new deploy means a new build id, a new worker and a new cache. When it
     takes over it deletes every older cache, so nothing from an old deploy is
     served after the next online visit.
@@ -83,9 +85,11 @@ function keepable(response) {
 }
 
 async function put(request, response) {
+  // Copy it straight away: once the page has read the response, it can't be copied.
+  const copy = response.clone();
   try {
     const cache = await caches.open(CACHE);
-    await cache.put(request, response.clone());
+    await cache.put(request, copy);
   } catch {
     // Storage full or blocked: the page still works, it just won't be there offline.
   }
@@ -147,6 +151,6 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(networkFirst(request).catch(() => new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } })));
     return;
   }
-  // Images (including /_next/image), fonts, the manifest and icons.
+  // Images (including /_next/image), fonts, the manifest, icons and the search index.
   event.respondWith(staleWhileRevalidate(request).catch(() => Response.error()));
 });
