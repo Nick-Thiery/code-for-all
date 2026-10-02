@@ -8,6 +8,7 @@ import { LEVELS, LEVEL_NAMES, type Level, type LevelChange, atModuleCeiling, lev
 import { drawMixed, shuffle, type DrawGroup, type QuizLesson, type QuizQuestion } from "@/lib/quiz";
 import { saveMastery, saveQuizResult, useMastery, useQuizResults } from "@/lib/quiz-results";
 import { formatDate } from "@/lib/format";
+import { moduleTrackHref } from "@/lib/outline";
 
 type Props = {
   /** Where the last result is saved: "module-1/quiz". */
@@ -74,8 +75,8 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
   const uid = useId();
   const Heading = level === 2 ? "h2" : "h3";
   const mixed = draw !== undefined;
-  // "module-5/check-your-skills" → /#module-5 on the home page's course grid.
-  const levelsHref = `/#module-${/^module-(\d+)\//.exec(id)?.[1] ?? 1}`;
+  // "module-5/check-your-skills" → /contents#module-5, the course grid.
+  const levelsHref = moduleTrackHref(Number(/^module-(\d+)\//.exec(id)?.[1] ?? 1));
   const { results, ready } = useQuizResults();
   const { levels } = useMastery();
   const saved = results[id] ?? null;

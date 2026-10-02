@@ -6,7 +6,7 @@ import { ModuleQuiz } from "@/components/module-quiz";
 import { PageBody, PageHeader } from "@/components/page-header";
 import { type NavTarget, PrevNext } from "@/components/prev-next";
 import { getModule, getModules, getPlannedModule, getSkillsCheck, getSkillsChecks, parseModuleParam } from "@/lib/lessons";
-import { moduleCompleteHref, moduleHref, moduleTrackHref, skillsCheckId } from "@/lib/outline";
+import { contentsHref, moduleCompleteHref, moduleHref, moduleTrackHref, skillsCheckId } from "@/lib/outline";
 import { type DrawGroup, drawCount } from "@/lib/quiz";
 
 type Props = { params: Promise<{ module: string }> };
@@ -59,7 +59,7 @@ export default async function CheckYourSkillsPage({ params }: Props) {
     ? { label: `Next · Module ${nextNumber}`, title: nextModule.title, href: nextModule.lessons[0].href }
     : planned
       ? { label: `Module ${nextNumber} is on the way`, title: "See what's coming", href: moduleHref(nextNumber) }
-      : { label: "You're at the end", title: "Back to the course", href: "/" };
+      : { label: "You're at the end", title: "Back to the course", href: contentsHref };
 
   return (
     <article>

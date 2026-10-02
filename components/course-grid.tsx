@@ -20,13 +20,13 @@ import {
 import { useCompletedLessons } from "@/lib/progress";
 import { type QuizResult, useMastery, useQuizResults } from "@/lib/quiz-results";
 
-// The homepage's Contents (design/cover: a magazine contents page on navy).
+// The Contents page (app/contents/page.tsx; design/cover: a magazine contents page on navy).
 // A "pick up where you left off" card, then every module by phase: big
 // italic numbers, titles and lesson counts, Check your skills in marigold
 // italic, and a stamp on a phase that isn't out yet. From 960px the modules
 // are buttons that choose which module's lessons show below them; under that,
 // each module opens and closes in place. The learner's current module is
-// chosen at first; /#module-N picks another.
+// chosen at first; /contents#module-N picks another.
 //
 // Progress comes from lib/progress.ts and lib/quiz-results.ts, unchanged.
 // Lesson rows also show each lesson's mastery level, and the chosen module
@@ -66,7 +66,7 @@ export function CourseGrid({ outline }: { outline: Outline }) {
   const panelId = `${uid}-panel`;
   const itemId = (n: number) => `${uid}-module-${n}`;
 
-  // Lesson, quiz and Check your skills pages link back to /#module-N.
+  // Lesson, quiz and Check your skills pages link back to /contents#module-N.
   useEffect(() => {
     const fromHash = () => {
       const n = Number(/^#module-(\d+)$/.exec(window.location.hash)?.[1]);
@@ -117,9 +117,9 @@ export function CourseGrid({ outline }: { outline: Outline }) {
           <span className="overline-serif text-on-navy-muted">
             {numberWord(moduleCount)} modules in {numberWord(outline.phases.length).toLowerCase()} phases
           </span>
-          <h2 id={`${uid}-title`} className="t-hero m-0">
+          <h1 id={`${uid}-title`} className="t-hero m-0">
             Contents
-          </h2>
+          </h1>
         </div>
         <p className="m-0 mt-1.5 text-[14px] leading-[1.4] text-on-navy-muted desktop:mt-0 desktop:pb-3.5 desktop:font-display desktop:text-[15px] desktop:font-bold desktop:tracking-[.14em] desktop:uppercase desktop:[font-stretch:85%]">
           Your progress saves on this device<span className="desktop:hidden">.</span>
@@ -287,14 +287,14 @@ function ContinueCard({
 function PhaseLabel({ phase }: { phase: OutlinePhase }) {
   const opening = phase.modules.every((m) => !m.released);
   return (
-    <h3 className="relative m-0 border-t-4 border-on-navy pt-2.5 pb-3 font-display text-[13px] leading-[1.35] font-extrabold tracking-[.12em] text-marigold uppercase [font-stretch:85%] desktop:pt-3 desktop:pb-3.5 desktop:text-[16px]">
+    <h2 className="relative m-0 border-t-4 border-on-navy pt-2.5 pb-3 font-display text-[13px] leading-[1.35] font-extrabold tracking-[.12em] text-marigold uppercase [font-stretch:85%] desktop:pt-3 desktop:pb-3.5 desktop:text-[16px]">
       Phase {phase.number} · {phase.title}
       {opening && (
         <span className="mt-2 block w-fit -rotate-3 rounded border-[2.5px] border-marigold px-3 py-1.5 text-[13px] desktop:absolute desktop:top-[18px] desktop:right-0 desktop:mt-0 desktop:-rotate-[4deg] desktop:text-[14px]">
           Opening soon
         </span>
       )}
-    </h3>
+    </h2>
   );
 }
 
@@ -401,10 +401,10 @@ function ModulePanel({ id, mod, progress }: { id: string; mod: OutlineModule; pr
       className="on-surface hidden scroll-mt-6 gap-x-12 rounded-md border-2 border-line bg-paper p-8 shadow-h8 desktop:flex"
     >
       <div className="flex w-[300px] flex-none flex-col gap-3">
-        <h3 id={`${id}-title`} className="m-0 flex flex-col gap-2">
+        <h2 id={`${id}-title`} className="m-0 flex flex-col gap-2">
           <span className="eyebrow">Module {mod.number}</span>
           <span className="font-serif text-[40px] leading-[1.04] font-medium tracking-[-.02em]">{mod.title}</span>
-        </h3>
+        </h2>
         <p className="m-0 text-[18px] leading-[1.5]">{mod.summary}</p>
         <p className="t-meta m-0 text-muted">
           {formatCount(mod.lessons.length, "lesson")} · {formatAbout(minutes)}
@@ -446,7 +446,7 @@ function PhoneModule({
   const lessonsId = `${id}-lessons`;
   return (
     <li id={id} className="scroll-mt-4">
-      <h4 className="m-0">
+      <h3 className="m-0 [text-wrap:wrap]">
         <button type="button" aria-expanded={open} aria-controls={lessonsId} onClick={onToggle} className={`${ROW} cursor-pointer text-fg`}>
           <span aria-hidden="true" className={`${ROW_NUMBER} ${open ? "text-marigold" : "text-on-navy-muted"}`}>
             {twoDigits(mod.number)}
@@ -461,7 +461,7 @@ function PhoneModule({
             className={`self-center transition-transform ${open ? "rotate-180 text-marigold" : "text-on-navy-muted"}`}
           />
         </button>
-      </h4>
+      </h3>
       <div id={lessonsId} hidden={!open} className="pt-3 pb-5">
         <div className="on-surface rounded-md border-2 border-line bg-paper px-3.5 pt-1 pb-4 shadow-h5">
           <ol className="m-0 flex list-none flex-col border-b-2 border-line p-0">

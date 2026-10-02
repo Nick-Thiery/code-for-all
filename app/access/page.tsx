@@ -4,7 +4,7 @@ import { Callout } from "@/components/callout";
 import { Icon } from "@/components/icons";
 import { PageBody, PageHeader } from "@/components/page-header";
 import { getOutline } from "@/lib/lessons";
-import { allLessons } from "@/lib/outline";
+import { allLessons, contentsHref } from "@/lib/outline";
 import { practiceCopy } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -169,7 +169,7 @@ export default async function AccessPage({ searchParams }: Props) {
               <Icon name="arrow-left" size={20} stroke={2.6} /> Back to Lesson {cameFrom.number}
             </Link>
           )}
-          <Link href="/" className={cameFrom ? "btn btn-secondary" : "btn btn-primary"}>
+          <Link href={contentsHref} className={cameFrom ? "btn btn-secondary" : "btn btn-primary"}>
             Go to the course
           </Link>
         </div>

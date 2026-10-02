@@ -55,7 +55,7 @@ test.describe("Starting the course", () => {
 });
 
 test.describe("Finishing lessons", () => {
-  test("Next marks the lesson done and the homepage remembers it after a reload", async ({ page }) => {
+  test("Next marks the lesson done and Contents remembers it after a reload", async ({ page }) => {
     await page.goto(module1[0].href);
     const next = page.getByRole("navigation", { name: "Lessons" }).getByRole("link", { name: /^Next/ });
     await expect(next).toContainText(module1[1].title);
@@ -65,7 +65,7 @@ test.describe("Finishing lessons", () => {
     const done = await readStorage<string[]>(page, PROGRESS_KEY);
     expect(done).toEqual([module1[0].id]);
 
-    await page.goto("/");
+    await page.goto("/contents");
     await expect(page.getByText(/^1 of \d+ lessons done$/)).toBeVisible();
     await expect(page.getByRole("link", { name: "Continue" }).first()).toBeVisible();
     await page.reload();
@@ -121,7 +121,7 @@ test.describe("Quizzes", () => {
     await page.reload();
     await expect(page.getByRole("heading", { name: `Last time, you got ${total - 1} of ${total}.` })).toBeVisible();
 
-    await page.goto("/#module-1");
+    await page.goto("/contents#module-1");
     await expect(visible(page.getByText(`Last score: ${total - 1} of ${total}`))).toBeVisible();
 
     // The same result, from the same store, on /quizzes.
@@ -155,7 +155,34 @@ test.describe("Quizzes", () => {
     expect(levels).not.toBeNull();
     for (const q of quiz1) expect(levels?.[`module-1/${q.lesson}`]).toBe("familiar");
 
-    await page.goto("/#module-1");
+    await page.goto("/contents#module-1");
     await expect(page.getByText(/Skill level: Familiar/).first()).toBeAttached();
+  });
+});
+
+test.describe("Contents", () => {
+  test("the lesson top bar's Contents link opens /contents on that lesson's module", async ({ page }) => {
+    const lesson = lessonsOf(2)[0];
+    await page.goto(lesson.href);
+    const back = page.locator("header").getByRole("link", { name: "Contents" }).locator("visible=true").first();
+    await expect(back).toHaveAttribute("href", "/contents#module-2");
+    await back.click();
+    await expect(page).toHaveURL("/contents#module-2");
+    await expect(visible(page.getByRole("link", { name: new RegExp(lesson.title) }))).toBeVisible();
+  });
+
+  test("old /#module-N and /#contents links go to /contents", async ({ page }) => {
+    await page.goto("/#module-3");
+    await expect(page).toHaveURL("/contents#module-3");
+    await page.goto("/#contents");
+    await expect(page).toHaveURL("/contents");
+  });
+
+  test("the homepage ends with a link to /contents, and the nav and footer point there", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("link", { name: /^See all \d+ modules/ })).toHaveAttribute("href", "/contents");
+    await expect(page.getByRole("navigation", { name: "Footer" }).getByRole("link", { name: "Contents" })).toHaveAttribute("href", "/contents");
+    await expect(page.locator('header a[href="/contents"]').first()).toBeAttached();
+    await expect(page.getByRole("heading", { name: "Run it with your group" })).toHaveCount(0);
   });
 });

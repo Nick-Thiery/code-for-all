@@ -67,7 +67,7 @@ questions:
     explanation: "Once you've kept the version you want, delete the <<<, === and >>> marker lines, then commit again."
     lesson: merge-conflicts
 
-  - question: "You're building Wordle as your own team and want to practise fixing a merge conflict. How do you cause one on purpose?"
+  - question: "You're building Wordle as your own team and want to practice fixing a merge conflict. How do you cause one on purpose?"
     options:
       - "Change different files on two branches, then merge both"
       - "Push the same branch to GitHub twice in a row"

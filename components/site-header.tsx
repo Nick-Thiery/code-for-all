@@ -16,7 +16,7 @@ import { THEME_CHANGE_EVENT, THEME_STORAGE_KEY, type Theme, applyTheme, readSave
 // where you left off" bar.
 
 const NAV = [
-  { href: "/", label: "Course", key: "course" },
+  { href: "/contents", label: "Contents", key: "contents" },
   { href: "/quizzes", label: "Quizzes", key: "quizzes" },
   { href: "/run-it", label: "Run a session", key: "run" },
   { href: "/help", label: "Help", key: "help" },
@@ -30,8 +30,8 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
   const lesson = outline.modules.flatMap((module) => module.lessons).find((l) => l.href === pathname);
   const lessonModule = lesson && outline.modules.find((module) => module.number === lesson.module);
   const active =
-    pathname === "/" || pathname.startsWith("/module-")
-      ? "course"
+    pathname === "/contents" || pathname.startsWith("/module-")
+      ? "contents"
       : pathname.startsWith("/quizzes")
         ? "quizzes"
         : pathname.startsWith("/run-it")
@@ -40,10 +40,11 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
             ? "help"
             : null;
 
-  // Not on the home page, whose hero has its own Continue button, and not
-  // in lessons, where the top bar already shows where you are.
+  // Not on the home page, whose hero has its own Continue button, nor on
+  // Contents, whose course grid has its own "Pick up where you left off"
+  // card, and not in lessons, where the top bar already shows where you are.
   const resume = ready ? resumeTarget(outline, completed) : null;
-  const showResume = resume !== null && pathname !== "/" && !lesson;
+  const showResume = resume !== null && pathname !== "/" && pathname !== "/contents" && !lesson;
 
   // The phone menu: closed again whenever the page changes, and by Escape.
   const [menuOpen, setMenuOpen] = useState(false);
@@ -74,7 +75,7 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
             <div className="flex items-center gap-2">
               <nav aria-label="Main" className="mr-0.5 hidden items-center gap-1.5 nav:flex">
                 {NAV.map((item) => (
-                  <NavLink key={item.key} href={item.href} current={active === item.key} prefetch={item.key === "course" ? undefined : false}>
+                  <NavLink key={item.key} href={item.href} current={active === item.key} prefetch={item.key === "contents" ? undefined : false}>
                     {item.label}
                   </NavLink>
                 ))}
@@ -98,7 +99,7 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
             <li key={item.key} className="border-b-2 border-line">
               <Link
                 href={item.href}
-                prefetch={item.key === "course" ? undefined : false}
+                prefetch={item.key === "contents" ? undefined : false}
                 aria-current={!lesson && active === item.key ? "page" : undefined}
                 className="kicker flex min-h-14 items-center justify-between gap-3 text-[15px] no-underline decoration-marigold decoration-4 underline-offset-8 hover:text-accent aria-[current=page]:underline"
               >
@@ -235,7 +236,7 @@ function LessonBar({
       className="kicker flex h-11 flex-none items-center gap-2 px-2 text-[14px] no-underline hover:text-accent desktop:px-0 desktop:text-[15px]"
     >
       <Icon name="arrow-left" size={18} stroke={2.6} />
-      Course
+      Contents
     </Link>
   );
   return (

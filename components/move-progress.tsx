@@ -10,6 +10,7 @@ import { useMastery } from "@/lib/quiz-results";
 import { useCompletedLessons } from "@/lib/progress";
 import { type Problem, type Snapshot, decode, encode, isEmpty, levelledCount, shareLink, today } from "@/lib/transfer";
 import { applySnapshot, readSnapshot } from "@/lib/transfer-storage";
+import { contentsHref } from "@/lib/outline";
 
 // "Move my progress" (app/move-progress/page.tsx). Two halves: this device's
 // progress as a code, a QR code and a file; and a box to load a code from
@@ -283,7 +284,7 @@ export function MoveProgress() {
                 </span>
                 Done. This device now has {describe(loading.snapshot)}.
               </p>
-              <Link href="/" className="btn btn-primary self-start">
+              <Link href={contentsHref} className="btn btn-primary self-start">
                 Go to the course <Icon name="arrow-right" size={20} stroke={2.6} />
               </Link>
             </div>

@@ -87,7 +87,7 @@ A lesson is one file. You don't need to touch any code.
    - Another one
    ```
 
-4. **Check it.** With `npm run dev` running, open http://localhost:3000. The lesson shows up on the course page in its place, numbered by its position in the module. Refresh the browser after each save to see changes.
+4. **Check it.** With `npm run dev` running, open http://localhost:3000/contents. The lesson shows up on the course page in its place, numbered by its position in the module. Refresh the browser after each save to see changes.
 
 5. **Commit and push** the new file (or open a pull request) the way your club normally does.
 
@@ -151,7 +151,7 @@ Like Khan Academy, every lesson that a quiz question tests has a mastery level: 
 - Any of them wrong: down one level, but never below Attempted.
 - A module quiz can take a lesson up to Proficient. Only a Check your skills quiz can take it to Mastered, so Mastered means the learner still remembers it later, in a mix.
 
-On the home page's course grid, each lesson row shows its level once it has one, and the chosen module shows its mastery % (Familiar counts 50%, Proficient 80%, Mastered 100%, as on Khan Academy) with a "How levels work" note, once a quiz has given one of its lessons a level. After a quiz, the summary lists each lesson's new level and links back to that module on the grid. A lesson no quiz question points at has no level and isn't counted. A module's lessons can only reach Mastered if a Check your skills page draws questions from that module, so give new modules one. The rules are in `lib/mastery.ts`.
+On the course grid (/contents), each lesson row shows its level once it has one, and the chosen module shows its mastery % (Familiar counts 50%, Proficient 80%, Mastered 100%, as on Khan Academy) with a "How levels work" note, once a quiz has given one of its lessons a level. After a quiz, the summary lists each lesson's new level and links back to that module on the grid. A lesson no quiz question points at has no level and isn't counted. A module's lessons can only reach Mastered if a Check your skills page draws questions from that module, so give new modules one. The rules are in `lib/mastery.ts`.
 
 ### Check your skills
 
@@ -245,8 +245,9 @@ To make another component available in lessons, add it to `components/mdx-compon
 ```
 content/course.yml              every module, grouped into phases
 content/module-N/               one .mdx file per lesson
-app/page.tsx                    home: hero, how it works, the course grid
-components/course-grid.tsx      the home page course: continue card, module grid (phone: module list), lessons
+app/page.tsx                    home: hero, what you'll make, how it works
+app/contents/page.tsx           /contents: the course grid
+components/course-grid.tsx      the course grid on /contents: continue card, module grid (phone: module list), lessons
 app/[module]/[lesson]/page.tsx  lesson template (/module-1/<slug>)
 app/[module]/complete/page.tsx  Module complete (/module-1/complete)
 app/[module]/quiz/page.tsx      module quiz (/module-1/quiz)
@@ -287,7 +288,7 @@ design/                       the design before Cover (kept for reference)
 
 ## Notes
 
-- **Completion** is stored in the browser's localStorage under `cfa:completed-lessons`, as a list of lesson ids like `module-1/meet-lovable`. It doesn't sync between devices. If you rename a slug or move a lesson to another module, anyone who finished that lesson will see it as unfinished. Returning learners get a "Continue" button in the home page hero, a "Pick up where you left off" card above the course grid and bar on other pages, pointing at their first unfinished lesson. The course grid opens on that lesson's module (Module 1 for a new visitor); `/#module-N` opens another, which is where lesson, quiz and Check your skills pages link back to. A lesson is marked done when the learner ticks its recap box or follows the "Next" card at the end of it (`components/mark-done-link.tsx`); unticking the recap box un-marks it. When that finishes a module's last unfinished lesson, a small card shows the module's honeycomb filling in (`components/module-celebration.tsx`, started by `lib/celebration.ts`). It lives in memory only, so nothing extra is stored, and with reduced motion on the honeycomb is simply full.
+- **Completion** is stored in the browser's localStorage under `cfa:completed-lessons`, as a list of lesson ids like `module-1/meet-lovable`. It doesn't sync between devices. If you rename a slug or move a lesson to another module, anyone who finished that lesson will see it as unfinished. Returning learners get a "Continue" button in the home page hero, a "Pick up where you left off" card above the course grid on /contents and a bar on other pages, pointing at their first unfinished lesson. The course grid opens on that lesson's module (Module 1 for a new visitor); `/contents#module-N` opens another (old `/#module-N` links redirect there), which is where lesson, quiz and Check your skills pages link back to. A lesson is marked done when the learner ticks its recap box or follows the "Next" card at the end of it (`components/mark-done-link.tsx`); unticking the recap box un-marks it. When that finishes a module's last unfinished lesson, a small card shows the module's honeycomb filling in (`components/module-celebration.tsx`, started by `lib/celebration.ts`). It lives in memory only, so nothing extra is stored, and with reduced motion on the honeycomb is simply full.
 - **Saved work** is stored under `cfa:saved-work`, as `{ id: text }`: what a learner types in a `<SaveHere>` box and the draft in each practice card (under its task id). It stays in the browser and is never sent anywhere; a later lesson's `<SavedWork>` shows it back. Clearing a box deletes it.
 - **Quiz results** are stored under `cfa:quiz-results`: for each quiz (`module-1/quiz`, `module-5/check-your-skills`), the last result only (how many right, out of how many, the ids of the lessons to review, and the date). Each lesson's mastery level is stored under `cfa:mastery`, as lesson id to level (`{"module-1/meet-lovable": "proficient"}`); renaming a slug resets that lesson to Not started. Check your skills ticks are stored under `cfa:checklists`, per page. None of them holds anything the learner typed or which answers they picked.
 - **Dark mode** follows the device setting until someone uses the toggle. After that, their choice is remembered in `cfa:theme`.

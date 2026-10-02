@@ -6,6 +6,7 @@ import type { CertificateText } from "@/lib/certificate";
 import { formatCount } from "@/lib/format";
 import { getModules, getPhases } from "@/lib/lessons";
 import { getLogoFiles } from "@/lib/logo";
+import { contentsHref } from "@/lib/outline";
 import { lightTokens } from "@/lib/tokens";
 
 export const metadata: Metadata = {
@@ -40,10 +41,10 @@ export default async function CourseCertificatePage() {
           text={text}
           lightTokens={lightTokens()}
           logoSrc={getLogoFiles().light}
-          unfinished={{ href: "/", label: "Back to the course" }}
+          unfinished={{ href: contentsHref, label: "Back to the course" }}
         />
         <p className="m-0 print:hidden">
-          <Link href="/">Back to the course</Link>
+          <Link href={contentsHref}>Back to the course</Link>
         </p>
       </PageBody>
     </article>
