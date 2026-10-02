@@ -294,14 +294,26 @@ function ContinueCard({
   );
 }
 
-/** The phase's kicker under a cream rule. A phase with nothing out yet gets the stamp. */
+/**
+ * The phase's kicker under a cream rule. A phase with nothing out yet gets the
+ * stamp: under the kicker on phones; from 960px in a column of its own at the
+ * right, so a narrow column wraps the kicker instead of running it under the
+ * stamp. Its negative bottom margin lets it hang below the rule's line as
+ * before, without making the heading taller.
+ */
 function PhaseLabel({ phase }: { phase: OutlinePhase }) {
   const opening = phase.modules.every((m) => !m.released);
   return (
-    <h2 className="relative m-0 border-t-4 border-on-navy pt-2.5 pb-3 font-display text-[13px] leading-[1.35] font-extrabold tracking-[.12em] text-marigold uppercase [font-stretch:85%] desktop:pt-3 desktop:pb-3.5 desktop:text-[16px]">
-      Phase {phase.number} · {phase.title}
+    <h2
+      className={`m-0 border-t-4 border-on-navy pt-2.5 pb-3 font-display text-[13px] leading-[1.35] font-extrabold tracking-[.12em] text-marigold uppercase [font-stretch:85%] desktop:pt-3 desktop:pb-3.5 desktop:text-[16px] ${
+        opening ? "desktop:grid desktop:grid-cols-[1fr_auto] desktop:items-start desktop:gap-x-4" : ""
+      }`}
+    >
+      <span>
+        Phase {phase.number} · {phase.title}
+      </span>
       {opening && (
-        <span className="mt-2 block w-fit -rotate-3 rounded border-[2.5px] border-marigold px-3 py-1.5 text-[13px] desktop:absolute desktop:top-[18px] desktop:right-0 desktop:mt-0 desktop:-rotate-[4deg] desktop:text-[14px]">
+        <span className="mt-2 block w-fit -rotate-3 rounded border-[2.5px] border-marigold px-3 py-1.5 text-[13px] desktop:mt-1.5 desktop:-mb-6 desktop:-rotate-[4deg] desktop:text-[14px]">
           Opening soon
         </span>
       )}
