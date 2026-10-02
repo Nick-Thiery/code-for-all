@@ -249,7 +249,9 @@
   display: flex;
   align-items: center;
   height: 54px;
-  overflow: hidden;
+  /* clip, not hidden: the browser can't scroll it to bring a focused link
+     into view, so only components/home-ticker.tsx moves the names. */
+  overflow: clip;
   border-bottom: 2px solid var(--line);
   background: var(--marigold);
   color: var(--on-marigold);
@@ -269,8 +271,26 @@
   text-transform: uppercase;
   animation: cvTicker 60s linear infinite;
 }
-.ticker[data-paused] .track {
+.ticker[data-paused] .track,
+.ticker:hover .track,
+.ticker:focus-within .track {
   animation-play-state: paused;
+}
+/* A link with keyboard focus: the strip stops where it shows the whole name (components/home-ticker.tsx). */
+.ticker[data-focus] .track {
+  animation: none;
+  transform: translateX(var(--shift));
+}
+/* The names are links, in the strip's own colour, underlined on hover. */
+.tickerLink,
+.tickerLink:hover {
+  color: inherit;
+}
+.tickerLink {
+  text-decoration-line: none;
+}
+.tickerLink:hover {
+  text-decoration-line: underline;
 }
 @media (min-width: 960px) {
   .ticker {

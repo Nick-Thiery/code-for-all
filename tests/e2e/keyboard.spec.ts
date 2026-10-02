@@ -66,7 +66,7 @@ for (const { name, path } of pages) {
     // reached. A radio group is one Tab stop, however many options it has.
     const controls = await page.evaluate(() => {
       const all = [...document.querySelectorAll<HTMLElement>(
-        "a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex='-1'])",
+        "a[href]:not([tabindex='-1']), button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex='-1'])",
       )].filter((el) => el.checkVisibility?.() ?? true);
       const radios = new Set(all.filter((el) => el instanceof HTMLInputElement && el.type === "radio").map((el) => (el as HTMLInputElement).name));
       return all.filter((el) => !(el instanceof HTMLInputElement && el.type === "radio")).length + radios.size;

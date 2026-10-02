@@ -2,16 +2,20 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import s from "@/components/home.module.css";
 import { Odometer } from "@/components/odometer";
-import { PauseOffscreen } from "@/components/pause-offscreen";
+import { HomeTicker } from "@/components/home-ticker";
 import { Reveal } from "@/components/reveal";
-import { type Outline, moduleTrackHref } from "@/lib/outline";
+import { contentError } from "@/lib/content-error";
+import { type Outline, moduleHref } from "@/lib/outline";
 
 // "What you'll make" on the homepage: one row per project, numbered by the
 // module that builds it, each with a small picture of the project. The
-// ticker under the cover runs the same names.
+// ticker under the cover runs the same names. Both link to the lesson where
+// you build the project.
 
 type Project = {
   module: number;
+  /** The slug of the lesson in that module where you build it. */
+  lesson: string;
   title: string;
   text: string;
   /** Its name in the ticker. */
@@ -26,6 +30,7 @@ const GUESSES = ["STARE", "PLANE", ANSWER];
 const PROJECTS: Project[] = [
   {
     module: 1,
+    lesson: "build-about-me",
     title: "Your own About me website",
     text: "Write one good prompt, and Lovable builds the site. Then change one part of the prompt and compare.",
     ticker: "An About me website",
@@ -44,6 +49,7 @@ const PROJECTS: Project[] = [
   },
   {
     module: 2,
+    lesson: "solo-sprint",
     title: "A quiz, a news site or a shop",
     text: "Pick one of three sites to build, then use AI to make your own prompt better.",
     ticker: "A personality quiz",
@@ -60,6 +66,7 @@ const PROJECTS: Project[] = [
   },
   {
     module: 3,
+    lesson: "plan-your-extension",
     title: "A Chrome extension",
     text: "Build a tool that lives in your browser with Claude Code, like a tab organiser.",
     ticker: "A Chrome extension",
@@ -86,6 +93,7 @@ const PROJECTS: Project[] = [
   },
   {
     module: 7,
+    lesson: "recreate-wordle",
     title: "A word game, branch by branch",
     text: "Build a Wordle clone on three branches, then merge them into one game with pull requests on GitHub.",
     ticker: "A word game",
@@ -105,6 +113,7 @@ const PROJECTS: Project[] = [
   },
   {
     module: 8,
+    lesson: "put-live-data-on-your-page",
     title: "A page with live data",
     text: "Your page asks a weather API for Singapore's live temperature, and shows it at the top.",
     ticker: "A page with live weather",
@@ -128,26 +137,36 @@ function Thumb({ className, tilt, children }: { className: string; tilt: number;
   );
 }
 
-/** Only the projects whose module is out. */
+/** The module where learners start their own project: the ticker's last name links to it. */
+const OWN_PROJECT_MODULE = 9;
+
+/**
+ * Only the projects whose module is out, each with its lesson's address. A
+ * slug that isn't a lesson in that module stops the build, so a renamed
+ * lesson can't leave a broken link on the homepage.
+ */
 function released(outline: Outline) {
   return PROJECTS.flatMap((project) => {
     const mod = outline.modules.find((m) => m.number === project.module);
-    return mod ? [{ ...project, moduleTitle: mod.title }] : [];
+    if (!mod) return [];
+    const lesson = mod.lessons.find((l) => l.slug === project.lesson);
+    if (!lesson) {
+      throw contentError("components/home-projects.tsx", [
+        `The project "${project.title}" links to the lesson "${project.lesson}", but Module ${project.module} has no lesson with that slug.`,
+        `Change its "lesson" in PROJECTS to the slug of the Module ${project.module} lesson where learners build it (the "slug" in that lesson's frontmatter).`,
+      ]);
+    }
+    return [{ ...project, moduleTitle: mod.title, href: lesson.href }];
   });
 }
 
-/** The marigold strip under the cover: the project names, scrolling. Decoration: the rows below say the same. */
+/** The marigold strip under the cover: the project names, scrolling, each a link to its lesson. */
 export function Ticker({ outline }: { outline: Outline }) {
-  const names = [...released(outline).map((project) => project.ticker), "A project of your own"];
-  return (
-    <PauseOffscreen aria-hidden="true" className={s.ticker}>
-      <div className={s.track}>
-        {[0, 1, 2, 3].flatMap((copy) =>
-          names.flatMap((name) => [<span key={`${copy}-${name}`}>{name}</span>, <span key={`${copy}-${name}-star`}>✦</span>]),
-        )}
-      </div>
-    </PauseOffscreen>
-  );
+  const items = [
+    ...released(outline).map((project) => ({ name: project.ticker, href: project.href })),
+    { name: "A project of your own", href: moduleHref(OWN_PROJECT_MODULE) },
+  ];
+  return <HomeTicker items={items} />;
 }
 
 export function ProjectRows({ outline }: { outline: Outline }) {
@@ -157,7 +176,7 @@ export function ProjectRows({ outline }: { outline: Outline }) {
       {projects.map((project, index) => (
         <Reveal key={project.module}>
           <Link
-            href={moduleTrackHref(project.module)}
+            href={project.href}
             className={`${s.row} flex flex-col gap-3.5 border-t-2 border-line pt-6 pb-[34px] text-fg no-underline hover:text-fg desktop:grid desktop:grid-cols-12 desktop:items-center desktop:gap-x-10 desktop:gap-y-0 desktop:py-[30px]`}
           >
             <span className="flex items-end gap-4 desktop:col-span-3 desktop:block">
