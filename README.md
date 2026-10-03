@@ -261,6 +261,11 @@ app/glossary/page.tsx         glossary, built from every <KeyTerm> (lib/glossary
 app/privacy/page.tsx          privacy, for parents and schools
 app/access/page.tsx           how hands-on access works, and the device guide (#devices)
 app/help/page.tsx             help for learners; linked from the footer and every Stuck box
+lib/help.ts                   the Help page's questions and answers (search finds them too)
+components/site-search.tsx    the Search buttons, the "/" shortcut and the search dialog
+components/search-panel.tsx   inside the search dialog: the box and the grouped results
+lib/search.ts                 search matching, in the browser
+lib/search-index.ts           what search looks through, served as /search-index.json
 app/about/page.tsx            about (a draft to rewrite)
 app/sitemap.ts, app/robots.ts sitemap.xml and robots.txt
 app/opengraph-image.tsx       the share image
@@ -295,6 +300,7 @@ design/                       the design before Cover (kept for reference)
 - **Design**: the site uses the Cover design: a bold magazine look with big condensed type, colour blocks and hard shadows. The source is `design/cover/`: read `SPEC.md`, and open a mock page in a browser to see it move. The colour tokens at the top of `app/globals.css` are pasted from that spec. Use the tokens (as Tailwind classes like `bg-paper`, `text-navy` or `shadow-h8`, or `var(--navy)`); Tailwind's default colour palette and shadows are switched off. Headlines, numerals, labels and buttons are set in Archivo capitals, card titles and ledes in Newsreader, body text in Atkinson Hyperlegible Next, code in Atkinson Hyperlegible Mono.
 - **Contact**: the address is one value in `lib/site.ts`. Every "Contact us" button links to `site.contactHref`.
 - **Logo**: `public/cfa-logo-light.png` (transparent background) and `public/cfa-logo-dark.png` (the same pixels with only the colours changed for dark mode). The header shows the logo's hexagon beside the name set in Archivo. If `public/cfa-logo.svg` exists, the header uses it instead, with `public/cfa-logo-dark.svg` for dark mode if that exists too.
+- **Site search**: the Search button in the header (the first row of the menu on phones) or "/" opens it. It looks through `/search-index.json`, written at build time from the lessons, quizzes, Coming soon modules, glossary and Help questions (`lib/search-index.ts`), so there's nothing to edit by hand. Searching happens in the browser; nothing typed is sent or saved. To change a Help answer, edit `lib/help.ts`.
 - **Search engines**: the site is hidden from them by default (`robots.txt` disallows everything and every page has a `noindex` meta tag). Set `NEXT_PUBLIC_ALLOW_INDEXING=true` at build time to let them in.
 - **Site URL**: share links and `sitemap.xml` use `NEXT_PUBLIC_SITE_URL` (for example `https://codeforall.example`). On Vercel it falls back to the project's production address; locally, to http://localhost:3000.
 - **Printing**: lessons and kit pages print in light colours without the header, navigation, buttons or practice box. Give any new control `print:hidden`.

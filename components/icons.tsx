@@ -79,6 +79,12 @@ const PATHS = {
       <path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6" />
     </>
   ),
+  search: (
+    <>
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="M15.5 15.5L21 21" />
+    </>
+  ),
   lock: (
     <>
       <rect x="5" y="11" width="14" height="10" rx="2" />

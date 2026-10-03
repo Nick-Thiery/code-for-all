@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type CSSProperties, useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { Icon } from "@/components/icons";
+import { SearchButton, SearchMenuItem, type SiteSearch, useSiteSearch } from "@/components/site-search";
 import type { LogoFiles } from "@/lib/logo";
 import { type Outline, type OutlineLesson, type OutlineModule, lessonLabel, moduleTrackHref, resumeTarget } from "@/lib/outline";
 import { useCompletedLessons } from "@/lib/progress";
@@ -13,7 +14,8 @@ import { THEME_CHANGE_EVENT, THEME_STORAGE_KEY, type Theme, applyTheme, readSave
 // One header for every page. The URL decides the rest: which nav item is
 // current, whether it's the lesson top bar (back to the course, the module's
 // lessons as segments, "Lesson 2 of 6"), and whether to show the "pick up
-// where you left off" bar.
+// where you left off" bar. Search (components/site-search.tsx) is the first
+// row of the phone menu, and a button beside the theme switch from 600px.
 
 const NAV = [
   { href: "/contents", label: "Contents", key: "contents" },
@@ -25,6 +27,7 @@ const NAV = [
 export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFiles }) {
   const pathname = usePathname();
   const { completed, ready } = useCompletedLessons();
+  const search = useSiteSearch();
   useThemeEffects();
 
   const lesson = outline.modules.flatMap((module) => module.lessons).find((l) => l.href === pathname);
@@ -54,7 +57,8 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
+      // Search handles its own Escape, and the menu it was opened from stays open.
+      if (event.key !== "Escape" || event.defaultPrevented) return;
       setMenuOpen(false);
       menuButton.current?.focus();
     };
@@ -67,34 +71,38 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
   return (
     <header className="border-b-2 border-line bg-bg text-fg print:hidden">
       {lesson && lessonModule ? (
-        <LessonBar lesson={lesson} module={lessonModule} completed={completed} ready={ready} menu={menu} />
+        <LessonBar lesson={lesson} module={lessonModule} completed={completed} ready={ready} menu={menu} search={search} />
       ) : (
-        <div className="px-(--gut) max-nav:pr-4">
-          <div className="mx-auto flex h-[62px] max-w-[1200px] items-center justify-between gap-3 nav:h-[76px]">
+        <div className="px-(--gut) max-desktop:pr-4 max-[375px]:pr-3 max-[375px]:pl-4">
+          {/* Below 375px (the smallest phones, down to 320px) the name is a step
+              smaller and the gaps tighter, so MENU stays on screen. */}
+          <div className="mx-auto flex h-[62px] max-w-[1200px] items-center justify-between gap-3 nav:h-[76px] max-[375px]:gap-2">
             <Wordmark files={logo} />
-            <div className="flex items-center gap-2">
-              <nav aria-label="Main" className="mr-0.5 hidden items-center gap-1.5 nav:flex">
+            <div className="flex items-center gap-2 max-[375px]:gap-1.5">
+              <nav aria-label="Main" className="mr-0.5 hidden items-center gap-1.5 desktop:flex">
                 {NAV.map((item) => (
                   <NavLink key={item.key} href={item.href} current={active === item.key} prefetch={item.key === "contents" ? undefined : false}>
                     {item.label}
                   </NavLink>
                 ))}
               </nav>
+              <SearchButton search={search} className="max-tablet:hidden" />
               <ThemeToggle />
-              <MenuButton menu={menu} className="nav:hidden" label />
+              <MenuButton menu={menu} className="desktop:hidden" label />
             </div>
           </div>
         </div>
       )}
 
-      {/* The menu behind the MENU button: phones, and tablets on a lesson. */}
+      {/* The menu behind the MENU button: phones and tablets. */}
       <nav
         id={menuId}
         aria-label="Main"
         hidden={!menuOpen}
-        className={`border-t-2 border-line bg-paper2 px-(--gut) pb-3 ${lesson ? "desktop:hidden" : "nav:hidden"}`}
+        className="border-t-2 border-line bg-paper2 px-(--gut) pb-3 desktop:hidden"
       >
         <ul className="m-0 flex list-none flex-col p-0">
+          <SearchMenuItem search={search} className="tablet:hidden" />
           {NAV.map((item) => (
             <li key={item.key} className="border-b-2 border-line">
               <Link
@@ -132,6 +140,7 @@ export function SiteHeader({ outline, logo }: { outline: Outline; logo: LogoFile
           </div>
         </div>
       )}
+      {search.dialog}
     </header>
   );
 }
@@ -149,7 +158,7 @@ function MenuButton({ menu, label = false, className = "" }: { menu: Menu; label
       aria-label={label ? undefined : menu.open ? "Close menu" : "Open menu"}
       onClick={menu.toggle}
       className={`flex h-11 flex-none cursor-pointer items-center justify-center gap-2 rounded border-2 border-line font-display text-[14px] font-extrabold tracking-[.1em] text-ink uppercase [font-stretch:85%] ${
-        label ? "bg-marigold px-3 text-on-marigold" : "w-11 bg-transparent"
+        label ? "bg-marigold px-3 text-on-marigold max-[375px]:gap-1.5 max-[375px]:px-2" : "w-11 bg-transparent"
       } ${className}`}
     >
       <Icon name={menu.open ? "cross" : "menu"} size={label ? 16 : 18} stroke={2.8} />
@@ -170,13 +179,13 @@ function Wordmark({ files }: { files: LogoFiles }) {
     <Link
       href="/"
       aria-label="Code for All home"
-      className="flex min-h-11 flex-none items-center gap-2.5 rounded text-fg no-underline hover:text-fg nav:gap-3"
+      className="flex min-h-11 flex-none items-center gap-2.5 rounded text-fg no-underline hover:text-fg nav:gap-3 max-[375px]:gap-2"
     >
       <span className="block h-[30px] w-[24px] flex-none overflow-hidden nav:h-9 nav:w-[29px]">
         <span className="block h-full dark:hidden">{image(files.light)}</span>
         <span className="hidden h-full dark:block">{image(files.dark)}</span>
       </span>
-      <span className="font-display text-[24px] leading-none font-extrabold tracking-[.01em] whitespace-nowrap uppercase [font-stretch:72%] nav:text-[28px]">
+      <span className="font-display text-[24px] leading-none font-extrabold tracking-[.01em] whitespace-nowrap uppercase [font-stretch:72%] nav:text-[28px] max-[375px]:text-[18px]">
         Code for All
       </span>
     </Link>
@@ -213,8 +222,9 @@ function NavLink({
 
 /**
  * The lesson top bar: back to the course, the module, one segment per lesson
- * and "Lesson 2 of 6". From 960px it also has Help and the theme switch; below
- * that they're behind the menu button.
+ * and "Lesson 2 of 6". From 960px it also has Help, the theme switch and,
+ * when there's room, Search; below that they're behind the menu button, and
+ * Search is a button of its own from 600px.
  */
 function LessonBar({
   lesson,
@@ -222,12 +232,14 @@ function LessonBar({
   completed,
   ready,
   menu,
+  search,
 }: {
   lesson: OutlineLesson;
   module: OutlineModule;
   completed: Set<string>;
   ready: boolean;
   menu: Menu;
+  search: SiteSearch;
 }) {
   const total = module.lessons.length;
   const back = (
@@ -249,6 +261,7 @@ function LessonBar({
           <span aria-hidden="true" className="kicker flex-none text-[13px] tracking-[.08em] tabular-nums">
             {lesson.number}/{total}
           </span>
+          <SearchButton search={search} className="max-tablet:hidden" labelClassName="sr-only" />
           <MenuButton menu={menu} />
         </div>
       </div>
@@ -268,13 +281,17 @@ function LessonBar({
             Lesson {lesson.number} of {total}
           </span>
         </div>
-        <div className="flex items-center justify-end gap-2">
-          <nav aria-label="Main">
-            <NavLink href="/help" current={false} prefetch={false}>
-              Help
-            </NavLink>
-          </nav>
-          <ThemeToggle />
+        {/* Search only when there's room beside Help and the theme switch; "/" works either way. */}
+        <div className="@container min-w-0">
+          <div className="flex items-center justify-end gap-2">
+            <SearchButton search={search} className="@max-[189px]:hidden" labelClassName="max-wide:sr-only @max-[279px]:sr-only" />
+            <nav aria-label="Main">
+              <NavLink href="/help" current={false} prefetch={false}>
+                Help
+              </NavLink>
+            </nav>
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </>

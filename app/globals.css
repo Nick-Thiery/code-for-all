@@ -223,7 +223,8 @@
   --shadow-h10: 10px 10px 0 var(--shadow);
 
   /* Phone < 600 ≤ tablet < 960 ≤ desktop; the lesson's three columns start
-     at 1280 ("wide"), and the header's full nav at 720 ("nav"). */
+     at 1280 ("wide"). The header's full nav starts at 960 (desktop), and its
+     bigger wordmark at 720 ("nav"). */
   --breakpoint-*: initial;
   --breakpoint-tablet: 600px;
   --breakpoint-nav: 720px;
