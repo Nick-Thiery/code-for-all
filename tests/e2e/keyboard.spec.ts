@@ -160,3 +160,58 @@ test("Check your skills' checklist ticks with Space", async ({ page }) => {
   await page.keyboard.press("Space");
   await expect(box).toBeChecked();
 });
+
+test("the retry round can be reached and played with the keyboard alone", async ({ page }) => {
+  const quiz1 = quizOf(1);
+  await page.goto("/module-1/quiz");
+  const quiz = page.getByRole("region", { name: /quiz/i }).first();
+
+  /** Tab to the options, pick with Space and the arrow keys, check with Enter, move on with Enter. */
+  async function answerWithKeys(heading: string, wrong: boolean) {
+    await expect(quiz.getByRole("heading", { name: heading })).toBeFocused();
+    const asked = (await quiz.locator("legend").innerText()).trim();
+    const q = quiz1.find((item) => item.question === asked)!;
+    // The order on screen: a retry reshuffles the options.
+    const shown = await quiz.getByRole("radio").evaluateAll((els) => els.map((el) => (el as HTMLInputElement).value));
+    const target = wrong ? shown.findIndex((o) => o !== q.answer) : shown.indexOf(q.answer);
+    await page.keyboard.press("Tab");
+    await expect(quiz.getByRole("radio").first()).toBeFocused();
+    await page.keyboard.press("Space");
+    for (let step = 0; step < target; step++) await page.keyboard.press("ArrowDown");
+    await expect(quiz.getByRole("radio", { name: shown[target], exact: true })).toBeChecked();
+    await page.keyboard.press("Enter");
+    await expect(quiz.getByRole("button", { name: /Next question|See how you did/ })).toBeFocused();
+    await page.keyboard.press("Enter");
+  }
+
+  /** Press Tab until `target` has focus. */
+  async function tabTo(target: ReturnType<typeof quiz.getByRole>) {
+    for (let i = 0; i < 20 && !(await target.evaluate((el) => el === document.activeElement)); i++) {
+      await page.keyboard.press("Tab");
+    }
+    await expect(target).toBeFocused();
+  }
+
+  // Focus isn't moved on load, so start at the first question's heading.
+  await quiz.getByRole("heading", { name: `Question 1 of ${quiz1.length}` }).focus();
+  for (let i = 0; i < quiz1.length; i++) await answerWithKeys(`Question ${i + 1} of ${quiz1.length}`, i < 2);
+  await expect(quiz.getByRole("heading", { name: `You got ${quiz1.length - 2} of ${quiz1.length}.` })).toBeFocused();
+
+  // Tab from the summary heading reaches "Try the ones I missed", announced as a button, before Try again.
+  const tryMissed = quiz.getByRole("button", { name: "Try the ones I missed" });
+  await tabTo(tryMissed);
+  await page.keyboard.press("Tab");
+  await expect(quiz.getByRole("button", { name: "Try again" })).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(tryMissed).toBeFocused();
+  await page.keyboard.press("Enter");
+
+  // Focus lands on the first retry question's heading, as it does when a quiz starts.
+  await answerWithKeys("Retry · question 1 of 2", false);
+  await answerWithKeys("Retry · question 2 of 2", false);
+  await expect(quiz.getByRole("heading", { name: "You got 2 of the 2 you'd missed." })).toBeFocused();
+  await expect(tryMissed).toHaveCount(0);
+  await tabTo(quiz.getByRole("button", { name: "Take the whole quiz again" }));
+  await page.keyboard.press("Enter");
+  await expect(quiz.getByRole("heading", { name: `Question 1 of ${quiz1.length}` })).toBeFocused();
+});
