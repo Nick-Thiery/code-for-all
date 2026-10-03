@@ -1331,6 +1331,10 @@
   components/reveal.tsx: a block that starts off screen is "armed" (held at
   its start), then plays once when it scrolls in. A block that's already in
   view when the page loads just stays as it is.
+
+  The homepage's cvFan and cvTicker live in components/home.module.css: a
+  CSS Module renames the animations it uses, so their keyframes must be
+  there too, or the names wouldn't match.
 */
 @keyframes cvUp {
   from { transform: translateY(106%); }
@@ -1344,17 +1348,9 @@
   from { opacity: 0; transform: translateY(28px); }
   to { opacity: 1; transform: none; }
 }
-@keyframes cvFan {
-  from { opacity: 0; transform: translate(0, 46px) rotate(0deg); }
-  to { opacity: 1; transform: translate(var(--x), var(--y)) rotate(var(--r)); }
-}
 @keyframes cvSpin {
   from { opacity: 0; transform: rotate(-220deg) scale(0.3); }
   to { opacity: 1; transform: rotate(12deg) scale(1); }
-}
-@keyframes cvTicker {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
 }
 @keyframes cvOdo {
   from { transform: translateY(0); }

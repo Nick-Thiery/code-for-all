@@ -22,7 +22,7 @@ import { type QuizResult, useMastery, useQuizResults } from "@/lib/quiz-results"
 
 // The Contents page (app/contents/page.tsx; design/cover: a magazine contents page on navy).
 // A "pick up where you left off" card, then every module by phase: big
-// italic numbers, titles and lesson counts, Check your skills in marigold
+// italic numbers, titles with their one-line summaries, lesson counts, Check your skills in marigold
 // italic, and a stamp on a phase that isn't out yet. From 960px the modules
 // are buttons that choose which module's lessons show below them; under that,
 // each module opens and closes in place. The learner's current module is
@@ -161,7 +161,13 @@ export function CourseGrid({ outline }: { outline: Outline }) {
                         {mod.skillsCheck && <SkillsCheckLink check={mod.skillsCheck} module={mod.number} />}
                       </div>
                     ) : (
-                      <ComingSoonRow key={m.number} number={m.number} title={m.title} labelled={phase.modules.some((x) => x.released)} />
+                      <ComingSoonRow
+                        key={m.number}
+                        number={m.number}
+                        title={m.title}
+                        summary={m.summary}
+                        labelled={phase.modules.some((x) => x.released)}
+                      />
                     );
                   })}
                 </div>
@@ -191,7 +197,12 @@ export function CourseGrid({ outline }: { outline: Outline }) {
                     />
                   ) : (
                     <li key={m.number}>
-                      <ComingSoonRow number={m.number} title={m.title} labelled={phase.modules.some((x) => x.released)} />
+                      <ComingSoonRow
+                        number={m.number}
+                        title={m.title}
+                        summary={m.summary}
+                        labelled={phase.modules.some((x) => x.released)}
+                      />
                     </li>
                   );
                 })}
@@ -283,14 +294,26 @@ function ContinueCard({
   );
 }
 
-/** The phase's kicker under a cream rule. A phase with nothing out yet gets the stamp. */
+/**
+ * The phase's kicker under a cream rule. A phase with nothing out yet gets the
+ * stamp: under the kicker on phones; from 960px in a column of its own at the
+ * right, so a narrow column wraps the kicker instead of running it under the
+ * stamp. Its negative bottom margin lets it hang below the rule's line as
+ * before, without making the heading taller.
+ */
 function PhaseLabel({ phase }: { phase: OutlinePhase }) {
   const opening = phase.modules.every((m) => !m.released);
   return (
-    <h2 className="relative m-0 border-t-4 border-on-navy pt-2.5 pb-3 font-display text-[13px] leading-[1.35] font-extrabold tracking-[.12em] text-marigold uppercase [font-stretch:85%] desktop:pt-3 desktop:pb-3.5 desktop:text-[16px]">
-      Phase {phase.number} · {phase.title}
+    <h2
+      className={`m-0 border-t-4 border-on-navy pt-2.5 pb-3 font-display text-[13px] leading-[1.35] font-extrabold tracking-[.12em] text-marigold uppercase [font-stretch:85%] desktop:pt-3 desktop:pb-3.5 desktop:text-[16px] ${
+        opening ? "desktop:grid desktop:grid-cols-[1fr_auto] desktop:items-start desktop:gap-x-4" : ""
+      }`}
+    >
+      <span>
+        Phase {phase.number} · {phase.title}
+      </span>
       {opening && (
-        <span className="mt-2 block w-fit -rotate-3 rounded border-[2.5px] border-marigold px-3 py-1.5 text-[13px] desktop:absolute desktop:top-[18px] desktop:right-0 desktop:mt-0 desktop:-rotate-[4deg] desktop:text-[14px]">
+        <span className="mt-2 block w-fit -rotate-3 rounded border-[2.5px] border-marigold px-3 py-1.5 text-[13px] desktop:mt-1.5 desktop:-mb-6 desktop:-rotate-[4deg] desktop:text-[14px]">
           Opening soon
         </span>
       )}
@@ -310,7 +333,37 @@ function moduleStatus(mod: OutlineModule, progress: Progress, current: boolean) 
 
 const ROW = "flex w-full items-baseline gap-3.5 border-0 border-b border-rule-on-navy bg-transparent py-3 text-left font-[inherit] desktop:gap-[22px] desktop:py-3.5";
 const ROW_NUMBER = "w-[42px] flex-none font-serif text-[36px] leading-[.9] italic desktop:w-16 desktop:text-[54px]";
-const ROW_TITLE = "min-w-0 flex-1 font-serif text-[22px] leading-[1.2] font-medium desktop:text-[30px] desktop:leading-[1.15]";
+const ROW_TITLE = "font-serif text-[22px] leading-[1.2] font-medium desktop:text-[30px] desktop:leading-[1.15]";
+/** The small text on a module's row: its summary, lesson count or progress, and "Coming soon". */
+const ROW_NOTE = "text-[13px] leading-[1.3] desktop:text-[15px]";
+
+/**
+ * A module's title with its one-line summary under it (content/course.yml).
+ * A row's number lines up with the title's first line. The hidden full stop
+ * keeps the two apart in the row's accessible name.
+ */
+function RowTitle({
+  title,
+  summary,
+  className = "",
+  dimmed = false,
+}: {
+  title: string;
+  summary: string;
+  className?: string;
+  /** A Coming soon row: the summary takes the row's dimmed colour, like its title. */
+  dimmed?: boolean;
+}) {
+  return (
+    <span className="flex min-w-0 flex-1 flex-col gap-1">
+      <span className={`${ROW_TITLE} ${className}`}>
+        {title}
+        <span className="sr-only">.</span>
+      </span>
+      <span className={`${ROW_NOTE} ${dimmed ? "" : "text-muted"}`}>{summary}</span>
+    </span>
+  );
+}
 
 /** A module in the contents, from 960px: a button that shows its lessons in the panel. */
 function ModuleRow({
@@ -335,11 +388,11 @@ function ModuleRow({
         {twoDigits(mod.number)}
       </span>
       <span className="sr-only">Module {mod.number}: </span>
-      <span
-        className={`${ROW_TITLE} decoration-2 underline-offset-[6px] group-hover:underline ${selected ? "underline decoration-marigold" : ""}`}
-      >
-        {mod.title}
-      </span>
+      <RowTitle
+        title={mod.title}
+        summary={mod.summary}
+        className={`decoration-2 underline-offset-[6px] group-hover:underline ${selected ? "underline decoration-marigold" : ""}`}
+      />
       <RowStatus mod={mod} status={status} />
       {selected && <Icon name="arrow-down" size={18} stroke={2.6} className="self-center text-marigold" />}
     </button>
@@ -352,7 +405,7 @@ function RowStatus({ mod, status }: { mod: OutlineModule; status: ReturnType<typ
     return <span className="stamp flex-none self-center max-desktop:px-2 max-desktop:text-[11px]">{status.label}</span>;
   }
   return (
-    <span className="flex flex-none items-center gap-1.5 self-center text-[13px] leading-[1.3] whitespace-nowrap text-muted desktop:text-[15px]">
+    <span className={`${ROW_NOTE} flex flex-none items-center gap-1.5 self-center whitespace-nowrap text-muted`}>
       {status.finished && <Icon name="check" size={16} stroke={3} className="text-marigold" />}
       {status.started ? status.label : formatCount(mod.lessons.length, "lesson")}
     </span>
@@ -373,16 +426,26 @@ function SkillsCheckLink({ check, module }: { check: OutlineQuiz; module: number
 }
 
 /** A module that isn't out yet: dimmed, and a link to its Coming soon page. */
-function ComingSoonRow({ number, title, labelled }: { number: number; title: string; labelled: boolean }) {
+function ComingSoonRow({
+  number,
+  title,
+  summary,
+  labelled,
+}: {
+  number: number;
+  title: string;
+  summary: string;
+  labelled: boolean;
+}) {
   return (
     <Link href={moduleHref(number)} className={`${ROW} group text-on-navy-soft no-underline hover:text-on-navy`}>
       <span aria-hidden="true" className={`${ROW_NUMBER} text-on-navy-dim`}>
         {twoDigits(number)}
       </span>
       <span className="sr-only">Module {number}: </span>
-      <span className={`${ROW_TITLE} decoration-2 underline-offset-[6px] group-hover:underline`}>{title}</span>
+      <RowTitle title={title} summary={summary} className="decoration-2 underline-offset-[6px] group-hover:underline" dimmed />
       {/* When the whole phase is on its way, its stamp says so for every row. */}
-      <span className={labelled ? "flex-none self-center text-[13px] whitespace-nowrap desktop:text-[15px]" : "sr-only"}>
+      <span className={labelled ? `${ROW_NOTE} flex-none self-center whitespace-nowrap` : "sr-only"}>
         {labelled ? "Coming soon" : " (coming soon)"}
       </span>
     </Link>
@@ -452,7 +515,7 @@ function PhoneModule({
             {twoDigits(mod.number)}
           </span>
           <span className="sr-only">Module {mod.number}: </span>
-          <span className={ROW_TITLE}>{mod.title}</span>
+          <RowTitle title={mod.title} summary={mod.summary} />
           <RowStatus mod={mod} status={status} />
           <Icon
             name="arrow-down"
