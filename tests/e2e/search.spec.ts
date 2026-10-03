@@ -223,7 +223,7 @@ test.describe("Site search", () => {
   test("before typing it shows a hint and suggestions; with no matches it points to Help", async ({ page }, testInfo) => {
     await page.goto("/");
     const box = await openSearch(page, testInfo);
-    await expect(dialog(page).getByText("Find a lesson, a quiz, a key term or a help answer.")).toBeVisible();
+    await expect(dialog(page).getByText("Find a lesson, a quiz, a key term, a help answer or a page.")).toBeVisible();
     const suggestion = dialog(page).getByRole("button", { name: "Wordle" });
     await suggestion.click();
     await expect(box).toHaveValue("Wordle");
@@ -364,4 +364,73 @@ test("the header fits at 320, 375, 768, 960 and 1280, on a page and on a lesson"
     const search = page.locator("header").getByRole("button", { name: "Search", exact: true }).locator("visible=true");
     await expect(search).toHaveCount(width >= 600 ? 1 : 0);
   }
+});
+
+// Help answers and the site's own pages ("Search more of the site").
+test.describe("Search: Help answers and pages", () => {
+  async function searchFor(page: import("@playwright/test").Page, query: string) {
+    await page.goto("/");
+    const dialog = page.getByRole("dialog", { name: "Search the course" });
+    // "/" opens search on any page, phone or desktop, once the page has hydrated.
+    await expect(async () => {
+      if (!(await dialog.isVisible())) await page.keyboard.press("/");
+      await expect(dialog).toBeVisible({ timeout: 1_000 });
+    }).toPass();
+    await dialog.getByRole("combobox", { name: "Search the course" }).fill(query);
+    return dialog;
+  }
+
+  test("a word only in a Help answer finds it, with a snippet, and opens its anchor", async ({ page }) => {
+    const dialog = await searchFor(page, "error");
+    const result = dialog
+      .getByRole("group", { name: /^Help/ })
+      .getByRole("option", { name: /Something broke and I don't know why\./ });
+    await expect(result).toHaveAttribute("href", "/help#broke");
+    await expect(result.locator("mark").first()).toHaveText(/^error$/i);
+    // The answer, not the question, holds the match, so a short snippet of it shows.
+    const snippet = result.locator("span").last();
+    await expect(snippet).toContainText("An error is information");
+    expect((await snippet.textContent())!.length).toBeLessThanOrEqual(125);
+
+    await result.click();
+    await expect(page).toHaveURL(/\/help#broke$/);
+    await expect(page.getByRole("heading", { name: "Something broke and I don't know why.", level: 2 })).toBeInViewport();
+  });
+
+  test("a match deep in an answer shows the snippet around it, cut with an ellipsis", async ({ page }) => {
+    const dialog = await searchFor(page, "stuck");
+    const result = dialog.getByRole("group", { name: /^Help/ }).getByRole("option", { name: /Something broke/ });
+    const snippet = result.locator("span").last();
+    await expect(snippet).toHaveText(/^…Every hands-on lesson also has a Stuck\? box/);
+    await expect(snippet.locator("mark")).toHaveText("Stuck");
+  });
+
+  for (const [query, href] of [
+    ["devices", "/access#devices"],
+    ["privacy", "/privacy"],
+    ["session kit", "/run-it#kit"],
+  ] as const) {
+    test(`"${query}" finds ${href} under Pages`, async ({ page }) => {
+      const dialog = await searchFor(page, query);
+      const pages = dialog.getByRole("group", { name: /^Pages/ });
+      const result = pages.getByRole("option").first();
+      await expect(result).toHaveAttribute("href", href);
+      await result.click();
+      await expect(page).toHaveURL(new RegExp(`${href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`));
+      const [, id] = href.split("#");
+      if (id) await expect(page.locator(`[id="${id}"]`)).toBeInViewport();
+    });
+  }
+
+  test("every Pages result links to a page that loads, and to an anchor that's on it", async ({ page, request }) => {
+    const index = await (await request.get("/search-index.json")).json();
+    const pages: { t: string; h: string }[] = index.pages;
+    expect(pages.length).toBeGreaterThanOrEqual(17);
+    for (const entry of pages) {
+      const [path, id] = entry.h.split("#");
+      const response = await page.goto(path);
+      expect(response?.status(), `${entry.t} (${entry.h})`).toBe(200);
+      if (id) await expect(page.locator(`[id="${id}"]`), `${entry.t} (${entry.h})`).toHaveCount(1);
+    }
+  });
 });

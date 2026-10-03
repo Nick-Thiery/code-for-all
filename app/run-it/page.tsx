@@ -9,12 +9,9 @@ import { formatCount } from "@/lib/format";
 import { getOutline } from "@/lib/lessons";
 import { moduleHref } from "@/lib/outline";
 import { site } from "@/lib/site";
+import { RUN_IT_SECTIONS, pageMetadata, runItFacts } from "@/lib/site-pages";
 
-export const metadata: Metadata = {
-  title: "Run a session",
-  description:
-    "Everything teachers, volunteers and club leaders need to run Code for All: run sheets, a facilitator script, a student handout and a pre-session checklist for every module.",
-};
+export const metadata: Metadata = pageMetadata("runIt");
 
 const printable: KitPage[] = ["script", "handout", "checklist"];
 
@@ -22,8 +19,8 @@ export default async function RunItPage() {
   const [kit, outline] = await Promise.all([getKit(), getOutline()]);
   const planned = outline.phases.flatMap((phase) => phase.modules);
   const comingSoon = planned.filter((mod) => !mod.released);
-  const covered = kit.sheets.map((sheet) => sheet.module.number);
-  const range = covered.length > 1 ? `Modules ${covered[0]} to ${covered[covered.length - 1]}` : `Module ${covered[0]}`;
+  const facts = runItFacts(kit, outline);
+  const { kit: kitSection, howItRuns, runSheets, contact } = RUN_IT_SECTIONS;
   const skillsPages = outline.modules.filter((mod) => mod.skillsCheck);
   const handsOnModules = outline.modules
     .map((mod) => ({ ...mod, handsOn: mod.lessons.filter((lesson) => lesson.requiresAccount) }))
@@ -56,20 +53,18 @@ export default async function RunItPage() {
           <dd className="m-0">Free</dd>
         </dl>
 
-        <section id="kit" aria-labelledby="kit-title" className="flex scroll-mt-6 flex-col gap-6 desktop:gap-8">
+        <section id={kitSection.id} aria-labelledby="kit-title" className="flex scroll-mt-6 flex-col gap-6 desktop:gap-8">
           <div className="flex flex-col gap-3">
             <h2 id="kit-title" className="t-section m-0">
-              The session kit
+              {kitSection.title}
             </h2>
-            <p className="m-0 text-muted">
-              Open it online, or print it. Each one covers {range}, with a page per module.
-            </p>
+            <p className="m-0 text-muted">{kitSection.description(facts)}</p>
           </div>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-6 desktop:gap-8">
             {printable.map((page) => {
               const info = KIT_PAGES[page];
               return (
-                <KitCard key={page} label={range} title={info.title} description={info.description}>
+                <KitCard key={page} label={facts.range} title={info.title} description={info.description}>
                   <Link href={kitHref(page)} className="btn btn-small">
                     Open
                   </Link>
@@ -86,14 +81,13 @@ export default async function RunItPage() {
           </div>
         </section>
 
-        <section id="how-it-runs" aria-labelledby="how-title" className="flex max-w-[820px] scroll-mt-6 flex-col gap-8">
+        <section id={howItRuns.id} aria-labelledby="how-title" className="flex max-w-[820px] scroll-mt-6 flex-col gap-8">
           <div className="flex flex-col gap-4">
             <h2 id="how-title" className="t-section m-0">
-              How LaunchLab runs
+              {howItRuns.title}
             </h2>
             <p className="m-0">
-              Code for All is adapted from LaunchLab, a free course of {planned.length} weekly sessions of{" "}
-              {kit.sessionMinutes} minutes. The original course ran online. Here&apos;s how it works, from the LaunchLab
+              {howItRuns.description(facts)} The original course ran online. Here&apos;s how it works, from the LaunchLab
               Blueprint.
             </p>
           </div>
@@ -180,15 +174,13 @@ export default async function RunItPage() {
           </div>
         </section>
 
-        <section id="run-sheets" aria-labelledby="run-sheets-title" className="flex max-w-[820px] scroll-mt-6 flex-col gap-6">
+        <section id={runSheets.id} aria-labelledby="run-sheets-title" className="flex max-w-[820px] scroll-mt-6 flex-col gap-6">
           <div className="flex flex-col gap-4">
             <h2 id="run-sheets-title" className="t-section m-0">
-              Run sheets
+              {runSheets.title}
             </h2>
             <p className="m-0">
-              One for each module: what to prepare, suggested timings for a {kit.sessionMinutes}-minute session, and the
-              group version of the activities the lessons turned into solo ones. The timings are only suggestions:
-              change them to suit your group.
+              {runSheets.description(facts)} The timings are only suggestions: change them to suit your group.
               {comingSoon.length > 0 &&
                 ` ${comingSoon.map((mod) => `Module ${mod.number}`).join(" and ")} ${comingSoon.length === 1 ? "is" : "are"} coming soon.`}
             </p>
@@ -233,15 +225,15 @@ export default async function RunItPage() {
         </section>
 
         <section
-          id="contact"
+          id={contact.id}
           aria-labelledby="contact-title"
           className="flex flex-wrap items-center justify-between gap-x-8 gap-y-5 border-t-2 border-line pt-12"
         >
           <div className="flex flex-[1_1_360px] flex-col gap-3">
             <h2 id="contact-title" className="t-section m-0">
-              Talk to the team
+              {contact.title}
             </h2>
-            <p className="m-0">Planning a session, or have a question about the kit? We&apos;d love to hear from you.</p>
+            <p className="m-0">{contact.description()}</p>
           </div>
           <a href={site.contactHref} className="btn btn-primary print:hidden">
             Contact us

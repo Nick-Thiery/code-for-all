@@ -3,11 +3,9 @@ import Link from "next/link";
 import { GlossaryDefinition } from "@/components/glossary-definition";
 import { PageBody, PageHeader } from "@/components/page-header";
 import { getGlossary, type GlossaryDefinition as Definition } from "@/lib/glossary";
+import { pageMetadata } from "@/lib/site-pages";
 
-export const metadata: Metadata = {
-  title: "Glossary",
-  description: "Every key term from the Code for All lessons, A to Z, with what it means and the lesson that explains it.",
-};
+export const metadata: Metadata = pageMetadata("glossary");
 
 // Built from the <KeyTerm>s in the lessons: see lib/glossary.ts.
 export default async function GlossaryPage() {

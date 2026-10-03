@@ -3,12 +3,9 @@ import Link from "next/link";
 import { Callout } from "@/components/callout";
 import { MoveProgress } from "@/components/move-progress";
 import { PageBody, PageHeader } from "@/components/page-header";
+import { pageMetadata } from "@/lib/site-pages";
 
-export const metadata: Metadata = {
-  title: "Move my progress",
-  description:
-    "Carry your Code for All progress to another device with a code, a QR code or a file. No account needed, and nothing is sent to a server.",
-};
+export const metadata: Metadata = pageMetadata("moveProgress");
 
 export default function MoveProgressPage() {
   return (

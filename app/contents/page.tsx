@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { CourseGrid } from "@/components/course-grid";
 import { getOutline } from "@/lib/lessons";
+import { pageMetadata } from "@/lib/site-pages";
 
-export const metadata: Metadata = {
-  title: "Contents",
-  description:
-    "Every Code for All module and lesson, with your progress, mastery levels and quiz scores. Pick a module to see its lessons.",
-};
+export const metadata: Metadata = pageMetadata("contents");
 
 // /contents: the course grid (components/course-grid.tsx) on navy. It opens on
 // the learner's current module; /contents#module-N opens another, which is

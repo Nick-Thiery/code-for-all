@@ -6,11 +6,9 @@ import { PageBody, PageHeader } from "@/components/page-header";
 import { getOutline } from "@/lib/lessons";
 import { allLessons, contentsHref } from "@/lib/outline";
 import { practiceCopy } from "@/lib/site";
+import { ACCESS_SECTIONS, pageMetadata } from "@/lib/site-pages";
 
-export const metadata: Metadata = {
-  title: "Hands-on access",
-  description: "How access works for the hands-on parts of Code for All, and what works without it.",
-};
+export const metadata: Metadata = pageMetadata("access");
 
 type Props = { searchParams: Promise<{ from?: string }> };
 
@@ -78,12 +76,10 @@ export default async function AccessPage({ searchParams }: Props) {
           </ul>
         </section>
 
-        <h2 id="devices" className="t-h2 mt-10 mb-0 scroll-mt-6">
-          Which device do you have?
+        <h2 id={ACCESS_SECTIONS.devices.id} className="t-h2 mt-10 mb-0 scroll-mt-6">
+          {ACCESS_SECTIONS.devices.title}
         </h2>
-        <p className="m-0">
-          Reading, practice and quizzes work on anything with a browser. The building parts depend on your device.
-        </p>
+        <p className="m-0">{ACCESS_SECTIONS.devices.description}</p>
         <div className="my-2 grid grid-cols-[repeat(auto-fit,minmax(min(100%,210px),1fr))] gap-5 wide:-mr-[310px]">
           {devices.map((device) => (
             <section
@@ -121,13 +117,12 @@ export default async function AccessPage({ searchParams }: Props) {
           working offline, and you can add the site to your home screen like an app.
         </p>
 
-        <h2 id="cost" className="t-h2 mt-10 mb-0 scroll-mt-6">
-          What does it cost?
+        <h2 id={ACCESS_SECTIONS.cost.id} className="t-h2 mt-10 mb-0 scroll-mt-6">
+          {ACCESS_SECTIONS.cost.title}
         </h2>
         <p className="m-0">
-          Nothing. The course is free, and every tool it uses is either free or comes through your Code for All
-          access. Nothing on this site or in the lessons should ever ask you for a bank card. If a tool asks for one,
-          stop: you&apos;re on the wrong page or the wrong plan. Ask in your session, or <Link href="/help">get help</Link>.
+          {ACCESS_SECTIONS.cost.description} Nothing on this site or in the lessons should ever ask you for a bank
+          card. If a tool asks for one, stop: you&apos;re on the wrong page or the wrong plan. Ask in your session, or <Link href="/help">get help</Link>.
         </p>
 
         <h2 className="t-h2 mt-10 mb-0">Which tools need access?</h2>

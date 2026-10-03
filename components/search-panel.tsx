@@ -7,7 +7,7 @@ import { type Range, type SearchIndex, markPieces, prepareIndex, search } from "
 
 // The inside of the search dialog (components/site-search.tsx), downloaded
 // the first time search opens. The box is a combobox over one listbox of
-// results grouped Lessons, Quizzes, Glossary and Help. Focus stays in the
+// results grouped Lessons, Quizzes, Glossary, Help and Pages. Focus stays in the
 // box: the arrow keys move the highlighted result (aria-activedescendant)
 // and Enter opens it. Every result is a real link.
 
@@ -101,7 +101,7 @@ export function SearchPanel({ index, onNavigate }: SearchPanelProps) {
 
         {!typed ? (
           <div className="flex flex-col gap-4 px-(--gut) py-5">
-            <p className="m-0 font-serif text-[20px] leading-[1.35]">Find a lesson, a quiz, a key term or a help answer.</p>
+            <p className="m-0 font-serif text-[20px] leading-[1.35]">Find a lesson, a quiz, a key term, a help answer or a page.</p>
             {suggestions.length > 0 && (
               <div className="flex flex-wrap items-center gap-2.5">
                 <span className="kicker mr-1">Try</span>
@@ -167,9 +167,9 @@ export function SearchPanel({ index, onNavigate }: SearchPanelProps) {
                         <span className="font-serif text-[20px] leading-[1.2] font-semibold desktop:text-[21px]">
                           <Marked text={hit.item.title} ranges={hit.marks.title} />
                         </span>
-                        {hit.item.text && (
+                        {hit.text && (
                           <span className="t-meta line-clamp-2 text-muted">
-                            <Marked text={hit.item.text} ranges={hit.marks.text} />
+                            <Marked text={hit.text} ranges={hit.marks.text} />
                           </span>
                         )}
                       </Link>
