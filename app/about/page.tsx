@@ -3,12 +3,9 @@ import Link from "next/link";
 import { DraftNotice } from "@/components/draft-notice";
 import { PageBody, PageHeader } from "@/components/page-header";
 import { getPhases } from "@/lib/lessons";
+import { pageMetadata } from "@/lib/site-pages";
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    "Code for All is a free course in building with AI tools, made by students at Singapore American School.",
-};
+export const metadata: Metadata = pageMetadata("about");
 
 // Widths and heights of the HDB blocks in the skyline.
 const blocks = [

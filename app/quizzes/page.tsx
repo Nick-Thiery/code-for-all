@@ -2,12 +2,9 @@ import type { Metadata } from "next";
 import { PageBody, PageHeader } from "@/components/page-header";
 import { QuizList } from "@/components/quiz-list";
 import { getOutline } from "@/lib/lessons";
+import { pageMetadata } from "@/lib/site-pages";
 
-export const metadata: Metadata = {
-  title: "Quizzes",
-  description:
-    "Every Code for All quiz in one place: each module's quiz and the Check your skills quizzes, with your last score and the lessons to look at again.",
-};
+export const metadata: Metadata = pageMetadata("quizzes");
 
 // /quizzes: every released module quiz and Check your skills page, grouped by
 // phase. The quizzes themselves stay at the end of their modules; this page

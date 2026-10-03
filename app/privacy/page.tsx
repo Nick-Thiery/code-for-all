@@ -4,12 +4,9 @@ import { Callout } from "@/components/callout";
 import { Icon } from "@/components/icons";
 import { PageBody, PageHeader } from "@/components/page-header";
 import { site } from "@/lib/site";
+import { pageMetadata } from "@/lib/site-pages";
 
-export const metadata: Metadata = {
-  title: "Privacy",
-  description:
-    "Code for All has no accounts and collects nothing. Progress stays in your browser, and practice prompts aren't stored.",
-};
+export const metadata: Metadata = pageMetadata("privacy");
 
 // Every claim here was checked against the code. If you change what the site
 // stores or sends, update this page:

@@ -140,8 +140,13 @@ export function helpSegments(paragraph: string): HelpSegment[] {
   return segments;
 }
 
-/** An answer's first paragraph as plain text: what the search shows under the question. */
-export function helpSummary(question: HelpQuestion): string {
-  const first = question.answer.find((block) => block.kind === "text");
-  return first ? helpSegments(first.text).map((segment) => segment.text).join("") : "";
+/**
+ * An answer's paragraphs as plain text, links reduced to their words: what
+ * the site search looks through and shows under the question. The prompt
+ * block is left out: it's a template to copy, not an answer to read.
+ */
+export function helpAnswerText(question: HelpQuestion): string {
+  return question.answer
+    .flatMap((block) => (block.kind === "text" ? [helpSegments(block.text).map((segment) => segment.text).join("")] : []))
+    .join(" ");
 }
