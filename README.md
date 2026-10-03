@@ -141,7 +141,7 @@ questions:
 | `explanation` | Why that answer is right, in a sentence or two. Shown after every answer. |
 | `lesson` | The slug of the lesson in this module that teaches it. A wrong answer links there ("Review: ..."), and the answer moves that lesson's mastery level (see below). |
 
-Learners answer one question at a time, see the explanation after each, and get a summary at the end ("You got 5 of 7.") showing how each lesson's level moved. There are no grades or pass marks. The first try uses the order you wrote the options in; "Try again" shuffles them, so vary where the correct answer sits. The build checks every quiz file and says what to fix, like it does for lessons.
+Learners answer one question at a time, see the explanation after each, and get a summary at the end ("You got 5 of 7.") showing how each lesson's level moved. There are no grades or pass marks. The first try uses the order you wrote the options in; "Try again" shuffles them, so vary where the correct answer sits. If they got any wrong, "Try the ones I missed" asks just those again; it moves lesson levels but keeps the saved score for the whole quiz. The build checks every quiz file and says what to fix, like it does for lessons.
 
 ### Mastery levels
 

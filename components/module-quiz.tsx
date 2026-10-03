@@ -45,6 +45,11 @@ type Run = {
   attempt: number;
   /** Once done: how the attempt moved each lesson's mastery level. */
   changes: LevelChange[];
+  /**
+   * A retry round (only the questions missed in the round before) carries the
+   * whole quiz's score, which it leaves saved as it is. Null for the whole quiz.
+   */
+  whole: { correct: number; total: number } | null;
 };
 
 type Focus = "question" | "next" | "summary";
@@ -54,7 +59,12 @@ type Focus = "question" | "next" | "summary";
 // starts again, which also keeps the first render the same as the server's.
 const inProgress = new Map<string, { run: Run | null; started: boolean }>();
 
-function newRun(questions: QuizQuestion[], shuffled: boolean, attempt: number): Run {
+function newRun(
+  questions: QuizQuestion[],
+  shuffled: boolean,
+  attempt: number,
+  whole: Run["whole"] = null,
+): Run {
   return {
     // The first attempt uses the order the options are written in; Try again shuffles them.
     items: questions.map((question) => ({
@@ -68,7 +78,13 @@ function newRun(questions: QuizQuestion[], shuffled: boolean, attempt: number): 
     done: false,
     attempt,
     changes: [],
+    whole,
   };
+}
+
+/** The questions a finished round got wrong, in the order they were asked. */
+function missedIn(run: Run): QuizQuestion[] {
+  return run.items.filter((_, i) => !run.right[i]).map((item) => item.question);
 }
 
 export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: Props) {
@@ -111,6 +127,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
     ({ question: questionRef, next: nextRef, summary: summaryRef })[target].current?.focus();
   });
 
+  const againNote = mixed ? "You'll get a new mix of questions." : "The answers come in a different order each time.";
   const lessons = useMemo(() => new Map(questions.map((q) => [q.lesson.id, q.lesson])), [questions]);
   const lessonName = (lesson: QuizLesson) => (mixed ? `Module ${lesson.module}: ${lesson.title}` : lesson.title);
 
@@ -118,6 +135,19 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
     setStarted(true);
     const next = draw !== undefined ? drawMixed(questions, draw) : questions;
     setRun(newRun(next, true, (run?.attempt ?? 0) + 1));
+    focusNext.current = "question";
+  }
+
+  // Only the questions just missed, options reshuffled like Try again. Check
+  // your skills keeps the same questions rather than drawing a new mix. Memory
+  // only: after a reload it's the normal quiz.
+  function tryMissed() {
+    if (!run?.done) return;
+    const missed = missedIn(run);
+    if (missed.length === 0) return;
+    const whole = run.whole ?? { correct: run.right.filter(Boolean).length, total: run.items.length };
+    setStarted(true);
+    setRun(newRun(missed, true, run.attempt + 1, whole));
     focusNext.current = "question";
   }
 
@@ -149,12 +179,15 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
       run.items.map((item, i) => ({ lesson: item.question.lesson.id, right: run.right[i] })),
       mixed ? "mixed" : "module",
     );
-    saveQuizResult(id, {
-      correct: run.right.filter(Boolean).length,
-      total: run.items.length,
-      review,
-      date: new Date().toISOString(),
-    });
+    // A retry round moves levels like any answer, but the saved score stays the whole quiz's.
+    if (!run.whole) {
+      saveQuizResult(id, {
+        correct: run.right.filter(Boolean).length,
+        total: run.items.length,
+        review,
+        date: new Date().toISOString(),
+      });
+    }
     setRun({ ...run, done: true, changes });
     focusNext.current = "summary";
   }
@@ -171,16 +204,21 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
           </Heading>
         }
         note={`Saved on this device on ${formatDate(saved.date)}.`}
-        allRight={saved.correct === saved.total}
-        rows={saved.review.flatMap((lessonId) => {
-          const lesson = lessons.get(lessonId);
-          return lesson ? [{ lesson, level: levelOf(levels, lessonId), change: null }] : [];
-        })}
-        rowsTitle={saved.review.length === 1 ? "Have another look at this lesson:" : "Have another look at these lessons:"}
+        praise={saved.correct === saved.total ? ALL_RIGHT : null}
+        groups={[
+          {
+            title: saved.review.length === 1 ? "Have another look at this lesson:" : "Have another look at these lessons:",
+            rows: saved.review.flatMap((lessonId) => {
+              const lesson = lessons.get(lessonId);
+              return lesson ? [{ lesson, level: levelOf(levels, lessonId), change: null }] : [];
+            }),
+          },
+        ]}
         lessonName={lessonName}
-        mixed={mixed}
         levelsHref={levelsHref}
         onTryAgain={tryAgain}
+        againLabel="Try again"
+        againNote={againNote}
         celebrate={false}
       />
     );
@@ -201,22 +239,40 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
     );
   } else if (run.done) {
     const correct = run.right.filter(Boolean).length;
+    const total = run.items.length;
     const rows = run.changes.flatMap((change) => {
       const lesson = lessons.get(change.lesson);
       return lesson ? [{ lesson, level: change.after, change }] : [];
     });
     const capped = masterAt && run.changes.some((change) => atModuleCeiling(change, mixed ? "mixed" : "module"));
+    const { whole } = run;
     body = (
       <Summary
         heading={
           <Heading ref={summaryRef} tabIndex={-1} className={SUMMARY_HEADING}>
-            You got {correct} of {run.items.length}.
+            {!whole
+              ? `You got ${correct} of ${total}.`
+              : total === 1
+                ? correct === 1
+                  ? "You got the one you'd missed."
+                  : "The one you'd missed is still wrong."
+                : `You got ${correct} of the ${total} you'd missed.`}
           </Heading>
         }
-        note="Saved on this device."
-        allRight={correct === run.items.length}
-        rows={rows}
-        rowsTitle="Your skills"
+        note={
+          whole
+            ? `Your saved score for the whole quiz is still ${whole.correct} of ${whole.total}.`
+            : "Saved on this device."
+        }
+        praise={correct < total ? null : whole ? "You got them all this time. Well done." : ALL_RIGHT}
+        groups={
+          whole
+            ? [
+                { title: "Still worth another look", rows: rows.filter((row) => row.change.missed) },
+                { title: "Right this time", rows: rows.filter((row) => !row.change.missed) },
+              ]
+            : [{ title: "Your skills", rows }]
+        }
         footnote={
           capped && (
             <p className="t-meta m-0 mt-3 text-muted">
@@ -226,9 +282,11 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
           )
         }
         lessonName={lessonName}
-        mixed={mixed}
         levelsHref={levelsHref}
+        onTryMissed={correct < total ? tryMissed : undefined}
         onTryAgain={tryAgain}
+        againLabel={whole ? "Take the whole quiz again" : "Try again"}
+        againNote={againNote}
         celebrate
       />
     );
@@ -252,7 +310,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
     body = (
       <form key={`${run.attempt}-${run.index}`} onSubmit={check} className="flex flex-col gap-5">
         <Heading ref={questionRef} tabIndex={-1} className="kicker m-0 self-start outline-offset-4">
-          Question {run.index + 1} of {run.items.length}
+          {run.whole ? "Retry · question" : "Question"} {run.index + 1} of {run.items.length}
           {mixed && <span className="font-normal"> · from Module {question.module}</span>}
         </Heading>
         <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
@@ -334,6 +392,7 @@ export function ModuleQuiz({ id, label, questions, draw, level = 2, masterAt }: 
 }
 
 const SUMMARY_HEADING = "display m-0 self-start text-(length:--head) leading-[1.12] outline-offset-[6px]";
+const ALL_RIGHT = "You got every question right. Well done.";
 
 function Option({
   name,
@@ -409,35 +468,41 @@ type SkillRow = { lesson: QuizLesson; level: Level; change: LevelChange | null }
 function Summary({
   heading,
   note,
-  allRight,
-  rows,
-  rowsTitle,
+  praise,
+  groups,
   footnote = null,
   lessonName,
-  mixed,
   levelsHref,
+  onTryMissed,
   onTryAgain,
+  againLabel,
+  againNote,
   celebrate,
 }: {
   heading: ReactNode;
   note: string;
-  allRight: boolean;
-  rows: SkillRow[];
-  rowsTitle: string;
+  /** Said when every question was right; null otherwise. */
+  praise: string | null;
+  /** Lists of lessons under a title; an empty one isn't shown. */
+  groups: { title: string; rows: SkillRow[] }[];
   footnote?: ReactNode;
   lessonName: (lesson: QuizLesson) => string;
-  mixed: boolean;
   /** The course grid opened on this quiz's module, where the lesson levels show. */
   levelsHref: string;
+  /** Straight after a round with wrong answers: a round of just those. */
+  onTryMissed?: () => void;
   onTryAgain: () => void;
+  againLabel: string;
+  againNote: string;
   celebrate: boolean;
 }) {
+  const shown = groups.filter((group) => group.rows.length > 0);
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-3">
           {heading}
-          {allRight && celebrate && (
+          {praise && celebrate && (
             <span aria-hidden="true" className="flex gap-[3px]">
               {[300, 420, 540].map((delay) => (
                 <span
@@ -452,13 +517,13 @@ function Summary({
         <p className="t-meta m-0 text-muted">{note}</p>
       </div>
 
-      {allRight && <p className="m-0">You got every question right. Well done.</p>}
+      {praise && <p className="m-0">{praise}</p>}
 
-      {rows.length > 0 && (
-        <div className="flex flex-col gap-1">
-          <p className="kicker m-0 mb-1">{rowsTitle}</p>
+      {shown.map((group, i) => (
+        <div key={group.title} className="flex flex-col gap-1">
+          <p className="kicker m-0 mb-1">{group.title}</p>
           <ul className="m-0 flex list-none flex-col gap-1 p-0">
-            {rows.map((row) => (
+            {group.rows.map((row) => (
               <li key={row.lesson.id} className="flex items-start gap-3">
                 <MasteryHex level={row.level} width={22} height={24} className="mt-2.5 flex-none" />
                 <span className="flex min-w-0 flex-col">
@@ -470,21 +535,24 @@ function Summary({
               </li>
             ))}
           </ul>
-          {footnote}
+          {i === shown.length - 1 && footnote}
         </div>
-      )}
+      ))}
 
       <Link href={levelsHref} className="text-link gap-1.5">
         See your lesson levels <Icon name="arrow-right" size={17} stroke={2.6} />
       </Link>
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 border-t-2 border-line pt-5">
+        {onTryMissed && (
+          <button type="button" onClick={onTryMissed} className="btn btn-primary">
+            Try the ones I missed
+          </button>
+        )}
         <button type="button" onClick={onTryAgain} className="btn btn-secondary">
-          Try again
+          {againLabel}
         </button>
-        <span className="t-meta text-muted">
-          {mixed ? "You'll get a new mix of questions." : "The answers come in a different order each time."}
-        </span>
+        <span className="t-meta text-muted">{againNote}</span>
       </div>
     </div>
   );

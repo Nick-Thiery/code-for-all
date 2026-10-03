@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import type { Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 // The tests read the course content straight from content/, so they follow
 // the lessons rather than hard-coding titles that a content edit would break.
@@ -41,6 +41,47 @@ export function quizOf(module: number): QuizInfo[] {
     answer: q.answer,
     lesson: q.lesson,
   }));
+}
+
+/** Every question in every released module's quiz, by its text: what a Check your skills page draws from. */
+export function allQuizQuestions(): Map<string, QuizInfo> {
+  const all = new Map<string, QuizInfo>();
+  for (const n of releasedModules()) {
+    if (!fs.existsSync(path.join(CONTENT, `module-${n}`, "quiz.yml"))) continue;
+    for (const q of quizOf(n)) all.set(q.question, q);
+  }
+  return all;
+}
+
+/**
+ * Answer one round of the quiz on the page, whole or retry, by clicking.
+ * `pick` gets each question's text and its place in the round. Returns the
+ * questions asked, in order, and leaves the round's summary showing.
+ */
+export async function answerRound(
+  page: Page,
+  pick: (asked: string, index: number) => "right" | "wrong",
+): Promise<string[]> {
+  const known = allQuizQuestions();
+  const quiz = page.getByRole("region", { name: /quiz/i }).first();
+  const asked: string[] = [];
+  for (let i = 0; ; i++) {
+    await expect(quiz.getByRole("heading", { name: /question \d+ of \d+/i })).toBeVisible();
+    const text = (await quiz.locator("legend").innerText()).trim();
+    asked.push(text);
+    const q = known.get(text)!;
+    const option = pick(text, i) === "right" ? q.answer : q.options.find((o) => o !== q.answer)!;
+    await quiz.getByRole("radio", { name: option, exact: true }).check();
+    await quiz.getByRole("button", { name: "Check answer" }).click();
+    const next = quiz.getByRole("button", { name: /Next question|See how you did/ });
+    await expect(next).toBeVisible();
+    // Buttons are set in capitals by the stylesheet, so compare without case.
+    const last = /see how you did/i.test(await next.innerText());
+    await next.click();
+    if (last) break;
+  }
+  await expect(quiz.getByRole("heading", { name: /^You got|^The one you'd missed/ })).toBeVisible();
+  return asked;
 }
 
 /** Every released module number, from the content folders. */
