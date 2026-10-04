@@ -2,6 +2,12 @@
 
 A free, self-paced AI course for 13 to 16 year olds, built with Next.js 15 (App Router), TypeScript, Tailwind CSS 4 and MDX. No accounts and no database: progress lives in the learner's browser. README.md has the full author guide.
 
+## Next.js docs for this version
+
+Read the matching page in `.next-docs/` before writing Next.js code; this project is on Next.js 15, which may differ from what you remember. The index is below. `.next-docs/` is gitignored, so in a fresh clone run `npx @next/codemod@canary agents-md --output AGENTS.md` first, and run it again after upgrading Next.js.
+
+@AGENTS.md
+
 ## Commands
 
 - `npm run dev`: dev server at http://localhost:3000
