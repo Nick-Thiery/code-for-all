@@ -2,7 +2,7 @@
 title: The art of prompting
 slug: the-art-of-prompting
 order: 40
-duration: 12
+duration: 15
 summary: What you get depends on how you ask. Compare a bad, a better and a strong prompt, then write your own.
 requiresAccount: false
 recap:
@@ -12,6 +12,8 @@ recap:
 ---
 
 Lovable builds what you ask for. Whatever you leave out, it guesses. So the way you ask decides what you get.
+
+Think of asking someone to bake you a birthday cake. "Make me a cake" could get you anything. "A chocolate cake for ten people, with blue icing and Happy Birthday on top" gets you the cake you pictured. A <Term>prompt</Term> works the same way.
 
 Here's the same request three times: bad, better and strong.
 
@@ -76,6 +78,46 @@ Some words in the strong prompt: "responsive" means the site works on a phone an
 <Callout kind="tip">
 The bad prompt leaves out the audience, the pages and the style. Check your own prompts for those three first.
 </Callout>
+
+## Before you write: four questions
+
+Lovable's own [prompting guide](https://docs.lovable.dev/prompting/prompting-one) says to answer four questions before you start:
+
+1. **What is it?** For example, a one-page website.
+2. **Who is it for?** This becomes your target audience.
+3. **Why will they use it?** This shapes your goal.
+4. **What's the one thing they should do there?** This becomes a key feature, like a button to press.
+
+If you can't answer one, the AI can't either. It will guess.
+
+## More tips from Lovable's guide
+
+- **Describe the look in words.** Words like "playful", "minimal" or "bold" tell Lovable the style. "Bold, bright colours" tells it more than "colourful".
+- **Use real words.** Write the actual heading or sentence you want, not "some text here". Otherwise you get <Term def="made-up filler words that sit where the real text will go.">placeholder text</Term>.
+- **Let it ask.** You can end a prompt with: "Ask me any questions you need in order to fully understand what I want." Lovable may reply with questions before it builds.
+
+## A worked example
+
+Here's how the four questions turn into a prompt for an About me website. This example is about a made-up teenager, so nothing here is about a real person.
+
+1. **What is it?** A one-page About me website.
+2. **Who is it for?** Other teenagers and my family.
+3. **Why will they use it?** To see what I like and what I've made.
+4. **What's the one thing they should do there?** Look at my projects.
+
+Each answer goes into a part of the strong prompt. "A one-page About me website" goes in the **Goal**. "Other teenagers and my family" is the **Target audience**. "Look at my projects" becomes a **Core page**: a Projects section. Then add the **Role**, the **Design style**, the **Output required** and the **Key features**, just like the strong prompt above.
+
+<CheckYourself>
+  <Question q='Your prompt just says "Make a nice website". Which three parts should you check for first?'>
+    The target audience, the core pages and the design style. The bad prompt leaves out all three.
+  </Question>
+  <Question q='Why is "modern" a weak design style?'>
+    It could mean almost anything. Describe the look in real words, like "light background, bold headings, friendly typography".
+  </Question>
+  <Question q="Which part of the strong prompt tells the AI what kind of expert to be?">
+    The Role. It makes the AI make the choices that expert would make.
+  </Question>
+</CheckYourself>
 
 ## Your turn
 

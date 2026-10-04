@@ -2,7 +2,7 @@
 title: Ethical considerations
 slug: ethical-considerations
 order: 50
-duration: 5
+duration: 8
 summary: "Three things to keep in mind when you build with AI: your own bias, representing everyone, and the amplification loop."
 requiresAccount: false
 recap:
@@ -19,11 +19,27 @@ When entering a <Term>prompt</Term>, make sure you don't make it reflect your ow
 
 An AI takes your words at face value. If your prompt assumes something about people, the result can too. For example, a prompt that says "for boys who like games" leaves out everyone else.
 
+Here's an example of spotting it and fixing it.
+
+```prompt title="Example: a prompt with bias"
+Make a website for a coding club for boys who like games.
+```
+
+This leaves out girls, and anyone who'd rather code art, music or useful tools. The site will probably only show games, with pictures and words aimed at boys.
+
+```prompt title="Example: the same prompt, fixed"
+Make a website for a coding club for 13 to 16 year olds. Show projects of all kinds: games, art, music and useful tools.
+```
+
+Now the prompt says who the club is for without assuming what they like.
+
 ## Representative
 
 If you are creating a tool such as ChatGPT, for example, you want it to give responses that represent a wide range of human perspectives.
 
 In plain words: a tool that many people use should work well for all of them, not just for one kind of person.
+
+You can check this in your own projects. If a site you build shows people, like a team page or example users, look at who's there. If they all seem the same, ask the AI for a mix.
 
 ## The amplification loop
 
@@ -31,6 +47,20 @@ When people use biased AI tools again and again, research suggests they can pick
 
 So bias doesn't stay inside the tool. It can spread to the people who use it. That's why the first two points matter.
 
+Think of a music app that only ever suggests one kind of song. The more you listen, the more it suggests the same thing, and after a while you might start to think that's all music is. A biased AI tool can work the same way: what it shows you shapes what you expect.
+
 ## In short
 
 <EthicsCardsDiagram />
+
+<CheckYourself>
+  <Question q='A prompt says "a website for mums who want to learn to cook". What might it leave out?'>
+    Dads, carers and anyone else who wants to learn to cook. That's input bias: the prompt assumes who the site is for.
+  </Question>
+  <Question q="You build a team page and every example person looks the same. What should you do?">
+    Ask the AI for a mix. A tool many people use should represent a wide range of people.
+  </Question>
+  <Question q="What is the amplification loop?">
+    People who keep using a biased AI tool can pick up its biases over time, so the bias spreads from the tool to the people using it.
+  </Question>
+</CheckYourself>
