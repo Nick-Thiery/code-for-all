@@ -33,7 +33,7 @@ questions:
       - "Ask it in plain words what it changed in this session"
       - "Open every file and compare it line by line yourself"
     answer: "Ask it in plain words what it changed in this session"
-    explanation: "Claude Code keeps track of the commands, errors and file changes from your session. So it can explain what's been going on, or undo recent changes."
+    explanation: "Claude Code keeps track of the commands, errors and file changes from your session. So it can explain what's been going on, or undo recent changes. A new session would start fresh, with no memory of what it changed."
     lesson: what-it-can-do
 
   - question: "You've installed the Claude desktop app and opened the Code tab on your project folder. What else do you need to install before you can use Claude Code there?"

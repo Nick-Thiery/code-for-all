@@ -56,14 +56,14 @@ questions:
     explanation: "Be specific about layout, colours and audience. It's your site, so change the prompt to say exactly what you mean, and take out anything you don't want."
     lesson: using-refined-prompts
 
-  - question: "You're about to paste Claude's refined prompt into Lovable. What goes in front of it?"
+  - question: "You're pasting Claude's refined prompt into the chat of your first draft, as the class did. What goes in front of it?"
     options:
       - "Your original prompt from the solo sprint"
       - "The whole message you sent to Claude"
       - "A line telling Lovable it's a refined prompt to make changes from"
       - "Nothing, just the refined prompt on its own"
     answer: "A line telling Lovable it's a refined prompt to make changes from"
-    explanation: "You add one line before the refined prompt that tells Lovable it's a refined prompt and to make the required changes. Then the refined prompt follows straight after."
+    explanation: "You add one line before the refined prompt that tells Lovable it's a refined prompt and to make the required changes. Then the refined prompt follows straight after. (In a fresh project there's nothing to change yet, so the refined prompt goes in on its own.)"
     lesson: using-refined-prompts
 
   - question: "In the gallery, you see your refined site now has a proper checkout page. What's the most useful thing to ask yourself?"

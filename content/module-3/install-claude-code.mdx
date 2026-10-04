@@ -2,27 +2,37 @@
 title: "Task: install Claude Code"
 slug: install-claude-code
 order: 30
-duration: 12
-summary: Download Claude Code onto your computer, using the desktop app or the terminal, and check that it works.
+duration: 30
+summary: Download Claude Code onto your computer, using the desktop app or the terminal, then try your first session.
 requiresAccount: true
 needs:
-  device: A Windows or Mac laptop. On a Chromebook or a device that blocks installs, use Claude Code on the web instead (see below).
+  device: "A Windows or Mac laptop: macOS 13 or later, or Windows 10 version 1809 or later. On a Chromebook or a device that blocks installs, see \"Can't install apps on your device?\" below."
   access:
     - Claude Code
+  before:
+    - "Permission to install apps on the laptop. School laptops often block this."
 recap:
-  - The desktop app is the main way in. It includes Claude Code, so there's nothing else to install.
-  - The other option is the terminal. Run the install command for your computer, then check it with claude --version.
+  - The desktop app is the main way in. It includes Claude Code, so there's nothing else to install. In the Code tab, choose Local, select your folder and pick Manual.
+  - The other option is the terminal. Run the install command for your computer, check it with claude --version, cd into your folder and run claude. Press Shift+Tab once to switch from auto mode to manual mode.
   - You only need one of the two.
+  - "In your first session: answer permission prompts with Yes or Accept, press Esc to stop, and say \"Undo that\" (or use /rewind in the terminal) to go back."
+  - Plan mode makes a plan without changing any files. Use it when you're not sure how to do something, or the change touches several files.
 ---
 
 Download Claude Code onto your computer. You'll use it to build a Chrome extension for this module's Challenge.
 
-There are two ways to get it. Start with the desktop app. The terminal is the other option, if you'd rather work there.
+There are two ways to get it. Start with the desktop app. The terminal is the other option, if you'd rather work there. You only need one. Then try your first session, which works the same way in both.
 
 These steps come from the official [Claude Code docs](https://code.claude.com/docs/en/desktop-quickstart), which is where the class slide sends you. Claude Code is free to download, and you sign in with your Code for All access.
 
 <Callout kind="headsup">
 **Can't install apps on your device?** Chromebooks and many school devices block installs. You can still use Claude Code: open Claude Code on the web at [claude.ai/code](https://claude.ai/code), or the Code tab of the Claude app on a phone. It runs in the cloud, so there's nothing to install. It needs a GitHub repository connected, which you set up in [Module 6](/module-6), and your Code for All access. Or use a laptop in a session. [Which device do you have?](/access#devices)
+
+On the web, three things work differently ([Claude Code on the web](https://code.claude.com/docs/en/web-quickstart)):
+
+- There's no Manual mode. Use **Plan** first, then **Accept edits**.
+- Your files end up on GitHub, not on your computer. To try a Chrome extension, you download them first. [Lesson 5](/module-3/plan-your-extension) shows how.
+- School Chromebooks often block the setting Chrome needs to load your own extension. If yours does, build the Challenge on a laptop in a session.
 </Callout>
 
 <HandsOn />
@@ -31,19 +41,39 @@ These steps come from the official [Claude Code docs](https://code.claude.com/do
 
 This part needs access; see [how hands-on access works](/access).
 
-1. Open the official [desktop app instructions](https://code.claude.com/docs/en/desktop-quickstart) and download the installer for your computer: macOS or Windows. On Linux, follow the Linux steps linked from that page.
-2. Run the installer.
-3. Open Claude: from your Applications folder on a Mac, the Start menu on Windows, or your app launcher on Linux.
-4. Log in using the access your Code for All session gives you.
-5. Click the **Code** tab at the top centre.
-6. Select **Local**, so Claude works on the files on your computer.
-7. Click **Select folder** and choose your project folder. A new, empty folder for your Chrome extension is fine.
+### Install it
+
+1. **Check your computer.** You need macOS 13 or later, or Windows 10 version 1809 or later.
+2. **Download the installer.** Open the official [desktop app instructions](https://code.claude.com/docs/en/desktop-quickstart) and click **Download for macOS** or **Download for Windows**.
+   - The Mac download works on every recent Mac.
+   - A Windows laptop with an ARM processor needs the ARM64 installer instead. It's linked on the same page.
+   - On Linux, the app is in beta. Follow the Linux steps linked from that page.
+3. **Run the installer.** Open the file you downloaded and follow what it says on screen.
+4. **Open Claude:** from your Applications folder on a Mac, the Start menu on Windows, or your app launcher on Linux.
+5. **Log in** using the access your Code for All session gives you.
+
+   You should now see the Claude app, with tabs at the top centre. One of them is **Code**. The other tabs' names may change, but **Code** stays.
 
 <InstallDownloadDrawing />
 
+### Open your project folder
+
+6. **Make a project folder.** In Finder (Mac) or File Explorer (Windows), make a new, empty folder called `my-extension`, in your Documents folder for example. This is where your Chrome extension will live.
+7. **Click the Code tab** at the top centre.
+
+   If it asks you to upgrade or for a card, stop. Don't pay for anything. Ask in your Code for All session.
+8. **Select Local**, so Claude works on the files on your computer. (The other choices, like **Cloud**, run somewhere else. You don't need them.)
+9. **Click Select folder** and choose your `my-extension` folder.
+
+   You should now see your folder's name in the Code tab.
+10. **Choose a model**, from the dropdown next to the send button. The one already chosen is fine.
+11. **Choose Manual**, from the mode selector next to the send button. In Manual, Claude asks before it changes a file or runs a command, so you see every step. If you see **Ask permissions** instead, that's the old name for the same thing. The app remembers your choice for this folder. ([Choose a permission mode](https://code.claude.com/docs/en/desktop#choose-a-permission-mode))
+
 <InstallCodeTabDrawing />
 
-The desktop app includes Claude Code, so you don't need to install anything else to use the Code tab. When the Code tab is open on your folder, you're ready.
+The desktop app includes Claude Code, so you don't need to install anything else to use the Code tab.
+
+**Check it worked:** the Code tab is open on your `my-extension` folder, with **Manual** chosen. You're ready for your first session, below.
 
 <HandsOn />
 
@@ -53,8 +83,14 @@ This part needs access; see [how hands-on access works](/access).
 
 The <Term>terminal</Term> is the text window where you type commands. Never used one? The official [terminal guide](https://code.claude.com/docs/en/terminal-guide) shows how to open one and paste a command.
 
-1. Open a terminal.
-2. Run the install command for your computer.
+### Install it
+
+1. **Open a terminal.**
+   - **Mac:** press **Cmd+Space**, type `Terminal` and press **Enter**.
+   - **Windows:** press **Win+X** and choose **Windows PowerShell** (or **Terminal**).
+
+   You should now see a window with a blinking cursor. On Windows, the line you type on starts with `PS`, which means you're in PowerShell.
+2. **Run the install command for your computer.** Copy it, paste it into the terminal and press **Enter**.
 
    **macOS, Linux or WSL:**
 
@@ -68,18 +104,155 @@ The <Term>terminal</Term> is the text window where you type commands. Never used
 
    <CommandBlock>{"curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd"}</CommandBlock>
 
-3. When it finishes, open a new terminal window and check that it worked:
+   You should see text scrolling past, then "Claude Code successfully installed!" If you see an error instead, look in the Stuck box at the end of this lesson.
+3. **Check that it worked.** Close the terminal, open a new terminal window and run:
 
    <CommandBlock>claude --version</CommandBlock>
 
-   A working installation prints a version number.
-4. To start Claude Code, open a terminal in your project folder and run:
+   A working installation prints a version number, followed by `(Claude Code)`.
+
+<InstallTerminalDrawing />
+
+### Open your project folder
+
+A new terminal starts in your home folder, the main folder for your user account. Claude Code works on the folder the terminal is in, so move into a project folder first. Don't start it in your home folder itself.
+
+4. **Make a project folder** called `my-extension`:
+
+   <CommandBlock>mkdir my-extension</CommandBlock>
+5. **Move into it:**
+
+   <CommandBlock>cd my-extension</CommandBlock>
+
+   `cd` means "change <Term def="another word for a folder.">directory</Term>": it moves the terminal into a folder. You should now see `my-extension` in the line you type on. Next time, open a terminal and run `cd my-extension` again to get back to it.
+6. **Start Claude Code:**
 
    <CommandBlock>claude</CommandBlock>
 
-   The first time, it opens your browser so you can log in. Log in using the access your Code for All session gives you.
+   The first time, it opens your browser so you can log in. Log in using the access your Code for All session gives you. If the browser doesn't open, press `c` to copy the login link, paste it into your browser and log in. If the page gives you a code, paste it back into the terminal.
+7. **Trust the folder.** The first time you start Claude Code in a folder, it asks whether you trust the files in it. This is your own new folder, so choose the option that says yes. ([Security](https://code.claude.com/docs/en/security))
 
-<InstallTerminalDrawing />
+   You should now see Claude Code, with its version, the model and the folder it's working in. Check that the folder is `my-extension`.
+8. **Switch to manual mode.** Look just under the box where you type. If it says `⏵⏵ auto mode on`, press **Shift+Tab** once.
+
+   You should now see `⏸ manual mode on`. If it already said manual mode, leave it.
+
+<Callout kind="headsup">
+**Why switch?** New terminal sessions start in auto mode, where Claude Code "edits most files and runs most commands without asking you". While you're learning, manual mode is better: it asks first, so you see every step. Each press of **Shift+Tab** moves to the next mode: auto, manual, accept edits, plan, then back to auto. ([Choose a permission mode](https://code.claude.com/docs/en/permission-modes#switch-permission-modes))
+</Callout>
+
+**Check it worked:** Claude Code is running in your `my-extension` folder, and it says `⏸ manual mode on`.
+
+<HandsOn />
+
+## Your first session
+
+This part needs access; see [how hands-on access works](/access).
+
+Try these steps in an empty `my-extension` folder before you start the Challenge. They work in the desktop app and in the terminal; where the two differ, both are given.
+
+### Ask for something small
+
+1. **Type a first request** and press **Enter**. This one comes from the official terminal guide:
+
+   ```prompt title="Example: a first request"
+   Make me a simple webpage that says hello world.
+   ```
+
+   Claude Code reads your folder and works out what to do. You'll see it think, then propose a change.
+
+### Answer the permission prompt
+
+2. **Approve the change.** Because you chose manual mode, Claude Code asks before it does anything.
+   - **In the terminal,** it shows what it wants to do. For a new file or a change to a file, it shows you the change. Choose **Yes** (it's picked already, so press **Enter**).
+   - **In the desktop app,** you see the change, with **Accept** and **Reject** buttons. Click **Accept**.
+
+   You should now see Claude say what it made, like a file called `index.html`.
+
+
+When Claude wants to run a command, the terminal asks "Do you want to proceed?" with these choices ([Configure permissions](https://code.claude.com/docs/en/permissions)):
+
+- **Yes**: do it this once. Pick this while you're learning.
+- **Yes, and don't ask again for: …**: do it, and don't ask about that command next time.
+- **Yes, and switch to auto mode**: do it, and stop asking about most things. Skip this one for now. It doesn't appear every time.
+- **No**: don't do it. To say what to do instead, move to **No** and press **Tab** to type a note. **Esc** cancels.
+
+In the desktop app, **Reject** says no. Claude then asks how you'd like it to go on.
+
+### Check the result
+
+3. **See what changed.**
+   - **In the desktop app,** click the counter that shows lines added and removed, like `+12 -1`. Files are on the left and the changes on the right. ([Review changes](https://code.claude.com/docs/en/desktop#review-changes-with-diff-view))
+   - **In the terminal,** ask "What files have you changed?". The `/diff` command shows the changes too, once your folder is a Git repository, which you'll set up in [Module 6](/module-6).
+4. **Open your page.** Find `index.html` in your `my-extension` folder and double-click it. It opens in your browser.
+
+   You should now see a page that says hello world.
+
+### Undo a change
+
+5. **Ask for a small change**, then approve it:
+
+   ```prompt title="Example: a small change"
+   Make the text purple and put it in the middle of the page.
+   ```
+6. **Undo it.** Type "Undo that" and Claude Code puts it back. This works in the desktop app and in the terminal.
+
+   In the terminal you can also use `/rewind`, or press **Esc** twice when the box you type in is empty. Pick the prompt you want to go back to, then **Restore code and conversation**. **Never mind** leaves everything as it is. ([Checkpointing](https://code.claude.com/docs/en/checkpointing))
+
+   Refresh the page in your browser. You should now see plain hello world again.
+
+Undo can't bring back a file that a command deleted or moved. That's one more reason to read each permission prompt before you say **Yes**.
+
+### Stop Claude Code
+
+7. **Press Esc** to stop Claude Code while it's working. In the desktop app, you can also click the stop button. It keeps what it has done so far, and you can type what to do instead.
+
+### Plan first
+
+8. **Try plan mode.** In plan mode, Claude Code reads your files and makes a plan, but doesn't change anything. ([Plan mode](https://code.claude.com/docs/en/permission-modes#analyze-before-you-edit-with-plan-mode))
+   - **In the terminal,** press **Shift+Tab** until it says `⏸ plan mode on`. Or start your prompt with `/plan`.
+   - **In the desktop app,** choose **Plan** from the mode selector.
+
+   ```prompt title="Example: something to plan"
+   Add a button to my page that changes the background colour each time I click it.
+   ```
+
+   You should now see a plan: which files it will change and how.
+9. **Approve the plan.** In the terminal, choose **Yes, manually approve edits**, so it still asks before each change. The other choices are a **Yes** that switches to auto mode or accept edits, and **No, keep planning**, where you tell it what to change in the plan. In the desktop app, approve the plan, then check the mode selector says **Manual** before Claude starts.
+
+Use plan mode when you're not sure how to do something, or the change touches several files. Skip it for small jobs: the docs say if you could describe the change in one sentence, you don't need a plan. ([Best practices](https://code.claude.com/docs/en/best-practices))
+
+### Finish
+
+10. **Close the session.** In the terminal, type `/exit` or press **Ctrl+D** twice. In the desktop app, close the window or start a new session from the sidebar.
+
+**Check it worked:** you have a page that says hello world, you've answered a permission prompt, you've undone a change, and you know that **Esc** stops Claude Code. That's everything you need for the Challenge.
+
+### Handy commands
+
+In the terminal, type `/` to see every command. In the desktop app, type `/`, or click **+** and then **Slash commands**. These are the ones you'll use most ([Commands](https://code.claude.com/docs/en/commands)):
+
+- `/help`: shows help and the commands you can use.
+- `/plan`: plan mode for the next prompt.
+- `/rewind`: goes back to an earlier point (also `/undo`).
+- `/clear`: starts a new conversation, with an empty memory.
+- `/init`: writes a first CLAUDE.md for your project.
+- `/cd`: moves the session to another folder, like `/cd my-extension`.
+- `/exit`: closes Claude Code.
+
+## Prompts that work
+
+These tips are from the official [best practices](https://code.claude.com/docs/en/best-practices):
+
+- **Be specific.** Name the file, say what should happen and what "fixed" looks like.
+- **Paste the exact error.** Copy the whole message into Claude Code and ask it to fix it and check it's fixed.
+- **Break big jobs into numbered steps.**
+- **Ask it to check its own work,** for example by testing the page and telling you what it found.
+- **Correct it early.** If it's going the wrong way, press **Esc**, or say "Undo that". If you've corrected the same thing twice and it's still wrong, type `/clear` and write a better first prompt.
+
+```prompt title="Example: fixing an error"
+The page shows this error: [paste the error]. Fix it, then check the page loads without errors.
+```
 
 <StuckBlock>
   <StuckItem question="Claude asks me to log in, or to upgrade.">
@@ -88,11 +261,38 @@ The <Term>terminal</Term> is the text window where you type commands. Never used
   <StuckItem question="My device won't let me install the app.">
     Use Claude Code on the web instead: [claude.ai/code](https://claude.ai/code) in your browser, with nothing to install. It needs a GitHub repository, which you set up in [Module 6](/module-6). Or do this lesson on a laptop in a session. [Which device do you have?](/access#devices)
   </StuckItem>
+  <StuckItem question="The Code tab shows a 403 error, or keeps asking me to upgrade.">
+    Sign out and back in from the app menu. If that doesn't work, quit the app completely (not just close the window), then open it and sign in again. If it still asks you to upgrade, ask in your session: don't pay for anything. ([Desktop troubleshooting](https://code.claude.com/docs/en/desktop#troubleshooting))
+  </StuckItem>
+  <StuckItem question='The desktop app says "Failed to load session".'>
+    The folder may have been moved or deleted, or the app can't open it. Choose a different folder, or restart the app. ([Desktop troubleshooting](https://code.claude.com/docs/en/desktop#troubleshooting))
+  </StuckItem>
   <StuckItem question="My terminal says claude isn't found or isn't recognised.">
-    Open a new terminal window and run `claude --version` again. If it's still not found, the install folder isn't on your PATH yet. The official page [Fix your PATH](https://code.claude.com/docs/en/troubleshoot-install#command-not-found-claude-after-installation) shows how to fix it.
+    Open a new terminal window and run `claude --version` again. If it's still not found, the install folder isn't on your PATH yet: that's `~/.local/bin` on a Mac or Linux, or `%USERPROFILE%\.local\bin` on Windows. The official page [Fix your PATH](https://code.claude.com/docs/en/troubleshoot-install#command-not-found-claude-after-installation) shows how to add it.
   </StuckItem>
   <StuckItem question="The Windows install command gives an error straight away.">
-    You may be in the wrong kind of terminal. If you see `The token '&&' is not a valid statement separator`, you're in PowerShell, not CMD: use the PowerShell command. If you see `'irm' is not recognized as an internal or external command`, you're in CMD, not PowerShell: use the CMD command. In PowerShell, the line you type on starts with `PS`.
+    You may be in the wrong kind of terminal. If you see `The token '&&' is not a valid statement separator`, you're in PowerShell, not CMD: use the PowerShell command. If you see `'irm' is not recognized as an internal or external command`, you're in CMD, not PowerShell: use the CMD command. If the error mentions a parameter name `fsSL`, you pasted the Mac command: use one of the Windows ones. In PowerShell, the line you type on starts with `PS`.
+  </StuckItem>
+  <StuckItem question="The install says EACCES: permission denied.">
+    Don't put `sudo` in front of the command: that usually causes this error. Run the install command for your computer from step 2, exactly as it's written. If it still fails, ask in your session. ([Troubleshoot installation](https://code.claude.com/docs/en/troubleshoot-install#permission-errors-during-installation))
+  </StuckItem>
+  <StuckItem question="On Windows, typing claude opens the desktop app.">
+    Update the Claude desktop app, then try again. ([Troubleshoot installation](https://code.claude.com/docs/en/troubleshoot-install))
+  </StuckItem>
+  <StuckItem question="The browser didn't open to log in, or it's stuck waiting for authentication.">
+    Press `c` in the terminal to copy the login link. Paste it into your browser and log in. If the page gives you a code, paste it back into the terminal. ([Login troubleshooting](https://code.claude.com/docs/en/troubleshoot-install#login-and-authentication))
+  </StuckItem>
+  <StuckItem question="It keeps asking me to log in.">
+    Type `/logout`, close Claude Code, then run `claude` again and log in. ([Login troubleshooting](https://code.claude.com/docs/en/troubleshoot-install#login-and-authentication))
+  </StuckItem>
+  <StuckItem question="Claude Code is working in the wrong folder.">
+    In the terminal, it works in the folder where you started it. Type `/exit`, `cd` into the right folder and run `claude` again. Or type `/cd` and the folder, like `/cd my-extension`. In the desktop app, start a new session and use **Select folder**.
+  </StuckItem>
+  <StuckItem question="It asks whether I trust the folder every time.">
+    You probably started Claude Code in your home folder. Make a project folder, `cd` into it and start Claude Code there. It remembers your answer for each project folder. ([Security](https://code.claude.com/docs/en/security))
+  </StuckItem>
+  <StuckItem question="Claude Code changed things without asking me.">
+    It's probably in auto mode, or accept edits. In the terminal, press **Shift+Tab** until it says `⏸ manual mode on`. In the desktop app, choose **Manual** from the mode selector. To go back, say "Undo that".
   </StuckItem>
   <StuckItem question="Something else went wrong.">
     The official [installation troubleshooting page](https://code.claude.com/docs/en/troubleshoot-install) matches common errors to fixes. Or ask in your Code for All session.

@@ -2,13 +2,14 @@
 title: What are Claude Skills?
 slug: what-are-skills
 order: 20
-duration: 6
+duration: 10
 summary: "A skill teaches Claude how you want something done, once, so you don't have to explain it again."
 requiresAccount: false
 recap:
   - "Reusable instructions: teach Claude your workflows or preferences once, and never repeat yourself."
   - "On-demand loading: Claude finds the right skill for your task and loads it only when it's needed."
   - "Consistent outputs: the same format and quality every time, without re-prompting."
+  - "A skill is a folder with a SKILL.md file in it. Claude reads each skill's name and description first, and only opens the instructions when your request fits."
 ---
 
 <KeyTerm term="Skill">
@@ -17,7 +18,20 @@ A set of instructions you give Claude once, saved as a file. Claude loads it whe
 
 In Module 1 you learned that the more you tell an AI, the less it has to guess. A skill lets you write those instructions once and keep them.
 
+## What a skill is, in plain words
+
+A skill is a folder. Inside it is one file called SKILL.md, and sometimes a few extra files, like a template. ([Skills overview](https://claude.com/docs/skills/overview))
+
+SKILL.md has two parts:
+
+- **The label:** the skill's name, and a one-line description of what it does and when to use it.
+- **The instructions:** the steps you want Claude to follow, written in ordinary words.
+
+Think of a skill as a recipe card in a kitchen. The cook doesn't read every recipe before making breakfast. They glance at the titles, pick the one that fits, and only then follow its steps.
+
 <SkillRecipeDiagram />
+
+Claude does the same. It only sees each skill's name and description until your request matches one. Then it reads that skill's instructions and follows them.
 
 ## 1. Reusable Instructions
 
@@ -31,8 +45,58 @@ Skills stay packaged until needed. Claude identifies the relevant skill for your
 
 You don't have to pick the skill yourself. It doesn't take up space in the conversation until your task needs it.
 
+That's why the description matters so much. The official help says it's "the only part Claude sees before deciding to use the skill" ([How to create custom skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)). A vague description means Claude may not pick it up.
+
 ## 3. Consistent, Standardised Outputs
 
 Define exactly how Claude should deliver results — formatted documents, code modules, structured data — and get the same quality every time without re-prompting.
 
 You describe the result you want once, and you get it the same way every time.
+
+## A worked example
+
+Say you make revision notes after every class, and you always want them the same way. Without a skill, you'd paste the same instructions into every chat. With a skill, you write them once.
+
+This is an example skill, written by us in the official format:
+
+```text title="revision-notes/SKILL.md"
+---
+name: revision-notes
+description: Turns my class notes into revision notes. Use when I ask for revision notes, a study summary or flashcards.
+---
+# Revision notes
+1. Start with a one-line summary.
+2. Use no more than 8 bullet points, in British English.
+3. End with 3 quiz questions and their answers.
+```
+
+The lines between the two `---` lines are the label: the name and the description. Everything after them is the instructions.
+
+Now, in a new chat, you paste your notes about the water cycle and write:
+
+```prompt title="Example: a request that fits the skill"
+Make revision notes from these notes about the water cycle.
+```
+
+"Revision notes" matches the description, so Claude opens the skill and follows its three steps: a summary, up to 8 bullets, then 3 quiz questions. If you asked for a poem about the water cycle instead, the description wouldn't match, and Claude would leave the skill closed.
+
+## Skills or projects?
+
+Claude also has projects, which you may have seen. They're different:
+
+- A **project** holds background knowledge that's always loaded when you work in that project.
+- A **skill** switches on only when a task needs it, and works everywhere in Claude, not just in one project.
+
+That comes from Anthropic's help page [What are skills?](https://support.claude.com/en/articles/12512176-what-are-skills). In the next lesson you'll set up a skill of your own.
+
+<CheckYourself>
+  <Question q="You have three skills: revision-notes, poster-maker and homework-checker. You ask Claude for a poster for the school fair. Which skill's instructions does Claude read?">
+    Only poster-maker's. Claude sees all three names and descriptions, but it opens the instructions of the one whose description fits the task. The other two stay packed away.
+  </Question>
+  <Question q='The description of your skill just says "Helps me." Claude never uses it. Why?'>
+    The description is the only part Claude sees before deciding. "Helps me" doesn't say what the skill does or when to use it, so nothing you ask ever matches it. Say what it does and the words you'd use when you want it.
+  </Question>
+  <Question q="What are the two parts of a SKILL.md file?">
+    The label at the top (the name and a description of when to use it), then the instructions Claude follows.
+  </Question>
+</CheckYourself>

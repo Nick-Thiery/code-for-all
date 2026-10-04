@@ -2,20 +2,22 @@
 title: Claude in Microsoft Excel
 slug: claude-in-excel
 order: 40
-duration: 8
+duration: 25
 summary: Use Claude directly inside Excel to analyse, explain and act on spreadsheet data, then use it to explain 90 days of real weather data.
 requiresAccount: true
 needs:
-  device: A laptop or Chromebook. Claude for Excel doesn't run on an iPad or a phone.
+  device: "A laptop or Chromebook. Claude for Excel doesn't run on an iPad, an Android phone or tablet, or Excel 2016 or 2019."
   access:
-    - Claude
-    - Excel (Excel on the web is free with a Microsoft account)
+    - "Claude (Claude for Excel needs a paid plan, which your session's access covers)"
+    - "Excel: Excel on the web is free with a Microsoft account"
   before:
     - "The weather data file, linked below"
 recap:
   - Claude in Excel works right inside your spreadsheet, with no switching tabs or copy-pasting.
   - "It helps with three things: formula assistance, data analysis, and audit and validation."
   - In the example, Claude showed which cells its numbers came from. Check its answers against the cells yourself.
+  - "To open it: Home, then Add-ins (Windows and the web), or Tools, then Add-ins (Mac), then sign in with your Code for All access."
+  - "Only use it on spreadsheets you trust, and read what it asks to change before you say yes."
 ---
 
 Claude doesn't only work in a chat window. It can also work inside Microsoft Excel, right next to your spreadsheet.
@@ -29,6 +31,8 @@ Use Claude directly inside Excel to analyse, explain, and act on your spreadshee
 - **Audit & Validation:** Trace logic errors and verify <Term def="the rules a business's numbers are meant to follow.">business rules</Term> step-by-step
 
 In plain words: Claude can write the maths for you, tell you what the numbers mean, and check for mistakes.
+
+It can also do jobs in the sheet for you: sort and filter, highlight cells with conditional formatting, and make charts. When it answers a question, it gives <Term def="labels that show exactly which cells an answer came from, so you can click them and check.">cell-level citations</Term>. ([Use Claude for Excel](https://claude.com/docs/office-agents/excel))
 
 <Figure src="/lessons/module-4/excel-finance-dashboard.jpg" alt="A Finance Summary Dashboard in Excel. Five boxes across the top show Revenue 428,109, Expense 250,498, Profit/Loss 177,611, Max Revenue 3,998 and Max Expense 1,500. Below them are ring charts of revenue and expenses by top 3 category, a line chart of cumulative profit and loss rising month by month, and bars comparing revenue and expense for each department." width={944} height={511} caption="A finance dashboard in Excel: the kind of spreadsheet Claude can analyse and explain." />
 
@@ -54,16 +58,30 @@ Claude found the two numbers it needed, showed which cells they came from, worke
 
 This part needs access; see [how hands-on access works](/access). Open Claude using the access your Code for All session gives you.
 
+### What you need
+
+Claude for Excel is an <Term def="a small extra you add to a program to give it a new ability.">add-in</Term>. It works in ([Use Claude for Excel](https://claude.com/docs/office-agents/excel)):
+
+- **Excel on the web**, which is free with a Microsoft account
+- **Excel on Windows** with Microsoft 365
+- **Excel on a Mac**, version 16.46 or later
+
+It doesn't work in Excel 2016 or 2019 (the versions you buy once, without Microsoft 365), on an iPad or on Android. If you have one of those, use Excel on the web on a laptop or a Chromebook instead ([which device do you have?](/access#devices)).
+
+Claude for Excel needs a paid Claude plan (Pro, Max, Team or Enterprise); it doesn't work on the free plan. The access your Code for All session gives you covers it, so there's nothing to buy.
+
 ### Open Claude in Excel
 
-Claude for Excel is an <Term def="a small extra you add to a program to give it a new ability.">add-in</Term>. It works in Excel on the web, in Excel on Windows with Microsoft 365, and in Excel on a Mac (version 16.46 or later). It doesn't work on an iPad or on Android, so use a laptop or a Chromebook for this part ([which device do you have?](/access#devices)).
+1. **Add Claude to Excel.** Open the [Claude for Microsoft 365 listing](https://marketplace.microsoft.com/en-us/product/office/WA200010725?tab=Overview) on Microsoft Marketplace (it used to be called AppSource) and select **Get it now**. If it asks you to sign in, use the Microsoft account you use for Excel.
 
-Don't have Excel? Excel on the web is free with a Microsoft account. Signing in to Claude uses the access your Code for All session gives you, so there's nothing to buy.
+   Or, from inside Excel on the web: **Home**, then **Add-ins**, then **More Add-ins**. Open the **Store** tab, search for Claude, and click **Add**.
+2. **Open Excel** and open any workbook. A new blank one is fine for now.
+3. **Open the add-in.** In Excel on Windows and on the web: **Home**, then **Add-ins**. On a Mac: **Tools**, then **Add-ins**. Choose Claude.
 
-1. Open the **Claude for Microsoft 365** listing on Microsoft AppSource and choose **Get it now**.
-2. Open Excel.
-3. Open the add-in. In Excel on Windows and on the web: **Home**, then **Add-ins**. On a Mac: **Tools**, then **Add-ins**.
-4. Sign in with your Claude account, using the access your Code for All session gives you.
+   You should now see a Claude panel open beside your sheet, like in the screenshots above.
+4. **Sign in** with your Claude account, using the access your Code for All session gives you.
+
+   You should now see a box in the panel where you can type a question.
 
 These steps come from the official [Claude for Excel docs](https://claude.com/docs/office-agents/excel). Menus move around, so if a button isn't where this says, look for **Add-ins**.
 
@@ -75,41 +93,123 @@ It holds 90 days of daily weather for Singapore, from 28 June to 25 September 20
 
 Weather data: [Open-Meteo.com](https://open-meteo.com/) (CC BY 4.0)
 
+5. **Open singapore-weather.csv in Excel.**
+
+   You should now see headings in row 1 and 90 days of data in rows 2 to 91. The columns are:
+
+   | Column | What it shows |
+   | --- | --- |
+   | A | Date |
+   | B | Max temperature (°C): the hottest it got that day |
+   | C | Min temperature (°C): the coolest it got, usually at night |
+   | D | Mean temperature (°C): the average for the day |
+   | E | Rainfall (mm) |
+   | F | Hours of rain |
+   | G | Max wind speed (km/h) |
+   | H | Hours of sunshine |
+
+   If Excel on the web won't let you edit the file, make a new blank workbook and copy the data into it.
+6. **Open the Claude panel** again if it closed (**Home** or **Tools**, then **Add-ins**).
+
 <Callout kind="tryit">
 Find out what the data shows, and explain it in your own words.
 </Callout>
 
-1. Open singapore-weather.csv in Excel.
-2. Open Claude and ask it to explain what the data shows. For example, ask about trends, the hottest and wettest days, and whether rainy days are cooler.
-3. Check its answer against the cells. If Claude says a day was the wettest, find that date and look at its Rainfall (mm) cell.
-4. Explain what the data shows in your own words, in two or three sentences.
+7. **Ask Claude to explain what the data shows.** For example, ask about trends, the hottest and wettest days, and whether rainy days are cooler.
 
-Here's one way to ask. It's only an example, so change it however you like:
+   Here's one way to ask. It's only an example, so change it however you like:
 
-```prompt title="Example question"
-Explain what this weather data shows. What are the main trends? Which were the hottest and wettest days? Are rainy days cooler than dry days? Tell me which cells you used for each answer.
+   ```prompt title="Example question"
+   Explain what this weather data shows. What are the main trends? Which were the hottest and wettest days? Are rainy days cooler than dry days? Tell me which cells you used for each answer.
+   ```
+
+   You should see an answer in the panel, with labels showing which cells each number came from.
+
+### Stay safe
+
+- **Read before you say yes.** When Claude wants to do something risky, it asks you to confirm first, and it warns you before it writes over data that's already there. Read what it's about to change.
+- **Only use spreadsheets you trust.** Anthropic's docs warn that files from other people can hide instructions that try to trick Claude. The weather file from this page is safe.
+- **Check its answers.** Claude can make mistakes. Click its citations, or find the cells yourself.
+
+### More questions to try, one at a time
+
+Asking one small question at a time makes each answer easier to check. These are examples; try them in order.
+
+**Start with questions that only read the sheet:**
+
+```prompt title="Example 1: understand the columns"
+In simple words, what does each column in this sheet show?
 ```
+
+```prompt title="Example 2: find a fact"
+Which date had the most rainfall? Tell me which cell you used.
+```
+
+You should see Claude name a date and a cell in column E. Click its citation, or find the cell yourself, and check the number.
+
+```prompt title="Example 3: compare two groups"
+Are rainy days cooler? Compare the average Max temperature on days with 5 mm of rain or more and days with less than 1 mm. Explain your formula. Don't change the sheet.
+```
+
+```prompt title="Example 4: explain a formula"
+Explain this formula in plain English: =AVERAGEIF(E2:E91,">=5",B2:B91)
+```
+
+You should see Claude explain that the formula looks down the rainfall column, picks the days with 5 mm or more, and averages their Max temperature.
+
+**Then try questions that change the sheet:**
+
+```prompt title="Example 5: make a chart"
+Make a line chart of Max temperature by date on a new sheet.
+```
+
+```prompt title="Example 6: highlight cells"
+Highlight the five wettest days.
+```
+
+Examples 5 and 6 change the file. That's fine: if anything goes wrong, download a fresh copy of the CSV from this page.
+
+### Check it worked
+
+8. **Check its answers against the cells.** If Claude says a day was the wettest, find that date and look at its Rainfall (mm) cell. Then answer each question below from what Claude told you, and reveal the answer to compare. If Claude said something different, find the cell and see who's right.
+
+<CheckYourself>
+  <Question q="Which day was the wettest, and how much rain fell?">
+    11 September 2026, with 28.5 mm, in cell E77. The next wettest was 22 September, with 17.2 mm.
+  </Question>
+  <Question q="Which day was the hottest, and which night was the coolest?">
+    The hottest day was 5 August 2026, at 34.1 °C (cell B40). The coolest night was 20 August, at 23.7 °C (cell C55).
+  </Question>
+  <Question q="Are rainy days cooler?">
+    Yes. On the 15 days with 5 mm of rain or more, the average Max temperature was about 30.5 °C. On the 36 days with less than 1 mm, it was about 32.8 °C. The formula in Example 4 gives 30.47.
+  </Question>
+  <Question q="How much rain fell in total, and how many days were completely dry?">
+    233.1 mm in total. 7 days had 0 mm. Across all 90 days, the average Mean temperature was about 28.9 °C.
+  </Question>
+</CheckYourself>
+
+9. **Explain what the data shows in your own words**, in two or three sentences, not Claude's words. That's the first half of this module's Challenge done.
 
 <StuckBlock>
   <StuckItem question="Claude asks me to sign up or log in.">
     Don't create your own account: Claude accounts are for people aged 18 and over. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access). You can keep reading the lessons without it.
   </StuckItem>
-  <StuckItem question="I don't have Excel.">
-    Use Excel on the web. It's free with a Microsoft account, and Claude for Excel works there.
-  </StuckItem>
-  <StuckItem question="I'm on an iPad or a phone.">
-    Claude for Excel doesn't run on iPad or Android. Do this part on a laptop or a Chromebook, or in a Code for All session.
-  </StuckItem>
-  <StuckItem question="I can't find the Add-ins button.">
-    On Windows and on the web it's under **Home**. On a Mac it's under **Tools**, and Excel needs to be version 16.46 or later. Still stuck? Ask in your Code for All session.
+  <StuckItem question="I can't sign in, or it says my plan doesn't include it.">
+    Claude for Excel needs a Pro, Max, Team or Enterprise plan, not the free one. Make sure you're signing in with the access your Code for All session gives you, and ask there if it still won't work.
   </StuckItem>
   <StuckItem question="I don't have Excel.">
     Use Excel on the web. It's free with a Microsoft account, and Claude for Excel works there.
   </StuckItem>
-  <StuckItem question="I'm on an iPad or a phone.">
-    Claude for Excel doesn't run on iPad or Android. Do this part on a laptop or a Chromebook, or in a Code for All session.
+  <StuckItem question="I'm on an iPad, a phone, or Excel 2016 or 2019.">
+    Claude for Excel doesn't run on iPad, on Android, or in Excel 2016 or 2019. Use Excel on the web on a laptop or a Chromebook, or do this part in a Code for All session.
   </StuckItem>
   <StuckItem question="I can't find the Add-ins button.">
     On Windows and on the web it's under **Home**. On a Mac it's under **Tools**, and Excel needs to be version 16.46 or later. Still stuck? Ask in your Code for All session.
+  </StuckItem>
+  <StuckItem question="It won't let me add Claude on my school Microsoft account.">
+    Schools and workplaces can switch off add-ins from the store, and only their IT team can switch them back on. Ask your school's IT team, or do this part in a Code for All session.
+  </StuckItem>
+  <StuckItem question="Excel freezes while Claude is working.">
+    Wait. Don't click repeatedly: Excel does one step at a time. If Claude says a step timed out, wait until Excel responds, save, then ask for a smaller step. ([Performance and limits](https://claude.com/docs/office-agents/performance))
   </StuckItem>
 </StuckBlock>
