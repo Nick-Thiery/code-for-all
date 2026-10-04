@@ -2,21 +2,25 @@
 title: 'Task: design an "About me" website'
 slug: build-about-me
 order: 60
-duration: 10
+duration: 30
 summary: Paste your prompt into Lovable, look at what it builds, then change one part of the prompt and compare.
 requiresAccount: true
 needs:
   device: A laptop or Chromebook
   access:
-    - Lovable
+    - Lovable, with enough credits for two builds
   before:
     - "Your About me prompt from [lesson 4](/module-1/the-art-of-prompting)"
+    - "how to start a project and undo a change, from [lesson 3](/module-1/meet-lovable)"
 recap:
   - Paste your prompt into Lovable and look at what it builds.
   - Change one part of the prompt and compare. That's how you learn what each part does.
+  - Run the changed prompt as a new project, so you keep the first one to compare.
 ---
 
 Time to build. You'll use the About me prompt you wrote in [lesson 4](/module-1/the-art-of-prompting).
+
+You'll make two versions of your site: one from your prompt, and one from the same prompt with one part changed. Then you'll compare them.
 
 <PublishSafely />
 
@@ -34,9 +38,24 @@ Key features: works on a phone, easy to read, no contact details or photos of me
 
 This part needs access; see [how hands-on access works](/access).
 
-1. Open Lovable.
-2. Paste your About me prompt. Use the Copy button above.
-3. Look at the result. What did Lovable get right? What did it have to guess?
+1. Read your prompt once more. Take out anything the safety box above says to leave out, like your full name or your school.
+2. Copy your prompt. Use the Copy button above.
+3. Open [Lovable](https://lovable.dev).
+
+   You should now see the dashboard, with the box that says "Ask Lovable to create…". If you see a project instead, click the menu icon at the top left to get back to the dashboard.
+
+4. Check that the mode picker beside the send button says **Build**. If it says Chat or Plan, click it and choose **Build**.
+5. Click in the box and paste your prompt: Ctrl+V on Windows or a Chromebook, Cmd+V on a Mac. Click the send button.
+6. If Lovable shows three design directions or asks about fonts and colours, pick the one closest to your design style and click **Submit**.
+
+   Your prompt already describes the look, so Lovable may skip this and start building straight away. Both are fine.
+
+7. Wait while it builds. This takes a few minutes.
+
+   You should now see the editor: the chat on the left and your About me site on the right.
+
+8. Click **Mobile view** above the preview to see it at phone size, then **Desktop view** to go back.
+9. **Check it worked.** You should see a website in the preview that's about you. Now look at the result. What did Lovable get right? What did it have to guess?
 
 Here's the kind of site a short prompt gets you. Kai is made up, so nothing here is about a real person.
 
@@ -48,13 +67,72 @@ Look at how much it had to guess: which sections to make, how it should look, ev
 
 ## Change one part and compare
 
+This part needs access; see [how hands-on access works](/access).
+
 1. Pick one part of your prompt, like the design style or the target audience, and change it.
-2. Run the new prompt in Lovable.
+
+   Change only that one line, so you know what caused any difference. Here are some examples of a changed line. Each one replaces just that line in your prompt:
+
+   ```prompt title="Example: a new design style"
+   Design style: calm and minimal, white background, thin dark headings, lots of space.
+   ```
+
+   ```prompt title="Example: a new target audience"
+   Target audience: my grandparents, who don't use the internet much.
+   ```
+
+   ```prompt title="Example: new core pages"
+   Core pages: a home section with a short hello, a Drawings gallery with six pictures, and a Games section with a card for each game I've made.
+   ```
+
+2. Run the new prompt in Lovable. Start a **new project** for it from the dashboard. Don't paste it into the chat of your first project.
+
+   A new project keeps your first version safe, so you can compare the two side by side. Pasting a whole new prompt into the same chat would change your first site instead.
+
+   To start a new project: go back to the dashboard, check the mode says **Build**, paste your changed prompt and click send. Pick a design direction if Lovable asks.
+
+   Each new build uses credits, and a whole site uses more than a small change. On Lovable's Free plan you get 5 a day. If you run out before the second build, your credits come back at 8am Singapore time the next day. ([Lovable's guide to credits](https://docs.lovable.dev/introduction/credits-and-usage))
+
 3. Compare the two results. What changed? Did it change the way you expected?
+
+   To switch between them, open each one from **Recents** in the dashboard sidebar. Look at the colours, the fonts, the words and the sections. Check both in **Mobile view** too.
+
+4. **Check it worked.** You should have two projects in **Recents**: your first build and the changed one. You should be able to say which part you changed and one thing that changed because of it.
+
+## Make small fixes
+
+Want to fix one thing on a site, like a heading? Don't rewrite the whole prompt. Lovable's advice is "one change per prompt, verify in the preview, then move on". ([Lovable's guide, From idea to app](https://docs.lovable.dev/tips-tricks/from-idea-to-app))
+
+- Type one change in the chat box, like "Make the Projects heading bigger", and press Enter.
+- Say what must stay the same: "Only change the Projects section. Leave the rest of the site unchanged."
+- To change a few words, use **Edit text inline** in the preview toolbar instead. A limited number are free each day.
+- Didn't like the change? Click **Undo latest edit**.
+
+<HandsOn />
+
+## Put it online (optional)
+
+This part needs access; see [how hands-on access works](/access).
+
+Want to share your site? Check it against the safety box at the top of this lesson first. On the Free plan, anyone with the link can visit, and you can't make it private. ([Lovable's guide to publishing](https://docs.lovable.dev/features/publish))
+
+1. Open the project you want to share. Click **Publish** at the top right of the editor, next to **Share**. On a narrow window it may show only an icon.
+
+   You should now see a box with a **Website URL** ending in `lovable.app`. You can change the first part of the address before you publish. Lovable runs a quick security check, which takes about 10 seconds.
+
+2. Click **Publish**.
+3. **Check it worked.** You should see **Your website is live**, with buttons to copy the link and visit the site. Click to visit it and check it looks right.
+
+Publishing this way doesn't use credits. Sites on the Free plan show a small **Edit with Lovable** badge.
+
+The live site is a snapshot. If you change your project later, the live site doesn't change until you click **Publish**, then **Publish changes**. A small dot on **Publish** means you have changes that aren't live yet. To take the site down, open the Publish box, click the **⋮** menu and choose **Unpublish**.
 
 <StuckBlock>
   <StuckItem question="Lovable asks me to sign up or log in.">
     You don't need to sign up for Lovable yourself. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access).
+  </StuckItem>
+  <StuckItem question="It started chatting about my prompt instead of building.">
+    The mode picker is on **Chat**. Click it, choose **Build** and send your prompt again. Or click the **Start building** card if Lovable shows one.
   </StuckItem>
   <StuckItem question="The result doesn't look the way I pictured.">
     Find the part of your prompt it got wrong and make that part more specific. That's the whole task: change one part, then compare.
@@ -62,10 +140,30 @@ Look at how much it had to guess: which sections to make, how it should look, ev
   <StuckItem question="I didn't keep my prompt.">
     If you wrote it on this device, it's in the box at the top of this lesson. If not, go back to the practice box in [lesson 4](/module-1/the-art-of-prompting) and write it again, using the strong prompt as your model. Or start from the sample above.
   </StuckItem>
+  <StuckItem question="I pasted the changed prompt into my first project by mistake.">
+    Click **Undo latest edit** under Lovable's latest reply to get your first version back. Then start a new project from the dashboard for the changed prompt. Undoing doesn't give back the credits the build used.
+  </StuckItem>
+  <StuckItem question="I ran out of credits before my second build.">
+    Your first build is safe. On the Free plan, credits come back at 8am Singapore time the next day: do the second build then. Don't click anything that asks you to upgrade or pay; ask in your Code for All session instead.
+  </StuckItem>
+  <StuckItem question="I can't find my first build.">
+    On the dashboard, click **Recents** or **Projects** in the sidebar, or press Ctrl+K (Cmd+K on a Mac) and search. To tell your two builds apart, rename them: click **⋯** on a project's card, then **Edit**, then **Name**.
+  </StuckItem>
+  <StuckItem question="The preview is blank, or I see an error.">
+    For a blank preview, click **Refresh** above it. For an error, click **Try to fix** once or twice, then describe the problem if it's still there. [Meet Lovable](/module-1/meet-lovable) has more fixes in its Stuck box.
+  </StuckItem>
+  <StuckItem question="Publish says there are build errors.">
+    Click **Try to fix** in the Publish box. When the errors are fixed, try **Publish** again.
+  </StuckItem>
+  <StuckItem question="I changed my site, but the live link still shows the old version.">
+    The live site is a snapshot. Click **Publish**, then **Publish changes**.
+  </StuckItem>
 </StuckBlock>
 
 <Challenge title="Watch Get Started With Lovable">
 Watch [Get Started With Lovable](https://www.youtube.com/watch?v=Vf2K0pcTLEo), Lovable's own starter tutorial on YouTube. (On YouTube it's called "Master Lovable in 17 minutes".) It's free to watch. On limited data, save it for Wi-Fi.
 
 <VideoEmbed id="Vf2K0pcTLEo" title="Master Lovable in 17 minutes (Starter Tutorial)" />
+
+The video was made in August 2025, and Lovable has changed since. Some names are different now: Agent mode is now **Build** mode, and Visual edits is now the **preview toolbar**. Where the video and this module disagree, follow this module.
 </Challenge>

@@ -50,6 +50,7 @@ Read the matching page in `.next-docs/` before writing Next.js code; this projec
 
 - The map is the plan; the slides are the source of truth for wording, prompts and homework. Slide PDFs are in `source/slides/`; `docs/launchlab-curriculum-source.md` summarises them.
 - Keep slide order. Copy slide prompts word for word into prompt blocks.
+- Lessons expand on the slides so a learner working alone, with no tutor, knows exactly what to do: numbered steps with exact button names in bold, "You should now see…" after key steps, a final "Check it worked" step, example prompts labelled as examples, and Stuck answers for common problems. The detail is researched from the tool's official docs (link the page a step comes from), and each addition is recorded as **[added]** in the course map with its source. Slide prompts and homework stay word for word.
 - Don't invent facts, steps, statistics or UI details. Missing content becomes a `<Placeholder>` saying what's needed.
 - Record every departure from the slides in the map as **[changed]** (with the reason), and every kept teaching addition as **[added]**, under that module's "Changes after review".
 - British spelling throughout, including slide text and prompts, with one exception: "practice" is spelt the American way as both noun and verb (practice, practiced, practicing), never "practise". Button and menu names stay as the product shows them (Customize, Authorize).
