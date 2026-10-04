@@ -18,7 +18,7 @@ const ALT =
   "An arrow points down to the user table, which gets a new row holding james@… and k9#Fq2x…: " +
   "your email and a scrambled version of your password. " +
   "Log in: a tick says your email and password match, and your browser is handed a token, " +
-  'a sticker that says "this is James" and expires on its own. ' +
+  'a sticker that says "this is James". It wears off after a while, but your browser renews it until you log out. ' +
   "Your browser shows the token on every request, so you don't retype your password. " +
   'Log out: the "this is James" token is crossed out, next to a bin. ' +
   "The token is thrown away, and the site stops recognising you.";
@@ -78,7 +78,7 @@ export function LoginDiagram() {
           <div className="mt-1.5 flex w-full max-w-[190px] -rotate-4 flex-col items-center gap-1 self-center rounded-md border-2 border-line bg-deco px-2 py-3.5 text-center text-on-deco shadow-h4">
             <span className={diagramLabel}>Token</span>
             <span className="font-serif text-[20px] leading-[1.2] font-semibold">“this is James”</span>
-            <span className="text-[13px] leading-[1.3]">expires on its own</span>
+            <span className="text-[13px] leading-[1.3]">renewed until you log out</span>
           </div>
         </Step>
 

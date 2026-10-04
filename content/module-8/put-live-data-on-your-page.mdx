@@ -2,7 +2,7 @@
 title: "Task 1: put live data on your page"
 slug: put-live-data-on-your-page
 order: 30
-duration: 10
+duration: 20
 summary: Ask Claude to fetch Singapore's live temperature from a weather API and show it in a small box at the top of your page.
 requiresAccount: true
 needs:
@@ -12,9 +12,11 @@ needs:
     - GitHub and Vercel, to see it live
   before:
     - "Any project of yours, like your [Wordle](/module-7/recreate-wordle), connected to Vercel as in [Module 6](/module-6/connect-to-vercel)"
+    - "Its live link from Vercel"
 recap:
   - Open any project, paste the open-meteo prompt into Claude, then refresh the page to check it worked.
-  - A real temperature, from a real weather service, that changes every time you reload.
+  - A real temperature, from a real weather service. It updates every 15 minutes, so reloading straight away usually shows the same number.
+  - "Open-Meteo's free data needs a credit: a small \"Weather data by Open-Meteo.com\" link next to it."
   - Link the chat to the correct repo, push the changes, and make sure the repo is connected to Vercel so you can see them.
 ---
 
@@ -34,6 +36,14 @@ This part needs access; see [how hands-on access works](/access).
 
 Open your [Wordle project](/module-7/recreate-wordle), or any project.
 
+1. **Pick a project that's already live on Vercel.** That's how you'll see the change on the internet. Not connected yet? [Module 6](/module-6/connect-to-vercel) shows how.
+2. **Open it in Claude Code**, the way you did in [Module 6](/module-6/get-your-code-into-github):
+   - **Desktop app:** in the **Code** tab, choose **Local** and select the project's folder.
+   - **Terminal:** `cd` into the project's folder, then run `claude`.
+   - **Claude Code on the web:** choose the project's repository before you start.
+
+   You should now see Claude Code ready for a message, working in your project's folder or repository. Check the name: it should be the project that's connected to Vercel. This is what "link the chat to the correct repo" means.
+
 ## 2. Paste the prompt into Claude
 
 ```prompt title="Paste this into Claude"
@@ -46,22 +56,117 @@ and show the current temperature in a small box at the top of the page.
 
 This will update your site with the live temperature of Singapore.
 
+1. **Paste the prompt and send it.**
+2. **Approve the changes.** Claude Code shows each change before it makes it. Choose **Yes** in the terminal, or **Accept** in the desktop app.
+
+   You should now see Claude say what it changed, usually your main page (often `index.html`), with a new box and a few lines of code that fetch the link. If it asks which page to add the box to, tell it the main one.
+
+### Add the credit
+
+Open-Meteo's free data comes with one rule: say where it came from. Its licence asks for a link next to the data ([Open-Meteo licence](https://open-meteo.com/en/licence)). Send this next:
+
+```prompt title="Example: add the credit"
+Under the temperature box, add a small link that says "Weather data by Open-Meteo.com" and goes to https://open-meteo.com/
+```
+
+You should now see Claude add one link under the box.
+
+### Optional: show Singapore time
+
+If your box shows the time as well as the temperature, it will be 8 hours behind. Open-Meteo gives times in GMT unless you ask for a time zone ([Open-Meteo docs](https://open-meteo.com/en/docs)). Adding `&timezone=Asia%2FSingapore` to the end of the link fixes it. `%2F` is how a `/` is written inside a link.
+
+```prompt title="Example: Singapore time"
+Add &timezone=Asia%2FSingapore to the end of the open-meteo URL, and show the time the temperature was updated next to it.
+```
+
+### What Claude added
+
+Your code will look different, and that's fine. Here's an example of the kind of thing Claude writes. We wrote it from the [MDN guide to fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and the Open-Meteo docs.
+
+```html title="Example: index.html"
+<div id="weather-box">Loading Singapore's temperature…</div>
+<a href="https://open-meteo.com/">Weather data by Open-Meteo.com</a>
+
+<script>
+  async function showTemperature() {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=1.29&longitude=103.85&current=temperature_2m&timezone=Asia%2FSingapore";
+    const box = document.getElementById("weather-box");
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Response status: ${response.status}`);
+      const data = await response.json();
+      const temp = data.current.temperature_2m;
+      const unit = data.current_units.temperature_2m;
+      box.textContent = `Singapore right now: ${temp}${unit} (updated ${data.current.time.slice(11)})`;
+    } catch (error) {
+      box.textContent = "Couldn't load the weather. Try again later.";
+      console.error(error.message);
+    }
+  }
+  showTemperature();
+</script>
+```
+
+Read it like this:
+
+- **`fetch(url)`** knocks on the door: it sends the request.
+- **`response.ok`** checks the answer isn't an error. `fetch` only fails by itself when there's no connection at all, so the code has to check this.
+- **`response.json()`** turns the answer into data the code can use.
+- **`data.current.temperature_2m`** picks out the number, the same place you found it in [lesson 2](/module-8/what-an-api-is).
+- **`box.textContent = …`** puts it in the box. If anything goes wrong, the box says so instead of staying blank.
+
+### Push it
+
 <Callout kind="tip">
 Remember to link the chat to the correct repo and push the changes. Also make sure that repo is connected to Vercel so that you can see changes. [Module 6](/module-6/connect-to-vercel) shows how to connect it.
 </Callout>
 
+1. **Ask Claude Code to push:**
+
+   ```prompt title="Example: push the change"
+   Commit these changes with a clear message and push them to GitHub.
+   ```
+
+   Working on a branch, as in [Module 7](/module-7/make-your-own-branch)? Open a pull request and merge it, so the change reaches main and your live site.
+2. **Wait about a minute.** Every push to GitHub makes Vercel rebuild your live site automatically.
+
 ## 3. Check it worked
 
-Refresh the page. A real temperature, from a real weather service, that changes every time you reload.
+Refresh the page. A real temperature, from a real weather service.
+
+1. **Open your live link** from Vercel and refresh it.
+
+   You should now see a small box at the top of the page with Singapore's temperature in °C, and the "Weather data by Open-Meteo.com" link under it.
+2. **Compare it** with [the open-meteo link from lesson 2](https://api.open-meteo.com/v1/forecast?latitude=1.29&longitude=103.85&current=temperature_2m). The `temperature_2m` number there should match your box.
+3. **Reload your page.** You'll usually see the same number. That's normal: Open-Meteo's current temperature updates every 15 minutes, not every second. Come back later and it may have changed.
+
+If the box says it couldn't load, or stays empty, look in the Stuck box below.
+
+**Check it worked:** your live site shows Singapore's real temperature in a small box at the top, with the Open-Meteo credit link, and the number matches the open-meteo link.
 
 <StuckBlock>
   <StuckItem question="Claude, GitHub or Vercel asks me to sign up or log in.">
     Access to Claude is set up through a Code for All session or a teacher running one, so you don't sign up for it yourself. GitHub and Vercel: you sign in with a GitHub account, so do those steps in a session, with your teacher's go-ahead. See [how hands-on access works](/access).
   </StuckItem>
   <StuckItem question="My live site doesn't show the temperature.">
-    Link the chat to the correct repo and push the changes. Then make sure that repo is connected to Vercel, so you can see the changes. [Module 6](/module-6/connect-to-vercel) shows how to connect it.
+    Link the chat to the correct repo and push the changes. Then make sure that repo is connected to Vercel, so you can see the changes. [Module 6](/module-6/connect-to-vercel) shows how to connect it. Pushed to a branch? Merge it into main with a pull request first. Then wait a minute and refresh.
   </StuckItem>
   <StuckItem question="The box shows nothing, or an error.">
     Press F12, open the Console and copy the red text, then paste it into Claude with what you expected to see, as in [When it breaks](/module-5/when-it-breaks).
+  </StuckItem>
+  <StuckItem question="The temperature doesn't change when I reload.">
+    That's normal. Open-Meteo's current temperature is updated every 15 minutes, so reloading straight away shows the same number. Check again in 15 minutes or so.
+  </StuckItem>
+  <StuckItem question="The time on my page is 8 hours wrong.">
+    Open-Meteo gives times in GMT unless you ask for a time zone. Use the "Singapore time" example prompt above: it adds `&timezone=Asia%2FSingapore` to the end of the link.
+  </StuckItem>
+  <StuckItem question="The Console says the request failed with status 400.">
+    The link was changed by mistake, and Open-Meteo answered with an error and a reason. Open the link in a new tab to read the reason. Then ask Claude to use the exact link from the prompt above.
+  </StuckItem>
+  <StuckItem question="It says it couldn't load the weather, and the Console mentions the network.">
+    Open [the open-meteo link](https://api.open-meteo.com/v1/forecast?latitude=1.29&longitude=103.85&current=temperature_2m) in a new tab. If that doesn't load either, the problem is your connection or the network you're on, not your code. Try again later or on another network.
+  </StuckItem>
+  <StuckItem question="Do I need an API key or an Open-Meteo account?">
+    No. Open-Meteo's free API needs no account and no key. A key is only for commercial use, like a business paying for it ([Open-Meteo docs](https://open-meteo.com/en/docs)). Just remember the credit link.
   </StuckItem>
 </StuckBlock>
