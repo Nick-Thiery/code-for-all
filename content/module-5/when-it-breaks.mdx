@@ -2,29 +2,96 @@
 title: When it breaks (and it will)
 slug: when-it-breaks
 order: 50
-duration: 10
+duration: 15
 summary: An error is information, not failure. Four steps to find what broke and tell Claude about it.
 requiresAccount: false
 recap:
   - An error is information, not failure. It names the file and the line where things went wrong.
-  - Press F12 and click the Console tab. Red text is your actual error.
+  - "Open the Console: Ctrl+Shift+J, or Cmd+Option+J on a Mac. Red text is your actual error."
   - Give Claude the whole story, then reload and check it yourself.
+  - If it looks wrong but nothing is red, right-click the part and choose Inspect.
 ---
 
 Your site will break at some point. That's normal. Here's what to do when it does.
 
 1. **Read the red. Don't panic.** An error is information, not failure. It names the file and the line where things went wrong.
-2. **Press F12.** Chrome DevTools opens. Click the Console tab: red text is your actual error. This is the first thing real engineers look at. Now it's the first thing you look at.
+2. **Open the Console.** Press Ctrl+Shift+J on Windows or a Chromebook, or Cmd+Option+J on a Mac. Chrome DevTools opens on the Console tab: red text is your actual error. This is the first thing real engineers look at. Now it's the first thing you look at.
 3. **Give Claude the whole story.** Paste the exact error, then say what you clicked and what you expected to happen.
 4. **Reload and check it yourself.** Refresh the page and test the exact thing that broke. If it's still broken, say so and go around again.
 
-DevTools is a set of tools built into Chrome for looking under the bonnet of a web page. The Console is the tab where errors show up. On a Mac, if F12 does nothing, press Option, Command and I together.
+<Term def="a set of tools built into Chrome for looking under the bonnet of a web page.">DevTools</Term> is a set of tools built into Chrome for looking under the bonnet of a web page. The Console is the tab where errors show up.
+
+Think of an error like a teacher marking your homework. A red mark doesn't mean you failed. It points at the exact line to look at again.
 
 <ConsoleDrawing />
 
+## Open the Console
+
+The quickest way is a shortcut that opens the Console straight away. ([Open Chrome DevTools](https://developer.chrome.com/docs/devtools/open))
+
+- **Windows:** Ctrl+Shift+J
+- **Chromebook:** Ctrl+Shift+J
+- **Mac:** Cmd+Option+J
+
+The slides say F12. On Windows, F12 opens DevTools too (on a Mac it's Fn+F12), but it opens on whichever tab you used last, and many Chromebooks have no F12 key. If you use F12, check that the **Console** tab is selected.
+
+No shortcut? Click Chrome's **⋮** menu (top right), then **More Tools**, then **Developer Tools**, then click the **Console** tab.
+
+## Read the error
+
+1. Open the Console, then do the thing that broke again, like clicking the button. The error appears when the problem happens.
+2. Look for red text. Can't see any? Open the **Log Levels** drop-down and make sure **Errors** is ticked. Chrome remembers this filter, so it may have been switched off earlier. ([Chrome: log messages in the Console](https://developer.chrome.com/docs/devtools/console/log))
+3. On the right of the error is a link, like `script.js:12`. That's the file and the line. Click it and Chrome shows you that line of code. ([Chrome: Console reference](https://developer.chrome.com/docs/devtools/console/reference))
+4. To see more detail, click the expand icon next to the error. You don't need to understand it. Claude does.
+
+Ignore the **Understand this error** button if you see one. It uses Google's Gemini, which is only for people aged 18 and over. ([Chrome: console insights](https://developer.chrome.com/docs/devtools/console/understand-messages))
+
+## Copy the error for Claude
+
+- **Copy everything:** right-click in the Console and choose **Copy console**. It copies all the messages.
+- **Copy just one:** select the red text with your mouse, then press Ctrl+C (Cmd+C on a Mac).
+
+Then paste it into Claude Code with the rest of the story: what you clicked, and what you expected.
+
+### Worked example
+
+You click the **Show a fact** button on your site and nothing happens. You open the Console and see:
+
+```console title="Console"
+Uncaught TypeError: Cannot set properties of null (setting 'textContent') at script.js:8
+```
+
+"Null" here means the script went looking for a part of the page that isn't there. ([MDN: What went wrong?](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_went_wrong)) You don't need to know that, though. Here's the kind of message to send Claude. It's only an example:
+
+```prompt title="Example: the whole story"
+When I click the Show a fact button, nothing happens. I expected a fun fact to appear under the button. This is the exact error from the Console:
+Uncaught TypeError: Cannot set properties of null (setting 'textContent') at script.js:8
+```
+
+It has all three parts: the exact error, what you clicked and what you expected.
+
+## Reload and check
+
+After Claude says it's fixed, reload the page so you see the newest version:
+
+- **Reload:** Ctrl+R (Cmd+R on a Mac).
+- **Hard reload,** if the old version keeps showing: Ctrl+Shift+R (Cmd+Shift+R on a Mac).
+
+Then test the exact thing that broke, with the Console still open.
+
+## When it looks wrong but nothing is red
+
+Sometimes nothing is broken, it just looks wrong: a button in the wrong place, or the wrong colour.
+
+1. Right-click the part that looks wrong and choose **Inspect**.
+2. The **Elements** panel opens, with that part selected. The **Styles** tab beside it lists the CSS rules that give it its look. ([Chrome: view and change CSS](https://developer.chrome.com/docs/devtools/css))
+3. Tell Claude which part is wrong, and what you want instead.
+
+**Check it on a phone screen.** In DevTools, click **Toggle device toolbar**. Pick a size from the list, from **Mobile S** (320 pixels wide) to **Laptop L** (1440 pixels). ([Chrome: device mode](https://developer.chrome.com/docs/devtools/device-mode))
+
 ## Practice: the broken sign-up button
 
-In [the last lesson](/module-5/after-hand-off), you asked Claude Code to make the sign-up form really save what people type. Now say you fill in the form, click **Sign up**, and nothing happens. You press F12, click the Console tab and see this in red:
+In [the last lesson](/module-5/after-hand-off), you asked Claude Code to make the sign-up form really save what people type. Now say you fill in the form, click **Sign up**, and nothing happens. You open the Console and see this in red:
 
 ```console title="Console"
 Uncaught TypeError: Cannot read properties of null (reading 'value') at script.js:12
@@ -36,9 +103,35 @@ You don't need to know what it means. Step 3 says what to do with it.
 Your sign-up button does nothing when you click it, and the console shows the error above. Write the message you'd send Claude.
 </PromptPractice>
 
+## Check yourself
+
+<CheckYourself>
+  <Question q="You're on a Mac. Which keys open the Console?">
+    Cmd+Option+J. On Windows or a Chromebook, it's Ctrl+Shift+J.
+  </Question>
+  <Question q="You see script.js:12 on the right of a red error. What does it tell you?">
+    The file (script.js) and the line (12) where things went wrong. Click it to see that line.
+  </Question>
+  <Question q="Claude says it fixed the bug, but your page looks the same. What do you do?">
+    Reload the page, or hard reload with Ctrl+Shift+R (Cmd+Shift+R on a Mac). Then test the exact thing that broke.
+  </Question>
+</CheckYourself>
+
 <StuckBlock>
   <StuckItem question="I can't see any red text in the Console.">
-    Make sure you're on the Console tab, not Elements. Then do the thing that broke again, with the Console open: the error appears when the problem happens.
+    Make sure you're on the Console tab, not Elements. Then do the thing that broke again, with the Console open: the error appears when the problem happens. Still nothing? Open **Log Levels** and check **Errors** is ticked.
+  </StuckItem>
+  <StuckItem question="The shortcut doesn't open anything.">
+    Try Chrome's **⋮** menu → **More Tools** → **Developer Tools**. If that's missing too, your school may have turned DevTools off: on managed devices, that also turns off the shortcuts and menu items. Ask whoever looks after your device, or use another computer in a session.
+  </StuckItem>
+  <StuckItem question="My page is completely blank.">
+    Check you opened the right `index.html`, then look in the Console. One JavaScript error can stop the whole page. If it says "Cross-origin request blocked", open the site with a local server instead (see [lesson 4](/module-5/after-hand-off)).
+  </StuckItem>
+  <StuckItem question="My page has no colours or layout.">
+    The page can't find `styles.css`. Look for a red error naming it. The file name in `index.html` has to match the real file exactly, capitals too: `Styles.css` and `styles.css` are different. Hard reload, then paste the error into Claude.
+  </StuckItem>
+  <StuckItem question="My images don't load.">
+    Check the image is really in your website folder, and that the name matches exactly, including capitals and spaces. Paths in code use forward slashes, like `images/cat.jpg`, even on Windows. Ask Claude Code to copy every image into an images folder and fix the paths.
   </StuckItem>
   <StuckItem question="Claude fixed it, but something else broke.">
     That happens. Go around again: read the new error, paste it into Claude, say what you did and what you expected. Each round gets you closer.

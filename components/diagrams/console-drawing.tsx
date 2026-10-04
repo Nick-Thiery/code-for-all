@@ -11,13 +11,13 @@ const ERROR = "Uncaught TypeError: Cannot read properties of null (reading 'valu
 
 const ALT =
   "Simplified drawing of a browser window. The top half is a web page with a sign-up form and a Sign up button. " +
-  "The bottom half is Chrome DevTools, opened with F12, with tabs Elements, Console and Sources, and Console selected. " +
+  "The bottom half is Chrome DevTools, opened with Ctrl+Shift+J (Cmd+Option+J on a Mac), with tabs Elements, Console and Sources, and Console selected. " +
   `In the Console is one red line: ${ERROR}, and on the right, script.js:12, the file and the line. ` +
-  "Three numbers mark the steps: 1, press F12; 2, click the Console tab; 3, the red text is your error, and it names the file and the line.";
+  "Three numbers mark the steps: 1, open the Console with Ctrl+Shift+J, or Cmd+Option+J on a Mac; 2, check the Console tab is selected; 3, the red text is your error, and it names the file and the line.";
 
 export function ConsoleDrawing() {
   return (
-    <Diagram alt={ALT} caption="Press F12, click Console, read the red. It names the file (script.js) and the line (12). Simplified drawing.">
+    <Diagram alt={ALT} caption="Open the Console, check it's the Console tab, read the red. It names the file (script.js) and the line (12). Simplified drawing.">
       <Window className="mx-auto max-w-[560px]">
         <div className="flex flex-col gap-2 px-4 py-3" aria-hidden="true">
           <Line w="40%" tone="accent" />
@@ -48,8 +48,8 @@ export function ConsoleDrawing() {
       </Window>
       <div className="mx-auto mt-3 flex max-w-[560px] flex-wrap gap-x-5 gap-y-2">
         {[
-          ["Press F12", "DevTools opens under the page."],
-          ["Click Console", "Not Elements: Console."],
+          ["Open the Console", "Ctrl+Shift+J, or Cmd+Option+J on a Mac."],
+          ["Check the tab", "Not Elements: Console."],
           ["Read the red", "It names the file and the line."],
         ].map(([title, what], index) => (
           <span key={title} className="flex items-center gap-2">

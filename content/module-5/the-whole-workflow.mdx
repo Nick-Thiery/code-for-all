@@ -2,11 +2,11 @@
 title: The whole workflow
 slug: the-whole-workflow
 order: 70
-duration: 6
+duration: 15
 summary: "Design, build, deploy: Claude Design makes the look, Claude Code builds it, and localhost or tiiny.host launches it."
 requiresAccount: true
 needs:
-  device: A laptop or Chromebook
+  device: A laptop with Claude Code and the Chrome browser
   access:
     - Claude Design
     - Claude Code
@@ -16,6 +16,7 @@ recap:
   - "Design: use Claude Design to make your website look how you want it, without any code."
   - "Build: hand off your design to Claude Code to build the actual files."
   - "Deploy: launch your final website with localhost or tiiny.host."
+  - Opening index.html straight from your folder isn't localhost. Localhost needs a local server.
 ---
 
 Everything in this module, in three steps. A workflow is the order you do things in.
@@ -24,11 +25,51 @@ Everything in this module, in three steps. A workflow is the order you do things
 
 1. **Design.** Use Claude Design to make your website look like how you want it to without any code. ([Lesson 1](/module-5/design-your-front-end-first))
 2. **Build.** Use Claude Code to build the actual file by handing off the design you made in Claude Design. ([Lessons 2](/module-5/export-your-design) and [4](/module-5/after-hand-off))
-3. **Deploy.** Use <Term def="your own computer, running your website.">localhost</Term> or [tiiny.host](https://tiiny.host/) to launch your final website!
+3. **Deploy.** Use <Term def="your own computer acting as a web server, so you can open your site at an address like localhost:8000. Only you can see it.">localhost</Term> or [tiiny.host](https://tiiny.host/) to launch your final website!
 
 Deploy means put it online, where other people can open it. tiiny.host is a website where you upload your files and get a link. It has a free option, which is all you need.
 
+It's like a school play. First you plan the set and costumes (design). Then you build the set and rehearse (build). Then you open the doors to an audience (deploy). Localhost is the dress rehearsal: only you are watching. tiiny.host is opening night.
+
+### The whole workflow, step by step
+
+Here's every step in this module, in order, with the lesson for each:
+
+1. Describe your site in Claude Design and improve it until you like it. ([Lesson 1](/module-5/design-your-front-end-first))
+2. Make an empty folder, click **Export** → **Handoff to Claude Code**, copy the prompt and paste it into Claude Code in that folder. ([Lesson 2](/module-5/export-your-design))
+3. Tell Claude Code to build, and watch it work. ([Lesson 4](/module-5/after-hand-off))
+4. Open your site in your browser and fix anything that differs from your design. ([Lesson 4](/module-5/after-hand-off))
+5. Make the sign-up form actually work. ([Lesson 4](/module-5/after-hand-off))
+6. When something breaks, open the Console, read the red and give Claude the whole story. ([Lesson 5](/module-5/when-it-breaks))
+7. Launch it on localhost or tiiny.host. (Below.)
+
 <Figure src="/lessons/module-5/tiiny-host-upload.png" alt="tiiny.host's home page, headed 'The simplest way to host & share your work online', with a box for a link name ending in .tiiny.site, tabs for Documents, Images, Code, Paste HTML, More and Examples, and a dashed area reading 'Drag & drop zip or single file here' above an Upload file button." width={989} height={593} caption="tiiny.host, where you can upload your website as a zip file." />
+
+<HandsOn />
+
+## Run it on localhost
+
+This part needs access; see [how hands-on access works](/access).
+
+Double-clicking `index.html` opens your site from the file itself: the address starts with `file://`. That's not localhost. For localhost, something has to run a <Term>local server</Term> on your computer. ([MDN: How do you set up a local testing server?](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/set_up_a_local_testing_server))
+
+1. Ask Claude Code to start one. For example:
+
+   ```prompt title="Example: open it on localhost"
+   Start a local server for this website and tell me the address to open in my browser.
+   ```
+
+   Or, if you have Python, open a terminal in your website folder and run:
+
+   <CommandBlock>{"python3 -m http.server"}</CommandBlock>
+
+2. Open the address in Chrome. With the command above, it's `http://localhost:8000`.
+
+   You should now see your website, with `localhost` in the address bar.
+
+3. **Check it worked.** Click every button and fill in the form with made-up details. Open the Console (Ctrl+Shift+J, or Cmd+Option+J on a Mac): is anything red?
+
+Only you can see your site on localhost. To show someone, screen-record it working, or put it on tiiny.host.
 
 <HandsOn />
 
@@ -44,6 +85,18 @@ Put all my website files into one folder and zip it, with index.html at the top 
 
 Then upload the zip file on tiiny.host, and you get a link.
 
+Step by step:
+
+1. Paste the prompt above into Claude Code and press Enter.
+
+   You should now see a new `.zip` file in your website folder. If you can't find it, ask Claude Code where it put it.
+
+2. Open [tiiny.host](https://tiiny.host/). You should see a box for your link name, ending in `.tiiny.site`, and a dashed area that says "Drag & drop zip or single file here" (see the picture above).
+3. Type a name for your link. Don't use your full name or your school's name: the link is public.
+4. Drag your zip file onto the dashed area, or click **Upload file** and choose it.
+5. Follow the steps on screen. If tiiny.host asks you to make an account, give an email address or pay, stop there. See the Stuck box.
+6. **Check it worked.** Open your link on a different device, like a phone. You should see your website, working, just as on localhost.
+
 <PublishSafely />
 
 <HandsOn />
@@ -56,15 +109,38 @@ This part needs access; see [how hands-on access works](/access).
 Your turn! Take your own website through the whole workflow: design it in Claude Design, hand it off to Claude Code to build, then launch it on localhost or tiiny.host.
 </Callout>
 
+## Check yourself
+
+<CheckYourself>
+  <Question q="You double-click index.html and your site opens. Is it running on localhost?">
+    No. The address starts with file://, so the browser is reading the file straight from your folder. Localhost needs a local server running on your computer.
+  </Question>
+  <Question q="Your friend wants to see your site from their house. Localhost or tiiny.host?">
+    tiiny.host. Only you can see your site on localhost. tiiny.host gives you a link anyone can open.
+  </Question>
+  <Question q="tiiny.host says it can't find index.html in your zip. What's wrong?">
+    index.html is inside another folder in the zip. It has to be at the top level. Ask Claude Code to zip it again with the prompt above.
+  </Question>
+</CheckYourself>
+
 <StuckBlock>
   <StuckItem question="tiiny.host asks me to pay.">
     You don't need to. Use the free option. If you can't find it, or it asks for a card, stop and screen-record your site working on localhost instead, which the Challenge also accepts.
+  </StuckItem>
+  <StuckItem question="tiiny.host asks me to make an account or give my email.">
+    Don't sign up yourself. Ask at a Code for All session, or screen-record your site working on localhost instead, which the Challenge also accepts. See [how hands-on access works](/access).
   </StuckItem>
   <StuckItem question="tiiny.host says it can't find index.html.">
     Your index.html has to be at the top level of the zip, not inside another folder. Ask Claude Code to zip it again with the prompt above.
   </StuckItem>
   <StuckItem question="What's localhost?">
-    Your own computer, running your website. Only you can see it. Ask Claude Code to "open this site on localhost" and it tells you the address to open in your browser.
+    Your own computer, running your website through a local server. Only you can see it. Ask Claude Code to "open this site on localhost" and it tells you the address to open in your browser.
+  </StuckItem>
+  <StuckItem question="The python3 command isn't found.">
+    Python isn't installed on your computer, or has a different name. You don't need it: ask Claude Code to start a local server for you instead (see "Run it on localhost" above).
+  </StuckItem>
+  <StuckItem question="It worked on localhost, but my tiiny.host site looks broken.">
+    Check that the zip has every file: index.html, styles.css, script.js and any images. Ask Claude Code to make the zip again and "include every file the site needs". Then upload the new zip.
   </StuckItem>
   <StuckItem question="Claude Design or Claude Code asks me to sign up or log in.">
     Sign in with the access your Code for All session gives you. You don't sign up or pay for anything yourself. See [how hands-on access works](/access).

@@ -2,16 +2,18 @@
 title: Design your front end first
 slug: design-your-front-end-first
 order: 10
-duration: 5
+duration: 20
 summary: Claude Design builds the visual shell of your site. You describe how it should look, without any code.
 requiresAccount: true
 needs:
-  device: A laptop or Chromebook
+  device: A laptop or Chromebook. The Claude phone app can show a design, but you can't edit one there.
   access:
     - Claude Design
 recap:
   - Claude Design allows you to build the visual shell of your site.
   - You describe how you want it to look, without any code.
+  - Open it from a chat (Output, then Design), from the Artifacts tab, or at claude.ai/design.
+  - A good description gives the goal, the layout, the content and who it's for.
   - "The plan for this module: design it in Claude Design, then let Claude Code build it."
 ---
 
@@ -26,17 +28,27 @@ Claude Design runs in your browser, through your Code for All access. Nothing to
 
 The <Term def="the part of a website people see and use: the words, the layout, the colours and the buttons.">front end</Term> is the part people see. A visual shell is the look of the site before it does anything. Making it actually work comes later, when you hand your design to Claude Code.
 
+You chat with Claude about what you want, and it draws a working design on a <Term def="the big area beside the chat in Claude Design where your design appears. You can click on it, comment on it and move things around.">canvas</Term> beside the chat. ([Get started with Claude Design](https://support.claude.com/en/articles/14604416-get-started-with-claude-design))
+
+### Think of it like building a house
+
+Before anyone builds a house, an architect draws what it will look like. Everyone can see the drawing, point at the bits they want changed, and try ideas. Changing a drawing is quick. Moving a wall after it's built isn't.
+
+Claude Design is the drawing. Claude Code, later in this module, is the builder.
+
 ## See it in action
 
 Watch this introduction to Claude Design before you start your own. On limited data, save it for Wi-Fi.
 
 <VideoEmbed id="t_LBECIQQqs" title="Introducing Claude Design by Anthropic Labs" />
 
+This video is from when Claude Design first came out, in April 2026, as its own website. It now also opens inside Claude, so your screen will look a bit different. The idea is the same: chat on one side, design on the other.
+
 <HandsOn />
 
 ## Start your design
 
-Open Claude Design using the access your Code for All session gives you. This part needs access; see [how hands-on access works](/access).
+This part needs access; see [how hands-on access works](/access).
 
 <Figure src="/lessons/module-5/claude-design-chat-and-design.png" alt="Claude Design with a chat panel on the left, where Claude lists the changes it has made, and a website design on the right: a page for Code For All Singapore headed 'A two-hour build-off for student coders.'" width={1032} height={302} caption="Claude Design: you describe what you want in the chat on the left, and the design appears on the right." />
 
@@ -44,11 +56,115 @@ Open Claude Design using the access your Code for All session gives you. This pa
 Describe how you want your website to look, in plain words. No code needed.
 </Callout>
 
+These steps come from Anthropic's guide, [Get started with Claude Design](https://support.claude.com/en/articles/14604416-get-started-with-claude-design). Claude Design is new and still changing, so a button might look a little different. If it does, look for one that does the same job.
+
+1. Open [Claude](https://claude.ai) in your browser, or the Claude desktop app, and log in with the access your Code for All session gives you.
+
+2. Open Claude Design. There are three ways in. Use whichever you can see:
+
+   - **From a chat:** start a new chat. In the message box, click **Output**, then choose **Design**.
+   - **From the Artifacts tab:** click **Artifacts** in the sidebar, then pick a **Design** template.
+   - **On its own site:** go to [claude.ai/design](https://claude.ai/design). It still works.
+
+   If Claude Design asks you to pick a design system, you can skip it. You don't need one.
+
+3. **Optional: add a picture of a site you like.** A screenshot helps Claude see the style you mean. Only use pictures with no names, faces or email addresses in them.
+
+4. Describe your website. A good description says four things:
+
+   - **The goal:** what the site is for.
+   - **The layout:** what goes where on the page.
+   - **The content:** the actual words, like the name and the headings.
+   - **The audience:** who it's for.
+
+   Here's an example. It's only an example: change it to your own idea.
+
+   ```prompt title="Example: describe your design"
+   Design a one-page website for my school's chess club, called Knight Moves.
+   Goal: get new members to sign up.
+   Layout: a big heading at the top, three short sections about what we do, and a sign-up form at the bottom with a box for a name and a Sign up button.
+   Content: we meet on Tuesdays after school, and beginners are welcome.
+   Audience: students aged 11 to 16.
+   Style: bold and friendly, in dark green and white.
+   ```
+
+   Include a sign-up form, like the one in the example. You'll make it work in [lesson 4](/module-5/after-hand-off).
+
+5. Send it. Claude may ask you some questions back before it starts. Answer them in the chat.
+
+   You should now see your design appear on the canvas, beside the chat.
+
+6. **Check it worked.** Look at the canvas. Can you see your site's name, your headings and the sign-up form? If something's missing, ask for it in the chat. Then leave the design open: in [the next lesson](/module-5/export-your-design) you'll export it.
+
+<Screenshot caption="Opening Claude Design from a chat: Output, then Design, in the message box.">The Claude message box with the Output menu open and Design highlighted, from a neutral account with no names or avatars</Screenshot>
+
+## Improve your design
+
+You don't have to get it right first time. There are four ways to change a design. ([Get started with Claude Design](https://support.claude.com/en/articles/14604416-get-started-with-claude-design))
+
+- **Chat**, for big changes that affect the whole design. Type what you want, like this official example:
+
+  ```prompt title="Example: try other layouts"
+  Show me 2–3 alternative layouts for this page.
+  ```
+
+- **Inline comments**, for one part. Click directly on a part of the canvas, like a button, and type the change you want for just that part.
+- **Edit directly.** Drag, resize and line things up on the canvas yourself.
+- **Sliders.** Claude can add sliders for things like spacing and colour, so you can try settings without typing. ([Claude Design](https://claude.com/product/design))
+
+Ask for one change at a time, so you can see what each one did. Here are two more examples of changes you might ask for:
+
+```prompt title="Example: one small change"
+Make the Sign up button bigger and change it to orange.
+```
+
+```prompt title="Example: fix the wording"
+Change the main heading to "Learn chess with us" and keep everything else the same.
+```
+
+### Before a big change, save what you have
+
+Claude Design doesn't have version history yet, so there's no undo button for a whole design. Before you try something very different, tell Claude:
+
+```prompt title="Save it first"
+Save what we have and try a completely different approach.
+```
+
+### Find it again
+
+Your design is private to you. Nobody else can see it unless you click **Share**, and you don't need to share it for this module. To open it again later, click the **Artifacts** tab in Claude's sidebar: it lists the things you've made. ([What are artifacts?](https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them))
+
+## Check yourself
+
+<CheckYourself>
+  <Question q="You want the whole page to feel calmer and more grown-up. Chat, or an inline comment?">
+    Chat. It's for big changes that affect the whole design. An inline comment is for one part, like a single button.
+  </Question>
+  <Question q="Your friend describes their site in six words: make a website for my club. What four things should they add?">
+    The goal (what the site is for), the layout (what goes where), the content (the actual words) and the audience (who it's for).
+  </Question>
+  <Question q="You want to try a totally different look, but you might want this one back. What do you type first?">
+    "Save what we have and try a completely different approach." Claude Design has no version history yet, so save before a big change.
+  </Question>
+</CheckYourself>
+
 <StuckBlock>
   <StuckItem question="Claude Design asks me to sign up or log in.">
     Don't create your own account. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access). You can keep reading the lessons without it.
   </StuckItem>
   <StuckItem question="I don't know what to design.">
     Use the site you built in Module 2, or your About me site from Module 1. Describe the same site, and see how Claude Design's version differs from Lovable's.
+  </StuckItem>
+  <StuckItem question="I can't find Output or Design in the message box.">
+    Try another way in: click **Artifacts** in the sidebar and pick a **Design** template, or go to [claude.ai/design](https://claude.ai/design). Claude Design is new and moves around, so one way may show before another.
+  </StuckItem>
+  <StuckItem question="I'm on a phone and can't change my design.">
+    That's expected. The Claude app for iPhone and Android can show a design, but editing it needs Claude on the web or the desktop app. Use a laptop or Chromebook. No laptop? See [which device do you have?](/access#devices)
+  </StuckItem>
+  <StuckItem question="Claude ignored my inline comment.">
+    Copy what you wrote and paste it into the chat instead, saying which part you mean, like "the Sign up button at the bottom". Anthropic's guide suggests the same thing.
+  </StuckItem>
+  <StuckItem question="A change made my design worse, and I want the old one back.">
+    There's no version history yet, so you can't undo a whole design. Tell Claude what to put back, as exactly as you can, like "Put the heading back to dark green". Next time, type "Save what we have and try a completely different approach." before a big change.
   </StuckItem>
 </StuckBlock>
