@@ -2,13 +2,13 @@
 title: What is Claude Code?
 slug: what-is-claude-code
 order: 10
-duration: 6
+duration: 8
 summary: Claude Code is an AI agent that builds on your own computer. Here's what that means, and where you can use it.
 requiresAccount: false
 recap:
   - Claude Code is an agent. It reads your whole project, runs commands and fixes its own mistakes, instead of just suggesting the next line.
-  - You describe the features you want in plain words, and it builds them, without you checking every line of code yourself.
-  - "It works in three places: the terminal, the VS Code extension and the desktop app."
+  - You describe the features you want in plain words, and it builds them. You don't have to check every line of code yourself, but you always test what it made.
+  - "It works in three places: the terminal, the VS Code extension and the desktop app. On a Chromebook, there's Claude Code on the web."
 ---
 
 In Modules 1 and 2 you built in the browser with Lovable. Now you'll build on your own computer, with an AI agent called Claude Code.
@@ -31,6 +31,26 @@ Some coding tools only autocomplete: they guess the next bit of code while you t
 
 <ChatVsAgentDiagram />
 
+### An everyday comparison
+
+Imagine your bike has a flat tyre.
+
+- **A chat is like phoning a friend who knows about bikes.** They tell you what to do. Then you find the tools and do every step yourself.
+- **An agent is like that friend coming round.** They find the puncture, fix it and pump the tyre up. If the patch doesn't hold, they try again.
+
+Either way, you still ride the bike round the block before you trust it. That's your job with Claude Code too.
+
+### A worked example
+
+Say you have a web page and you type: "Add a Sign up button to my page." Here's what an agent like Claude Code does, as in the drawing above:
+
+1. **It looks around.** It reads the files in your project folder to find the page.
+2. **It makes the change.** It adds the button to the page file, then styles it in the style file.
+3. **It checks its work.** It runs the page and spots an error.
+4. **It fixes the error** and tells you what it changed.
+
+A chat would stop after step 1 with "Here's how. Add this code…", and you'd do the rest.
+
 ## For product designers
 
 You don't have to be an engineer to build with Claude Code.
@@ -39,6 +59,8 @@ You don't have to be an engineer to build with Claude Code.
 - It turns them into a working prototype, fast. A prototype is a first working version.
 - It can build working parts of an app, and put complete interactive projects online.
 - You don't have to check every line of code yourself.
+
+That last point needs one rule added: **always test what it made.** Open it, click every button, and try it the way a real person would. The official guide to working with Claude Code puts it this way: "If you can't verify it, don't ship it." ([Claude Code best practices](https://code.claude.com/docs/en/best-practices))
 
 It's the same idea as <Term>vibe coding</Term> from [Module 1](/module-1/what-is-vibe-coding): you describe it, the AI builds it. The difference is that Claude Code works with the files on your own computer.
 
@@ -50,4 +72,18 @@ Claude Code works in three places:
 - **The VS Code extension.** <Term def="Visual Studio Code: an app for writing and editing code.">VS Code</Term> has an official Claude Code extension. It makes changes across several files at once and keeps track of what changed. The extension comes with its own copy of Claude Code for its chat panel. You only need the terminal version as well if you want to type `claude` in VS Code's built-in terminal.
 - **The desktop app.** Claude Code in a normal app window, so you don't need the terminal. It's what you'll install in [lesson 3](/module-3/install-claude-code).
 
-On a Chromebook, or a school device that blocks installs, there's a fourth way: Claude Code on the web, which runs in your browser. See [Which device do you have?](/access#devices)
+They're the same Claude Code underneath. Pick one and stick with it for now. If you're not sure, use the desktop app.
+
+On a Chromebook, or a school device that blocks installs, there's a fourth way: Claude Code on the web, which runs in your browser. It needs a GitHub repository, which you set up in [Module 6](/module-6), and it works a little differently. [Lesson 3](/module-3/install-claude-code) explains. See [Which device do you have?](/access#devices)
+
+<CheckYourself>
+  <Question q="A friend says Claude Code just guesses the next line of code while you type. What would you tell them?">
+    That's autocomplete. Claude Code is an agent: it reads your whole project, runs commands, and fixes its own mistakes when something fails.
+  </Question>
+  <Question q="Claude Code says it has finished your page. What should you do before you show it to anyone?">
+    Test it yourself. Open it, click everything and try it the way a real person would. If you can't check that it works, it isn't finished.
+  </Question>
+  <Question q="You have a school Chromebook that won't install apps. Can you still use Claude Code?">
+    Yes: Claude Code on the web runs in the browser. It needs a GitHub repository, from Module 6. Or use a laptop in a session.
+  </Question>
+</CheckYourself>
