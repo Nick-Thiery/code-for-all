@@ -2,13 +2,13 @@
 title: What Claude Code actually does
 slug: what-claude-code-actually-does
 order: 30
-duration: 6
+duration: 8
 summary: Claude Code is an agent, not a chatbot. It works on the files on your computer, on its own.
 requiresAccount: false
 recap:
   - Claude Code is an agent, not a chatbot. It works directly on the files on your computer.
-  - It splits your design into index.html, styles.css and script.js, and works on its own.
-  - Errors are normal. If you hit an API limit error, just type "continue".
+  - Ask it to split your design into index.html, styles.css and script.js, and it works on its own.
+  - Errors are normal. At a usage limit, keep Claude Code open and wait for the reset time. Never run /usage-credits.
 ---
 
 You met Claude Code in [Module 3](/module-3). Here's what it does with your design once you hand it off.
@@ -19,18 +19,65 @@ Claude Code is an <Term>agent</Term>, not a chatbot. Instead of just replying in
 
 A chatbot tells you what to change. An agent makes the change.
 
+Think of a broken bike. A chatbot is a friend on the phone telling you which bolt to tighten: you still do the work. An agent is a mechanic who takes the bike, fixes it and hands it back.
+
 ## It splits your design into files
 
 It splits your single design into proper, separate files: `index.html`, `styles.css` and `script.js`. You'll see what each one is for in [lesson 6](/module-5/the-three-files).
+
+The handoff itself doesn't split anything. It only brings in your design files, your chat and a README ([lesson 2](/module-5/export-your-design)). The split happens when you ask for it, and the "Tell it to build" prompt in [lesson 4](/module-5/after-hand-off) does exactly that. Claude Code sometimes splits a page this way without being asked, as in the picture below, but asking makes sure.
 
 ## It works on its own
 
 It works on its own: running commands, reading files, and deciding what to do next without you guiding each step.
 
+### What that looks like
+
+Here's the kind of thing you'll see when you ask it to build your design. Every build is a little different.
+
+1. You type an instruction, like "Tell it to build" in lesson 4.
+2. Claude Code reads the design files to see what you made.
+3. It says what it plans to do, like splitting the design into three files.
+4. It makes the files, one after another, and shows each one as it goes.
+5. When it's done, it stops and waits for your next instruction.
+
+It might stop and ask you before it makes a file or runs a command. Whether it asks depends on its permission mode. In **Manual** mode, it "stops and asks you before most actions that edit files, run shell commands, or reach the network". ([Choose a permission mode](https://code.claude.com/docs/en/permission-modes)) Read what it wants to do before you say yes.
+
 ## Errors are normal
 
-Errors are normal and not a sign you broke something. If you hit an API limit error, just type `continue` and it picks up exactly where it left off.
+Errors are normal and not a sign you broke something. When something on your site goes wrong, [lesson 5](/module-5/when-it-breaks) shows you how to find the error and tell Claude about it.
 
-An API limit error means Claude Code has used up its allowance for now. It's not a bill, and you never pay anything. It comes back after a short wait.
+### When you hit a usage limit
 
-<Figure src="/lessons/module-5/claude-code-api-limit-continue.png" alt="A Claude Code chat. After the prompt 'reconstruct the website fully from the html provided and put it all in the folder', Claude says 'I'll split this single HTML file into a proper website structure: index.html, styles.css, and script.js.' and creates the files. A red API Error box follows, reading 'You're out of extra usage · resets 10:20pm (Asia/Singapore)', and then the message 'continue'." width={686} height={337} caption="Claude Code splitting a design into index.html, styles.css and script.js. When it hits an API limit error, you type continue." />
+A <Term def="the amount of Claude Code you can use in a set time. When it runs out, Claude Code stops until it resets.">usage limit</Term> means Claude Code has used up its allowance for now. It's not a bill, and you never pay anything. The message tells you when it comes back. For example: ([Claude Code docs: errors](https://code.claude.com/docs/en/errors))
+
+```console title="Claude Code"
+You've hit your session limit · resets 3:45pm
+```
+
+Here's what to do:
+
+1. **Leave Claude Code open.** Don't close the window or the terminal.
+2. **Wait for the time in the message.** Claude Code won't do anything until then, however many times you ask. The wait can be a few hours. A weekly limit can take days.
+3. **Let it carry on by itself.** In the terminal you'll see a line like `Continuing automatically at 3:45pm · esc to cancel`. Don't press Esc: that cancels it. When the limit resets, Claude Code picks the task up where it stopped. ([Wait for a usage limit to reset](https://code.claude.com/docs/en/interactive-mode#wait-for-a-usage-limit-to-reset)) In the desktop app, tick **Auto-continue when limits reset** on the message, if you see it.
+4. **If it doesn't carry on**, type `continue` and press Enter, but only after the reset time.
+
+<Callout kind="headsup">
+**Never run `/usage-credits`**, and don't pick any option that adds usage credits or upgrades a plan. They buy extra usage with real money. Waiting is free.
+</Callout>
+
+<Figure src="/lessons/module-5/claude-code-api-limit-continue.png" alt="A Claude Code chat. After the prompt 'reconstruct the website fully from the html provided and put it all in the folder', Claude says 'I'll split this single HTML file into a proper website structure: index.html, styles.css, and script.js.' and creates the files. A red API Error box follows, reading 'You're out of extra usage · resets 10:20pm (Asia/Singapore)', and then the message 'continue'." width={686} height={337} caption="Claude Code splitting a design into index.html, styles.css and script.js, then stopping at a usage limit. The red message says when it resets. Typing continue only works after that time." />
+
+## Check yourself
+
+<CheckYourself>
+  <Question q="You ask a chatbot and Claude Code to change your heading colour. What does each one do?">
+    The chatbot tells you what to change, and you edit the file yourself. Claude Code, an agent, opens the file and makes the change.
+  </Question>
+  <Question q="You pasted the handoff prompt. Does Claude Code now have index.html, styles.css and script.js?">
+    Not yet. The handoff brings in your design files, your chat and a README. The three files come when you tell it to build and ask for the split, as in lesson 4.
+  </Question>
+  <Question q="Claude Code says: You've hit your session limit · resets 4:30pm. It's 2pm. What do you do?">
+    Leave Claude Code open and wait. At 4:30pm it carries on by itself. If it doesn't, type continue then. Never run /usage-credits: that buys extra usage.
+  </Question>
+</CheckYourself>

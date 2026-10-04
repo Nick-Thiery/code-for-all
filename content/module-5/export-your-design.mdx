@@ -2,47 +2,129 @@
 title: Export your design
 slug: export-your-design
 order: 20
-duration: 5
+duration: 15
 summary: The Handoff button gives you a prompt that brings your design into Claude Code. Find it before you start building.
 requiresAccount: true
 needs:
-  device: A laptop or Chromebook
+  device: A laptop with Claude Code on it. On a Chromebook, see the Stuck box at the end.
   access:
     - Claude Design
     - Claude Code
   before:
     - "The design you started in [lesson 1](/module-5/design-your-front-end-first)"
     - "Claude Code, installed in [Module 3](/module-3/install-claude-code), or Claude Code on the web"
+    - A new, empty folder for your website (step 1 below shows how)
 recap:
-  - When your design is done, open the Export menu and find "Handoff to Claude Code…".
+  - When your design is done, click Export in the top right and choose Handoff to Claude Code.
   - "It gives you a prompt to copy: open Claude Code in your project folder, paste it in, and Claude Code fetches your design."
   - Locate this button before you start building. It's easy to miss in the menu.
+  - If the handoff doesn't work, download the design as a .zip or standalone HTML and put it in your folder instead.
 ---
 
 Claude Design makes your site look right. Claude Code makes it work. The handoff is how your design gets from one to the other.
+
+## What the handoff sends
+
+The handoff packs up three things from your design: the design files, your chat with Claude, and a README, a note telling Claude Code how to read the design. It gives you a <Term>prompt</Term> with a link to that pack. When you paste the prompt into Claude Code, Claude Code fetches the pack. ([Using Claude Design for prototypes and UX](https://claude.com/resources/tutorials/using-claude-design-for-prototypes-and-ux))
+
+It's like handing a builder the architect's drawings plus the notes from your meetings. The builder has everything they need, but they haven't started building yet. You'll tell Claude Code to start in [lesson 4](/module-5/after-hand-off).
 
 <HandsOn />
 
 ## Hand off your design
 
-- When your design is done, open the **Export** menu.
-- Find **"Handoff to Claude Code…"** in the export options. This is the bridge that connects the two tools.
-- It gives you a <Term>prompt</Term> to copy. Open Claude Code in your project folder and paste the prompt in. Claude Code then fetches your design, ready to turn it into a real, working site.
-
 This part needs access; see [how hands-on access works](/access).
 
-<Figure src="/lessons/module-5/handoff-dialog.png" alt="The Hand off to Claude Code window, with Local agent selected, the design file listed, an instructions box and a Copy prompt button." width={1166} height={594} caption="The Hand off to Claude Code window. Copy prompt copies the prompt you paste into Claude Code." />
+- When your design is done, open the **Export** menu.
+- Find **Handoff to Claude Code** in the export options. This is the bridge that connects the two tools.
+- It gives you a prompt to copy. Open Claude Code in your project folder and paste the prompt in. Claude Code then fetches your design, ready to turn it into a real, working site.
 
 <Callout kind="headsup">
 Locate this button *before* you start building. You'll need it, and it's easy to miss in the menu.
 </Callout>
 
+Here's how, step by step. The export steps come from Anthropic's guide, [Get started with Claude Design](https://support.claude.com/en/articles/14604416-get-started-with-claude-design).
+
+### 1. Make a folder for your website
+
+Keep all the files for one website in one folder. Give it a name in lowercase letters with no spaces, like `chess-club-site`. Spaces and capitals in names cause problems later. ([MDN: Dealing with files](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Dealing_with_files))
+
+1. Open your files: File Explorer on Windows, or Finder on a Mac.
+2. Make a new folder somewhere easy to find, like Documents, and name it. For example: `chess-club-site`.
+3. Leave it empty. Claude Code will fill it.
+
+### 2. Copy the handoff prompt
+
+1. Open your finished design in Claude Design.
+2. Click **Export**, in the top right corner.
+3. Choose **Handoff to Claude Code**. Anthropic's guide says it has two choices: **Send to local coding agent**, for Claude Code on your own computer, and **Send to Claude Code Web**. Pick the one for your own computer.
+
+   You should now see a window called **Hand off to Claude Code**, with two tabs at the top: **Local agent** and **Web session**. Keep **Local agent** selected.
+
+   If your menu looks different, look for the option that mentions Claude Code and your computer, or "local".
+
+4. **Optional:** there's a box called **Add instructions (optional)**. You can type a note for Claude Code there. For example:
+
+   ```prompt title="Example: an instruction for Claude Code"
+   Use plain HTML, CSS and JavaScript.
+   ```
+
+5. Click **Copy prompt**. The window says "Open Claude Code and paste in this prompt."
+
+<Figure src="/lessons/module-5/handoff-dialog.png" alt="The Hand off to Claude Code window, with Local agent selected, the design file listed, an instructions box and a Copy prompt button." width={1166} height={594} caption="The Hand off to Claude Code window. Copy prompt copies the prompt you paste into Claude Code." />
+
+### 3. Paste it into Claude Code
+
+1. Open Claude Code in your new folder, the way you did in [Module 3](/module-3/install-claude-code):
+   - **Desktop app:** click the **Code** tab, select **Local**, click **Select folder** and choose your website folder.
+   - **Terminal:** open a terminal in your website folder and type `claude`, then press Enter.
+2. Click in the message box and paste the prompt: Ctrl+V (Cmd+V on a Mac).
+3. Press Enter.
+
+   You should now see Claude Code start to fetch your design.
+
+4. Claude Code may stop and ask before it does something, like reaching the internet or making a file. That depends on its <Term def="a Claude Code setting that decides which actions it takes without asking you first.">permission mode</Term>. ([Choose a permission mode](https://code.claude.com/docs/en/permission-modes)) Read what it wants to do. If it's getting your design or working in your website folder, allow it. If you're not sure, choose no and ask a question instead.
+
+5. **Check it worked.** Ask Claude Code what it got:
+
+   ```prompt title="Example: check the handoff"
+   What did you get from the handoff? List the files and describe the design in one sentence.
+   ```
+
+   You should see it describe your design. If it does, the handoff worked. Stop here: building is [lesson 4](/module-5/after-hand-off).
+
+<Screenshot caption="Claude Design's Export menu, open, with Handoff to Claude Code in the list.">The Export menu in the top right of Claude Design, open, showing Download as .zip, Export as standalone HTML and Handoff to Claude Code, from a neutral account with no names or avatars</Screenshot>
+
+## If the handoff doesn't work: download it instead
+
+The Export menu has other options too. Two of them give you your design as files you can put in your folder yourself:
+
+- **Download as .zip**: your design as a zip file.
+- **Export as standalone HTML**: your design as one web page file.
+
+1. Click **Export**, then one of those two options.
+2. Move the file from your Downloads folder into your website folder.
+3. In Claude Code, tell it the file's name. For example:
+
+   ```prompt title="Example: use a downloaded design"
+   The file chess-club-design.html in this folder is my design from Claude Design. Use it as the design for my website.
+   ```
+
 <StuckBlock>
-  <StuckItem question="I can't find Handoff to Claude Code… in the Export menu.">
-    It's under **Export** (checked September 2026). When these lessons were first taught it was in the **Share** menu, so if Claude Design has changed again, look there too.
+  <StuckItem question="I can't find Handoff to Claude Code in the Export menu.">
+    **Export** is in the top right corner of Claude Design, says Anthropic's guide (checked October 2026). When these lessons were first taught, the handoff was in the **Share** menu, so if Claude Design has changed again, look there too. Or use **Download as .zip** or **Export as standalone HTML** instead (see "If the handoff doesn't work" above).
   </StuckItem>
   <StuckItem question="Claude Code says it can't reach the design.">
-    There are two ways to fix it. Connect Claude Code to Claude Design once: run the command Claude Code suggests, then type `/design-login`, then restart Claude Code and paste the prompt again. Or, in the same menu, choose **Project archive** ("Every project file, zipped"; older versions: **Download project as .zip**), put the files in your project folder, and tell Claude Code where they are.
+    First, copy the prompt again with **Copy prompt** and paste the whole thing, so no part of the link is missing. If it still can't, use the other way: **Export** → **Download as .zip** or **Export as standalone HTML**, put the file in your website folder, and tell Claude Code its name.
+  </StuckItem>
+  <StuckItem question="I pasted, but nothing appeared in the message box.">
+    The prompt wasn't copied. Go back to the **Hand off to Claude Code** window, click **Copy prompt** again, then click in Claude Code's message box and press Ctrl+V (Cmd+V on a Mac).
+  </StuckItem>
+  <StuckItem question="I opened Claude Code in the wrong folder.">
+    Claude Code works in the folder you opened it in. Close it, open it again in your website folder, and paste the prompt again.
+  </StuckItem>
+  <StuckItem question="I'm on a Chromebook, or I can't install Claude Code.">
+    Claude Code on the web runs in the cloud, so there's nothing to install, but it works on a GitHub repository, which you set up in [Module 6](/module-6). Until then, use a laptop in a session. See [which device do you have?](/access#devices)
   </StuckItem>
   <StuckItem question="Claude Design asks me to sign up or log in.">
     Don't create your own account. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access).

@@ -44,7 +44,7 @@ questions:
     explanation: "A sign-up form can look finished and still do nothing with what people type. That's why the last step is to make it actually work."
     lesson: after-hand-off
 
-  - question: "You click Sign up and nothing happens. You press F12 and see red text in the Console. What do you send Claude?"
+  - question: "You click Sign up and nothing happens. You open the Console and see red text. What do you send Claude?"
     options:
       - "The exact error, plus what you clicked and what you expected to happen"
       - "\"My sign-up button is broken, please fix it\", without the error"

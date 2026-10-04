@@ -2,13 +2,14 @@
 title: The three files
 slug: the-three-files
 order: 60
-duration: 6
+duration: 10
 summary: Claude Code splits your site into three files. Each one has its own job, so you know where to look.
 requiresAccount: false
 recap:
   - "index.html: the words and the structure."
   - "styles.css: the look, and how it changes on a phone versus a laptop."
   - "script.js: the behaviour, what happens when somebody clicks, types or hits submit."
+  - index.html links to the other two by their file names, so the names have to match exactly.
 ---
 
 When Claude Code builds your site, it splits it into three files: `index.html`, `styles.css` and `script.js`. Each one has its own job. Know which is which, and you'll know where to look when you want to change something.
@@ -27,6 +28,59 @@ The look: colours, fonts, spacing, and how it changes on a phone versus a laptop
 
 The behaviour: what happens when somebody clicks, types, or hits submit.
 
+## Three languages, three jobs
+
+Each file is written in a different language. MDN, a guide to the web for developers, explains them like this: ([MDN: What is JavaScript?](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_is_JavaScript))
+
+- **HTML** is "the markup language that we use to structure and give meaning to our web content".
+- **CSS** is "a language of style rules that we use to apply styling to our HTML content".
+- **JavaScript** "enables you to create dynamically updating content": things that change while you use the page.
+
+Think of a house. `index.html` is the walls and rooms. `styles.css` is the paint and the furniture. `script.js` is the wiring: press a switch and a light comes on.
+
+## Worked example: one button, three files
+
+Here's a small example of how one Sign up button might look in each file. Your files will be longer and different, but the idea is the same.
+
+The words and the structure, in `index.html`:
+
+```html title="index.html"
+<link rel="stylesheet" href="styles.css">
+<script defer src="script.js"></script>
+
+<h1>Join the club</h1>
+<button id="signup">Sign up</button>
+```
+
+The look, in `styles.css`:
+
+```css title="styles.css"
+#signup {
+  background: orange;
+  font-size: 20px;
+}
+```
+
+The behaviour, in `script.js`:
+
+```js title="script.js"
+document.querySelector("#signup").addEventListener("click", () => {
+  alert("Thanks for signing up!");
+});
+```
+
+Look at the first two lines of `index.html`. That's how the three files find each other: `index.html` names `styles.css` and `script.js`. If a name doesn't match the real file exactly, capitals included, the page loses its look or its behaviour.
+
+## Look inside your own files
+
+- **In the Claude Code desktop app:** click a file name in the chat. `styles.css` and `script.js` open in the file pane. `index.html` opens in the **Browser** pane, as a web page. ([Claude Code desktop](https://code.claude.com/docs/en/desktop))
+- **Anywhere:** open the file in a code editor like VS Code, from [Module 3](/module-3/what-is-claude-code).
+- **Ask Claude Code.** For example:
+
+  ```prompt title="Example: explain a line"
+  Explain line 12 of script.js in simple words. What does it do on my page?
+  ```
+
 ## Check yourself
 
 Before you move on, answer these.
@@ -43,5 +97,8 @@ Before you move on, answer these.
   </Question>
   <Question q="Point at one line you didn't write and say what it does.">
     There's no single right answer: it depends on your own files. Open one, point at a line Claude wrote, and say what it does. The file it's in is a clue. `index.html` is the words and structure, `styles.css` is the look, and `script.js` is the behaviour.
+  </Question>
+  <Question q="You rename styles.css to style.css, and your page loses all its colours. Why?">
+    `index.html` still asks for `styles.css`, which isn't there any more. The name in `index.html` has to match the real file exactly. Rename it back, or ask Claude Code to fix the link.
   </Question>
 </CheckYourself>
