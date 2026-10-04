@@ -2,16 +2,17 @@
 title: "Solo sprint: build your first draft"
 slug: solo-sprint
 order: 20
-duration: 12
+duration: 30
 summary: Write a detailed prompt for the site you picked, paste it into Lovable, and save your prompt for later.
 requiresAccount: true
 needs:
   device: A laptop or Chromebook
   access:
-    - Lovable
+    - Lovable, with enough credits for one full build
   before:
     - "The site you picked in [Today's task](/module-2/todays-task)"
     - "The strong prompt from [Module 1](/module-1/the-art-of-prompting), as your model"
+    - "How to start a project in Lovable, from [Meet Lovable](/module-1/meet-lovable)"
 recap:
   - Draft a detailed prompt that describes your site and its layout.
   - Paste it into Lovable to create your website.
@@ -23,6 +24,8 @@ Time to build a first draft of the site you picked in [Today's task](/module-2/t
 A sprint is a short burst of work. In the original class, this one was 20 minutes. Take as long as you need.
 
 <SprintTimelineDiagram />
+
+There are three steps: write your prompt, paste it into Lovable, then save your prompt. Lovable changes often, so a button might look a little different from what's described here. If it does, look for one that does the same job.
 
 <HandsOn />
 
@@ -38,11 +41,149 @@ This part needs access; see [how hands-on access works](/access).
 **Crucial:** Copy-paste and save your exact prompt text into a safe notes file for later edits.
 </Callout>
 
-You can save it here too. It stays on this device, and the next two lessons show it back to you.
+The rest of this lesson takes you through each step.
+
+## Step 1: Write your prompt
+
+Open a notes app or a document on your device, and write your prompt there. That way it's already saved somewhere safe.
+
+Use the seven parts of the strong prompt from Module 1, one after another:
+
+- **Role:** what kind of expert Lovable should be. For example, "an expert web designer".
+- **Goal:** what to build, and its name.
+- **Target audience:** who will use it.
+- **Core pages:** every page, and what goes on each one.
+- **Design style:** how it should look, in real words.
+- **Output required:** what you want back. For Lovable, a working website.
+- **Key features:** the must-haves, like working on a phone.
+
+A few tips from Lovable's own [prompting guide](https://docs.lovable.dev/prompting/prompting-one):
+
+- **Describe the look with style words**, like "playful", "minimal" or "bold". "Bold, saturated colours" tells Lovable more than "colourful".
+- **Ask for real words**, not placeholder text. A quiz needs real questions, a news site real headlines.
+- **Say "No login or database yet."** Lovable's own starter prompt ends with that line: there's less to go wrong. ([Lovable's Getting started guide](https://docs.lovable.dev/introduction/getting-started))
+- **Leave out personal details.** No full names, school, address, phone number or photos of you.
+
+### Example prompts
+
+Here's one example prompt for each site. They're examples only: use one as a model, but make your own with your own ideas. Copying one word for word won't teach you much.
+
+```prompt title="Example: personality quiz"
+Role: You are an expert web designer who makes fun quiz websites.
+Goal: Create a personality quiz website called "Which noodle are you?". It has five questions with four answers each, and six possible results.
+Target audience: Teenagers who want a quick, funny quiz to share with friends.
+Core pages:
+1. Start page (the quiz name, one line about it and a big Start button)
+2. Question pages (one question at a time, four answer buttons and a progress bar)
+3. Results page (which noodle you are, an emoji, a short funny description and a Try again button)
+Design style:
+1. Playful and bright
+2. Cream background with one orange accent colour
+3. Big rounded buttons and friendly headings
+Output required: A working website I can open and edit.
+Key features:
+1. Works well on a phone
+2. Every answer counts towards a result
+3. Real questions and results, not placeholder text
+4. No login or database yet
+```
+
+```prompt title="Example: news website"
+Role: You are an expert designer of news websites.
+Goal: Create a news website called "The Weekly Byte" with short articles about science and technology.
+Target audience: Students aged 13 to 16 who are curious about science but don't like long articles.
+Core pages:
+1. Home page (the top story in a big card, then the six latest stories)
+2. Story page (headline, date, a picture, the article and three related stories)
+3. Topic pages for Space, Games, Gadgets and Nature
+4. About page (what the site is for)
+Design style:
+1. Clean and bold, like a magazine
+2. White background, black headings and one bright blue accent
+3. Big headlines that are easy to scan
+Output required: A working website I can open and edit.
+Key features:
+1. Works well on a phone
+2. A menu to switch between topics
+3. Six short example articles, each labelled "Example story"
+4. No login or database yet
+```
+
+```prompt title="Example: online store"
+Role: You are an expert designer of online shops.
+Goal: Create an online store for a made-up stationery brand called "Inkwell" that sells notebooks, pens and stickers.
+Target audience: Students who like nice stationery and want to find a gift.
+Core pages:
+1. Home page (a big banner, three best-selling products and a Shop now button)
+2. Shop page (twelve products as cards with a picture, a name and a price, and filters for Notebooks, Pens and Stickers)
+3. Product page (a bigger picture, a description, the price and an Add to basket button)
+4. Basket page (the items, the total and a Checkout button)
+Design style:
+1. Calm and minimal
+2. Soft green and white, with dark grey text
+3. Rounded cards with lots of space
+Output required: A working website I can open and edit.
+Key features:
+1. Works well on a phone
+2. The basket adds up the total
+3. Checkout only shows a thank-you message: no real payments
+4. No login or database yet
+```
+
+The news example asks for "Example story" labels because Lovable will make the articles up. Made-up news shouldn't look real.
+
+**Check your prompt:** does it say who the site is for, list every page and describe the look? If so, you're ready.
+
+## Step 2: Paste it into Lovable
+
+These steps come from Lovable's [Getting started guide](https://docs.lovable.dev/introduction/getting-started).
+
+1. Copy your whole prompt: select it, then press Ctrl+C (Cmd+C on a Mac).
+2. Open [Lovable](https://lovable.dev) and log in with the access your Code for All session gives you.
+
+   You should now see the dashboard. In the middle is a big box for your prompt. It says "Ask Lovable to create…". If you see one of your projects instead, click the menu icon at the top left to get back to the dashboard.
+
+3. Check the <Term def="the menu by Lovable's prompt box that picks Build, Chat or Plan. Build is the one that makes things.">mode picker</Term> beside the send button. It should say **Build**.
+
+   If it says **Chat** or **Plan**, click it and choose **Build**. Chat only talks about your idea, and Plan writes a plan first. Lovable remembers the last mode you picked in that browser, so check it each time. ([Lovable's guide to the dashboard](https://docs.lovable.dev/introduction/dashboard-overview))
+
+4. Click in the box and paste your prompt: Ctrl+V (Cmd+V on a Mac). Then click the send button.
+5. Pick a look. Lovable may show you **three design directions** side by side, or ask a few questions about fonts, colours and layout. Click the one closest to your design style, then click **Submit**.
+
+   Your prompt already describes the look, so Lovable may skip this and start building straight away. Both are fine. Picking a look doesn't cost anything extra. ([Lovable's guide to design directions](https://docs.lovable.dev/features/design-guidance))
+
+   <Screenshot caption="Lovable's three design directions for a first prompt, side by side.">Lovable showing three design directions for a quiz website, with a Describe changes box and a Submit button, from a neutral account with no names or avatars</Screenshot>
+
+6. Wait while it builds. The first version takes a few minutes, and you can watch it take shape.
+
+   If Lovable stops to ask you a question, pick an answer or skip it.
+
+7. You should now see the editor: the chat on the left and your new site, the <Term def="the live version of your website in Lovable's editor. It changes as Lovable builds.">preview</Term>, on the right.
+
+   There's no save button. Lovable saves every change as a version for you. ([Lovable's guide to the chat](https://docs.lovable.dev/features/projects/chat))
+
+8. Click around the preview like a visitor would. Then click **Mobile view** above the preview to see your site at phone size, and **Desktop view** to go back. ([Lovable's guide to the preview](https://docs.lovable.dev/features/projects/preview))
+9. **Check it worked.** You should see your site in the preview, and it should be the kind of site you picked: a quiz, a news site or a shop.
+
+Building uses Lovable <Term def="Lovable's allowance for building. Each change you ask for uses some.">credits</Term>. On Lovable's Free plan you get 5 a day, and a whole new site uses more than a small change. You'll need credits for one more full build in [lesson 4](/module-2/using-refined-prompts), so don't spend them all on small fixes today. ([Lovable's guide to credits](https://docs.lovable.dev/introduction/credits-and-usage))
+
+## Step 3: Save your exact prompt
+
+You'll need this exact prompt in the next lesson, so save it now.
+
+1. If you wrote your prompt in a notes file, check it's the version you pasted. If you changed anything in Lovable's box before sending, change it in your notes too. Your prompt is also in Lovable's chat, as your first message, if you need to copy it again.
+2. Paste it into the box below as well. It stays on this device, and the next two lessons show it back to you.
 
 <SaveHere id="solo-sprint-prompt" label="Your exact prompt for Lovable" placeholder="Paste the prompt you gave Lovable, exactly as you typed it." />
 
-You'll need that exact prompt in the next lesson, when you ask Claude to help you improve it. It's only a first draft. Look at what Lovable got right and what it had to guess. The next two lessons make your prompt better, so the next version guesses less.
+3. Give your project a name you'll recognise, like "Noodle quiz, first draft". Go to the dashboard, click **⋯** on the project's card, then **Edit**, then **Name**. ([Lovable's guide to the dashboard](https://docs.lovable.dev/introduction/dashboard-overview))
+4. **Check it worked.** Your prompt should be in your notes file and in the box above. Your project should be in **Recents** in the dashboard sidebar, with its new name.
+
+## Look at your first draft
+
+It's only a first draft. Look at what Lovable got right and what it had to guess. Did it make the pages you listed? Did it pick colours or words you didn't ask for?
+
+Jot down two or three things you'd change. Don't fix them one by one yet. The next two lessons make your prompt better, so the next version guesses less.
 
 {/* Slide 3's video (IV2njF0rOhw, "20-Minute Timer: Endless Countdown in Dark Cinematic Geometry") is left out on purpose: it's a countdown clock that timed the live class sprint, not teaching content. See docs/modules-1-8-review.md, Module 2. */}
 
@@ -53,10 +194,28 @@ You'll need that exact prompt in the next lesson, when you ask Claude to help yo
   <StuckItem question="Lovable asks me to sign up or log in.">
     You don't need to sign up for Lovable yourself. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access).
   </StuckItem>
+  <StuckItem question="It started chatting about my prompt instead of building.">
+    The mode picker is probably on **Chat**. Click it, choose **Build** and send your prompt again. If Lovable shows a **Start building** card, you can click that instead. ([Lovable's guide to Chat mode](https://docs.lovable.dev/features/chat-mode))
+  </StuckItem>
+  <StuckItem question="It's showing me three designs, or asking about fonts and colours.">
+    That's normal for a first prompt. Click the design closest to the style in your prompt (or answer the questions), then click **Submit**. It doesn't cost extra.
+  </StuckItem>
   <StuckItem question="I didn't save my prompt.">
-    Write it again as closely as you can, and save it in the box above straight away. You'll need it in the next lesson.
+    It's in Lovable's chat, as your first message: copy it from there. Or write it again as closely as you can. Either way, save it in the box above straight away. You'll need it in the next lesson.
   </StuckItem>
   <StuckItem question="The result doesn't look the way I pictured.">
     That's what the rest of this module is for. In the next lesson you'll ask Claude to help you make your prompt more detailed.
+  </StuckItem>
+  <StuckItem question="The preview is blank, white or stuck.">
+    Click **Refresh** above the preview. If that doesn't work, hold Shift and click **Refresh** to restart the preview. Still blank? Press Ctrl+Shift+R (Cmd+Shift+R on a Mac) to reload the whole page. If it's still white, ask Lovable: "The preview is white, investigate and fix it." If it says **Still building?**, click **Keep building**. ([Lovable's guide to the preview](https://docs.lovable.dev/features/projects/preview))
+  </StuckItem>
+  <StuckItem question="I see an error and a Try to fix button.">
+    Click **Try to fix**. A few fixes are free each day. If it's still broken after once or twice, describe the problem instead: what's wrong, where it is, and what you expected to see. ([Lovable's guide to fixing errors](https://docs.lovable.dev/prompting/prompting-debugging))
+  </StuckItem>
+  <StuckItem question="Lovable says I'm out of credits.">
+    Building stops until your credits come back: at 8am Singapore time the next day on the Free plan. Anything you've made is safe. Don't click anything that asks you to upgrade or pay; ask in your Code for All session instead. ([Lovable's guide to credits](https://docs.lovable.dev/introduction/credits-and-usage))
+  </StuckItem>
+  <StuckItem question="I can't find my project.">
+    On the dashboard, click **Recents** or **Projects** in the sidebar, or press Ctrl+K (Cmd+K on a Mac) and search for its name.
   </StuckItem>
 </StuckBlock>
