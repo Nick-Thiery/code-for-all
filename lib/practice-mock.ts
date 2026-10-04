@@ -194,7 +194,7 @@ const REFINE_REQUEST = (() => {
         headline: "This is a message Claude can really work with.",
         fix: {
           kind: "stretch",
-          text: "Name one feature the site must have, like the example's “Include working sign in and sign out.” For a quiz, that could be a button to share your result.",
+          text: "Name one feature the site must have. For a quiz, that could be a button to share your result.",
         },
         rewrite: [
           { text: `${strongMain} ` },

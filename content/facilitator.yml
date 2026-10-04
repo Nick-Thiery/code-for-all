@@ -164,9 +164,9 @@ modules:
       - Claude in Excel
       - Claude in Chrome
     prepare:
-      - "Microsoft Excel on each laptop, and a way to open Claude in Excel with your group's access. The lesson doesn't include these setup steps yet, so sort them out before the session."
+      - "Excel for each learner, with Claude for Excel added: Excel on the web (on a laptop or Chromebook), Excel on Windows with Microsoft 365, or Excel on a Mac. Excel 2016 and 2019 don't work. Try lesson 4's steps with your group's access before the session."
       - Each learner's Chrome extension from the Module 3 Challenge, ready to open.
-      - "Learners upload a SKILL.md file in lesson 3. Lesson 3 shows what goes in one; Claude's menu also has Create with Claude and Write skill instructions."
+      - "Learners upload a ZIP file of their skill's folder, with the SKILL.md inside, in lesson 3. Lesson 3 shows what goes in a SKILL.md; Claude's menu also has Create with Claude and Write skill instructions."
       - "Claude's menus change often. Check the path in lesson 3 (Customize, then Skills) in the live app before the session."
     links:
       - label: Claude in Chrome on the Chrome Web Store
@@ -200,7 +200,7 @@ modules:
       - Claude Code
       - tiiny.host
     prepare:
-      - "Find \"Handoff to Claude Code…\" in Claude Design's Export menu before the session. It's easy to miss."
+      - "Find \"Handoff to Claude Code\" in Claude Design's Export menu before the session. It's easy to miss."
       - "Try the handoff once yourself. If Claude Code can't reach the design, lesson 2's Stuck box has the fix."
       - "Google Chrome on each laptop. Lesson 5 opens the Console with Ctrl+Shift+J (Cmd+Option+J on a Mac) to read errors. F12 opens whichever DevTools panel was used last, needs Fn on a Mac, and many Chromebooks have no F12 key."
       - "Each learner needs a project folder on their laptop for Claude Code to build in."
@@ -339,7 +339,7 @@ modules:
       - minutes: 35
         lessons: [creating-login-with-supabase]
         do: Learners sign up for Supabase, copy their two values, then paste the login prompt into Claude and try it with a test email.
-        note: "Turning off \"Confirm Email\" is fine for practice, but not for a real app."
+        note: "Turning off \"Confirm email\" is fine for practice, but not for a real app."
       - title: Quiz and Challenge
         minutes: 10
         do: Learners try the module quiz. Then set the Challenge.
