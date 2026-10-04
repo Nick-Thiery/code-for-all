@@ -2,13 +2,14 @@
 title: Key terms
 slug: key-terms
 order: 20
-duration: 8
+duration: 10
 summary: "Six words you'll use every time you work with GitHub: fork, clone, commit, push, pull request and merge."
 requiresAccount: false
 recap:
   - "Grab an existing project: fork makes your own copy on GitHub, clone copies a repo onto your computer."
-  - "Save and upload your work: commit saves a snapshot on your computer, push sends it up to GitHub."
+  - "Save and upload your work: commit saves a snapshot, push sends it up to GitHub. A commit made on your computer stays there until you push."
   - "Combine work with a team: a pull request proposes your changes, and a merge adds them to the main project."
+  - Pull, without "request", is the opposite of push. It brings new changes down from GitHub to your computer.
 ---
 
 The terms are grouped by what you're trying to do.
@@ -25,19 +26,41 @@ Make your own copy of someone else's repo on your GitHub account, so you can cha
 Copy a repo from GitHub down onto your computer so you can edit the files <Term def="on your own computer, not online.">locally</Term>.
 </KeyTerm>
 
+**In everyday terms:** a fork is like photocopying a friend's recipe book and keeping the copy on your own shelf. You can scribble on your copy and theirs stays clean. A clone is like taking a copy home so you can work on it at your own desk.
+
+Both make copies. The difference is **where the copy goes**: a fork stays on GitHub, a clone goes onto your computer.
+
 ## 2. Save and upload your work
 
 <KeyTerm term="Commit">
-Save a snapshot of your current changes, along with a short note describing what you did. This will save locally and NOT on GitHub.
+Save a snapshot of your current changes, along with a short note describing what you did. When you commit on your computer, this will save locally and NOT on GitHub.
 </KeyTerm>
 
 <KeyTerm term="Push">
 Send the commits you saved on your computer up to GitHub, so the online copy is up to date.
 </KeyTerm>
 
-So a commit on its own isn't on GitHub yet. You commit, then you push.
+So a commit made on your computer isn't on GitHub yet. You commit, then you push.
+
+**In everyday terms:** a commit is like writing a page in your diary. A push is like posting a copy of the new pages to a friend who keeps your spare copy safe. Until you post them, the new pages are only in your diary.
 
 <CodeJourneyDiagram />
+
+### A worked example
+
+You fix a spelling mistake on your website with Claude Code. Then:
+
+1. **You commit.** You ask Claude Code to commit your changes. It saves a snapshot on your computer with a note like "Fix spelling on the home page".
+2. **You check GitHub.** The fix isn't there yet. That's normal: the commit is only on your computer.
+3. **You push.** You ask Claude Code to push. Now refresh your repo on GitHub, and the fix and its note are there.
+
+You can make several commits, then push them all at once.
+
+<Callout kind="tip">
+**One exception:** if you change a file on the GitHub website itself, its **Commit changes** button saves your commit straight to GitHub, so there's nothing to push. ([Editing files](https://docs.github.com/en/repositories/working-with-files/managing-files/editing-files)) But your computer's copy doesn't have that change yet, which is why the next word matters.
+</Callout>
+
+**Pull** (without "request") is the opposite of push. It brings new commits down from GitHub into the copy on your computer. You pull when someone else, or you on another device, has changed the repo on GitHub. ([GitHub glossary](https://docs.github.com/en/get-started/learning-about-github/github-glossary))
 
 ## 3. Combine work with a team
 
@@ -49,6 +72,21 @@ Propose your changes and ask teammates to review them before they get added to t
 Approve the changes from a pull request and combine them into the main version of the project.
 </KeyTerm>
 
+**In everyday terms:** a pull request is like handing your essay to a friend and asking "Can you check this before I hand it in?" They read it, suggest changes, and say when it's ready. Merging is handing it in: your changes become part of the main project.
+
+The main version of a project is usually called <Term def="the main version of a project. It's the one Vercel puts live.">main</Term>. You'll open your first pull request in [Module 7](/module-7).
+
+## All six in one story
+
+You find a free website template on GitHub that you like.
+
+1. You **fork** it, so you have your own copy on GitHub.
+2. You **clone** your fork onto your laptop.
+3. You change the colours and **commit**, with the note "New colours".
+4. You **push**, so your fork on GitHub has the new colours.
+5. You think the original project would like your colours too, so you open a **pull request** to it.
+6. Its owner likes it and **merges** it. Your colours are now in the original project.
+
 <CheckYourself>
   <Question q="You want your own copy of someone else's repo on your GitHub account. Which term is that?">
     Fork. You can change your copy without affecting the original.
@@ -57,7 +95,7 @@ Approve the changes from a pull request and combine them into the main version o
     Clone. It copies the repo from GitHub down onto your computer.
   </Question>
   <Question q="You want to save a snapshot of your changes, with a short note about what you did. Which term is that?">
-    Commit. It saves locally, NOT on GitHub.
+    Commit. When you commit on your computer, it saves locally, NOT on GitHub.
   </Question>
   <Question q="You've made a commit. How do you get it onto GitHub?">
     Push. It sends the commits you saved on your computer up to GitHub, so the online copy is up to date.
@@ -67,5 +105,8 @@ Approve the changes from a pull request and combine them into the main version o
   </Question>
   <Question q="A pull request looks good. What do you call approving it and combining it into the main version of the project?">
     Merge.
+  </Question>
+  <Question q="You fixed a typo using the edit button on the GitHub website. Do you need to push it?">
+    No. A commit made on the GitHub website goes straight to GitHub. To get the change onto your computer, you'd pull.
   </Question>
 </CheckYourself>

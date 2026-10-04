@@ -2,13 +2,14 @@
 title: What is GitHub?
 slug: what-is-github
 order: 10
-duration: 5
+duration: 8
 summary: "GitHub does three things for your code: it stores it, lets you share it and lets you work on it with others."
 requiresAccount: false
 recap:
   - "GitHub does three things: store, share and collaborate."
   - Your project's files and their history live in one place, called the repository, or repo for short.
-  - You can make a repo public, so anyone can see, use and learn from what you've done.
+  - Git is the tool that tracks the versions. GitHub is the website that keeps them online.
+  - You can make a repo public, so anyone can see, use and learn from what you've done. In this course, your own repos are Private.
 ---
 
 So far you've built projects with Lovable and Claude Code. This module is about where that code goes next: GitHub to keep it, and Vercel to turn it into a live website.
@@ -27,6 +28,22 @@ The one location where all your project files and their history are kept. On Git
 
 A project's history means every version of every file, not only the latest one.
 
+### An everyday comparison
+
+Think of the save points in a video game. Each time you reach one, the game keeps a copy of where you are. If something goes wrong later, you can go back to an earlier save.
+
+A repo keeps save points for your project. Each one has a short note saying what changed, like "Added a contact page". You can look back at any of them, and nothing you saved is lost when you make a new one.
+
+### A worked example
+
+Say your project is a website about your football team.
+
+1. **Monday:** you add a fixtures page and save it to your repo with the note "Added fixtures page".
+2. **Tuesday:** you change the colours, and now the menu has disappeared.
+3. **Wednesday:** you open your repo's history on GitHub. Monday's version is still there, so you can see exactly what the menu looked like before Tuesday's change, and put it back.
+
+That's **store**. If a friend helps with the site, you both send your work to the same repo, and GitHub keeps track of who changed what. That's **collaborate**.
+
 ## How it works
 
 Your computer and GitHub each keep a copy of your project.
@@ -35,10 +52,38 @@ Your computer and GitHub each keep a copy of your project.
 
 Git is the tool that keeps track of the versions. GitHub is the website that stores them online.
 
+- **Git** runs on your computer. It saves the snapshots of your project. Claude Code uses it for you when you ask it to save or send your work.
+- **GitHub** is a website. It keeps a copy of your repo online, so it's safe if your laptop breaks, and so other people can work on it too.
+
+You don't need to learn Git's commands. In this course, Claude Code or Lovable runs them for you. You do need to know the words for what they do, which is the next lesson.
+
+## Public or private?
+
+When you make a repo, you choose who can see it ([About repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories)):
+
+- **Public:** anyone on the internet can see it, and everything you've ever saved to it.
+- **Private:** only you, and people you invite, can see it.
+
+In this course, make your own repos **Private**. You'll still be able to put your website live with Vercel. Public repos are for code you're happy for the whole world to read, like the open source projects in this module's Challenge.
+
 ## How a repository looks
 
-On GitHub, your repositories page lists every repo you have, and a green **New repository** button makes another. You'll press that button in lesson 5.
+On GitHub, your repositories page lists every repo you have, with a button for making a new one. In lesson 5 you'll make one from the **+** menu at the top of any GitHub page.
 
 <Screenshot caption="GitHub's repositories page: a list of repositories, with the green New repository button.">GitHub's repositories page with the green New repository button, from a neutral account with no personal details</Screenshot>
+
+When you open a repo, you see its files. Click a file to read it.
+
+<CheckYourself>
+  <Question q="Your laptop stops working. Your project was in a GitHub repo. Is it lost?">
+    No. GitHub keeps a copy of your repo online, with its whole history. You can get it back on another computer.
+  </Question>
+  <Question q="What's the difference between Git and GitHub?">
+    Git is the tool that tracks the versions of your files. GitHub is the website that stores them online, so you can share them and work with others.
+  </Question>
+  <Question q="You're making a repo for your own project. Public or private?">
+    Private. A public repo can be seen by anyone, along with everything you've saved to it.
+  </Question>
+</CheckYourself>
 
 In the next lesson you'll learn the six words for getting work into and out of a repo.
