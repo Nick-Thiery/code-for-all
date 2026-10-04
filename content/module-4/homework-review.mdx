@@ -2,13 +2,21 @@
 title: Review your extension
 slug: homework-review
 order: 10
-duration: 4
-summary: Before you learn something new, look back at the Chrome extension you built with Claude Code.
-requiresAccount: false
+duration: 15
+summary: Before you learn something new, look back at the Chrome extension you built with Claude Code, test it properly and fix what's broken.
+requiresAccount: true
+needs:
+  device: "A laptop with Google Chrome. School laptops and Chromebooks may block loading your own extension; see the Stuck box."
+  access:
+    - Claude Code
+  before:
+    - "Your extension folder from the [Module 3 Challenge](/module-3/plan-your-extension)"
 recap:
   - "Test it first: does it install cleanly and run?"
   - Say what problem it solves, and what exactly it should do if it worked perfectly.
   - Name the hardest part to get working.
+  - "To test it: chrome://extensions, Developer mode on, Load unpacked, choose the folder with manifest.json, then pin it and try it."
+  - "Errors are clues: read them on the Errors button or the popup's Console, and paste the whole message into Claude Code."
 ---
 
 The challenge at the end of [Module 3](/module-3) was to build a <Term>Chrome extension</Term> with Claude Code. Take a few minutes to look back at what you made.
@@ -24,4 +32,90 @@ Open your extension and answer these four questions. Write your answers in your 
 - What was the hardest part to get working?
 - If it worked perfectly, what exactly should it do?
 
-Not working yet? Go back to the Module 3 challenge and keep going. Your answer to the last question is exactly what to tell Claude Code.
+Not sure about the first question? The steps below show you how to check it properly. Not working yet? Go back to the Module 3 challenge and keep going. Your answer to the last question is exactly what to tell Claude Code.
+
+<HandsOn />
+
+## Check it installs and runs
+
+This part needs access; see [how hands-on access works](/access).
+
+"Installs cleanly" means Chrome loads your extension with no errors. "Runs" means it does its job when you use it. These steps come from Google's [Hello World tutorial](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world) and [Debug extensions](https://developer.chrome.com/docs/extensions/get-started/tutorial/debug) guide.
+
+### Load it into Chrome
+
+1. **Open the Extensions page.** In Chrome, open a new tab, type `chrome://extensions` in the address bar and press **Enter**. Or click the puzzle-piece **Extensions** button in the toolbar and choose **Manage Extensions**.
+2. **Turn on Developer mode.** It's a switch on the Extensions page.
+
+   You should now see extra buttons, including **Load unpacked**. No Developer mode switch? Your device is probably managed by a school; see the Stuck box.
+3. **Click Load unpacked** and choose your extension's folder: the one with <Term def="the file that tells Chrome what an extension is called, what it's allowed to do and which files to use. Every Chrome extension has one, at the top of its folder.">manifest.json</Term> directly inside it. Choose the folder itself, not a file in it.
+
+   You should now see a card for your extension on the Extensions page, with its name. Already loaded it in Module 3? It's still there; skip to step 4.
+4. **Pin it.** Click the puzzle-piece **Extensions** button, find your extension and click the pin next to it.
+
+   You should now see its icon in the toolbar, next to the address bar.
+
+<Screenshot caption="Your extension's card on chrome://extensions. The refresh icon reloads it; the Errors button appears only when something has gone wrong.">The chrome://extensions page with Developer mode on and one extension's card showing its name, the refresh icon and an Errors button</Screenshot>
+
+### Use it like a real person would
+
+5. **Try it.** Go to a page your extension is for, click its icon and do the thing it's meant to do. Then try it on a second page.
+6. **Write down what happened**, next to your answer to "If it worked perfectly, what exactly should it do?" Anything different is a bug to fix.
+
+### Look for errors
+
+7. **Check the card.** Go back to `chrome://extensions`. If something went wrong, an **Errors** button appears on your extension's card. Click it to read the message.
+8. **Check the popup's console.** If your extension has a <Term def="the small window that opens when you click an extension's icon.">popup</Term>, open it, right-click inside it and choose **Inspect**. In the window that opens, click the **Console** tab. Errors show in red.
+
+   No errors anywhere and it does its job? Then the answer to "Does it install cleanly and run?" is yes. Skip to **Check it worked**.
+
+## Fix it with Claude Code
+
+9. **Open Claude Code in your extension's folder**, the way you did in [Module 3](/module-3/install-claude-code).
+10. **Tell it exactly what's wrong.** Paste the whole error message, not just part of it, and say what you expected to happen. For example:
+
+    ```prompt title="Example: fixing an error"
+    My Chrome extension shows this error on chrome://extensions: [paste the whole error]. When I click the icon, I expected [what should happen], but [what actually happens]. Find the cause, fix it, then tell me how to check it worked.
+    ```
+
+    No error, but it doesn't do the right thing? Use your answer to the last self-review question:
+
+    ```prompt title="Example: when there's no error"
+    My extension loads with no errors, but it doesn't do what I want. If it worked perfectly, it would [your answer]. Right now it [what happens]. Explain what's going wrong in plain English, then fix it.
+    ```
+11. **Read and approve the changes** as Claude Code makes them.
+12. **Reload the extension.** On `chrome://extensions`, click the refresh icon on your extension's card. Changes to `manifest.json` only work after a reload; for changes to the popup, just open the popup again.
+13. **Clear the old errors.** If there's an **Errors** button, open it and click **Clear all**, so you only see new ones. Then test again from step 5.
+
+Fixed one problem and found another? That's normal. Fix one thing at a time, and test after each fix.
+
+### Check it worked
+
+14. **Run through it one last time.** Your extension loads on `chrome://extensions` with no **Errors** button, its icon is pinned in the toolbar, it does its job on two different pages, and it still works after you click the refresh icon. Now answer "Does it install cleanly and run?" in your notes.
+
+<StuckBlock>
+  <StuckItem question="Claude Code asks me to sign up or log in.">
+    Don't create your own account: Claude accounts are for people aged 18 and over. Sign in with the access your Code for All session gives you. See [how hands-on access works](/access). You can keep reading the lessons without it.
+  </StuckItem>
+  <StuckItem question="There's no Developer mode switch, or I can't turn it on.">
+    Your device is probably managed by a school or work, and they've switched it off. You can't change this yourself. Use a personal laptop, or a laptop in a Code for All session. [Which device do you have?](/access#devices)
+  </StuckItem>
+  <StuckItem question="Chrome says the manifest file is missing or unreadable.">
+    The folder you chose doesn't have `manifest.json` directly inside it. Click **Load unpacked** again and choose the folder one level down, the one where you can see `manifest.json`. This often happens after **Download ZIP** on GitHub: unzipping adds an extra folder.
+  </StuckItem>
+  <StuckItem question='Chrome says "Could not load manifest."'>
+    Something in `manifest.json` is wrong, and the message names the part. Copy the whole message, paste it into Claude Code and ask it to fix the manifest. Then click **Load unpacked** again.
+  </StuckItem>
+  <StuckItem question="Nothing happens when I click the icon.">
+    Ask Claude Code to check that `manifest.json` has an `"action"` with a `"default_popup"`. Make sure the extension is pinned: it may be hidden in the puzzle-piece menu. Then look at **Errors** on its card, and at the popup's console (right-click the popup, **Inspect**, **Console**). Paste any error into Claude Code.
+  </StuckItem>
+  <StuckItem question="My extension can't see the tabs' titles or addresses.">
+    It's probably missing the `"tabs"` permission. Ask Claude Code to add `"tabs"` to the permissions in `manifest.json`, then click the refresh icon on the extension's card.
+  </StuckItem>
+  <StuckItem question="My changes don't show up.">
+    Click the refresh icon on the extension's card on `chrome://extensions`, then open the popup again. Changes to `manifest.json` need a reload every time.
+  </StuckItem>
+  <StuckItem question="Something else is wrong.">
+    Google's [Debug extensions](https://developer.chrome.com/docs/extensions/get-started/tutorial/debug) guide shows where each kind of error appears. Or look at [Help](/help), or ask in your Code for All session.
+  </StuckItem>
+</StuckBlock>
