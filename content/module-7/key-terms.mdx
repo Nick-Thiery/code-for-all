@@ -2,7 +2,7 @@
 title: Key terms
 slug: key-terms
 order: 10
-duration: 6
+duration: 8
 summary: "Four words for working on one project together: branch, main, switch and merge conflict."
 requiresAccount: false
 recap:
@@ -14,6 +14,12 @@ recap:
 In [Module 6](/module-6) you put your code on GitHub and Vercel. This module is about working on one project with other people, without overwriting each other's work.
 
 This module talks about teammates. Working on your own? You'll be your own team in the [task at the end](/module-7/recreate-wordle).
+
+## The problem branches solve
+
+Imagine three friends writing one story in a single shared document, all typing at once. One deletes a paragraph while another is still fixing it. Someone's work gets lost.
+
+Code has the same problem. Branches fix it: everyone gets their own copy to work on, and the copies are joined back together only when they're ready.
 
 The four terms come in three groups. Think of each branch as a lane on a road.
 
@@ -27,11 +33,15 @@ Your own parallel copy of the code, inside the same repo. You can change anythin
 The default/"real" branch that Vercel puts live.
 </KeyTerm>
 
+Every repo starts with one branch, main. GitHub calls it the <Term def="the branch GitHub shows first when you open a repo, and the one new branches start from unless you pick another.">default branch</Term> ([GitHub glossary](https://docs.github.com/en/get-started/learning-about-github/github-glossary)). Every other branch starts as a copy of it.
+
 ## Moving between lanes
 
 <KeyTerm term="Switch">
 Jump from one branch to another. Your files instantly change to match the branch you're on. Older tutorials call this checkout. Same thing.
 </KeyTerm>
+
+Nothing is lost when you switch. Your work stays saved on its own branch, ready for when you switch back.
 
 ## Joining lanes back together
 
@@ -40,6 +50,15 @@ Two branches changed the same line, and Git needs a human to pick which version 
 </KeyTerm>
 
 You'll see what a merge conflict looks like, and how to fix one, in [lesson 5](/module-7/merge-conflicts).
+
+## Words you already know
+
+You met these in [Module 6's key terms](/module-6/key-terms). They come up a lot in this module:
+
+- A <Term>commit</Term> saves a set of changes, with a message saying what changed.
+- A <Term>push</Term> sends your commits to GitHub.
+- A <Term>pull request</Term> says "please add my changes". People can look at it and talk about it before the changes are accepted.
+- A <Term>merge</Term> copies the changes from one branch into another.
 
 ## How branching works
 
@@ -50,3 +69,27 @@ You'll see what a merge conflict looks like, and how to fix one, in [lesson 5](/
 1. You **branch off** from main. Here, your branch is called alex-keyboard.
 2. You make **your commits** on your branch. Meanwhile, **main keeps moving**.
 3. A **pull request merges it back** into main.
+
+## A worked example
+
+Here's how a team of three might build a Wordle game. (It's an example: the names are made up.)
+
+1. The repo has one branch, main, with a starter page on it. Vercel puts main live.
+2. Alex makes a branch called alex-keyboard. Sam makes one called sam-board. Each of them works in their own lane, at the same time.
+3. Sam finishes first. Sam opens a pull request, the team looks at it, and it's merged into main. The live site now has the board.
+4. Alex's pull request goes next. Alex and Sam both changed the page title, so Git can't tell which title to keep. That's a merge conflict. Alex picks one, and the merge goes ahead.
+5. Main now has the board and the keyboard. Vercel puts that live.
+
+You'll do all of this yourself in the [Wordle task](/module-7/recreate-wordle).
+
+<CheckYourself>
+  <Question q="You're on your branch and you change the page's colours. Does the live site change straight away?">
+    No. Vercel puts main live, and main never sees your work until your branch is merged in with a pull request.
+  </Question>
+  <Question q="You switch from your branch back to main. Where did your work go?">
+    Nowhere: it's still saved on your branch. Your files change to match main, and when you switch back, your work is there again.
+  </Question>
+  <Question q="You and a friend both change the same line of the same file, on two different branches. What happens when both branches are merged?">
+    A merge conflict. Git can't tell which version is right, so it stops and asks a person to choose. It's normal, and nothing is broken.
+  </Question>
+</CheckYourself>

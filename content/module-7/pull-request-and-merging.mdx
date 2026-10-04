@@ -2,18 +2,21 @@
 title: "Step 2: pull request and merging"
 slug: pull-request-and-merging
 order: 40
-duration: 8
+duration: 15
 summary: Open a pull request, get it reviewed, then merge it into main so Vercel puts it live.
 requiresAccount: true
 needs:
   device: A laptop or Chromebook
   access:
     - GitHub
+    - "Vercel, if your repo is connected to it (from [Module 6](/module-6/connect-to-vercel))"
   before:
     - "A branch you pushed in [Step 1](/module-7/make-your-own-branch)"
 recap:
-  - Open a pull request from the yellow Compare & pull request banner, with one line about your change.
+  - "Open a pull request from the yellow Compare & pull request banner, with one line about your change. No banner? Pull requests tab, then New pull request."
+  - "Check base is main and compare is your branch: your changes go from compare into base."
   - "A teammate reviews it in the Files changed tab: green lines were added, red lines removed."
+  - "You can't approve your own pull request, but you can still read it and merge it."
   - Merging joins your branch to main, and Vercel redeploys the live site automatically.
 ---
 
@@ -37,6 +40,77 @@ It's that easy. But remember, step two can only be done by you, not Claude. Howe
 Step two here means this whole lesson: opening, reviewing and merging the pull request. It's not just item 2 in the list above.
 </Callout>
 
+The rest of this lesson walks through each step.
+
+## Step by step: open a pull request
+
+These steps come from GitHub's guide to [creating a pull request](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request).
+
+1. **Open your repo** on [github.com](https://github.com).
+2. **Choose your branch.** Click the **branch dropdown** above the files and pick your branch, like alex-keyboard.
+3. **Click Compare & pull request** in the yellow banner.
+
+   No banner? Click the **Pull requests** tab at the top of the repo, then **New pull request**. Set **base** to main and **compare** to your branch, then click **Create pull request** ([GitHub Skills](https://github.com/skills/resolve-merge-conflicts)).
+
+   You should now see a form with a box for a title and a bigger box for a description.
+4. **Check base and compare.** At the top there are two branch menus with an arrow between them. **base** is where the changes go: it should say **main**. **compare** is where they come from: it should be your branch.
+5. **Write a title and description.** One line is enough for the title, like "Add the keyboard". In the description, say what you changed and how to try it.
+6. **Click Create pull request.**
+
+   You should now see your pull request's own page, with its title at the top and a number, like #1.
+
+If your repo is connected to Vercel, wait a minute. Vercel builds a <Term def="a private test copy of your site, made from a branch or pull request. It doesn't change your live site.">preview</Term> of your branch and adds a comment to the pull request with a **Visit Preview** link ([Vercel environments](https://vercel.com/docs/deployments/environments)). Click it to try your changes before they go live.
+
+On Claude Code on the web, there's another way to open one: click **Create PR** at the top of the diff view ([Claude Code on the web](https://code.claude.com/docs/en/web-quickstart)). You still review and merge it on GitHub.
+
+## Step by step: review it
+
+A review is a second pair of eyes before anything reaches main. These steps come from GitHub's guide to [reviewing changes](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/reviewing-proposed-changes-in-a-pull-request).
+
+1. **Open the Files changed tab** on the pull request. Each changed file is listed: green lines were added, red lines removed.
+2. **Comment on a line** if something needs a question or a fix. Point at the line and add a comment.
+3. **Finish the review.** At the top of **Files changed**, open the review box, choose **Comment**, **Approve** or **Request changes**, and click **Submit review**.
+
+What makes a good review? Kind and specific. For example: "The keyboard looks great. Could the Enter key be wider, so it's easier to tap on a phone?"
+
+### Working on your own?
+
+GitHub says: "Pull request authors cannot approve their own pull requests" ([approving a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/approving-a-pull-request-with-required-reviews)). So you won't be able to click **Approve** on your own. That's fine: you can still read **Files changed** carefully, try the preview, and merge it yourself.
+
+Claude can be your second pair of eyes. In Claude Code, on your branch, ask:
+
+```prompt title="Example: a review from Claude Code"
+Review my changes and suggest improvements.
+```
+
+To have Claude explain a teammate's branch, ask:
+
+```prompt title="Example: explain a teammate's branch"
+Fetch the latest changes from GitHub. Then explain, in plain words, what changed on the branch called <their branch name> compared with main.
+```
+
+Claude suggests; you decide. Opening, reviewing and merging stay your job.
+
+## Step by step: merge it
+
+These steps come from GitHub's guide to [merging a pull request](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/merging-a-pull-request).
+
+1. **Open the pull request.** Click the **Pull requests** tab, then click your pull request.
+2. **Click Merge pull request**, near the bottom of the page.
+
+   The button has a small arrow next to it with three ways to merge: **Create a merge commit**, **Squash and merge** and **Rebase and merge**. Leave it on the one GitHub has picked for you.
+3. **Click Confirm merge.**
+
+   You should now see that the pull request is marked as merged. Your branch has joined main.
+4. **Optional: tidy up.** GitHub offers a **Delete branch** button near the bottom of the merged pull request. Changed your mind? **Restore branch** brings it back.
+
+If **Merge pull request** is deactivated and GitHub talks about conflicts, two branches changed the same line. [Lesson 5](/module-7/merge-conflicts) explains what that means, and the [Wordle task](/module-7/recreate-wordle) shows how to fix it.
+
+## Check it worked
+
+1. On the repo's main page, check the branch dropdown says **main**. Open a file you changed: your changes should be there.
+2. If your repo is connected to Vercel, wait a minute or two, then open your live site and refresh. Your change should be live. Only merges into main change the live site ([Vercel environments](https://vercel.com/docs/deployments/environments)).
+
 <Callout kind="tip">
 Working on your own? In the [task](/module-7/recreate-wordle) you'll be your own team, so you'll review and merge your own pull requests.
 </Callout>
@@ -45,10 +119,22 @@ Working on your own? In the [task](/module-7/recreate-wordle) you'll be your own
   <StuckItem question="GitHub asks me to sign up or log in.">
     You sign in to GitHub with a GitHub account, so do those steps in a session, with your teacher's go-ahead. See [how hands-on access works](/access).
   </StuckItem>
+  <StuckItem question="There's no Compare & pull request banner.">
+    It only stays up for a while after you push. Click the **Pull requests** tab, then **New pull request**. Set **base** to main and **compare** to your branch, then click **Create pull request**. If your branch isn't in the compare menu, it hasn't been pushed yet: go back to [Step 1](/module-7/make-your-own-branch).
+  </StuckItem>
   <StuckItem question="There's no teammate to review my pull request.">
     Be your own reviewer. Open the **Files changed** tab yourself and look at the green and red lines. You can ask Claude to help you review the changes. Then merge it.
   </StuckItem>
+  <StuckItem question="I can't click Approve on my own pull request.">
+    That's normal: GitHub doesn't let you approve your own pull request. You can still merge it with **Merge pull request**, then **Confirm merge**.
+  </StuckItem>
   <StuckItem question="Git says there's a merge conflict.">
     Two branches changed the same line, and Git needs you to pick which version wins. You didn't break anything. [Lesson 5](/module-7/merge-conflicts) shows how to fix it.
+  </StuckItem>
+  <StuckItem question="I merged, but my live site hasn't changed.">
+    Give Vercel a minute or two, then refresh. Check you merged into **main**: only main updates the live site, and other branches only get preview links. If your repo isn't connected to Vercel yet, [Module 6](/module-6/connect-to-vercel) shows how.
+  </StuckItem>
+  <StuckItem question="My friend sees a Vercel login page when they open the preview link.">
+    Vercel keeps preview links private by default, behind a Vercel login ([Deployment Protection](https://vercel.com/docs/deployment-protection)). Share your live site's address instead, once your change is merged.
   </StuckItem>
 </StuckBlock>

@@ -2,7 +2,7 @@
 title: "Task: recreate Wordle"
 slug: recreate-wordle
 order: 60
-duration: 15
+duration: 60
 summary: Be your own team. Build a Wordle clone on three branches, merge them with pull requests, and hit (and fix) a merge conflict on purpose.
 requiresAccount: true
 needs:
@@ -10,14 +10,17 @@ needs:
   access:
     - GitHub
     - Vercel
-    - Claude Code (or Lovable or Claude Design, your choice)
+    - "Claude Code, for the branches and pushes (Claude Design or Lovable too, if you like)"
   before:
     - "How to make a repo and connect it to Vercel, from [Module 6](/module-6/get-your-code-into-github)"
     - "How to make a branch and open a pull request, from [lessons 3](/module-7/make-your-own-branch) and [4](/module-7/pull-request-and-merging)"
+    - "About an hour. You can stop after any part and come back: your work is saved on GitHub."
 recap:
   - Work on your own branches. Never push straight to main.
   - Connect the repo to Vercel at the start, so every merged pull request updates the live site.
+  - "Merge in order: board, then keyboard, then make the game logic branch from the new main."
   - Changing the same line on two branches on purpose is how you learn to fix a merge conflict.
+  - "On GitHub: Resolve conflicts, fix the file, Mark as resolved, Commit merge, then Merge pull request."
 ---
 
 Time to use everything from this module: recreate Wordle, with <Term term="branch">branches</Term> and <Term term="pull request">pull requests</Term>. The original task is for teams of three. Here, you'll be your own team.
@@ -42,6 +45,8 @@ Make them with either track from [lesson 3](/module-7/make-your-own-branch).
 
 You are free to use any tools you like: Claude Design, Claude Code, Lovable. Split the work across your branches: the board on one, the keyboard on another, and the game logic on the third.
 
+The steps below use Claude Code, because it can make branches and push them with a prompt. If you design a part in Claude Design or Lovable, bring it into Claude Code on that part's branch.
+
 ## Ship it as you go
 
 Connect the repo to **Vercel** at the **start** of the process, not the end. This way every merged PR updates the live site. [Module 6](/module-6/connect-to-vercel) shows how to connect it.
@@ -54,32 +59,214 @@ Connect the repo to **Vercel** at the **start** of the process, not the end. Thi
 2. **2+ pushes per branch.** Push each branch to GitHub at least twice. By doing this, you will get a better understanding of how the mechanic works.
 3. **2+ merged pull requests.** Merge at least two pull requests. This will teach you how to merge a PR and how to overcome merge conflicts should they come up.
 
-## Hit a merge conflict on purpose
+## The plan
 
-On a team, conflicts happen by themselves. On your own, you have to make one.
+Here's the whole task on one page. Each part is explained step by step below.
 
-1. Change the page title on two of your branches, on purpose, to two different titles. For example, use the two titles from [lesson 5](/module-7/merge-conflicts): Wordle by Team 3 on one branch, Team 3 Wordle on the other.
-2. Merge both branches with pull requests. The first one merges as normal. When you open the second, GitHub shows "This branch has conflicts that must be resolved", and the **Merge pull request** button stays off until you fix it. Both branches changed the same line, and main now has the other title.
-3. Fix it one of two ways: in your browser on GitHub, or with Claude Code. Either way, you keep the version you want or combine both, and delete the `<<<`, `===` and `>>>` marker lines, the way [lesson 5](/module-7/merge-conflicts) shows.
+1. Set up the repo with a starter page, and connect Vercel.
+2. Build the board on its own branch. Push twice.
+3. Build the keyboard on its own branch. Push twice.
+4. Merge the board with a pull request.
+5. Merge the keyboard with a pull request, and fix the merge conflict you made on purpose.
+6. Make the game logic branch from the new main, build it, and push twice.
+7. Merge the game logic with a pull request, then play your game.
 
-### On GitHub, in your browser
+Why this order? The game logic needs the board and the keyboard to work with, so it's built last, once they're on main.
 
-This works for simple conflicts like this one, where two branches changed the same line.
+The branch names below use the name Alex as an example: alex-board, alex-keyboard and alex-logic. Use your own first name. The prompts are examples too: change them to make the game your own.
 
-1. On the pull request, click **Resolve conflicts**.
-2. In the file, keep the version you want or combine both, and delete the marker lines.
+<Callout kind="headsup">
+**Using Claude Code on the web?** Each task gets its own session and its own branch, and Claude pushes it to GitHub for you ([Claude Code on the web](https://code.claude.com/docs/en/web-quickstart)). So start a new task for each part, with the branch selector under the message box set to the branch you want to start from (main, unless the steps say otherwise). Ask "Which branch am I on?" to get each branch's name. To try your game, use the **Visit Preview** link on each pull request instead of localhost.
+</Callout>
+
+## Part 1: set up the repo
+
+**On Claude Code on the web**, do it in a different order: make an empty **Private** repo on GitHub first, choose it in the repository selector, then send the starter prompt in step 1. Claude pushes the starter to its own branch, so instead of step 2's push, open a pull request for it and merge it, the way [lesson 4](/module-7/pull-request-and-merging) shows. Then main has the starter.
+
+1. **Make a starter page.** In Claude Code, in a new, empty folder, send:
+
+   ```prompt title="Example: the starter page"
+   Make a starter for a Wordle clone. Create an index.html with the heading "Wordle", and these empty files, all linked from index.html: board.js, board.css, keyboard.js, keyboard.css and game.js. Don't build the game yet.
+   ```
+
+   Separate files for each part mean your three branches mostly change different files. That keeps accidental conflicts away, so the only one you hit is the one you make on purpose.
+2. **Put it on GitHub.** Make a new **Private** repo and push the starter to it, the way [Module 6](/module-6/get-your-code-into-github) showed. This first push is the setup, before the team starts work. From now on, nothing goes straight to main.
+
+   You should now see your six files on the repo page on GitHub, on main.
+3. **Connect Vercel.** Import the repo into Vercel, the way [Module 6](/module-6/connect-to-vercel) showed.
+
+   You should now see your live site at its Vercel address, showing just the heading "Wordle". Keep that address: you'll check it after every merge.
+
+## Part 2: the board
+
+1. **Make the branch.**
+
+   ```prompt title="Branch first"
+   Create a branch called <your branch name> and switch to it.
+   ```
+
+   Use your name and the part, like alex-board.
+2. **Build the board.**
+
+   ```prompt title="Example: build the board"
+   Build the Wordle board in board.js and board.css: a grid of 6 rows with 5 square boxes in each row, centred on the page. Add a way for other code to put a letter in a box and colour a box green, yellow or grey. Only change board.js and board.css.
+   ```
+3. **Try it in your browser.** On a laptop:
+
+   ```prompt title="Example: see your site"
+   Open this site on localhost so I can try it in my browser.
+   ```
+
+   You should now see an empty grid, 6 rows of 5 boxes. Not right? Tell Claude Code what looks wrong, one thing at a time.
+4. **Push it** (push 1 of 2):
+
+   ```prompt title="Push"
+   Commit all the changes in this session to the branch and push it to GitHub.
+   ```
+5. **Change the title, on purpose.** This is half of the merge conflict you'll make:
+
+   ```prompt title="Example: the first title"
+   Change the heading in index.html to "Wordle by Team 3". Don't change anything else.
+   ```
+6. **Push again** (push 2 of 2), with the same Push prompt.
+
+   You should now see a yellow **Compare & pull request** banner for alex-board on your repo page. Don't open the pull request yet.
+
+## Part 3: the keyboard
+
+1. **Go back to main first.** The keyboard branch should start from main, not from the board branch:
+
+   ```prompt title="Example: back to main"
+   Switch back to the main branch.
+   ```
+
+   On the web, start a new task with the branch selector on main.
+2. **Make the branch**, with the Branch first prompt. Call it something like alex-keyboard.
+3. **Build the keyboard.**
+
+   ```prompt title="Example: build the keyboard"
+   Build an on-screen keyboard for Wordle in keyboard.js and keyboard.css: three rows of letter keys, Q to P, A to L and Z to M, with an Enter key and a Backspace key on the bottom row. Typing on a real keyboard should work too. Add a way for other code to know which key was pressed, and to colour a key green, yellow or grey. Only change keyboard.js and keyboard.css.
+   ```
+4. **Try it in your browser**, with the localhost prompt from Part 2.
+
+   You should now see the keyboard, but no board. That's right: the board is on its own branch and isn't on main yet.
+5. **Push it** (push 1 of 2), with the Push prompt.
+6. **Change the title to something different, on purpose.** This is the other half of the conflict:
+
+   ```prompt title="Example: the second title"
+   Change the heading in index.html to "Team 3 Wordle". Don't change anything else.
+   ```
+7. **Push again** (push 2 of 2).
+
+   You should now have two branches on GitHub. Both changed the same line, the heading, in two different ways.
+
+## Part 4: merge the board
+
+Follow the steps from [lesson 4](/module-7/pull-request-and-merging):
+
+1. On your repo page, choose **alex-board** in the branch dropdown and click **Compare & pull request**. No banner? **Pull requests** → **New pull request**, with base main and compare alex-board.
+2. Check **base** is main and **compare** is alex-board. Add a title, like "Add the board", and click **Create pull request**.
+3. **Review it.** Open **Files changed** and read the green lines. If Vercel has commented with a **Visit Preview** link, click it and check the board appears.
+
+   You can't **Approve** your own pull request: GitHub doesn't allow it ([approving a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/approving-a-pull-request-with-required-reviews)). You can still merge it.
+4. **Merge it.** Click **Merge pull request**, then **Confirm merge**.
+
+   You should now see the pull request marked as merged. After a minute or two, your live site shows the board and the heading "Wordle by Team 3".
+
+## Part 5: merge the keyboard, and fix the conflict
+
+1. **Open a pull request for alex-keyboard**, the same way as Part 4.
+
+   You should now see GitHub say that this branch has conflicts that must be resolved, and **Merge pull request** is deactivated ([GitHub: about merge conflicts](https://docs.github.com/en/pull-requests/reference/merge-conflicts)). Both branches changed the same line, and main now has the other title. That's the conflict you made on purpose.
+
+   No conflict? Check that both branches changed the same heading line in index.html, in two different ways.
+2. **Fix it** one of two ways: in your browser on GitHub, or with Claude Code. Either way, you keep the version you want or combine both, and delete the `<<<`, `===` and `>>>` marker lines, the way [lesson 5](/module-7/merge-conflicts) shows.
+
+### Fix it on GitHub, in your browser
+
+This works for simple conflicts like this one, where two branches changed the same line. The steps come from GitHub's guide to [resolving a merge conflict on GitHub](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/resolving-a-merge-conflict-on-github).
+
+1. Near the bottom of the pull request, click **Resolve conflicts**.
+
+   You should now see index.html in an editor, with the conflict marked. Your branch is on top and main is at the bottom:
+
+   ```html
+   <<<<<<< alex-keyboard
+   <h1>Team 3 Wordle</h1>
+   =======
+   <h1>Wordle by Team 3</h1>
+   >>>>>>> main
+   ```
+2. **Edit the file.** Keep the title you want, and delete the other one and all three marker lines. For example, to keep "Team 3 Wordle", those five lines become one:
+
+   ```html
+   <h1>Team 3 Wordle</h1>
+   ```
 3. Click **Mark as resolved**, then **Commit merge**.
-4. Back on the pull request, click **Merge pull request**.
+4. If GitHub asks which branch to commit to, click **I understand, continue updating alex-keyboard** (it shows your branch's name). That puts the fix on your branch.
 
-If **Resolve conflicts** is greyed out, the conflict is too complicated to fix in the browser. Use Claude Code instead.
+   You should now be back on the pull request, and the conflict message has gone.
+5. Click **Merge pull request**, then **Confirm merge**.
 
-### With Claude Code
+If **Resolve conflicts** is switched off, the conflict is too complicated to fix in the browser. Use Claude Code instead.
+
+### Fix it with Claude Code
 
 Use the escape hatch. Paste the entire block of code into Claude Code, then say:
 
 ```prompt title="The escape hatch"
 I have a merge conflict in <name of the file>. Please help me resolve it and keep all features working.
 ```
+
+For a conflict on a pull request, the conflict has to be fixed on your branch, then pushed. On a laptop, you can ask Claude Code to do it all in one go:
+
+```prompt title="Example: fix the pull request's conflict"
+Switch to the branch alex-keyboard and fetch the latest changes from GitHub. Merge main into this branch, help me resolve the merge conflicts and keep all features working, then push the branch.
+```
+
+Claude Code will ask, or tell you, which title it kept. When it has pushed, refresh the pull request.
+
+You should now see the conflict message gone. Click **Merge pull request**, then **Confirm merge**.
+
+Using Claude Code on the web? Each task there works on its own new branch, so for this conflict, fix it on GitHub in your browser instead.
+
+### Check the merge worked
+
+After a minute or two, open your live site and refresh. You should see the board, the keyboard and the title you kept. That's two merged pull requests: the must-have is done.
+
+## Part 6: the game logic
+
+1. **Start from the new main.** Main now has the board and the keyboard. Your game logic branch must start from there, so it can use them:
+
+   ```prompt title="Example: get the new main"
+   Switch to the main branch and pull the latest changes from GitHub.
+   ```
+
+   On the web, start a new task with the branch selector on main.
+2. **Make the branch**, with the Branch first prompt. Call it something like alex-logic.
+3. **Build the game logic.**
+
+   ```prompt title="Example: build the game logic"
+   Build the Wordle game logic in game.js, using the board and the keyboard that are already here. Pick a secret five-letter word from a list of at least 50 common words. The player has six tries. After each guess, colour each letter: green if it's in the right place, yellow if it's in the word but in the wrong place, grey if it's not in the word. Colour the keyboard keys the same way. Show a message when the player wins, or show the word when they run out of tries.
+   ```
+4. **Try it in your browser**, with the localhost prompt. Play a whole game. Try a word with a letter twice, and try losing on purpose.
+5. **Push it** (push 1 of 2).
+6. **Fix or improve one thing**, then **push again** (push 2 of 2). For example:
+
+   ```prompt title="Example: one improvement"
+   Add a "Play again" button that appears when the game ends and starts a new game with a new word.
+   ```
+
+## Part 7: merge the game logic
+
+1. Open a pull request for alex-logic, review **Files changed**, and try the **Visit Preview** link.
+2. Click **Merge pull request**, then **Confirm merge**.
+
+## Check it worked
+
+1. **Play it live.** Open your live site and play a whole game, start to finish. Everything should work: the board, the keyboard, the colours and the end-of-game message.
+2. **Look at your pull requests.** On GitHub, click the **Pull requests** tab, then **Closed**. You should see three merged pull requests.
+3. **Count your pushes.** Open each pull request and look at its list of commits. Each branch should have at least two.
 
 <Callout kind="tip">
 **Doing this with friends? Follow the original team rules.**
@@ -88,6 +275,13 @@ I have a merge conflict in <name of the file>. Please help me resolve it and kee
 - One person works on the board, one on the keyboard, and one on the game logic.
 - Everyone works on their own branch, and nobody pushes their work directly to main.
 - Everyone pushes their branch to GitHub at least twice, and the team merges at least two pull requests.
+
+To add a teammate ([inviting collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository)): on the repo, click **Settings**, then **Collaborators** in the "Access" section, then **Add people**. Search for their GitHub username, click it, then click the **Add … to …** button, which shows their username and your repo's name. They get an email invitation, which they must accept.
+
+Two things to know about Vercel before you start:
+
+- **Only the repo owner can import the repo into Vercel** ([Vercel guide](https://vercel.com/kb/guide/unable-to-find-github-repository)). So the owner does Part 1.
+- **Vercel's free Hobby plan is meant for one person.** Vercel's help says a Hobby project may not deploy commits made by anyone except its owner, especially from a private repo ([troubleshooting collaboration](https://vercel.com/docs/deployments/troubleshoot-project-collaboration)). Vercel's own pages don't fully agree on this, so test it first: have one teammate push a small change to their branch and see if Vercel adds a preview to their pull request. If it doesn't, ask in your Code for All session before you go on. Preview links also sit behind a Vercel login, so teammates may not be able to open them ([Deployment Protection](https://vercel.com/docs/deployment-protection)).
 </Callout>
 
 Don't hesitate to ask AI if you have a question or are getting stuck. In a Code for All session, you can ask a tutor too.
@@ -97,10 +291,34 @@ Don't hesitate to ask AI if you have a question or are getting stuck. In a Code 
     Access to Claude Code is set up through a Code for All session or a teacher running one, so you don't sign up for it yourself. GitHub and Vercel: you sign in with a GitHub account, so do those steps in a session, with your teacher's go-ahead. See [how hands-on access works](/access).
   </StuckItem>
   <StuckItem question="I hit a merge conflict.">
-    Good: that's part of the task. [Lesson 5](/module-7/merge-conflicts) shows how to fix it, and its escape hatch prompt hands it to Claude Code.
+    Good: that's part of the task. [Lesson 5](/module-7/merge-conflicts) shows how to fix it, and its escape hatch prompt hands it to Claude Code. Part 5 above walks through it on GitHub, click by click.
+  </StuckItem>
+  <StuckItem question="Merge pull request is deactivated.">
+    There's a merge conflict. Scroll down the pull request and click **Resolve conflicts**, then follow "Fix it on GitHub" in Part 5. If **Resolve conflicts** is switched off too, use "Fix it with Claude Code".
+  </StuckItem>
+  <StuckItem question="I clicked Commit merge, and GitHub asked about branches.">
+    Choose **I understand, continue updating** with your branch's name. That puts the fix on your branch, so your pull request can merge.
+  </StuckItem>
+  <StuckItem question="I fixed the conflict, but my page shows the marker lines.">
+    A marker line was left in. Open index.html on your branch, delete the leftover marker lines, and push again. Or ask Claude Code: "Remove any leftover merge conflict markers in index.html, then push."
+  </StuckItem>
+  <StuckItem question="My keyboard branch also has the board in it.">
+    The keyboard branch was made from the board branch, not from main. Each branch should start from main. Ask Claude Code which branch you're on, switch back to main, and make the branch again. Then build the keyboard on it.
+  </StuckItem>
+  <StuckItem question="The game logic can't find the board or the keyboard.">
+    The logic branch needs to start from main after the board and the keyboard are merged. Check both pull requests are merged, then ask Claude Code to "Merge the latest main from GitHub into this branch", and push again.
+  </StuckItem>
+  <StuckItem question="My push was rejected.">
+    GitHub has commits on that branch that Claude Code doesn't have yet, for example a conflict you fixed on github.com. Pull first, then push again ([GitHub's guide](https://docs.github.com/en/get-started/using-git/dealing-with-non-fast-forward-errors)). Ask Claude Code: "Pull the latest changes for this branch from GitHub, then push again."
   </StuckItem>
   <StuckItem question="My live site doesn't change when I merge.">
-    Connect the repo to Vercel at the start of the process. After that, every merged PR updates the live site. [Module 6](/module-6/connect-to-vercel) shows how to connect it.
+    Connect the repo to Vercel at the start of the process. After that, every merged PR updates the live site. [Module 6](/module-6/connect-to-vercel) shows how to connect it. Give it a minute or two after merging, then refresh. Only main updates the live site: other branches get preview links.
+  </StuckItem>
+  <StuckItem question="Someone sees a Vercel login page when they open my preview link.">
+    Vercel keeps preview links private by default ([Deployment Protection](https://vercel.com/docs/deployment-protection)). Share your live site's address instead.
+  </StuckItem>
+  <StuckItem question="I deleted a branch too soon.">
+    Open the merged pull request and click **Restore branch** near the bottom ([merging a pull request](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/merging-a-pull-request)).
   </StuckItem>
 </StuckBlock>
 

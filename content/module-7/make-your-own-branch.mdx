@@ -2,19 +2,22 @@
 title: "Step 1: make your own branch"
 slug: make-your-own-branch
 order: 30
-duration: 8
+duration: 15
 summary: Make your own branch on GitHub or with Claude Code, build your feature on it, then push it.
 requiresAccount: true
 needs:
   device: A laptop or Chromebook
   access:
     - GitHub
-    - Claude Code
+    - Claude Code (the app on a laptop, or Claude Code on the web on a Chromebook)
   before:
-    - "A repo on GitHub, from [Module 6](/module-6/get-your-code-into-github)"
+    - "A repo on GitHub with your project in it, from [Module 6](/module-6/get-your-code-into-github)"
+    - "That project open in Claude Code"
 recap:
   - "On GitHub: click the branch dropdown (it says main), type a name like alex-keyboard, then click Create branch."
+  - "A branch made on GitHub isn't in Claude Code yet: ask Claude Code to fetch it from GitHub and switch to it."
   - "With Claude Code, the entire process can be done with prompts: branch first, build, then push."
+  - "Before you build, check which branch you're on. Ask Claude Code, or look at the branch dropdown."
   - After you push, a yellow Compare & pull request banner appears on the repo page. That's your branch arriving on GitHub.
 ---
 
@@ -26,21 +29,52 @@ Here's the picture from [Key terms](/module-7/key-terms) again. This lesson is s
 
 <BranchLanesDiagram />
 
+## Choose a branch name
+
+Use your first name and the part you're working on, like alex-keyboard. Don't use your full name. Keep it short, and use a hyphen (-) instead of a space.
+
 <HandsOn />
 
 ## The GitHub track
 
-This part needs access; see [how hands-on access works](/access).
+This part needs access; see [how hands-on access works](/access). Sign in to GitHub in a session, with your teacher's go-ahead.
 
-1. **Create it on GitHub.** On your team's repo, click the **branch dropdown** (it says **main**), type a name like alex-keyboard, then click **Create branch: alex-keyboard from main**.
-2. **Make your changes.** Write the code needed for your branch feature to work. When you're ready to push your branch to GitHub, you can use the Push prompt from step 3 of the Claude Code track below.
-3. **Check it worked.** After you push your branch, a yellow banner appears on the repo page: **Compare & pull request**. That's your branch arriving on GitHub.
+Here's the slide version: on your team's repo, click the **branch dropdown** (it says **main**), type a name like alex-keyboard, then click **Create branch**. Step by step, from GitHub's guide to [managing branches](https://docs.github.com/en/pull-requests/how-tos/commit-changes/managing-branches-within-your-repository):
+
+1. **Open your repo** on [github.com](https://github.com). That's the page with your files listed.
+2. **Open the branch dropdown.** It's above the list of files and shows the branch you're on, usually **main**. Click it.
+
+   You should now see a small menu with a box at the top that says **Find or create a branch...**, and a list of branches. A new repo has just one: main.
+3. **Type your branch name** in that box, like alex-keyboard.
+4. **Click Create branch.** It appears under the box once you've typed a name that isn't taken, with your branch name in it.
+
+   You should now see your branch name on the branch dropdown, instead of main. GitHub has made a copy of main called alex-keyboard.
+
+   Still says main? Open the dropdown again and click your branch's name in the list. If it isn't there, start again from step 2. If a branch with that name already exists, choose a different name.
+
+   <Screenshot caption="The branch dropdown on a repo page.">The branch dropdown open on a repo's main page, with "alex-keyboard" typed in the Find or create a branch... box and the Create branch option underneath. No account names or avatars.</Screenshot>
+
+5. **Bring the branch into Claude Code.** Your new branch is on GitHub, but not in Claude Code yet. Claude Code has to fetch it first.
+
+   - **Claude Code on a laptop:** open your project and paste this prompt, with your branch name:
+
+     ```prompt title="Example: get the branch you made on GitHub"
+     Fetch the latest changes from GitHub and switch to the branch called <your branch name>.
+     ```
+
+     You should now see Claude Code say it has switched to your branch. (Git can switch to a branch that only exists on GitHub so far, as long as the name matches: see [git switch](https://git-scm.com/docs/git-switch).)
+   - **Claude Code on the web:** under the message box, click the repository selector and choose your repo. Each repo shows a branch selector: change it from main to your branch before you send your first message ([Claude Code on the web](https://code.claude.com/docs/en/web-quickstart)).
+6. **Make your changes.** Write the code needed for your branch feature to work. Tell Claude Code what to build, the same way as step 2 of the Claude Code track below.
+7. **Push.** When you're ready to push your branch to GitHub, use the Push prompt from step 4 of the Claude Code track below.
+8. **Check it worked.** After you push your branch, a yellow banner appears on the repo page: **Compare & pull request**. That's your branch arriving on GitHub. See step 5 of the Claude Code track for what to check.
 
 <HandsOn />
 
 ## The Claude Code track
 
 Paste these prompts into Claude Code. This part needs access; see [how hands-on access works](/access).
+
+Open the project that's connected to your GitHub repo first: the one you pushed in [Module 6](/module-6/get-your-code-into-github). On Claude Code on the web, choose that repo in the repository selector under the message box.
 
 ### 1. Branch first
 
@@ -50,17 +84,57 @@ Create a branch called <your branch name> and switch to it.
 
 Replace `<your branch name>` with your own branch name, like alex-keyboard. Use your first name and the part you're working on, not your full name.
 
+You should now see Claude Code reply that it has made the branch and switched to it.
+
+<Callout kind="headsup">
+**On Claude Code on the web**, each task already gets its own session and its own branch, and Claude pushes that branch to GitHub for you when it reaches a stopping point ([Claude Code on the web](https://code.claude.com/docs/en/web-quickstart)). You can still send the Branch first prompt. Either way, check the branch's name before you push, in step 3.
+</Callout>
+
 ### 2. Build
 
 Use Claude Code as normal. Tell it what changes you want it to make, or what feature you want the program to have, and it will create the code.
 
-### 3. Push
+Ask for one feature at a time. For example:
+
+```prompt title="Example: a small first change"
+Add a footer to the page that says "Made by Team 3", in small grey text.
+```
+
+Then look at the result. On a laptop, Claude Code can open your site in your browser ([Module 5](/module-5/the-whole-workflow) showed how):
+
+```prompt title="Example: see your site"
+Open this site on localhost so I can try it in my browser.
+```
+
+On Claude Code on the web, your code runs in the cloud, not on your computer. You'll see your changes on a Vercel preview link instead, in the [next lesson](/module-7/pull-request-and-merging).
+
+### 3. Check which branch you're on
+
+Before you push, make sure your work is on your branch, not on main. Ask:
+
+```prompt title="Example: check your branch"
+Which branch am I on, and what files have I changed?
+```
+
+You should now see your branch name, like alex-keyboard, and a list of the files you changed. If it says main, look in the Stuck box below before you push.
+
+### 4. Push
 
 ```prompt title="Push"
 Commit all the changes in this session to the branch and push it to GitHub.
 ```
 
-After you get Claude to push it to GitHub, go to step 3 of the GitHub track: check it worked.
+You should now see Claude Code say it has made a <Term>commit</Term> and pushed your branch. If it asks you to sign in to GitHub, follow its instructions.
+
+Want to push again later? Make more changes, then send the same Push prompt. Each push adds new commits to the same branch.
+
+### 5. Check it worked
+
+1. Open your repo on [github.com](https://github.com), or refresh the page if it's already open.
+2. Look for a yellow banner near the top: **Compare & pull request**, with your branch's name. That's your branch arriving on GitHub.
+3. Click the **branch dropdown**. Your branch should be in the list. Click it, and you should see your changes in its files.
+
+The banner only stays up for a while. If it's gone, that's fine: step 3 still shows your branch, and the [next lesson](/module-7/pull-request-and-merging) shows another way to open a pull request without it.
 
 <StuckBlock>
   <StuckItem question="GitHub or Claude Code asks me to sign up or log in.">
@@ -69,8 +143,20 @@ After you get Claude to push it to GitHub, go to step 3 of the GitHub track: che
   <StuckItem question="Which track should I use?">
     Either. The entire process can be done just using Claude Code, and both tracks end with the same check: the yellow **Compare & pull request** banner on the repo page.
   </StuckItem>
+  <StuckItem question="I made a branch on GitHub, but Claude Code says it doesn't exist.">
+    A branch made on GitHub isn't in Claude Code until it fetches it. On a laptop, send the prompt from step 5 of the GitHub track: "Fetch the latest changes from GitHub and switch to the branch called…", with your branch name. Check the spelling matches exactly. On Claude Code on the web, choose the branch in the branch selector under the message box when you start a task.
+  </StuckItem>
+  <StuckItem question="I made my changes on main by mistake.">
+    Always check which branch you're on before you edit: ask Claude Code "Which branch am I on?", or look at the branch dropdown on GitHub. If you haven't pushed yet, ask Claude Code to move the work, for example: "I made these changes on main by mistake and haven't pushed them. Move them onto a new branch called `<your branch name>`, switch to it, and leave main as it was." Then check again with "Which branch am I on, and what files have I changed?"
+  </StuckItem>
   <StuckItem question="I don't see the Compare & pull request banner.">
-    The banner appears after you push your branch. On either track, you can push with the Push prompt in step 3 of the Claude Code track.
+    The banner appears after you push your branch. On either track, you can push with the Push prompt in step 4 of the Claude Code track. Then refresh the repo page. The banner only stays up for a while, so if you pushed a while ago it may have gone: your branch is still there in the branch dropdown, and the [next lesson](/module-7/pull-request-and-merging) shows how to open a pull request without the banner.
+  </StuckItem>
+  <StuckItem question="My push was rejected.">
+    That usually means GitHub has commits on your branch that Claude Code doesn't have yet, for example a change made on github.com. Pull them first, then push again ([GitHub's guide](https://docs.github.com/en/get-started/using-git/dealing-with-non-fast-forward-errors)). Ask Claude Code: "Pull the latest changes for this branch from GitHub, then push again."
+  </StuckItem>
+  <StuckItem question="On Claude Code on the web, my branch has a different name from the one I asked for.">
+    Each task on the web gets its own branch. Ask Claude "Which branch am I on?" and use that name in the next lesson. It works the same way.
   </StuckItem>
 </StuckBlock>
 

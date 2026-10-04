@@ -2,12 +2,13 @@
 title: Branch vs fork
 slug: branch-vs-fork
 order: 20
-duration: 4
+duration: 7
 summary: "Don't mix these up: a fork is your own separate copy of a project, and a branch is your own lane inside a repo you share."
 requiresAccount: false
 recap:
   - "Fork: lives on your GitHub account, completely separate from the original. Use it for a project you're not a part of."
   - "Branch: lives inside the repo you and your team share. Use it when working with other people."
+  - "A clone is different again: a copy of a repo on your own computer."
 ---
 
 <Term term="fork">Forks</Term> and <Term term="branch">branches</Term> both give you your own copy of the code to change. The difference is where the copy lives.
@@ -26,6 +27,54 @@ recap:
 - **One repo, many branches:** each teammate works in their own lane, contributing to the same final project, at the same time.
 - **Use when:** working with other people.
 
+## An everyday comparison
+
+Think of a class recipe book.
+
+- **A fork** is like photocopying a whole recipe book that belongs to someone else and taking it home. You can scribble on your copy as much as you like. The original doesn't change. If you think the owner would like one of your changes, you can send it to them, and they decide.
+- **A branch** is like the class's own shared recipe book, where each person drafts their recipe on a spare page. When a recipe is ready, the class adds it to the main part of the book.
+
+## A worked example
+
+Two situations, with made-up names:
+
+- **Priya finds a typo** in a free, open source game made by people she doesn't know. She can't change their repo, so she forks it. Her fork is her own copy, on her account. She fixes the typo there, then opens a pull request asking the game's owners to take her fix. GitHub's glossary describes this: a fork lets you change a project "without affecting the original", and you can then open a pull request on the original ([GitHub glossary](https://docs.github.com/en/get-started/learning-about-github/github-glossary)).
+- **Priya, Ben and Leo are building one website together.** The repo belongs to Priya, and she adds the other two as <Term def="people the owner has invited to work in a repo. They can push branches to it.">collaborators</Term>. Each of them makes a branch inside that one repo. No forks needed.
+
+## How a fork is made
+
+You did this in Module 6's challenge. Here are the steps again, from GitHub's guide to [forking a repository](https://docs.github.com/en/pull-requests/how-tos/work-with-forks/fork-a-repo):
+
+1. On the original repo's page, click **Fork**.
+2. Under **Owner**, choose your own account.
+3. Keep the name, or change it.
+4. Leave **Copy the DEFAULT branch only** ticked.
+5. Click **Create fork**.
+
+<Callout kind="headsup">
+A fork of a public repo is public too. GitHub says: "You cannot change the visibility of a fork by itself." So never put personal details in a fork.
+</Callout>
+
+## Fork, branch or clone?
+
+A third word sounds similar. A <Term>clone</Term> is a copy of a repo on your own computer. It's how Claude Code on a laptop works on your files.
+
+- **Fork:** a new repo on your GitHub account. Use it to change a project you're not part of.
+- **Branch:** a lane inside the repo you share. Use it to work on your part of a team project.
+- **Clone:** a copy on your computer. Use it to work on a repo's files on your own device.
+
 ## Which one this module uses
 
 In this module you'll share one repo, with a team or as your own team, so you'll use **branches, not forks**.
+
+<CheckYourself>
+  <Question q="You want to suggest a fix to a popular open source app. You're not part of its team. Fork or branch?">
+    Fork. You can't make branches in a repo you're not part of, so you make your own copy on your account, fix it there, then open a pull request on the original.
+  </Question>
+  <Question q="Your team of three is building one game in a repo you all share. Fork or branch?">
+    Branch. Each of you makes your own branch inside the shared repo, then merges it back with a pull request.
+  </Question>
+  <Question q="You fork a public repo. Can you make your fork private?">
+    Not by itself. A fork of a public repo is public, so keep personal details out of it.
+  </Question>
+</CheckYourself>
