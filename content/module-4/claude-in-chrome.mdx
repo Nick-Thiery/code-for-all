@@ -2,16 +2,19 @@
 title: Download the Claude extension
 slug: claude-in-chrome
 order: 50
-duration: 4
-summary: Claude in Chrome lets Claude handle work in your browser. Watch the video, then download the extension.
+duration: 15
+summary: Claude in Chrome lets Claude handle work in your browser. Watch the video, then add the extension, set it to ask before every action and try a safe first task.
 requiresAccount: true
 needs:
-  device: A laptop or Chromebook with the Chrome browser. Some school devices block extensions; if yours does, just watch the video.
+  device: "A laptop with Google Chrome (not another browser, and not a phone). Some school devices block extensions; if yours does, just watch the video."
   access:
-    - Claude
+    - "Claude (Claude in Chrome needs a paid plan, which your session's access covers)"
 recap:
   - Claude in Chrome is a Chrome extension that lets Claude handle work in your browser.
-  - Download it from the Chrome Web Store, and open it using the access your Code for All session gives you.
+  - Add it from the Chrome Web Store, pin it, and sign in using the access your Code for All session gives you.
+  - "The extension is free to add, but Claude in Chrome needs a paid Claude plan. Your session's access covers it."
+  - "Switch it to Manually approve, so it asks before every action. Then choose Allow this time only or Deny each time."
+  - "Start with simple tasks on sites you trust. Keep it away from email, school portals and anything you're signed in to."
 ---
 
 In Module 3 you built a <Term>Chrome extension</Term> of your own. Claude also comes as one, made by Anthropic, the company behind Claude. It's called Claude in Chrome.
@@ -22,15 +25,94 @@ Watch Anthropic's video about Claude in Chrome. On limited data, save it for Wi-
 
 <VideoEmbed id="rBJnWMD0Pho" title="Let Claude handle work in your browser" />
 
+## What it does
+
+Anthropic describes it as "a browser extension that allows Claude to read, click, and navigate websites alongside you" ([Get started with Claude in Chrome](https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome)). It opens in Chrome's <Term def="a strip down the side of the browser window that stays open while you move between pages.">side panel</Term>, so you can watch what it does on the page.
+
+Think of it like letting a friend use your mouse while you sit next to them. It's useful, but you'd watch what they click, and you wouldn't let them into your messages.
+
+A few things to know first:
+
+- It's in <Term def="an early version that's still being tested, so it may change or have problems.">beta</Term>.
+- It works in **Google Chrome** on a computer. It doesn't work in other browsers built on Chrome, or on phones.
+- The extension is free to add, but using it needs a paid Claude plan (Pro, Max, Team or Enterprise). The access your Code for All session gives you covers it, so there's nothing to buy.
+
 <HandsOn />
 
 ## Claude Chrome extension download
 
-This part needs access; see [how hands-on access works](/access).
+This part needs access; see [how hands-on access works](/access). You don't need to sign up for anything yourself.
 
-Download it from the Chrome Web Store: [Claude Chrome Extension Download](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn). The extension is free. Then open it using the access your Code for All session gives you. You don't need to sign up for anything yourself.
+These steps come from Anthropic's [Get started with Claude in Chrome](https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome) page.
+
+1. **Open Google Chrome** and go to the Chrome Web Store listing: [Claude Chrome Extension Download](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn).
+
+   You should now see a page for an extension called **Claude**, made by Anthropic, like the picture below. Check the name and maker before you add anything.
+2. **Click Add to Chrome**, then **Add extension** in the box that pops up.
+3. **Sign in** when it asks, using the access your Code for All session gives you.
+4. **Pin it.** Click the puzzle-piece icon in Chrome's toolbar, then the pin next to **Claude**.
+
+   You should now see the Claude icon in the toolbar, next to the address bar.
+5. **Allow the permissions it asks for.** It needs them to read pages and click for you.
+6. **Click the Claude icon** to open the side panel.
+
+   You should now see Claude in a panel down the side of the window, with a box to type in.
 
 <Figure src="/lessons/module-4/claude-chrome-web-store.png" alt="The Claude extension's page on the Chrome Web Store, published by Anthropic, listed under Extension and Tools, with a video preview of Claude working in a side panel next to a document." width={1015} height={546} caption="The Claude extension on the Chrome Web Store, made by Anthropic." />
+
+## Make it ask before every action
+
+Claude in Chrome has three ways to work ([permissions guide](https://support.claude.com/en/articles/12902446-claude-in-chrome-permissions-guide)):
+
+- **Manually approve:** it stops and asks you before each action.
+- **Automatically approve:** it keeps going and checks its own actions for safety.
+- **Skip all approvals:** it acts without stopping and without those checks.
+
+The newer side panel starts on **Automatically approve**, and it remembers what you pick. Switch it to **Manually approve** while you're learning:
+
+7. **Find the permission setting** in the side panel. It's a drop-down on the box where you type your message.
+8. **Choose Manually approve.**
+
+   You should now see it say Manually approve, or Manual.
+
+<Screenshot caption="The permission drop-down on Claude in Chrome's message box, set to Manually approve.">Claude in Chrome's side panel with the permission drop-down open, showing Manually approve, Automatically approve and Skip all approvals</Screenshot>
+
+From now on, when Claude wants to do something, it asks. Read what it wants to do, then choose **Allow this time only** or **Deny**. Whatever mode you pick, it always asks first before it downloads a file, types in sensitive information or grants a permission on a site.
+
+## Try a safe first task
+
+Start with simple research on a site you trust. Open a page you'd like summarised, like a Wikipedia article, then ask in the side panel. These are examples:
+
+```prompt title="Example: summarise a page"
+Summarise this page in five bullet points.
+```
+
+Open a second tab on the same topic, then try:
+
+```prompt title="Example: compare two tabs"
+Compare these two tabs and list three differences.
+```
+
+Or ask it to walk through something step by step while you watch, approving each step.
+
+9. **Check it worked.** Claude answered in the side panel, the mode still says Manually approve, and it asked before any action it took on a page. That's it: you've set up Claude in Chrome.
+
+## Stay safe
+
+Anthropic's [safety page](https://support.claude.com/en/articles/12902428-use-claude-in-chrome-safely) says Claude in Chrome won't bypass captchas or type in sensitive data. It also advises against using it for:
+
+- financial accounts, legal documents or medical information
+- accounts with private information, like a work account
+- sites with other people's personal information
+
+So, while you're learning, keep it away from your email, school portals and anything you're signed in to. You're still responsible for anything it sends, buys or changes for you.
+
+Two more things to know:
+
+- **It takes screenshots** of the tabs it works in, so it can see the page.
+- **Its chats are saved to the account's history.** On a shared session account, other people may be able to see them. Don't open anything private while it's running.
+
+To see or remove the sites you've let it use: click the Claude icon, then the three dots, then **Extension settings**, and look under your approved sites.
 
 <StuckBlock>
   <StuckItem question="The extension asks me to sign up or log in.">
@@ -38,6 +120,18 @@ Download it from the Chrome Web Store: [Claude Chrome Extension Download](https:
   </StuckItem>
   <StuckItem question="My school device won't let me add extensions.">
     That's common on managed devices, and it's fine: the video shows what the extension does, and nothing later in the course needs it. Try it on a laptop in a session if you like. [Which device do you have?](/access#devices)
+  </StuckItem>
+  <StuckItem question="It won't install, or it won't let me sign in.">
+    Claude in Chrome needs a paid plan, so sign in with the access your Code for All session gives you. Anthropic's [troubleshooting page](https://support.claude.com/en/articles/12902405-claude-in-chrome-troubleshooting) also suggests clearing Chrome's cookies for claude.ai, then signing out and back in.
+  </StuckItem>
+  <StuckItem question="I'm using Edge, Brave or another browser, or a phone.">
+    Claude in Chrome only works in Google Chrome on a computer. Open this lesson in Chrome, or watch the video instead.
+  </StuckItem>
+  <StuckItem question="Claude can't see the page I'm on.">
+    Refresh the page. Check the extension is switched on, and that you've given it permission for that site.
+  </StuckItem>
+  <StuckItem question="The side panel looks different from this lesson.">
+    Anthropic has a newer side panel and an older, classic one, and buttons may sit in different places in each. To switch to the classic one, click the three dots in the panel's top corner and choose **Switch back to classic**.
   </StuckItem>
 </StuckBlock>
 

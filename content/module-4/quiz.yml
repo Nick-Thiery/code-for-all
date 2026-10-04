@@ -38,13 +38,13 @@ questions:
     explanation: "A SKILL.md starts with the name and a description that tells Claude what the skill does and when to use it. The instructions come after that."
     lesson: set-up-a-skill
 
-  - question: "You've uploaded your SKILL.md, but you want it to load automatically when you work on a project. What's the last step?"
+  - question: "You've uploaded the ZIP of your revision-notes skill, and it's in your list of skills. What's the last step before you rely on it?"
     options:
-      - "Paste the file's text into each new chat"
-      - "Link the skill to the project"
-      - "Make the skill again with Create with Claude"
-    answer: "Link the skill to the project"
-    explanation: "The fourth step is to attach the skill to a project. Once it's linked, it loads automatically."
+      - "Paste the SKILL.md text into each new chat"
+      - "Turn it on, then test it with a request it should help with"
+      - "Upload the same ZIP again so Claude remembers it"
+    answer: "Turn it on, then test it with a request it should help with"
+    explanation: "Once it's uploaded, make sure the skill's switch is on, then ask for something its description covers and check the answer follows your instructions. Skills work across Claude once they're on, so there's nothing to paste."
     lesson: set-up-a-skill
 
   - question: "A formula in your spreadsheet gives the wrong total, and you can't work out why. How can Claude in Excel help?"
@@ -56,13 +56,13 @@ questions:
     explanation: "Formula assistance is one of the three things Claude in Excel helps with. It can write, fix and explain formulas in plain English, right inside your spreadsheet."
     lesson: claude-in-excel
 
-  - question: "Claude in Excel tells you the wettest day in the weather data was 14 August. What should you do before you put that in your explanation?"
+  - question: "Claude in Excel tells you the wettest day in the weather data was 11 September, with 28.5 mm. What should you do before you put that in your explanation?"
     options:
       - "Nothing, because Claude read the whole sheet so it can't be wrong"
-      - "Find 14 August and check its Rainfall (mm) cell yourself"
+      - "Find 11 September and check its Rainfall (mm) cell yourself"
       - "Ask again and use whichever answer comes up twice"
       - "Copy the data into a normal chat and ask there too"
-    answer: "Find 14 August and check its Rainfall (mm) cell yourself"
+    answer: "Find 11 September and check its Rainfall (mm) cell yourself"
     explanation: "Claude can show which cells its numbers came from, but you should still check its answers against the cells. Looking at the cell yourself is the quickest way to be sure."
     lesson: claude-in-excel
 

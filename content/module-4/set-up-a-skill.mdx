@@ -2,18 +2,20 @@
 title: How to set up a skill
 slug: set-up-a-skill
 order: 30
-duration: 10
+duration: 25
 requiresAccount: true
 needs:
-  device: A laptop or Chromebook
+  device: "A laptop or Chromebook: you'll make a folder and zip it, which is hard on a phone or tablet"
   access:
     - Claude
   before:
-    - "A SKILL.md file with your instructions in it (any text editor works; see step 3)"
-summary: Add a skill of your own to Claude in four steps.
+    - "An idea for a skill: something you ask Claude to do the same way again and again ([what are skills?](/module-4/what-are-skills))"
+summary: Write a SKILL.md, zip its folder, upload it to Claude and test that Claude uses it.
 recap:
-  - "Four steps: open Skills under Customize, create a skill, upload your SKILL.md, attach it to a project."
-  - A SKILL.md starts with the skill's name and a description of when to use it, then the instructions.
+  - "Four steps: open Skills under Customize, create a skill, upload a ZIP of your skill folder, then turn it on and test it."
+  - "A SKILL.md starts with a name and a description between two --- lines, then the instructions. The name uses lowercase letters, numbers and hyphens, and matches the folder's name."
+  - Zip the folder itself, not the file inside it.
+  - "Skills need Code execution and file creation switched on, in Settings, then Capabilities."
   - Claude's menus change often. If a button has moved, look for Skills under Customize.
   - "A plugin is a bundle: skills, connectors and more, installed together. You don't need any for this course."
 ---
@@ -28,14 +30,135 @@ This part needs access; see [how hands-on access works](/access). Open Claude us
 
 1. **Access Portal.** On Claude.ai, go to **Customize**, then **Skills**.
 2. **Add Skill.** Click the **+** button, then **Create skill**, then **Upload a skill**.
-3. **Upload File.** Upload your SKILL.md file with your instructions.
-4. **Attach.** Link the skill to a project so it loads automatically.
+3. **Upload File.** Upload a <Term def="one file that holds a folder and everything in it, squeezed smaller. Its name ends in .zip.">ZIP file</Term> of your skill's folder, with your SKILL.md inside.
+4. **Turn on and test.** Switch the skill on, then ask for something it should help with.
 
-A SKILL.md is a plain text file named SKILL.md. Write it in any text editor, like Notepad, TextEdit or Google Docs (download it as plain text). It starts with the skill's name and a line about when to use it, then your instructions.
+The rest of this lesson walks through each step, starting with writing the file.
 
 <Callout kind="headsup">
 Claude's menus change often, so a button may have moved since this was written. If you can't find one, look for **Skills** under **Customize**.
 </Callout>
+
+## Before you start: check skills are switched on
+
+Skills need a setting called **Code execution and file creation**. It's on by default, but check it once. ([Use skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude))
+
+1. In Claude, open **Settings**, then **Capabilities**.
+2. Find **Code execution and file creation** and make sure its switch is on.
+
+If you can't change it, ask in your Code for All session.
+
+## Step by step: write your SKILL.md
+
+A SKILL.md is a plain text file. It has a label at the top, between two lines of three dashes (`---`), then your instructions. ([Create custom skills](https://claude.com/docs/skills/how-to))
+
+Here's the example from the last lesson. It's ours, written in the official format:
+
+```text title="revision-notes/SKILL.md"
+---
+name: revision-notes
+description: Turns my class notes into revision notes. Use when I ask for revision notes, a study summary or flashcards.
+---
+# Revision notes
+1. Start with a one-line summary.
+2. Use no more than 8 bullet points, in British English.
+3. End with 3 quiz questions and their answers.
+```
+
+### The rules for the label
+
+The `name` line ([Agent Skills overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)):
+
+- uses only lowercase letters, numbers and hyphens (-), with no spaces
+- is 64 characters or fewer
+- doesn't start or end with a hyphen, and never has two hyphens in a row
+- can't contain the words "anthropic" or "claude"
+- is exactly the same as the name of the folder the file sits in
+
+The `description` line says what the skill does and when to use it. Claude reads it to decide when to load the skill, so use the words you'd use when asking. Keep it under 200 characters, which is the limit on [Anthropic's help page](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills).
+
+After the second `---`, write your instructions in plain words. Numbered steps work well. Keep them under 500 lines; most skills need far fewer.
+
+### Write it
+
+1. **Make a new folder** on your computer and give it your skill's name, like `revision-notes`.
+2. **Open a text editor**, like Notepad on Windows, TextEdit on a Mac, or Google Docs.
+3. **Write your SKILL.md.** Start from the example above, or fill in the gaps in this one:
+
+   ```text title="SKILL.md (fill in the gaps)"
+   ---
+   name: your-skill-name
+   description: What it does. Use when I ask for [the words you'd use].
+   ---
+   # Your skill's title
+   1. [First instruction]
+   2. [Second instruction]
+   3. [Third instruction]
+   ```
+
+4. **Save it as SKILL.md** inside your new folder. The name must be exactly `SKILL.md`, in capitals.
+
+   Using Google Docs? Download it as plain text. That gives you a file ending in `.txt`, so rename it to exactly `SKILL.md` and move it into your folder.
+
+You should now see a folder, like `revision-notes`, with one file inside it called `SKILL.md`. If the file is called `SKILL.md.txt` or `SKILL.txt`, rename it.
+
+### Zip the folder
+
+Claude takes a skill as a ZIP of its folder. Zip **the folder itself**, not the file inside it. The official docs warn that a SKILL.md sitting on its own at the top of the ZIP isn't recognised as a skill ([Create custom skills](https://claude.com/docs/skills/how-to)).
+
+- **Windows:** right-click the folder, choose **Show more options**, then **Send to**, then **Compressed (zipped) folder**. ([Microsoft's guide](https://support.microsoft.com/en-us/windows/zip-and-unzip-files-8d28fa72-f2f9-712f-67df-f80cf89fd4e5))
+- **Mac:** Control-click the folder and choose **Compress**. ([Apple's guide](https://support.apple.com/guide/mac-help/zip-and-unzip-files-and-folders-on-mac-mchlp2528/mac))
+- **Chromebook:** open the **Files** app, select the folder, right-click it and choose **Zip**. ([Google's guide](https://support.google.com/chromebook/answer/1700055))
+
+You should now see a new file next to your folder, like `revision-notes.zip`.
+
+## Step by step: upload it to Claude
+
+1. **Open Skills.** In Claude, click **Customize** in the left sidebar, then **Skills**. ([Browse skills, connectors and plugins](https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory))
+
+   You should now see a list of skills, which may already include some from Anthropic.
+2. **Start a new skill.** Click the **+** button, then **Create skill**.
+3. **Choose Upload a skill** and pick your ZIP file.
+
+   You should now see your skill in the list, with the name from its SKILL.md. If you see an error instead, look in the Stuck box.
+
+## Step by step: turn it on and test it
+
+1. **Turn it on.** In **Customize**, then **Skills**, find your skill and make sure the switch next to it is on.
+2. **Start a new chat** and ask for something your description covers. For the revision-notes example, paste some notes from a lesson and write:
+
+   ```prompt title="Example: a request that should use the skill"
+   Make revision notes from these notes.
+   ```
+3. **Check that it used the skill.** The answer should follow your instructions: for the example, a one-line summary, up to 8 bullet points and 3 quiz questions. If Claude shows its thinking, look there too: Anthropic's help says to "review Claude's thinking to confirm it's loading the skill".
+4. **Not used?** You can pick the skill yourself. Type `/` to see your skills and choose it from the list, or name it in your request ([Use skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude)):
+
+   ```prompt title="Example: naming the skill"
+   Use my revision-notes skill to make revision notes from these notes.
+   ```
+
+   Then improve the description so Claude finds it on its own next time.
+5. **Check it worked.** In a brand-new chat, ask for your task in your own words, without naming the skill. If the answer follows your instructions, your skill works. That's the second half of this module's Challenge done.
+
+Want to change it? Edit SKILL.md, zip the folder again and upload the new ZIP.
+
+## Other ways to get a skill
+
+You don't have to upload a file.
+
+- **Create with Claude.** It's in the same **Create skill** menu. Or start a chat with "I want to create a skill for…": Claude uses a skill from Anthropic called skill-creator, asks you questions and writes the SKILL.md with you. ([How to create a skill with Claude](https://academy.claude.com/tutorials/how-to-create-a-skill-with-claude-through-conversation))
+
+  ```prompt title="Example: making a skill by chatting"
+  I want to create a skill for turning my class notes into revision notes. Ask me questions one at a time, then write the SKILL.md.
+  ```
+- **Write skill instructions** is also in that menu. It isn't described in Anthropic's help pages yet, so follow what it shows you.
+- **Ready-made skills.** Click **+**, then **Browse skills**, then **Add** on a skill you want. ([Browse skills, connectors and plugins](https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory))
+
+Anthropic's own skills for Excel, Word, PowerPoint and PDF files are already built in, and Claude uses them by itself: "You don't need to explicitly invoke them". Try this to see one at work:
+
+```prompt title="Example: a built-in skill"
+Make a one-slide PowerPoint about Singapore's weather.
+```
 
 ## What it looks like
 
@@ -69,8 +192,20 @@ You don't need any plugins for this course. Your own skill is enough.
   <StuckItem question="Claude asks me to sign up or log in.">
     Don't create your own account: Claude accounts are for people aged 18 and over. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access). You can keep reading the lessons without it.
   </StuckItem>
+  <StuckItem question="I can't see Skills, or it's greyed out.">
+    Turn on **Code execution and file creation** in **Settings**, then **Capabilities**. Then go back to **Customize**, then **Skills**. If you can't change the setting, ask in your Code for All session.
+  </StuckItem>
   <StuckItem question="I can't find the button in step 2.">
     Claude's menus change often. Go to **Customize**, then **Skills**, and look for the **+** button.
+  </StuckItem>
+  <StuckItem question="The upload fails.">
+    Anthropic's help lists four causes. The ZIP is too big: take out anything but SKILL.md. The folder's name doesn't match the `name` line: make them exactly the same. SKILL.md is missing: check the file is called exactly SKILL.md and is inside the folder. Or the name or description has characters that aren't allowed: use only lowercase letters, numbers and hyphens in the name. One more to check: zip the folder itself, not the SKILL.md file on its own.
+  </StuckItem>
+  <StuckItem question="My file is called SKILL.md.txt.">
+    Your editor added `.txt`. Rename the file to exactly `SKILL.md`, then zip the folder again.
+  </StuckItem>
+  <StuckItem question="Claude isn't using my skill.">
+    Check its switch is on in **Customize**, then **Skills**. Then make the description say clearly when to use it, with the words you'd use in a request. Or be explicit: name the skill in your message, or type `/` and pick it.
   </StuckItem>
   <StuckItem question="I don't know what to put in my SKILL.md.">
     Start small. Name the skill, say when Claude should use it, then write three or four instructions, like "Always answer in British English" or "Keep answers under 100 words". You can also pick **Create with Claude** in step 2 and let Claude write it with you.
