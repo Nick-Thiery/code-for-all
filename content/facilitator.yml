@@ -202,7 +202,7 @@ modules:
     prepare:
       - "Find \"Handoff to Claude Code…\" in Claude Design's Export menu before the session. It's easy to miss."
       - "Try the handoff once yourself. If Claude Code can't reach the design, lesson 2's Stuck box has the fix."
-      - Google Chrome on each laptop. Lesson 5 uses F12 and the Console tab to read errors.
+      - "Google Chrome on each laptop. Lesson 5 opens the Console with Ctrl+Shift+J (Cmd+Option+J on a Mac) to read errors. F12 opens whichever DevTools panel was used last, needs Fn on a Mac, and many Chromebooks have no F12 key."
       - "Each learner needs a project folder on their laptop for Claude Code to build in."
     links:
       - label: tiiny.host
@@ -216,7 +216,7 @@ modules:
         do: Show where the handoff is. Learners copy the handoff prompt and paste it into Claude Code in their project folder.
       - minutes: 5
         lessons: [what-claude-code-actually-does]
-        do: "Explain the difference between an agent and a chatbot, and that errors are normal: type continue."
+        do: "Explain the difference between an agent and a chatbot, and what to do at a usage limit: leave Claude Code open and wait for the reset time in the message, and it carries on by itself. Type continue only if it doesn't. Never run /usage-credits: it buys extra usage."
       - minutes: 20
         lessons: [after-hand-off]
         do: Learners tell Claude Code to build, watch it work, then make the site actually work.
