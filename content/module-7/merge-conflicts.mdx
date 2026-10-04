@@ -2,12 +2,13 @@
 title: "Merge conflicts: you will hit one"
 slug: merge-conflicts
 order: 50
-duration: 8
+duration: 12
 summary: Why merge conflicts happen, what one looks like, how to fix it, and the escape hatch if you get stuck.
 requiresAccount: false
 recap:
   - A merge conflict happens when two branches change the same line. Instead of assuming which is correct, Git stops and asks you.
-  - "Git shows you both versions: what's on main (top) and what's on your branch (bottom)."
+  - "Git shows you both versions. The top part belongs to the branch you're on (HEAD); the bottom part is the branch being merged in, named on the last line."
+  - "On GitHub's Resolve conflicts page, that means your branch is on top and main is at the bottom."
   - "To fix it: keep the version you want or combine both, delete the marker lines, then commit again. Or paste the block into Claude Code."
 ---
 
@@ -16,6 +17,10 @@ You will hit one. That's normal: a <Term>merge conflict</Term> doesn't mean you 
 ## Why it happens
 
 This tends to happen when two <Term term="branch">branches</Term> change the **same line**. Instead of assuming which is correct, Git stops and asks you.
+
+If two branches change *different* lines, or different files, Git joins them together by itself. A conflict only happens when the same line of the same file was changed in two different ways ([GitHub: about merge conflicts](https://docs.github.com/en/pull-requests/reference/merge-conflicts)).
+
+Think of two friends editing the same shared shopping list. One changes "6 eggs" to "12 eggs". The other changes "6 eggs" to "no eggs". Nobody can just add both changes together. Someone has to decide. That's a merge conflict.
 
 ## What it looks like
 
@@ -29,16 +34,35 @@ Say main and your branch, alex-keyboard, both changed the Wordle page title. Git
 >>>>>>> alex-keyboard
 ```
 
-Git shows you both versions: what's on main (top) and what's on your branch (bottom).
+Git shows you both versions, between three <Term def="lines Git adds to a file to show where a conflict starts, where its two versions meet, and where it ends.">marker lines</Term>. Which version is on top depends on which branch you're on when the branches are joined ([how Git shows conflicts](https://git-scm.com/docs/git-merge#_how_conflicts_are_presented)):
 
-In this example:
+- **The top part**, between `<<<<<<<` and `=======`, belongs to the branch you're on. Git calls it <Term def="Git's name for the branch you're on right now.">HEAD</Term>.
+- **The bottom part**, between `=======` and `>>>>>>>`, comes from the branch being merged in. Its name is on the last line.
 
-- The top version sits between `<<<<<<< HEAD` and `=======`. That's main.
-- The bottom version sits between `=======` and `>>>>>>> alex-keyboard`. That's your branch, named on the last line.
+In this example, you're on main and merging alex-keyboard into it. That's what you'd see if you merged alex-keyboard into main on your computer, for example with Claude Code. So:
+
+- The top version, after `<<<<<<< HEAD`, is main's: "Wordle by Team 3".
+- The bottom version, before `>>>>>>> alex-keyboard`, is your branch's: "Team 3 Wordle".
+
+### On GitHub, it's the other way round
+
+You'll usually fix conflicts on GitHub, with the **Resolve conflicts** button on a pull request. GitHub does it the other way: it merges main into your branch. So your branch is on top, and main is at the bottom ([GitHub Skills](https://github.com/skills/resolve-merge-conflicts)):
+
+```html
+<<<<<<< alex-keyboard
+<h1>Team 3 Wordle</h1>
+=======
+<h1>Wordle by Team 3</h1>
+>>>>>>> main
+```
+
+Same conflict, same two titles. The rule hasn't changed: the top belongs to the branch you're on, and the last line names the one coming in. When in doubt, read the names on the first and last marker lines.
 
 Here's a conflict in a real code editor, from a different project:
 
 <Figure src="/lessons/module-7/merge-conflict-in-an-editor.png" alt="A code editor showing index.html from a project called carparts-website_conflict, on main. Inside a navigation list, a line reading <<<<<<< HEAD comes before four links: Home, About Us, Product and Imprint. Then a line of equals signs. Then two links: Returns and FAQ. Then a line reading >>>>>>> develop." width={914} height={484} caption="This conflict is from a different project. The branch being merged in here is called develop, not alex-keyboard." />
+
+Here, the project is on main, so the top part (four links) is main's, and the bottom part (two links) comes from develop.
 
 ## How to fix it
 
@@ -52,6 +76,14 @@ For example, in the Wordle conflict, to keep main's title, those five lines beco
 <h1>Wordle by Team 3</h1>
 ```
 
+Sometimes you want both. In the editor picture above, main added four links and develop added two. Neither is wrong, so combining both would keep all six links, with the three marker lines deleted.
+
+Before you commit, check that no marker lines are left anywhere in the file. A leftover marker line can show up on your page, or stop your code working.
+
+<Callout kind="tip">
+The [Wordle task](/module-7/recreate-wordle) walks you through fixing a conflict on GitHub, click by click: **Resolve conflicts**, **Mark as resolved**, then **Commit merge**.
+</Callout>
+
 ## The escape hatch
 
 An escape hatch is the easy way out. Paste the entire block of code into Claude Code, then say:
@@ -62,9 +94,20 @@ I have a merge conflict in <name of the file>. Please help me resolve it and kee
 
 Replace `<name of the file>` with the name of the file that has the conflict.
 
+If Claude Code is already working in your project, you don't even need to paste the block. Claude Code's own guide suggests asking ([Claude Code quickstart](https://code.claude.com/docs/en/quickstart)):
+
+```prompt title="Example: from Claude Code's guide"
+help me resolve merge conflicts
+```
+
+Claude Code can find the conflict and suggest a fix. Read what it chose before you accept it: you decide which version wins.
+
 <CheckYourself>
-  <Question q="Look at the Wordle conflict above. Which title is on main, and which is on your branch?">
-    "Wordle by Team 3" is on main: it's the top version, straight after `<<<<<<< HEAD`. "Team 3 Wordle" is on your branch, alex-keyboard: it's the bottom version, just before `>>>>>>> alex-keyboard`.
+  <Question q="Look at the first Wordle conflict, the one whose first line ends in HEAD. You're on main, merging alex-keyboard in. Which title is on main, and which is on your branch?">
+    "Wordle by Team 3" is on main: it's the top version, straight after `<<<<<<< HEAD`, and HEAD is the branch you're on. "Team 3 Wordle" is on your branch, alex-keyboard: it's the bottom version, just before `>>>>>>> alex-keyboard`.
+  </Question>
+  <Question q="Now you're on GitHub's Resolve conflicts page, for alex-keyboard's pull request. Which part is your branch?">
+    The top part. GitHub merges main into your branch, so your branch is on top (named on the `<<<<<<<` line) and main is at the bottom (named on the `>>>>>>>` line).
   </Question>
   <Question q="Why does Git stop and ask you, instead of picking a version itself?">
     Two branches changed the same line. Instead of assuming which is correct, Git stops and asks you.
