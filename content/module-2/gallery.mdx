@@ -2,9 +2,16 @@
 title: Gallery
 slug: gallery
 order: 50
-duration: 4
+duration: 15
 summary: Put your first draft and your refined version side by side, and see what a better prompt changed.
-requiresAccount: false
+requiresAccount: true
+needs:
+  device: A laptop or Chromebook
+  access:
+    - Lovable
+  before:
+    - "Your first draft from the [solo sprint](/module-2/solo-sprint)"
+    - "Your refined version from [Using refined prompts](/module-2/using-refined-prompts)"
 recap:
   - Put your first draft and your refined version side by side.
   - Write down three things that changed.
@@ -27,9 +34,112 @@ Here's the About Me site from [Module 1](/module-1/build-about-me) done twice: o
 
 <GalleryCompareDiagram />
 
-<Callout kind="headsup">
-If you share a link to your site, remember it's public. Check it has no full name, school, address, phone number or photos of you on it.
-</Callout>
+Look at change 2. The short prompt said nothing about the look, so the first draft is plain. The stronger prompt said "playful, light background, bold headings, one accent colour", and the second version has a light background, bold headings and one accent colour. That change came straight from the prompt.
+
+It's like a "spot the difference" puzzle, except you also ask: why did this change?
+
+<HandsOn />
+
+## Put them side by side
+
+This part needs access; see [how hands-on access works](/access).
+
+How you do this depends on which way you used in [the last lesson](/module-2/using-refined-prompts).
+
+**If you made a fresh project (way 1):**
+
+1. Open [Lovable](https://lovable.dev) and click **Recents** in the dashboard sidebar.
+2. Open your first draft. Then open your refined version in a second browser tab.
+3. Put the two tabs side by side, or switch between them.
+
+**If you changed your first draft (way 2):**
+
+1. Open your project and click **History** next to the project name.
+2. Click your first draft in the list. Open its **More actions** menu and choose **Open preview in new tab**. ([Lovable's guide to version history](https://docs.lovable.dev/features/projects/history))
+3. Back in Lovable, click **Back to latest**. Now one tab shows your first draft and the other shows your refined version.
+
+Took a screenshot of your first draft? You can use that instead.
+
+**Check it worked:** you can see both versions, one after the other.
+
+## Write down three things that changed
+
+Click through both versions like a visitor would. Look at:
+
+- **Pages:** are there new pages, or new things on a page?
+- **The look:** colours, fonts, buttons and space.
+- **The words:** are they real, or vague and made-up-sounding?
+- **On a phone:** click **Mobile view** above the preview in each one. ([Lovable's guide to the preview](https://docs.lovable.dev/features/projects/preview))
+
+For each change, find the line in your refined prompt that caused it. If you can't find one, Lovable guessed.
+
+<SaveHere id="gallery-changes" label="Three things that changed, and the prompt line behind each" placeholder="1. The results page now has an emoji for each noodle. My refined prompt asked for one." rows={5} />
+
+<CheckYourself>
+  <Question q="Your refined site has bigger buttons, but your refined prompt doesn't mention buttons. What does that tell you?">
+    Lovable guessed. Next time, if you want big buttons, say so in the prompt.
+  </Question>
+  <Question q="Your refined prompt said 'cream background', and the new version has one. Where did that change come from?">
+    From your prompt. You named the colour, so Lovable didn't have to guess.
+  </Question>
+</CheckYourself>
+
+<HandsOn />
+
+## Show both to someone
+
+This part needs access; see [how hands-on access works](/access).
+
+The simplest way is to show someone your screen: a friend, someone at home or your Code for All session. Tell them the three changes you found.
+
+To send them a link instead, publish your site. Before you do, check it:
+
+<PublishSafely />
+
+On Lovable's Free plan, anyone with the link can visit your site, and you can't make it private. So treat the link as public. ([Lovable's guide to publishing](https://docs.lovable.dev/features/publish))
+
+### Publish your site
+
+1. Open the project you want to share. Click **Publish** at the top right of the editor, next to **Share**. On a narrow window it may show only an icon.
+
+   You should now see a box with a **Website URL** ending in `lovable.app`. Lovable runs a quick security check.
+
+2. Click **Publish**.
+3. **Check it worked.** You should see **Your website is live**, with buttons to copy the link and visit the site. Click to visit it, and check it looks right.
+
+Publishing this way doesn't use credits. Sites on the Free plan show a small **Edit with Lovable** badge.
+
+If you made two projects (way 1), publish each one, and share both links. If you changed your first draft (way 2), the link shows only your newest version: show your first draft from History on your screen, or share your screenshot of it.
+
+### Keep it up to date, or take it down
+
+- **Changed your site after publishing?** The live site is a snapshot: it doesn't change by itself. Click **Publish**, then **Publish changes**. A dot on **Publish** means you have changes that aren't live yet.
+- **Want to take it down?** Open the Publish box, click the **⋮** menu and choose **Unpublish**.
+
+### Share a preview instead (optional)
+
+Not ready to publish? You can share a <Term def="a link that lets anyone see your site in Lovable before it's published. On the Free plan it stops working after 7 days.">preview link</Term>. Click **Share**, then **Share preview**, then **Create new preview link**. Anyone with it can open it, and on the Free plan it stops working after 7 days. ([Lovable's guide to sharing](https://docs.lovable.dev/features/share-project))
+
+<StuckBlock>
+  <StuckItem question="Lovable asks me to sign up or log in.">
+    You don't need to sign up for Lovable yourself. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access).
+  </StuckItem>
+  <StuckItem question="I can't find my first draft.">
+    If you made a fresh project, look in **Recents** or **Projects** in the dashboard sidebar, or press Ctrl+K (Cmd+K on a Mac) and search. If you changed your first draft, click **History** next to the project name: it's the oldest version.
+  </StuckItem>
+  <StuckItem question="I can't spot three changes.">
+    Look at one thing at a time: first the pages, then the colours, then the words, then Mobile view. Read your refined prompt line by line and check each one in the new version.
+  </StuckItem>
+  <StuckItem question="Publish says there are build errors.">
+    Click **Try to fix** in the Publish box. When the errors are fixed, try **Publish** again. ([Lovable's guide to publishing](https://docs.lovable.dev/features/publish))
+  </StuckItem>
+  <StuckItem question="I changed my site, but the live link still shows the old version.">
+    The live site is a snapshot. Click **Publish**, then **Publish changes**.
+  </StuckItem>
+  <StuckItem question="I published something I shouldn't have.">
+    Take it down straight away: open the Publish box, click the **⋮** menu and choose **Unpublish**. Then remove the details from your site before you publish again.
+  </StuckItem>
+</StuckBlock>
 
 <Challenge title="Build a site that predicts something">
 Build a Lovable site that predicts or forecasts something. A stock direction tool, a weather predictor, etc. Pick something real. Pull data from somewhere if you can. Show your reasoning for the prediction logic.

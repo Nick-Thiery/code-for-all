@@ -2,20 +2,21 @@
 title: Using refined prompts
 slug: using-refined-prompts
 order: 40
-duration: 8
+duration: 25
 summary: Check the refined prompt Claude gave you, then paste it into Lovable with one line in front.
 requiresAccount: true
 needs:
   device: A laptop or Chromebook
   access:
-    - Lovable
+    - Lovable, with enough credits for one full build
   before:
     - "The refined prompt Claude gave you in [Using AI to make better prompts](/module-2/better-prompts-with-ai)"
-    - "Your first draft, still open in Lovable"
+    - "Your first draft in Lovable, from the [solo sprint](/module-2/solo-sprint)"
 recap:
   - Be specific about layout, colours and audience.
   - Check over the prompt to make sure it has the elements you want.
   - "Paste it into Lovable with “This is a refined prompt, make the required changes: ” in front."
+  - Your first draft is kept in History, or in its own project, so you can compare the two.
 ---
 
 Claude has given you a refined <Term>prompt</Term>: a better version of the one you wrote in the [solo sprint](/module-2/solo-sprint). Before you use it, check it.
@@ -26,6 +27,31 @@ Claude has given you a refined <Term>prompt</Term>: a better version of the one 
 
 - **Be specific about layout, colours, and audience.** If the refined prompt still leaves any of these vague, change it to say exactly what you mean.
 - **Check over the prompt to ensure it has the elements you want.** It's your site. If something you want is missing, add it. If something's there that you don't want, take it out.
+
+### How to check it
+
+Read the refined prompt slowly, one line at a time. Then go through this list. Change the prompt in your notes file as you go.
+
+- **Layout.** Does it name every page, and say what goes on each one?
+- **Colours.** Does it name real colours or style words? "Cream background with one orange accent" tells Lovable much more than "a colourful design".
+- **Audience.** Does it say who the site is for?
+- **What you want.** Is everything you wanted in there? Look back at the two or three things you jotted down after your first draft.
+- **What you don't want.** Take out anything you didn't ask for. Take out any login, sign in, database or real payments too: Lovable's own advice is to leave those out at first. ([Lovable's Getting started guide](https://docs.lovable.dev/introduction/getting-started))
+- **Personal details.** No full names, school, address, phone number or photos of you.
+
+### An example
+
+Say Claude's refined prompt for the noodle quiz says:
+
+> Use a colourful, modern design.
+
+That's vague. Lovable will have to guess which colours, and "modern" could mean almost anything. You change it to:
+
+> Design style: playful and bright. Cream background, one orange accent colour, big rounded buttons and friendly headings.
+
+Now Lovable doesn't have to guess.
+
+When you've finished checking, paste the final version into your notes file. If you changed it, update the saved box at the top of this lesson too.
 
 <HandsOn />
 
@@ -41,20 +67,101 @@ This is a refined prompt, make the required changes:
 
 So your message to Lovable is that line, followed straight away by your refined prompt.
 
+### Pick one of two ways
+
+You can use your refined prompt in two ways. Both work. Not sure? Use way 1.
+
+- **Way 1: A fresh project.** Paste the refined prompt on its own into a new project. Your first draft stays exactly as it was, as its own project. To compare, open both from **Recents**.
+- **Way 2: Change your first draft.** Paste the line above, then the refined prompt, into the chat of your first draft. Lovable keeps your first draft in **History**, so you can still look at it.
+
+Way 2 is what the class did. It sends lots of changes in one message. That works, but Lovable's own advice is "one change per prompt", because a big prompt can make changes you didn't ask for. If that happens, way 2 shows you what to do. ([Lovable's guide, From idea to app](https://docs.lovable.dev/tips-tricks/from-idea-to-app))
+
+Either way, a full rebuild uses more <Term def="Lovable's allowance for building. Each change you ask for uses some.">credits</Term> than a small change. On the Free plan you get 5 a day. ([Lovable's guide to credits](https://docs.lovable.dev/introduction/credits-and-usage))
+
 <Callout kind="tip">
-Before you paste, take a screenshot of your first draft. In the [next lesson](/module-2/gallery) you'll put it side by side with the new version.
+Before you paste, take a screenshot of your first draft. In the [next lesson](/module-2/gallery) you'll put it side by side with the new version. It's a backup: Lovable keeps your first draft too.
 </Callout>
 
-When Lovable is done, look at what changed.
+### Way 1: A fresh project
+
+A new project builds your site from scratch. There's nothing to change yet, so you don't need the line in front.
+
+1. Copy your refined prompt. Use the **Copy** button on it at the top of this lesson, or copy it from your notes file.
+2. Open [Lovable](https://lovable.dev). You should see the dashboard, with the box that says "Ask Lovable to create…". If you see a project instead, click the menu icon at the top left to get back to the dashboard.
+3. Check that the mode picker beside the send button says **Build**. If it says Chat or Plan, click it and choose **Build**.
+4. Paste your refined prompt into the box and click the send button.
+5. If Lovable shows design directions or asks about fonts and colours, pick the one closest to your refined prompt and click **Submit**.
+6. Wait a few minutes while it builds. You should now see the editor, with your new version in the preview.
+7. Give it a name you'll recognise, like "Noodle quiz, refined". On the dashboard, click **⋯** on its card, then **Edit**, then **Name**. ([Lovable's guide to the dashboard](https://docs.lovable.dev/introduction/dashboard-overview))
+8. **Check it worked.** In the dashboard sidebar, click **Recents**. You should see two projects: your first draft and your refined version.
+
+### Way 2: Change your first draft
+
+1. Open your first draft. On the dashboard, click **Recents** in the sidebar, then click its card.
+2. Check that the mode picker beside the chat box says **Build**.
+3. Copy the line from the box above (use its **Copy** button) and paste it into the chat box at the bottom of the chat.
+4. Copy your refined prompt and paste it straight after the line. Then press Enter.
+
+   You should now see Lovable working on the changes. When it's done, the preview shows the new version.
+
+5. Look at what changed. Did it change anything you didn't ask for?
+
+   - **All good?** You're done.
+   - **Something went wrong?** Click **Undo latest edit** under Lovable's latest reply to get your first draft back. ([Lovable's guide to version history](https://docs.lovable.dev/features/projects/history)) Then send the changes one at a time instead, as Lovable recommends. Go through your refined prompt and send each difference as its own short message. Check the preview after each one before you send the next.
+
+   Here are some example one-change messages:
+
+   ```prompt title="Example: one change to the look"
+   Make the background cream. Leave the rest of the site unchanged.
+   ```
+
+   ```prompt title="Example: one change to a page"
+   Only change the results page: add an emoji and a short, funny description for each result. Leave the rest of the site unchanged.
+   ```
+
+6. **Check it worked.** The preview should show your refined version. Click **History** next to the project name: your first draft should be in the list.
+
+## Compare with History
+
+Lovable saves every change as a version, so your first draft is never lost. Here's how to look at it again. ([Lovable's guide to version history](https://docs.lovable.dev/features/projects/history))
+
+1. Click **History** next to the project name.
+
+   You should now see a list of versions, with two tabs: **History** and **Bookmarks**.
+
+   <Screenshot caption="Lovable's History panel, with the History and Bookmarks tabs and a list of versions.">Lovable's History panel showing a list of versions with the History and Bookmarks tabs, from a neutral account with no names or avatars</Screenshot>
+
+2. Click an older version, like your first draft. The preview shows that version. Nothing has changed yet: you're only looking.
+3. To see it full screen in its own tab, open the version's **More actions** menu and choose **Open preview in new tab**. Keep that tab open for the [next lesson](/module-2/gallery).
+4. Click **Back to latest** to return to your newest version.
+
+Don't click **Revert** unless you want to go back to that version for real. Going back doesn't give back the credits a change used.
+
+**Check it worked:** you can switch between your first draft and your refined version, either in **History** or between your two projects in **Recents**.
 
 <StuckBlock>
   <StuckItem question="Lovable asks me to sign up or log in.">
     You don't need to sign up for Lovable yourself. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access).
   </StuckItem>
+  <StuckItem question="It started chatting about my prompt instead of building.">
+    The mode picker is on **Chat**. Click it, choose **Build** and send your prompt again. Or click the **Start building** card if Lovable shows one. ([Lovable's guide to Chat mode](https://docs.lovable.dev/features/chat-mode))
+  </StuckItem>
   <StuckItem question="The new version still isn't what I wanted.">
-    Go back over the two checks: be specific about layout, colours and audience, and make sure the prompt has the elements you want. Then paste it into Lovable again, with the line above in front.
+    Go back over the two checks: be specific about layout, colours and audience, and make sure the prompt has the elements you want. Then fix what's left one change at a time, in the chat. Say what must stay the same, like "Only change the results page. Leave the rest of the site unchanged."
+  </StuckItem>
+  <StuckItem question="Lovable changed things I didn't ask for.">
+    Click **Undo latest edit** under Lovable's latest reply. Then send your changes one at a time, checking the preview after each. A big prompt can make changes you didn't ask for; small ones don't.
+  </StuckItem>
+  <StuckItem question="I can't find my first draft any more.">
+    Click **History** next to the project name and click the oldest version to look at it. To go back to it for real, click **Revert to this version** under that reply in the chat, or **Revert** in History. ([Lovable's guide to version history](https://docs.lovable.dev/features/projects/history))
   </StuckItem>
   <StuckItem question="I lost the refined prompt Claude gave me.">
-    If you saved it on this device, it's in the box at the top of this lesson. If not, send Claude your message from [the last lesson](/module-2/better-prompts-with-ai) again, with your original prompt at the end.
+    If you saved it on this device, it's in the box at the top of this lesson. If not, open your conversation with Claude again: it's still there. Or send Claude your message from [the last lesson](/module-2/better-prompts-with-ai) again, with your original prompt at the end.
+  </StuckItem>
+  <StuckItem question="I see an error and a Try to fix button.">
+    Click **Try to fix**. A few fixes are free each day. If it's still broken after once or twice, describe the problem: what's wrong, where it is, and what you expected to see. If that fails too, go back to the last version that worked. ([Lovable's guide to fixing errors](https://docs.lovable.dev/prompting/prompting-debugging))
+  </StuckItem>
+  <StuckItem question="Lovable says I'm out of credits.">
+    Your first draft is safe. On the Free plan, credits come back at 8am Singapore time the next day: build your refined version then. Don't click anything that asks you to upgrade or pay; ask in your Code for All session instead. ([Lovable's guide to credits](https://docs.lovable.dev/introduction/credits-and-usage))
   </StuckItem>
 </StuckBlock>

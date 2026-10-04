@@ -2,7 +2,7 @@
 title: Using AI to make better prompts
 slug: better-prompts-with-ai
 order: 30
-duration: 8
+duration: 20
 summary: Ask Claude to help you revise your Lovable prompt before you build again.
 requiresAccount: true
 needs:
@@ -11,6 +11,7 @@ needs:
     - Claude
   before:
     - "Your exact prompt from the [solo sprint](/module-2/solo-sprint)"
+    - "Optional: a screenshot of your first draft, with no personal details in it"
 recap:
   - You can ask an AI, Claude, to help you revise your prompt for Lovable.
   - Tell it what the site should include, who it's for and how it should look.
@@ -22,6 +23,12 @@ Your first prompt got you a first draft. Now you'll ask another AI, Claude, to h
 Claude is a chat AI made by Anthropic. You'll use it a lot in this course. It runs in your browser, through your Code for All access.
 
 <RefinePromptDiagram />
+
+## Why ask another AI?
+
+It's like asking a friend to read your essay before you hand it in. You know what you meant, so it's hard to spot what you left out. A fresh reader asks, "Which colours? What's on the results page?"
+
+Claude is good at that. You give it your prompt and tell it what you want the site to be. It gives you back a <Term def="a better version of your prompt, rewritten to leave the AI less to guess.">refined prompt</Term>: yours, but clearer and more detailed. You stay in charge: it's still your site and your idea.
 
 <SavedWork id="solo-sprint-prompt" what="your exact prompt from the solo sprint" from="/module-2/solo-sprint" fromLabel="the solo sprint" sample="Create a personality quiz website called Which noodle are you? It has five questions with four answers each, and six possible results with a fun description for each one. Make it colourful and friendly, for teenagers, and make it work on a phone." />
 
@@ -36,7 +43,7 @@ This part needs access; see [how hands-on access works](/access).
 3. **Ask it to revise your prompt.** See the example below.
 
 ```prompt title="Example prompt to Claude"
-Help me revise my prompt for Lovable to create a website for my vibe coding academy. The site should include module info, exercises, and walkthroughs. I am tutoring high school students — it should look clean, not too AI-generated. Include working sign in and sign out. Help with design too.
+Help me revise my prompt for Lovable to create a website for my vibe coding academy. The site should include module info, exercises, and walkthroughs. I am tutoring high school students — it should look clean, not too AI-generated. No login or database yet. Help with design too.
 
 Original prompt here
 ```
@@ -51,9 +58,13 @@ This example is for a different site, a vibe coding academy. Here's what each pa
 - **"The site should include module info, exercises, and walkthroughs."** says what the site should include.
 - **"I am tutoring high school students"** says who it's for.
 - **"it should look clean, not too AI-generated"** says how it should look.
-- **"Include working sign in and sign out."** names a feature the site must have.
+- **"No login or database yet."** keeps the site simple and safe for now.
 - **"Help with design too."** asks Claude to help with the design as well.
 - **"Original prompt here"** is where your own prompt goes, so Claude has something to revise.
+
+<Callout kind="headsup">
+**Why no login?** The class version of this message asked for "working sign in and sign out". In Lovable, asking for sign in switches on its built-in backend, Lovable Cloud, and creates a database of users. On a public site, that would collect the email address of everyone who signs up. Lovable's own quick start says to leave out login and a database at first: there's less to go wrong. ([Lovable Cloud](https://docs.lovable.dev/features/cloud), [Getting started](https://docs.lovable.dev/introduction/getting-started)) You'll learn how logging in works, and how to do it safely, in [Module 8](/module-8/how-logging-in-works).
+</Callout>
 
 ## Your turn
 
@@ -63,18 +74,108 @@ Write your own message to Claude for the site you picked. Practice it here first
 Write the message you'd send Claude asking it to improve your prompt from the solo sprint.
 </PromptPractice>
 
-When your message is ready, send it to Claude (step 3). Claude will reply with a refined prompt: a better version of yours. Save it here, so the [next lesson](/module-2/using-refined-prompts) can show it back to you.
+### Example messages
+
+Stuck for words? Here's one example message for each site, written the same way as the class example. They're examples only: change the details to match your own site, then put your own prompt where it says "Original prompt here".
+
+```prompt title="Example: personality quiz"
+Help me revise my prompt for Lovable to create a personality quiz website called "Which noodle are you?". The site should include a start page, five questions with four answers each, and a results page for each of the six noodles. It's for teenagers who want a quick, funny quiz to share with friends — it should look playful and bright, not too AI-generated. No login or database yet. Help with design too.
+
+Original prompt here
+```
+
+```prompt title="Example: news website"
+Help me revise my prompt for Lovable to create a news website called "The Weekly Byte". The site should include a home page with the latest stories, a page for each story, and topic pages for Space, Games, Gadgets and Nature. It's for students aged 13 to 16 who don't like long articles — it should look clean and bold, like a magazine, not too AI-generated. No login or database yet. Help with design too.
+
+Original prompt here
+```
+
+```prompt title="Example: online store"
+Help me revise my prompt for Lovable to create an online store for a made-up stationery brand called "Inkwell". The site should include a home page, a shop page with filters, a page for each product and a basket. It's for students looking for a gift — it should look calm and minimal, not too AI-generated. No login, database or real payments yet. Help with design too.
+
+Original prompt here
+```
+
+## Send it to Claude
+
+These steps come from Claude's help centre: [Get started with Claude](https://support.claude.com/en/articles/8114491). Claude's look is changing for some people while its new design rolls out, so your screen may not match this lesson exactly. ([What's changing](https://support.claude.com/en/articles/16761823))
+
+1. Go to [claude.ai](https://claude.ai) in your browser, or open the Claude desktop app if you have it. Use the access your Code for All session gives you.
+
+   You should now see a box to type your message in. If an old conversation is open, start a new one, so Claude only sees this request.
+
+   <Screenshot caption="Claude, ready for a new message.">Claude's start screen with an empty message box and the + button at the lower left, from a neutral account with no names or avatars</Screenshot>
+
+2. Click in the box and paste your message. To copy it from the practice box above, select it and press Ctrl+C (Cmd+C on a Mac).
+3. Find the line "Original prompt here" in the box. Select it, then paste your exact prompt from the solo sprint over it. Use the **Copy** button on your saved prompt at the top of this lesson.
+4. Click the submit button.
+
+   You should now see Claude's reply. It usually has a new version of your prompt, and it may explain what it changed or suggest design ideas.
+
+5. Read Claude's version. Is it still your site? Does it keep your name, your pages and your ideas?
+
+### Ask for changes
+
+Not quite right? Reply in the same conversation and tell Claude what to change. You can give it follow-up instructions, or ask it to rewrite its answer. ([Claude's help centre](https://support.claude.com/en/articles/7996857))
+
+Here are some example follow-ups. Send one at a time:
+
+```prompt title="Example follow-up: keep your idea"
+Keep my original site name and my six results. Only make the design and the page layout more detailed.
+```
+
+```prompt title="Example follow-up: just the prompt"
+Give me only the revised prompt, in one block I can copy, with no explanation.
+```
+
+```prompt title="Example follow-up: take something out"
+Take out the login and the newsletter sign-up. No login or database yet.
+```
+
+If Claude asks you questions about your site, answer them in the same conversation. Its next version will use your answers.
+
+### Show Claude your first draft (optional)
+
+A picture helps Claude see what Lovable got wrong. Take a screenshot of your first draft in Lovable. Check it shows no names, emails or photos of you. Then: ([Claude's help centre: uploading files](https://support.claude.com/en/articles/8241126))
+
+1. Click the **+** button at the lower left of the message box.
+2. Click **Add files or photos**, choose your screenshot, then click **Open**. You can also drag the file into the chat, or paste a copied picture. Claude takes JPEG, PNG, GIF and WebP pictures.
+3. Add a message, then click the submit button. For example:
+
+   ```prompt title="Example: with a screenshot"
+   This is what Lovable built from my original prompt. The colours are wrong and the results page is too plain. Revise my prompt so the next version fixes these.
+   ```
+
+## Copy it back
+
+1. In Claude's reply, select the whole refined prompt: click at the start, then hold Shift and click at the end.
+2. Copy it: Ctrl+C (Cmd+C on a Mac).
+3. Paste it into the box below. It stays on this device, and the [next lesson](/module-2/using-refined-prompts) shows it back to you. Paste it into your notes file too.
 
 <SaveHere id="refined-prompt" label="The refined prompt Claude gave you" placeholder="Paste the refined prompt from Claude." rows={7} />
+
+4. **Check it worked.** The box should hold Claude's refined prompt, not your message to Claude. It should describe your site, with more detail than your first prompt: what's on each page, the colours and fonts, and who it's for.
 
 <StuckBlock>
   <StuckItem question="Claude asks me to sign up or log in.">
     Don't create your own account: Claude accounts are for people aged 18 and over. You don't need to sign up for Claude yourself. Access is set up for you through a Code for All session, or by a teacher running one. See [how hands-on access works](/access).
   </StuckItem>
   <StuckItem question="I didn't save my prompt from the solo sprint.">
-    If you saved it on this device, it's in the box at the top of this lesson. If not, go back to the [solo sprint](/module-2/solo-sprint) and write it again as closely as you can.
+    If you saved it on this device, it's in the box at the top of this lesson. If not, open your project in Lovable: your prompt is your first message in the chat. Or go back to the [solo sprint](/module-2/solo-sprint) and write it again as closely as you can.
   </StuckItem>
   <StuckItem question="Claude gave me an idea for a different site.">
     Check that your message says what your site should include, who it's for and how it should look, and that your original prompt is pasted at the end. Then ask it to revise your prompt, not write a new one.
+  </StuckItem>
+  <StuckItem question="Claude wrote a long answer, and I can't tell which part is the prompt.">
+    Reply: "Give me only the revised prompt, in one block I can copy, with no explanation." Then copy just that.
+  </StuckItem>
+  <StuckItem question="Claude added sign in, payments or a database.">
+    Ask it to take them out: "No login or database yet." Or delete those lines yourself before you save it. They make Lovable switch on a database, and you don't need one for this site.
+  </StuckItem>
+  <StuckItem question="Claude's screen doesn't look like this lesson says.">
+    Claude's design is changing, and the change reaches different people at different times. Look for the box where you type a message and the button that sends it; that's all you need.
+  </StuckItem>
+  <StuckItem question="My screenshot won't upload.">
+    Claude takes JPEG, PNG, GIF and WebP pictures. Try dragging the file into the chat instead. Or skip the picture and describe what's wrong in words: the screenshot is optional.
   </StuckItem>
 </StuckBlock>
