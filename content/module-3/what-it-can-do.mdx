@@ -2,13 +2,13 @@
 title: What it can do
 slug: what-it-can-do
 order: 20
-duration: 8
+duration: 12
 summary: "Three things Claude Code is good at: routines, refactoring, and remembering what happened in your session."
 requiresAccount: false
 recap:
-  - "Routines: Claude Code can run jobs in the background, again and again, inside your project."
-  - "Refactoring: it can tidy up or reorganise code without changing what the code does."
-  - "Session context: it keeps track of the commands, errors, file changes and goal from earlier in your session."
+  - "Routines: Claude Code can run jobs again and again, on your computer. A job only repeats if you set a schedule, with /loop in the terminal or Routines in the desktop app, and only while it's running."
+  - "Refactoring: it can tidy up or reorganise code without changing what the code does. Test it afterwards to make sure."
+  - "Session context: it keeps track of the commands, errors, file changes and goal from earlier in your session. A new session starts fresh; CLAUDE.md carries instructions over."
 ---
 
 You ask Claude Code for things in plain words, the same way you <Term term="prompt" def="the message you type to tell an AI what you want.">prompted</Term> Lovable. Here are three kinds of job it can do, with example prompts.
@@ -31,6 +31,23 @@ Run a multi-step process: clean the files, test the code, then generate a report
 
 In plain words: it can do repeated jobs for you, inside your project, on your computer.
 
+### How to make a job actually repeat
+
+Think of an alarm clock. Saying "wake me at seven" out loud doesn't do anything. You have to set the alarm, and it only rings if it's switched on.
+
+It's the same here. To be sure a job repeats, set a schedule:
+
+- **In the terminal,** start your prompt with `/loop` and how often, like `/loop 1h check this folder for errors`. Claude Code tells you how often it will run. It only keeps going while that Claude Code session is open, and stops for good after seven days. ([Run prompts on a schedule](https://code.claude.com/docs/en/scheduled-tasks))
+- **In the desktop app,** open the **Code** tab, click **Routines** in the sidebar, then **New routine**, and choose **Local**. Give it a name, your instructions, a folder and a schedule such as **Hourly**. It only runs while the app is open and your computer is awake. ([Scheduled tasks in the desktop app](https://code.claude.com/docs/en/desktop-scheduled-tasks))
+
+If Claude Code doesn't confirm a schedule, assume it did the job once.
+
+<Callout kind="headsup">
+In the official docs, "routines" also means jobs that run in the cloud, on Anthropic's computers. Those can't see the files on your computer. You won't need them in this course: the routines on this page all run on your own computer.
+</Callout>
+
+The second prompt is a different kind of routine: one job with several steps in a row. You don't need a schedule for that. Claude Code does the steps in order and reports back.
+
 ## Refactoring
 
 <Term def="changing how code is written without changing what it does.">Refactoring</Term> is tidying up code. Claude Code can rename things everywhere they appear, change how your files are laid out, and update the versions of the <Term def="ready-made code that your project uses, written by someone else.">packages</Term> your project uses, all across the project at once. It copes with big, complicated folders and keeps the code written correctly.
@@ -45,6 +62,22 @@ Make this code easier to read while keeping the same functionality.
 
 **Key idea:** Claude Code can help clean up or reorganise existing code without changing what the code actually does.
 
+### An everyday comparison
+
+Refactoring is like tidying your bedroom. You fold the clothes, put the books on a shelf and label the drawers. Nothing gets thrown away, and it's still the same room. It's just easier to find things.
+
+### A worked example
+
+Your Chrome extension has a <Term def="a name in code that holds a value, like a number or some text, so the code can use it later.">variable</Term> called `x` that counts your open tabs. It's used in three places, and `x` doesn't tell anyone what it's for.
+
+```prompt title="Example: rename a variable"
+In popup.js, rename the variable x to tabCount everywhere it appears. Don't change anything else.
+```
+
+Claude Code finds all three places and changes them together. The extension works exactly as before, but the code now says what it means. That's a refactor.
+
+**Then test it.** Open the extension and check it still does everything it did before. A refactor that changes what your code does has gone wrong. If it has, ask Claude Code to undo it (see below).
+
 ## Session context
 
 Claude Code remembers what has happened so far in your <Term def="one conversation with Claude Code about your project.">session</Term>. So it can quickly undo recent changes, explain code straight away, and answer questions in plain words about what's been going on.
@@ -57,3 +90,39 @@ Claude Code remembers what has happened so far in your <Term def="one conversati
 - What you were trying to fix.
 
 So you don't have to repeat yourself. It already knows what you did five minutes ago.
+
+### Example questions
+
+These all lean on session context. They're examples: ask in your own words.
+
+```prompt title="Example: what changed"
+What files have you changed so far, and why?
+```
+
+```prompt title="Example: explain an error"
+Explain the error from earlier in plain words. What caused it?
+```
+
+```prompt title="Example: undo"
+Undo that last change.
+```
+
+### What it forgets
+
+Session context only lasts for one session. Think of a friend who remembers everything you said today, but nothing from last week unless you left them a note.
+
+- **A new session starts fresh.** So does typing `/clear`, which empties the conversation. Claude Code won't remember what you did before. In the terminal, `claude --continue` picks up your last conversation in that folder. ([Quickstart](https://code.claude.com/docs/en/quickstart))
+- **CLAUDE.md is the note it reads every time.** It's a plain text file in your project folder that Claude Code reads at the start of every session. Put lasting instructions in it, like "Use plain JavaScript, no libraries". Type `/init` and Claude Code looks at your project and writes a first one for you. Keep it short. ([CLAUDE.md files](https://code.claude.com/docs/en/memory))
+- **Undo can't reverse everything.** Claude Code saves a checkpoint each time you send a prompt, so it can put files back how they were. But if a command deleted or moved a file, undo can't bring it back. ([Checkpointing](https://code.claude.com/docs/en/checkpointing)) You'll learn how to undo in the [next lesson](/module-3/install-claude-code).
+
+<CheckYourself>
+  <Question q="You type 'Check this folder for errors every hour' in the terminal and close it for the night. Will the check run overnight?">
+    No. In the terminal, a repeating job needs `/loop`, and it only runs while that Claude Code session is open. Closing the terminal stops it.
+  </Question>
+  <Question q="Claude Code refactored your code. What should be different afterwards, and what should stay the same?">
+    The code should be tidier and easier to read. What it does should stay exactly the same, so test it to check.
+  </Question>
+  <Question q="Yesterday you told Claude Code to use plain JavaScript. Today you start a new session. Will it remember?">
+    No, a new session starts fresh. Put lasting instructions like that in CLAUDE.md, which it reads at the start of every session.
+  </Question>
+</CheckYourself>

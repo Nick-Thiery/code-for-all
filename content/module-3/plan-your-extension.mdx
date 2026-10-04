@@ -2,12 +2,21 @@
 title: Plan your Chrome extension
 slug: plan-your-extension
 order: 50
-duration: 5
-summary: You're building a Chrome extension with Claude Code. Pick a problem you actually have, and use the ideas here to get started.
-requiresAccount: false
+duration: 20
+summary: You're building a Chrome extension with Claude Code. Pick a problem you actually have, then build it, load it into Chrome and test it.
+requiresAccount: true
+needs:
+  device: "A Windows or Mac laptop with Google Chrome. School laptops and Chromebooks may block loading your own extension; see the Stuck box."
+  access:
+    - Claude Code
+  before:
+    - "Claude Code, installed and tried in [lesson 3](/module-3/install-claude-code)"
 recap:
   - You're building a Chrome extension with Claude Code for this module's Challenge.
   - Pick a problem you actually have. That's where the bonus points are.
+  - Every extension is a folder with a manifest.json file in it. That's the only file it must have.
+  - "Plan it first, then load it in Chrome: chrome://extensions, turn on Developer mode, Load unpacked, choose the folder with manifest.json."
+  - After a change, click the refresh icon on the extension's card. If something's wrong, look at Errors and paste the message into Claude Code.
   - It must actually install in your browser and work.
 ---
 
@@ -17,9 +26,30 @@ Snapiq, from [Module 1](/module-1/what-is-vibe-coding), is one.
 
 ## What's in an extension
 
+An extension is a folder of files. Chrome reads them and adds what they describe to your browser.
+
 <ExtensionPartsDiagram />
 
-Your extension needs those three parts too. Claude Code writes them for you; you decide what the popup shows and what happens on the page.
+The only file every extension must have is <Term def="the file that tells Chrome what an extension is called, which version it is, what it's allowed to do and which files to use. Every Chrome extension has one.">manifest.json</Term>, and it must sit in the top level of the folder, not inside another folder. ([Extensions: get started](https://developer.chrome.com/docs/extensions/get-started))
+
+Think of it as the label on a jar. It says what's inside, and Chrome reads it before anything else. If the label is missing or smudged, Chrome won't open the jar.
+
+Everything else depends on what your extension does:
+
+- **A popup** is the small window that opens when you click the extension's icon. It's made of `popup.html`, plus `popup.js` for what the buttons do. (Chrome doesn't let a popup run code written inside its HTML file, so the code has to go in its own file.)
+- **An icon** is optional. Without one, Chrome shows a plain icon for you.
+- **Something that changes web pages**, like the highlighter in the drawing, is only needed if your extension works on pages. A tab organiser changes your tabs instead, so it doesn't need one.
+
+You don't have to write any of these files. Claude Code writes them; you decide what the extension does and check that it works.
+
+### Permissions
+
+To use some parts of Chrome, an extension has to ask for permission in its manifest. Chrome describes some of these permissions in plain words. For example, a tab organiser needs ([tabs](https://developer.chrome.com/docs/extensions/reference/api/tabs), [tabGroups](https://developer.chrome.com/docs/extensions/reference/api/tabGroups)):
+
+- `"tabs"`, so it can read each tab's address and title. Chrome describes this one as "Read your browsing history".
+- `"tabGroups"`, so it can name and colour groups of tabs. Chrome describes it as "View and manage your tab groups".
+
+Only ask for what your extension needs. If Claude Code adds a permission and you don't know why, ask it.
 
 ## Pick a problem you actually have
 
@@ -36,16 +66,139 @@ Pick something cool:
 
 Remember the [business lesson](/module-3/quick-business-lesson): an idea that already exists is fine. What matters is how well you build it.
 
+Start small: one button that does one thing well. You can add more once that works.
+
 <Callout kind="tryit">
 Pick a problem you actually have when you use your browser. Write down, in one sentence, what your extension will do about it. That's what you'll build in the Challenge.
 </Callout>
 
 <SaveHere id="extension-idea" label="My extension will…" placeholder="One sentence: what your extension does, and the problem it solves." rows={3} />
 
+<HandsOn />
+
+## Build it, step by step
+
+This part needs access; see [how hands-on access works](/access).
+
+These steps build a tab organiser called Tab Tidy, as a worked example. For your own idea, change the first prompt and keep the rest of the steps.
+
+### Plan it with Claude Code
+
+1. **Make a new, empty folder** for the extension, like `tab-tidy`, and open Claude Code in it, as in [lesson 3](/module-3/install-claude-code). In the desktop app, choose **Local** and **Select folder**. In the terminal, `cd` into the folder and run `claude`.
+2. **Switch to plan mode.** In the terminal, press **Shift+Tab** until it says `⏸ plan mode on`. In the desktop app, choose **Plan** from the mode selector.
+3. **Paste your first prompt** and press **Enter**. This is an example for a tab organiser:
+
+   ```prompt title="Example: Tab Tidy, a tab organiser"
+   I want to build a Chrome extension called Tab Tidy. When I click its icon, a small popup opens with one button, "Group my tabs". Clicking it puts the tabs in my current window into tab groups, one group per website (for example, all youtube.com tabs together), named after the website. Use Manifest V3 and the chrome.* namespace. Keep it simple: manifest.json, popup.html, popup.js and popup.css only, with no icons, no libraries and no inline JavaScript. Only ask for the permissions it needs. Explain your plan in plain English before writing any code. When you're done, tell me step by step how to load it with Load unpacked and how to test it.
+   ```
+
+   For your own idea, fill in the gaps in this one:
+
+   ```prompt title="Example: your own extension"
+   I want to build a Chrome extension called [name]. When I click its icon, [what happens]. Use Manifest V3 and the chrome.* namespace. Keep it simple, with no libraries and no inline JavaScript. Only ask for the permissions it needs. Explain your plan in plain English before writing any code. When you're done, tell me step by step how to load it with Load unpacked and how to test it.
+   ```
+
+   Why "the chrome.* namespace"? Some newer guides write `browser.` in the code instead of `chrome.`. Older versions of Chrome don't understand `browser.`, but every version understands `chrome.`. ([The browser namespace](https://developer.chrome.com/docs/extensions/develop/concepts/browser-namespace))
+4. **Read the plan.** You should see the files it will make, what each one does, and the permissions it will ask for. If anything is unclear, ask about it. In the terminal, choose **No, keep planning** to tell it what to change.
+5. **Approve the plan.** In the terminal, choose **Yes, manually approve edits**. In the desktop app, approve it, then check the mode selector says **Manual**.
+
+### Let it build
+
+6. **Approve each file** as Claude Code makes it: **Yes** in the terminal, **Accept** in the desktop app. For Tab Tidy, expect `manifest.json`, `popup.html`, `popup.js` and `popup.css`, and maybe a `README.md` explaining it.
+7. **Check the manifest.** Open `manifest.json` and look for the name, the version, the popup and the permissions. For Tab Tidy it should look roughly like this:
+
+   ```json title="manifest.json"
+   {
+     "manifest_version": 3,
+     "name": "Tab Tidy",
+     "version": "1.0",
+     "action": { "default_popup": "popup.html" },
+     "permissions": ["tabs", "tabGroups"]
+   }
+   ```
+
+   Yours may be laid out differently or have a description too. That's fine.
+
+### Load it into Chrome
+
+Chrome normally installs extensions from the Chrome Web Store. To try one you've made, you load the folder yourself. These steps are from Google's [Hello World tutorial](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world).
+
+8. **Open the Extensions page.** Open a new tab in Chrome, type `chrome://extensions` in the address bar and press **Enter**. (Or click the puzzle-piece **Extensions** button and choose **Manage Extensions**.)
+9. **Turn on Developer mode.** It's a switch on the Extensions page.
+
+   You should now see a row of extra buttons, including **Load unpacked**. No Developer mode switch? Your device is probably managed by a school or work. See the Stuck box.
+10. **Click Load unpacked** and choose your `tab-tidy` folder: the folder that has `manifest.json` directly inside it. Choose the folder itself, not a file in it.
+
+    You should now see a card for Tab Tidy on the Extensions page. If you see an error instead, look in the Stuck box.
+11. **Pin it.** Click the puzzle-piece **Extensions** button in Chrome's toolbar, find Tab Tidy and choose **Pin**. ([Chrome Web Store help](https://support.google.com/chrome_webstore/answer/2664769))
+
+    You should now see its icon in the toolbar, next to the address bar. With no icon file, Chrome gives it a plain one.
+
+### Test it
+
+12. **Try it the way a real person would.** For Tab Tidy, open four or five tabs from two websites. Click the Tab Tidy icon, then **Group my tabs**.
+
+    You should see coloured tab groups, one for each website, each named after it.
+
+### Change it and reload
+
+13. **Ask for a change.** Go back to Claude Code. For example:
+
+    ```prompt title="Example: a next step"
+    Add an Ungroup button to the popup that takes all the tabs in my current window out of their groups.
+    ```
+14. **Reload the extension.** On `chrome://extensions`, click the refresh icon on your extension's card, next to its on/off switch. Changes to `manifest.json` only work after a reload. Changes to the popup show up when you open the popup again, but reloading never hurts.
+15. **Test again**, including the parts that worked before.
+
+### Find and fix errors
+
+16. **Look for errors.** If something goes wrong, an **Errors** button appears on the extension's card on `chrome://extensions`. Click it to read the message. ([Debug extensions](https://developer.chrome.com/docs/extensions/get-started/tutorial/debug))
+
+    For problems in the popup, open the popup, right-click inside it and choose **Inspect**, then click the **Console** tab. Errors show in red.
+17. **Paste the error into Claude Code:**
+
+    ```prompt title="Example: fixing an error"
+    My extension shows this error: [paste the whole error]. Fix it, then tell me how to check it worked.
+    ```
+18. **Clear the old errors.** Click **Clear all** in the errors list, reload the extension and test again.
+
+**Check it worked:** your extension loads on `chrome://extensions` with no errors, its icon is pinned in the toolbar, it does its job when you try it, and it still works after you reload it. That's the Challenge done.
+
+<Callout kind="headsup">
+**Built it with Claude Code on the web?** Your files are on GitHub, not on your computer. On your repository's page on GitHub, click **Code**, then **Download ZIP**, and unzip the file. Then do steps 8 to 12, and in step 10 choose the folder that has `manifest.json` directly inside it. Unzipping often adds an extra folder, so you may need to open one more folder first. After each change, download it again. School Chromebooks often block Developer mode; if yours does, use a laptop in a session.
+</Callout>
+
+<StuckBlock>
+  <StuckItem question="There's no Developer mode switch, or I can't turn it on.">
+    Your device is probably managed by a school or work, and they've switched it off. Google's help says organisations "might block some extensions". You can't change this yourself. Use a personal laptop, or a laptop in a Code for All session.
+  </StuckItem>
+  <StuckItem question="Chrome says the manifest file is missing or unreadable.">
+    The folder you chose doesn't have `manifest.json` directly inside it. Click **Load unpacked** again and choose the folder one level down, the one where you can see `manifest.json`. This often happens after unzipping a download from GitHub, which adds an extra folder.
+  </StuckItem>
+  <StuckItem question='Chrome says "Could not load manifest."'>
+    Something in `manifest.json` is wrong, and the message names the part. Copy the whole message, paste it into Claude Code and ask it to fix the manifest. Then click **Load unpacked** again.
+  </StuckItem>
+  <StuckItem question="Nothing happens when I click the icon.">
+    Check that `manifest.json` has an `"action"` with a `"default_popup"`. Make sure the extension is pinned: it may be hidden in the puzzle-piece menu. Then look at **Errors** on its card, and at the popup's console (right-click the popup, **Inspect**, **Console**). Paste any error into Claude Code.
+  </StuckItem>
+  <StuckItem question="My tab organiser can't see the tabs' titles or addresses.">
+    It's probably missing the `"tabs"` permission. Ask Claude Code to add `"tabs"` to the permissions in `manifest.json`, then reload the extension.
+  </StuckItem>
+  <StuckItem question="My changes don't show up.">
+    Click the refresh icon on the extension's card on `chrome://extensions`, then open the popup again. Changes to `manifest.json` need a reload every time.
+  </StuckItem>
+  <StuckItem question="The code says browser. instead of chrome.">
+    Ask Claude Code to use the `chrome.*` namespace instead. Older versions of Chrome don't understand `browser.`.
+  </StuckItem>
+  <StuckItem question="Claude Code made something different from what I wanted.">
+    Say "Undo that", or use `/rewind` in the terminal. Then try again with a more specific prompt: say exactly what should happen when you click. If it's gone wrong twice, type `/clear` and start with a better first prompt.
+  </StuckItem>
+</StuckBlock>
+
 <Challenge title="Build a Chrome extension">
 Build a Chrome extension with Claude Code. Pick something cool: a screenshot tool, a tab organiser, a YouTube speed controller, something that highlights words on any page.
 
 It must actually install in your browser and work. Bonus points if it solves a problem you genuinely have.
 
-Building it needs Claude Code; see [how hands-on access works](/access). On a device that blocks installs, use Claude Code on the web or a session laptop ([which device do you have?](/access#devices)). You'll review your extension at the start of [Module 4](/module-4).
+Building it needs Claude Code; see [how hands-on access works](/access). The steps above show how to plan it, load it with **Load unpacked**, reload it after changes and find errors. On a device that blocks installs, use Claude Code on the web or a session laptop ([which device do you have?](/access#devices)). You'll review your extension at the start of [Module 4](/module-4).
 </Challenge>
