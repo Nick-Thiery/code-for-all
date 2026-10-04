@@ -2,7 +2,7 @@
 title: Creating login with Supabase
 slug: creating-login-with-supabase
 order: 50
-duration: 15
+duration: 30
 summary: Sign up for Supabase, copy your two values, then paste one prompt into Claude to add sign-up, log-in and log-out to your page.
 requiresAccount: true
 needs:
@@ -11,13 +11,17 @@ needs:
     - GitHub
     - Supabase (free plan, signed in with GitHub during a session)
     - Claude Code
+    - Vercel, to see it live
   before:
-    - "The page from [Task 1](/module-8/put-live-data-on-your-page)"
+    - "The page from [Task 1](/module-8/put-live-data-on-your-page), live on Vercel"
     - "A test email address to try sign-up with, not your own"
+    - "Somewhere to paste two values for a few minutes, like a notes app"
 recap:
   - Sign up for Supabase with GitHub, in a session. Your database password is NOT your login password, so save it.
-  - "Copy two values: your Publishable key and your Project ID. Turn off \"Confirm Email\" for practice only."
+  - "Copy two values: your Publishable key (it starts sb_publishable_) and your Project ID. Turn off \"Confirm email\" for practice only."
+  - The publishable key is safe in your page's code. A secret or service_role key never goes in your page or on GitHub.
   - "The prompt adds three things: one script tag that loads Supabase, one line that connects using your two values, and three buttons: sign up, log in, log out."
+  - "Check it worked: sign up, log out and log in on your live site, then find your test user under Authentication → Users."
 ---
 
 Your turn! You've seen [how logging in works](/module-8/how-logging-in-works). Now add it to your own page.
@@ -36,34 +40,105 @@ The three actions you're adding are the ones from [lesson 4](/module-8/how-loggi
 
 This part needs access; see [how hands-on access works](/access). You sign in to Supabase with a GitHub account, so do this step in a session, with your teacher's go-ahead.
 
-Take 60 seconds:
+### Sign in
 
 1. Go to [supabase.com](https://supabase.com) → click **Start your project** → **Continue with GitHub**.
-2. Set up a database password and save it (this is **NOT** your login password).
-3. Pick the recommended region.
+
+   If GitHub asks whether Supabase can use your account, say yes (it may say **Authorize**). You should now see your Supabase dashboard.
+
+### Make an organisation (first time only)
+
+The first time, Supabase asks you to make an <Term def="a folder for your Supabase projects. You make one, the first time you use Supabase.">organisation</Term> before your first project.
+
+2. **Name it.** Anything works, like `my-projects`. Leave out your full name and your school.
+3. **Type.** If it asks what kind of organisation it is, pick the closest match, like a personal one. Not sure? Ask in your session.
+4. **Plan: choose Free.** If anything asks for a card, stop: you're on the wrong plan.
+5. **Click Create organization.**
+
+### Make a project
+
+You should now see a page called "Create a new project".
+
+6. **Organization:** the one you just made.
+7. **Project name:** anything, like `my-login-test`. No personal details.
+8. Set up a database password and save it (this is **NOT** your login password).
+
+   Type one, or use the option under the box that makes one for you, then copy it into your notes. This course never uses it, but keep it safe.
+9. Pick the recommended region.
+
+   You may see **Auto**, marked **Recommended**: keep it. If you're asked to choose, pick the one nearest you. For Singapore, that's **Southeast Asia (Singapore)** ([Supabase regions](https://supabase.com/docs/guides/platform/regions)).
+10. **Leave the Security options as they are.** Keep **Enable Data API** ticked: the code Claude writes needs it.
+11. **Click Create new project.** Setting it up takes a minute or two.
+
+    You should now see your project's home page, with its name at the top.
+
+<Screenshot caption="Supabase's Create a new project form: organisation, project name, database password and region.">Supabase's Create a new project form with a made-up project name, from a neutral account with no personal details</Screenshot>
 
 ## 2. Get your two values
 
-In your Supabase project:
+In your Supabase project, there are three parts: the Publishable key (steps 1 to 3), the Project ID (steps 4 and 5) and turning off Confirm email (steps 6 to 8).
+
+### The Publishable key
 
 1. Go to **Project Settings**.
-2. Go to **API Keys**.
-3. Copy **Publishable Key**.
-4. Go to **General**.
-5. Copy **Project ID**.
-6. Go to **Authentication**.
-7. Disable **Confirm Email**.
-8. Click **Save changes**.
 
-Keep the Publishable key and the Project ID somewhere handy. They go into the prompt in the next step. A key is a long code that proves to Supabase which project is asking.
+   It's in the sidebar on the left, with a gear icon.
+2. Go to **API Keys**.
+
+   It's under **Configuration**. You should now see a tab called **Publishable and secret API keys**. Stay on it.
+3. Copy **Publishable key**.
+
+   It's in the **Publishable key** section. Paste it into your notes. It's short, and starts with `sb_publishable_`. It's not a password: it tells Supabase **which project** is asking. Logging in is what tells it **who** is asking.
 
 <Callout kind="headsup">
-Turning off **Confirm Email** is fine for practice, but don't do it for a real app. And when you try out your sign-up, use a test email, not your own.
+**Only copy the Publishable key.** On the same page there's a **Secret keys** section, and a tab for **Legacy anon, service_role API keys**. Don't copy anything from those.
+
+The publishable key is made to go in a web page: Supabase says it's "safe to expose online", even in code on GitHub. A secret key or service_role key is the opposite. It gets past every safety rule in your project, so it must never go in your page, in a prompt for your page, or on GitHub ([Supabase API keys](https://supabase.com/docs/guides/api/api-keys)).
 </Callout>
+
+<Screenshot caption="Project Settings → API Keys: copy the key in the Publishable key section, not a secret key.">Supabase's API Keys page with the Publishable key section highlighted, the key itself blurred, from a neutral account</Screenshot>
+
+### The Project ID
+
+4. Go to **General**.
+
+   It's in **Project Settings** too.
+5. Copy **Project ID**.
+
+   Paste it into your notes. It's a string of lowercase letters, like `xvljpkujuwroxcuvossw`. Your project's address is `https://` + your Project ID + `.supabase.co`.
+
+**Shortcut:** the **Connect** button at the top of your project page also shows your Project URL and publishable key, ready to copy.
+
+### Turn off Confirm email
+
+6. Go to **Authentication**.
+
+   It's in the sidebar on the left. Then, under **Configuration**, click **Sign In / Providers**.
+7. Disable **Confirm email**.
+
+   It's near the top, in the **User Signups** section. (On some dashboards it's inside the **Email** provider instead.) Switch it off.
+8. Click **Save changes**.
+
+   You should now see a message saying the settings were updated, and **Confirm email** stays off.
+
+With **Confirm email** off, signing up logs you straight in. With it on, Supabase wants to send an email first ([Supabase sign-up reference](https://supabase.com/docs/reference/javascript/auth-signup)).
+
+<Screenshot caption="Authentication → Sign In / Providers: switch off Confirm email, then click Save changes.">Supabase's Sign In / Providers page with the Confirm email switch turned off, from a neutral account</Screenshot>
+
+Keep the Publishable key and the Project ID somewhere handy. They go into the prompt in the next step.
+
+<Callout kind="headsup">
+Turning off **Confirm email** is fine for practice, but don't do it for a real app. And when you try out your sign-up, use a test email, not your own.
+
+**Why it has to be off for practice:** Supabase's built-in email only sends to people on your project's team, and only 2 emails an hour. So with **Confirm email** on, signing up with a test email fails ([Supabase email](https://supabase.com/docs/guides/auth/auth-smtp), [rate limits](https://supabase.com/docs/guides/auth/rate-limits)).
+
+</Callout>
+
+**Which test email?** One that's only for trying things out, like one your session gives you. While **Confirm email** is off, Supabase doesn't send it anything. Addresses like `test@example.com`, or anything at `example.com` or `test.com`, may be refused. If one is, use another.
 
 ## 3. Paste this into Claude
 
-"This page" in the prompt means the page of the project you used in [Task 1](/module-8/put-live-data-on-your-page).
+"This page" in the prompt means the page of the project you used in [Task 1](/module-8/put-live-data-on-your-page). Open that project in Claude Code first, the same way you did there.
 
 ```prompt title="Paste this into Claude"
 Add email signup, login and logout to this page using Supabase.
@@ -79,13 +154,66 @@ When someone is logged in, show their email and a log out button.
 
 Before you send it, swap `<your project id>` for the Project ID you copied in step 5, and `<paste yours>` for the Publishable key from step 3.
 
+For example, if your Project ID were `xvljpkujuwroxcuvossw` (a made-up one), the Project URL line would end in `xvljpkujuwroxcuvossw.supabase.co`, with no `<` or `>` left.
+
+Check that the key starts with `sb_publishable_`. If it starts with `eyJ` and is very long, you've copied an old-style key. Go back to step 2.
+
+You can also add these two lines at the end of the prompt. They head off two common slips:
+
+```prompt title="Example: two extra lines"
+Call the Supabase client "client", not "supabase".
+Only use the publishable key.
+```
+
 This will add:
 
 1. One **script tag** that loads Supabase.
 2. One line that connects using your two values.
 3. Three buttons: sign up, log in, log out.
 
+Your code will look different, but those first two parts look something like this ([supabase-js docs](https://supabase.com/docs/reference/javascript/installing)):
+
+```html title="Example: the script tag and the line that connects"
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const client = supabase.createClient("https://YOUR-PROJECT-ID.supabase.co", "sb_publishable_PASTE_YOURS");
+</script>
+```
+
+The three buttons each send one request to Supabase: `client.auth.signUp`, `client.auth.signInWithPassword` and `client.auth.signOut`. They're the three API calls from [lesson 4](/module-8/how-logging-in-works).
+
+Then:
+
+1. **Approve the changes** (**Yes** in the terminal, **Accept** in the desktop app).
+2. **Push them**, as in [Task 1](/module-8/put-live-data-on-your-page): ask Claude Code to commit the changes and push them to GitHub. On a branch? Merge it with a pull request.
+3. **Wait about a minute** for Vercel to update your live site.
+
 Got questions? In a Code for All session, ask your tutor.
+
+## 4. Check it worked
+
+1. **Open your live site** and refresh it.
+
+   You should now see an email box, a password box, and **Sign up** and **Log in** buttons. (Claude may label them a little differently.)
+2. **Sign up.** Type your test email and a password of at least 6 characters, then click sign up.
+
+   You should now see your test email on the page, and a log out button. If you see an error instead, find it in the Stuck box below.
+3. **Refresh the page.** You should still be logged in: your browser kept your token, as in [lesson 4](/module-8/how-logging-in-works).
+
+   If the sign-up form comes back instead, send Claude this example prompt: "When the page loads, check if someone is already logged in and show their email."
+4. **Log out.** The email boxes come back.
+5. **Log in** with the same test email and password. Your email shows again.
+6. **Check Supabase.** In your project, click **Authentication**, then **Users**. Your test email is in the list: that's the new row in the user table.
+
+**Check it worked:** on your live site you can sign up, log out and log in again, and your test user appears under **Authentication** → **Users**.
+
+<Callout kind="tryit">
+**See your token.** On your live site, while you're logged in, open Chrome DevTools: press Ctrl+Shift+I on Windows or a Chromebook, or Cmd+Option+I on a Mac. Click the **Application** tab, then **Local storage**, then your site's address. Look for a name that starts with `sb-` and ends with `-auth-token`: that's your sticker and voucher from [lesson 4](/module-8/how-logging-in-works). Log out, and it disappears.
+</Callout>
+
+## Keep your project awake
+
+Supabase pauses a free project after a week without use, and emails a warning first. Nothing is lost. To wake it up, open your Supabase dashboard, pick the project and click **Resume project**. You can do this for up to a year ([Supabase project pausing](https://supabase.com/docs/guides/platform/free-project-pausing)).
 
 <StuckBlock>
   <StuckItem question="Supabase, GitHub or Claude asks me to sign up or log in.">
@@ -95,10 +223,52 @@ Got questions? In a Code for All session, ask your tutor.
     No. Set up a database password and save it. It is NOT your login password.
   </StuckItem>
   <StuckItem question="Where do I find my Project ID and Publishable key?">
-    Publishable key: **Project Settings** → **API Keys**. Project ID: **General**. Steps 1 to 5 in "Get your two values" above.
+    Publishable key: **Project Settings** → **API Keys**. Project ID: **General**. Steps 1 to 5 in "Get your two values" above. Or click **Connect** at the top of your project page.
   </StuckItem>
   <StuckItem question="Supabase asks me to pay.">
     You don't need to. The free plan is enough for this course. If a page asks for a card, go back and pick the free option, or ask in your session.
+  </StuckItem>
+  <StuckItem question="The key I copied starts with eyJ and is very long.">
+    That's an old-style (legacy) key. Supabase is phasing them out by the end of 2026. Go back to **Project Settings** → **API Keys**, stay on the **Publishable and secret API keys** tab, and copy the key in the **Publishable key** section. It starts with `sb_publishable_` ([Supabase API keys](https://supabase.com/docs/guides/api/api-keys)).
+  </StuckItem>
+  <StuckItem question="I put a secret key or service_role key in my page by mistake.">
+    Take it out straight away: tell Claude to use only the publishable key, and push the change. That key can get past every safety rule in your project, so ask in your session about making a new one. The old one stays in your GitHub history ([Supabase API keys](https://supabase.com/docs/guides/api/api-keys)).
+  </StuckItem>
+  <StuckItem question="It says the API key is invalid.">
+    The Project URL or the key is wrong. Check both came from the same project, and that the key wasn't cut short when you copied it. Copy them again from **Connect** or **Project Settings** → **API Keys**, and ask Claude to swap them in.
+  </StuckItem>
+  <StuckItem question="Nothing works, and the Console says “Identifier 'supabase' has already been declared”.">
+    The script tag already makes something called `supabase`, so the code can't use that name again. Paste this into Claude: "Rename the Supabase client from supabase to client."
+  </StuckItem>
+  <StuckItem question="It says “Email not confirmed”.">
+    **Confirm email** is still on. Turn it off (step 2, steps 6 to 8) and click **Save changes**. Then delete the test user under **Authentication** → **Users** and sign up again.
+  </StuckItem>
+  <StuckItem question="Sign-up fails with an error about sending email, or the email address not being authorised.">
+    Supabase's built-in email only sends to your project's team, so it won't send to a test email. Turn off **Confirm email** (step 2, steps 6 to 8), then try again.
+  </StuckItem>
+  <StuckItem question="It says the email address is invalid.">
+    Supabase may refuse made-up addresses like `test@example.com`, or anything at `example.com` or `test.com`. Use a different test email.
+  </StuckItem>
+  <StuckItem question="It says I've tried too many times (a rate limit).">
+    Supabase limits how often you can try, to stop spam. Wait a few minutes and try again. If it's about sending email, make sure **Confirm email** is off ([Supabase rate limits](https://supabase.com/docs/guides/auth/rate-limits)).
+  </StuckItem>
+  <StuckItem question="It says “User already registered”.">
+    That test email has already signed up. Click log in instead, with the same password.
+  </StuckItem>
+  <StuckItem question="It says my password is too weak.">
+    Use at least 6 characters. 8 or more is better.
+  </StuckItem>
+  <StuckItem question="Logging in says the details are wrong, but I'm sure they're right.">
+    For safety, Supabase doesn't say whether the email or the password was wrong. Check both for typos. Forgotten the password? Delete the test user under **Authentication** → **Users** and sign up again.
+  </StuckItem>
+  <StuckItem question="A confirmation email link opens localhost:3000.">
+    That only happens when **Confirm email** is on. Turn it off for practice. For a real app later, set your live address under **Authentication** → **URL Configuration** → **Site URL** ([Supabase redirect URLs](https://supabase.com/docs/guides/auth/redirect-urls)).
+  </StuckItem>
+  <StuckItem question="My project says it's paused.">
+    Free projects pause after a week without use. Open your Supabase dashboard, pick the project and click **Resume project** ([Supabase project pausing](https://supabase.com/docs/guides/platform/free-project-pausing)).
+  </StuckItem>
+  <StuckItem question="I click sign up and nothing happens.">
+    Open the Console: press Ctrl+Shift+J on Windows or a Chromebook, or Cmd+Option+J on a Mac. Copy the red text, then paste it into Claude with what you expected to see, as in [When it breaks](/module-5/when-it-breaks). Check the questions above too: the error may be one of them.
   </StuckItem>
 </StuckBlock>
 

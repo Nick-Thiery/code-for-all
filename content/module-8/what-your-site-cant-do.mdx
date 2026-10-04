@@ -2,7 +2,7 @@
 title: Two things your site still can't do
 slug: what-your-site-cant-do
 order: 10
-duration: 5
+duration: 7
 summary: Your site forgets everyone, and it only knows its own files. In this module you fix both, with APIs and authentication.
 requiresAccount: false
 recap:
@@ -19,9 +19,24 @@ You can build a site, put it on GitHub and send it live with Vercel. But there a
 
 For example, when you close your [Wordle clone](/module-7/recreate-wordle) tab, it has no idea who you were. It can't keep track of users, scores, or saved games.
 
+Your site is just files: a page, its styles and its code. Everyone who visits gets the same files. There's no list of who has visited and nowhere to keep a score that belongs to one person.
+
+A page can save a little in the browser it's open in. This course does that with your progress. But that stays on one device. The site still doesn't know who you are, and your score won't follow you to another computer.
+
 ## 2. It knows only its own files
 
 It can't tell you anything that is live. This could be the weather, temperature, etc. It can only display what you typed in the original code.
+
+If you type "31°C" into your page today, it says 31°C tomorrow, next week and in the middle of a storm. The number only changes when you change the code.
+
+## Think of a printed poster
+
+Your site today is like a poster on a wall.
+
+- It shows exactly what was printed on it. It can't show today's weather unless someone prints a new poster.
+- It has no idea who is standing in front of it. It says the same thing to everyone.
+
+This module turns the poster into something closer to a screen at a train station: it shows live information from somewhere else, and you can tap your card to say who you are.
 
 ## Today you fix both
 
@@ -30,4 +45,25 @@ You will learn about **APIs** and **authentication**.
 - An **<Term>API</Term>** lets your site borrow data from someone else.
 - **<Term>Authentication</Term>** lets it remember who is here.
 
+## A worked example
+
+Say you want your Wordle clone to do two new things:
+
+1. **Show the weather at the top of the page.** That data lives on a weather service's computers, not in your files. Your site has to ask for it: that's an **API**.
+2. **Say "Welcome back, Sam! Your streak is 4 days."** First your site has to know you're Sam. That's **authentication**: signing up, logging in and logging out.
+
+Most sites you use do both. A video app logs you in, then fetches the videos to show you.
+
 You'll start with APIs in [lesson 2](/module-8/what-an-api-is) and put live data on your page in [lesson 3](/module-8/put-live-data-on-your-page). Then you'll see [how logging in works](/module-8/how-logging-in-works) and add it to your page with Supabase in [lesson 5](/module-8/creating-login-with-supabase).
+
+<CheckYourself>
+  <Question q="You want your page to show today's football scores. Do you need an API or authentication?">
+    An API. The scores are live data from somewhere else, so your site has to borrow them.
+  </Question>
+  <Question q="You want your page to say “Hi, Priya” when Priya comes back. Do you need an API or authentication?">
+    Authentication. Your site has to know who is here, and that means logging in.
+  </Question>
+  <Question q="Why can't you just type the weather into your code?">
+    Your site can only show what you typed. The weather changes, but your number stays the same until you change the code.
+  </Question>
+</CheckYourself>

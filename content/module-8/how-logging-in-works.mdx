@@ -2,12 +2,13 @@
 title: How logging in works
 slug: how-logging-in-works
 order: 40
-duration: 8
+duration: 12
 summary: What really happens when you sign up, log in and log out, what a token is, and why logging in is just an API call.
 requiresAccount: false
 recap:
   - Signing up creates a new row in the user table, with your email and a scrambled version of your password.
   - Logging in checks your email and password, then hands your browser a token. Logging out throws the token away.
+  - A token wears off after a while, but your browser quietly swaps it for a fresh one, so you stay logged in until you log out.
   - All three actions send a request to another computer and get an answer back. Logging in is just an API call!
 ---
 
@@ -23,6 +24,14 @@ When someone signs up on a website or app, it creates a new row in the user tabl
 
 The user table is a list of everyone who has signed up, one row per person. Scrambled means the site can check your password without ever storing the real one.
 
+### How scrambling works
+
+The scrambling only works one way. Your password goes in, and a jumble of letters, numbers and symbols comes out. There's no way to turn the jumble back into the password.
+
+When you log in, the site scrambles what you typed in the same way and checks it against the jumble it saved. If they match, the password was right. The real password is never saved anywhere.
+
+This one-way scrambling is called <Term def="scrambling a password one way, so it can be checked but never turned back into the real password.">hashing</Term>. Supabase, the service you'll use in [lesson 5](/module-8/creating-login-with-supabase), says "only hashed passwords are stored" ([Supabase password security](https://supabase.com/docs/guides/auth/password-security)).
+
 ## Log in
 
 When you try to log in, it verifies if your email and password match what is registered in the user table. If they match, it will hand your browser a token.
@@ -31,19 +40,57 @@ When you try to log in, it verifies if your email and password match what is reg
 
 Logging out throws your token away. This means the site stops recognising you until you log in again.
 
+Your row in the user table stays. You can log in again any time with the same email and password.
+
 ## What a token is
 
 <KeyTerm term="Token">
-A token is a temporary sticker that says "this is James". Your browser shows it on every request, so the site doesn't ask for your password on every single click. It expires on its own.
+A token is a temporary sticker that says "this is James". Your browser shows it on every request, so the site doesn't ask for your password on every single click. It wears off after a while, but your browser quietly swaps it for a fresh one, so you stay logged in until you log out.
 </KeyTerm>
 
 <LoginDiagram />
+
+### Why the sticker can't be faked
+
+A token isn't just the words "this is James". It also says when it wears off, and it carries a <Term def="a code only the site can make. If anyone changes the token, the code no longer matches, so the site knows it's been changed.">signature</Term> that only the site can make. If someone changes "James" to "Priya", the signature stops matching, and the site refuses the token ([Supabase JWTs](https://supabase.com/docs/guides/auth/jwts)).
+
+### Why you stay logged in
+
+On Supabase, the sticker wears off after about an hour. That's on purpose: if someone ever copied it, it wouldn't work for long.
+
+So why don't you have to log in again every hour? When you log in, your browser gets two things:
+
+- **The sticker** (an access token), which it shows on every request.
+- **A one-time voucher** (a refresh token). When the sticker wears off, your browser swaps the voucher for a fresh sticker and a new voucher, without asking for your password.
+
+This happens in the background. By default you stay logged in until you log out. Logging out bins both ([Supabase sessions](https://supabase.com/docs/guides/auth/sessions)).
+
+Being logged in, from logging in to logging out, is called a <Term def="the time you're logged in, from logging in until you log out. Your browser keeps your tokens for it.">session</Term>.
+
+### Where the browser keeps it
+
+Your browser keeps your tokens in its <Term def="a small store in your browser where a site can save things, on this device only. It stays until it's cleared.">local storage</Term>, for that site only ([Supabase auth overview](https://supabase.com/llms/js.txt)). That's why you're still logged in when you close the tab and come back.
+
+It's also why a private or incognito window logs you out when you close it: its storage is cleared when the last private tab closes ([MDN localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)).
+
+## A worked example: a day with James
+
+1. **Monday, 4pm.** James signs up with an email and a password. The user table gets a new row: the email, and the jumble the password scrambles to.
+2. **4.01pm.** James logs in. The site scrambles the password James typed, checks it against the jumble and finds a match. James's browser gets a sticker and a voucher.
+3. **4.02pm.** James clicks through five pages. Each time, the browser shows the sticker. Nobody asks for the password.
+4. **5.05pm.** The sticker has worn off. The browser swaps the voucher for a fresh sticker and a new voucher. James doesn't notice a thing.
+5. **5.30pm.** James clicks **Log out**. The browser bins the sticker and the voucher. The site doesn't recognise James any more.
+6. **Tuesday.** James logs in again. The row is still there, so the same email and password still work.
 
 ## Notice what all 3 actions are
 
 Your site is sending a request to another computer and getting an answer back. Logging in is just an <Term>API</Term> call!
 
 It's the door from [lesson 2](/module-8/what-an-api-is) again: you knock with a request, and it answers.
+
+- **Sign up:** "Here's a new email and password." The answer: your new account.
+- **Log in:** "Here's my email and password." The answer: a token, or "that doesn't match".
+- **Log out:** "I'm done." The answer: your token is no longer accepted.
 
 <CheckYourself>
   <Question q="What happens to your token when you log out?">
@@ -54,5 +101,11 @@ It's the door from [lesson 2](/module-8/what-an-api-is) again: you knock with a 
   </Question>
   <Question q="What do signing up, logging in and logging out have in common?">
     Each one sends a request to another computer and gets an answer back. They're all API calls.
+  </Question>
+  <Question q="A site's tokens wear off after an hour. Why are you still logged in the next day?">
+    Your browser swaps its one-time voucher (the refresh token) for a fresh token in the background. You stay logged in until you log out.
+  </Question>
+  <Question q="Someone gets into a site's user table. Can they read your password?">
+    No. The table only holds the scrambled (hashed) version, and it can't be turned back into your real password.
   </Question>
 </CheckYourself>

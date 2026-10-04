@@ -2,13 +2,14 @@
 title: What an API actually is
 slug: what-an-api-is
 order: 20
-duration: 5
+duration: 10
 summary: An API is like a door. You knock with a request for information, and it answers with data.
 requiresAccount: false
 recap:
   - An API is like a door. You knock with a request for information, and it answers with data.
   - You never see the inside, and you don't have to.
   - Open the open-meteo link in your browser to see the raw data an API sends back.
+  - "The link is the request: the address, then a ? and the details you're asking for, joined by &."
 ---
 
 Your site only knows its own files. An API is how it borrows data from someone else.
@@ -34,6 +35,17 @@ The API is the messenger: it takes the app's request to where the data lives, an
 
 <Figure src="/lessons/module-8/where-the-api-sits.png" alt="Diagram. Four circles in a row, joined by a line. From left to right: End User, Browser / mobile, with a person icon; App, The interface, with a screen icon; API, The messenger, with two arrows pointing opposite ways; and Server + DB, Where data lives, with a database icon. The label request sits on the line between End User and App, and the label response sits on the line between API and Server + DB." width={1600} height={353} caption="Where the API sits: end user, app, API, then server and database, with the request going out and the response coming back." />
 
+## Like a waiter in a café
+
+In a café, you don't walk into the kitchen. You tell the waiter what you want, the waiter takes your order to the kitchen, and comes back with your food.
+
+- **You** are the end user.
+- **The menu** is the app: it shows you what you can ask for.
+- **The waiter** is the API: the messenger.
+- **The kitchen** is the server and database: where the work happens.
+
+You never see the kitchen, and you don't need to know how the chef cooks. You only need to know how to order.
+
 ## Watch this video
 
 On limited data, save it for Wi-Fi. The door picture above says the same thing.
@@ -46,4 +58,69 @@ On limited data, save it for Wi-Fi. The door picture above says the same thing.
 What you see is the raw data Singapore's weather comes back as. You knocked with a request, and the door answered with data.
 </Callout>
 
+Open-Meteo is a free weather service. Anyone can use its API for a non-commercial project like this one, with no account and no key ([Open-Meteo terms](https://open-meteo.com/en/terms)).
+
+## A worked example: read the request
+
+The link you just opened *is* the request. Here it is in parts:
+
+```text title="The request"
+https://api.open-meteo.com/v1/forecast
+?latitude=1.29
+&longitude=103.85
+&current=temperature_2m
+```
+
+- `https://api.open-meteo.com/v1/forecast` is the address of the door: Open-Meteo's forecast API.
+- `?` means "here come the details of what I'm asking for".
+- `latitude=1.29` and `longitude=103.85` say where on Earth: Singapore.
+- `&` joins one detail to the next.
+- `current=temperature_2m` asks for the temperature right now, 2 metres above the ground.
+
+Each `name=value` pair is called a <Term def="a detail added to the end of a web address, after a ?, to say exactly what you're asking for. Several are joined with &.">parameter</Term>. Change a parameter and you ask a different question. Open-Meteo's own docs use Berlin as their example: [try latitude 52.52 and longitude 13.41](https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m) and you get Berlin's temperature instead.
+
+## A worked example: read the answer
+
+The answer comes back as <Term def="a way of writing data as text, with names and values inside curly brackets, that both people and code can read. It's short for JavaScript Object Notation.">JSON</Term>. Some browsers lay it out neatly, others show one long line. Both are fine. It looks something like this (your numbers will be different):
+
+```json title="The answer (shortened)"
+{
+  "latitude": 1.3005272,
+  "longitude": 103.862564,
+  "timezone": "GMT",
+  "current_units": {
+    "time": "iso8601",
+    "interval": "seconds",
+    "temperature_2m": "°C"
+  },
+  "current": {
+    "time": "2026-10-04T04:15",
+    "interval": 900,
+    "temperature_2m": 32.2
+  }
+}
+```
+
+Here's how to read it:
+
+- **`current` → `temperature_2m`** is the number you want: 32.2.
+- **`current_units` → `temperature_2m`** says what it's measured in: °C.
+- **`latitude` and `longitude`** are a little different from what you asked for. Open-Meteo uses the nearest point on its weather map. That's normal.
+- **`time`** is in GMT, unless you ask for another time zone. Singapore is 8 hours ahead of GMT, so 04:15 here is 12:15 in Singapore. [Lesson 3](/module-8/put-live-data-on-your-page) shows how to ask for Singapore time.
+- **`interval: 900`** means 900 seconds: 15 minutes. "Current" conditions come from weather data that's updated every 15 minutes, so if you reload straight away, you'll usually see the same number ([Open-Meteo docs](https://open-meteo.com/en/docs)).
+
+If you mistype part of the link, the door still answers, but with an error: something like `{"reason": "…", "error": true}`, with a reason saying what was wrong.
+
 In [Task 1](/module-8/put-live-data-on-your-page), you'll ask Claude to fetch this same link and show the temperature on your page.
+
+<CheckYourself>
+  <Question q="In the café comparison, which part is the API?">
+    The waiter. It takes your order (the request) to the kitchen and brings back your food (the data). You never go into the kitchen.
+  </Question>
+  <Question q="You want Berlin's temperature instead of Singapore's. Which part of the link do you change?">
+    The latitude and longitude parameters, the numbers after `latitude=` and `longitude=`. The rest of the link stays the same.
+  </Question>
+  <Question q="You reload the open-meteo link and the temperature hasn't changed. Is it broken?">
+    No. The current temperature is updated every 15 minutes, so reloading straight away usually shows the same number.
+  </Question>
+</CheckYourself>

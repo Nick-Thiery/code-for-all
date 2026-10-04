@@ -48,7 +48,7 @@ questions:
     options:
       - "Your browser shows your token on every request"
       - "Your browser quietly sends your password again on every click"
-      - "Once you've logged in, a site remembers you forever"
+      - "The site recognises the Wi-Fi network you're on"
     answer: "Your browser shows your token on every request"
     explanation: "Logging in hands your browser a token, like a sticker that says who you are. Your browser shows it on every request, so the site doesn't need your password on every click."
     lesson: how-logging-in-works
@@ -62,11 +62,11 @@ questions:
     explanation: "Logging out throws your token away. The site stops recognising you until you log in again, but your account is still there."
     lesson: how-logging-in-works
 
-  - question: "Your practice login works with Confirm Email turned off. Now you want to turn it into a real app for your school club. What should you do about Confirm Email?"
+  - question: "Your practice login works with Confirm email turned off. Now you want to turn it into a real app for your school club. What should you do about Confirm email?"
     options:
       - "Leave it off, because it worked fine in practice"
       - "Turn it back on: switching it off is only for practice"
       - "Leave it off, but ask everyone to use a test email"
     answer: "Turn it back on: switching it off is only for practice"
-    explanation: "Turning off Confirm Email is fine for practice, but don't do it for a real app. A test email is only for trying out your own sign-up."
+    explanation: "Turning off Confirm email is fine for practice, but don't do it for a real app. A test email is only for trying out your own sign-up."
     lesson: creating-login-with-supabase
