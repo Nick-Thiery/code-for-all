@@ -55,7 +55,7 @@ for (const folder of folders) {
         href: `/${folder}/${lesson.slug}`,
         file: `${lesson.file}:${line}`,
         kind: match[1] === "Screenshot" ? "Screenshot" : "Placeholder",
-        needed: match[1] === "Screenshot" ? `${body}.${caption ? ` Caption: ${caption}` : ""}` : body,
+        needed: match[1] === "Screenshot" ? `${body.replace(/\.$/, "")}.${caption ? ` Caption: ${caption}` : ""}` : body,
       });
     }
   });

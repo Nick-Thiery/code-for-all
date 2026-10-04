@@ -194,7 +194,7 @@ const REFINE_REQUEST = (() => {
         headline: "This is a message Claude can really work with.",
         fix: {
           kind: "stretch",
-          text: "Name one feature the site must have, like the example's “Include working sign in and sign out.” For a quiz, that could be a button to share your result.",
+          text: "Name one feature the site must have. For a quiz, that could be a button to share your result.",
         },
         rewrite: [
           { text: `${strongMain} ` },
@@ -264,7 +264,7 @@ const BUG_REPORT = (() => {
   const near = [
     "Hi Claude, I need help with my website. It's for my school's coding club, so people need to be able to sign up before our first meeting on Friday. On the home page there's a sign-up form with a box for your name and a box for your email, and a big Sign up button under them. The button looks right, it just doesn't do anything.",
     "I typed my name and my email into the boxes and clicked the Sign up button, and nothing happened at all. The page didn't change, nothing got saved and no message came up.",
-    "I pressed F12, clicked the Console tab and this is the exact red error I saw:",
+    "I pressed Ctrl+Shift+J to open the Console and this is the exact red error I saw:",
     error,
     "I expected the form to save what I typed and then tell me I'd signed up, because earlier I asked you to make the sign-up form really save what people type.",
     "I reloaded the page and tried again with a different email, and the same error came back. I also tried it on my phone and it didn't work there either.",
