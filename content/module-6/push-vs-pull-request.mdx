@@ -2,13 +2,14 @@
 title: Push vs pull request
 slug: push-vs-pull-request
 order: 30
-duration: 5
+duration: 7
 summary: Two ways to add your changes to a project. A push goes straight in; a pull request asks others to look first.
 requiresAccount: false
 recap:
   - A push uploads your commits straight to the repo, with no waiting and no approval.
   - A pull request asks others to look at your changes before anything is merged.
   - Push when you're working solo and confident. Open a pull request when you're on a team or working on someone else's project.
+  - Once Vercel is connected, a push to main changes your live website. That's why a pull request matters on a team.
 ---
 
 <Term>Push</Term> and <Term>pull request</Term> are two ways to add your changes to a project. The difference is whether anyone checks them first.
@@ -27,4 +28,52 @@ recap:
 - **Discussion:** Others can comment, suggest edits, and approve or reject the changes.
 - **Use when:** Working on a team or contributing to someone else's project.
 
+## An everyday comparison
+
+Think of a school magazine.
+
+- **A push is like posting on your own blog.** You write it, press publish, and it's out. Nobody checks it first. That's fine when it's your blog and you've read it through.
+- **A pull request is like sending an article to the magazine's editor.** The editor reads it, maybe asks you to change a paragraph, and only then puts it in the magazine. It takes longer, but two people have checked it.
+
+## A worked example
+
+Here's the same change made both ways. You want to add a "Contact" page to a website.
+
+**Working alone, with a push:**
+
+1. You ask Claude Code to add the page.
+2. You check the page works, then commit and push.
+3. The page is in your repo straight away. Once your repo is connected to Vercel in [lesson 6](/module-6/connect-to-vercel), a push to <Term def="the main version of a project. It's the one Vercel puts live.">main</Term> also updates your live website.
+
+**On a team, with a pull request:**
+
+1. You add the page on your own branch, so main isn't touched yet.
+2. You push your branch and open a pull request.
+3. A teammate reads your changes and spots a broken link. They leave a comment.
+4. You fix the link and push again. The pull request updates.
+5. Your teammate approves, and the pull request is merged into main.
+
+A push to main skips every check, so on a team one broken push can break the site for everyone. That's what pull requests are for.
+
+## Which one should I use?
+
+| You're… | Use |
+|---|---|
+| Building your own project, alone | Push |
+| Working with friends on one project | Pull request |
+| Suggesting a change to someone else's project | Pull request (from your fork) |
+| Not sure your change is right yet | Pull request, so someone can check it |
+
 In this module you work on your own project by yourself, so you'll push. You'll open pull requests in [Module 7](/module-7).
+
+<CheckYourself>
+  <Question q="You're building your own website alone and you've tested a change. Push or pull request?">
+    Push. You're working solo and confident, so there's no one to wait for.
+  </Question>
+  <Question q="You found a mistake in an open source project you don't own. How do you suggest a fix?">
+    Fork it, make the fix in your fork, then open a pull request to the original project. Its owner decides whether to merge it.
+  </Question>
+  <Question q="Three friends are building one site together. Why not have everyone push straight to main?">
+    A push has no review. One mistake would go straight into the project, and onto the live site, for everyone. A pull request lets someone check it first.
+  </Question>
+</CheckYourself>

@@ -2,12 +2,14 @@
 title: Intro to Vercel
 slug: intro-to-vercel
 order: 40
-duration: 5
+duration: 8
 summary: Vercel turns the code in your GitHub repo into a live website, and updates it every time you push.
 requiresAccount: false
 recap:
   - "Vercel in three steps: connect your repo once, deploy every time you push, and preview every pull request."
   - GitHub stores your code. Vercel turns that code into a website at a public link.
+  - A push to main updates your live site. A push to any other branch, or a pull request, makes a preview instead.
+  - Preview links are locked to your own Vercel login. To show a friend, share your live address.
   - It's similar to tiiny.host, but there's no manual uploading, ever.
 ---
 
@@ -23,10 +25,63 @@ On limited data, save the video for Wi-Fi. The steps below say the same thing in
 
 1. **Connect.** Link your GitHub repo to Vercel once. From then on, Vercel watches that repo for you.
 2. **Deploy.** Every time you <Term>push</Term>, Vercel grabs the new code and updates your live site in seconds: no manual uploading, ever.
-3. **Preview.** Every <Term>pull request</Term> gets its own preview link, so your team can see the changes before merging them.
+3. **Preview.** Every <Term>pull request</Term> gets its own preview link, so you can see the changes before merging them.
+
+<KeyTerm term="Deploy">
+Put a version of your website online, so people can open it in a browser. Each time Vercel does this, it's called a **deployment**.
+</KeyTerm>
+
+### Live site and previews
+
+Vercel makes two kinds of deployment ([Environments](https://vercel.com/docs/deployments/environments)):
+
+- **Production: your live site.** Your first deployment, and every push to <Term def="the main version of a project. It's the one Vercel puts live.">main</Term> after that, updates the address you share with people.
+- **Preview: a test copy.** A push to any other <Term def="your own parallel copy of the code, inside the same repo. You'll learn about branches in Module 7.">branch</Term>, or a pull request, gets its own separate link. Your live site doesn't change until the change reaches main.
+
+<Callout kind="headsup">
+**Preview links are locked.** New Vercel projects have Vercel Authentication switched on, so only people logged in to Vercel with access to your project can open a preview. On the free plan, that's mostly just you. ([Deployment Protection](https://vercel.com/docs/deployment-protection))
+
+So a preview is for checking your own changes. To show friends your site, share your live address. You'll find it in [lesson 6](/module-6/connect-to-vercel).
+</Callout>
 
 ## What's the difference between GitHub and Vercel?
 
 GitHub stores your code: every file, every version, shared with your team. But nothing there is a website yet.
 
 Vercel turns that code into one. It reads your repo, builds the site, and hosts it at a public link that updates every time you push.
+
+### An everyday comparison
+
+Think of a band.
+
+- **GitHub is the band's practice room.** All the songs are written, changed and stored there. Only the band goes in.
+- **Vercel is the stage.** It takes the songs from the practice room and plays them to an audience.
+
+Each time the band finishes a new version of a song (a push to main), the stage plays the new version. A preview is a soundcheck: the band hears it before the audience does.
+
+### A worked example
+
+Your website is live on Vercel at an address like `my-football-site.vercel.app`. You spot that "Fixtures" is spelt "Fixtrues".
+
+1. **You fix it** with Claude Code and push the fix to main on GitHub.
+2. **Vercel notices the push.** Nobody has to tell it. It's watching your repo.
+3. **Vercel builds the new version** of your site. This usually takes a few seconds for a small site.
+4. **The same address now shows the fix.** You didn't upload anything.
+
+If something goes wrong, Vercel shows you what happened in its build logs. Lesson 6 shows where to find them.
+
+## What it costs
+
+Vercel's **Hobby** plan is free, for personal projects that aren't for business. ([Vercel plans](https://vercel.com/docs/plans/hobby)) It's all you need for this course. If Vercel ever asks for a bank card, stop: you're on the wrong plan.
+
+<CheckYourself>
+  <Question q="Your project is in a GitHub repo. Why isn't it a website yet?">
+    GitHub only stores code. Something has to build it and put it online: that's what Vercel does.
+  </Question>
+  <Question q="You push a change to a branch called new-colours, not main. Does your live site change?">
+    No. A push to another branch makes a preview. Your live site only changes when the change reaches main.
+  </Question>
+  <Question q="You send a friend a preview link and they see a Vercel login page. Why?">
+    Preview links are locked by default, so only people logged in to Vercel with access to your project can open them. Send your live address instead.
+  </Question>
+</CheckYourself>

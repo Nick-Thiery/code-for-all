@@ -2,19 +2,22 @@
 title: "Step 1: get your code into GitHub"
 slug: get-your-code-into-github
 order: 50
-duration: 10
-summary: Make a repo on GitHub, then let Claude Code commit your project and push it there.
+duration: 30
+summary: Set up Git, make a repo on GitHub, then let Claude Code commit your project and push it there.
 requiresAccount: true
 needs:
-  device: A laptop or Chromebook
+  device: "A Windows or Mac laptop with Git on it, or permission to install Git. On a Chromebook, use Claude Code on the web: see \"On a Chromebook\" below."
   access:
-    - GitHub (a free account, signed in during a session)
-    - Claude Code
+    - GitHub (signed in during a session)
+    - Claude Code, or Lovable if you built your project there
   before:
     - "Your latest project from Claude Code or Lovable, like the site from [Module 5](/module-5/the-whole-workflow)"
 recap:
-  - Make a repo on github.com, copy its URL, then give Claude Code the prompt to push your project to it.
-  - Using Lovable? Settings → GitHub → Connect does it all for you.
+  - "Before the first push: Git installed, a way for Git to sign in to GitHub (Git Credential Manager on Windows, gh auth login on a Mac), and your GitHub noreply email for commits."
+  - "On GitHub: + → New repository, name it, choose Private, leave the README off, then Create repository. Copy its URL."
+  - Give Claude Code the push prompt with your URL, plus "Use a branch called main." Approve each git command.
+  - Using Lovable? Project settings → Git → GitHub → Connect does it for you.
+  - On a Chromebook, Claude Code on the web works with a repo you make on GitHub first.
   - Make your repo Private, and never put passwords, API keys or personal details in a repo.
 ---
 
@@ -24,8 +27,16 @@ This lesson is the GitHub half. [Step 2](/module-6/connect-to-vercel) is the Ver
 
 <CodeJourneyDiagram />
 
+## Which way is yours?
+
+- **You built it with Claude Code on a laptop:** follow every part of this lesson, in order.
+- **You built it in Lovable:** Lovable sends it to GitHub for you. Read the box below, then skip to [Step 2](/module-6/connect-to-vercel).
+- **You're on a Chromebook:** go to **On a Chromebook**, near the end of this lesson.
+
 <Callout kind="tip">
-**Using Lovable instead?** You don't need any of the steps below. Open your project → **Settings** → **GitHub** → **Connect**. Lovable creates the repo, pushes your code automatically, and keeps it in sync from then on. Skip to [Step 2](/module-6/connect-to-vercel).
+**Using Lovable instead?** You don't need any of the steps below. Open your project → **Project settings** → **Git** → **GitHub**, then click the button to connect your project. Lovable creates the repo, pushes your code automatically, and keeps it in sync from then on, both ways, on the repo's default branch (usually main). The repo it makes is private. Skip to [Step 2](/module-6/connect-to-vercel). ([Lovable GitHub docs](https://docs.lovable.dev/integrations/github))
+
+Your Lovable workspace needs its own connection to GitHub first, and only a workspace owner or admin can add it. If you don't see a way to connect, ask in your session. Lovable's menus change often: if yours look different, look for **Git** or **GitHub** in the project's settings.
 
 This part needs access; see [how hands-on access works](/access). Connect to GitHub in a session, with your teacher's go-ahead.
 </Callout>
@@ -38,9 +49,80 @@ Make your repo **Private** when you create it in step 1. A public repo can be se
 
 <HandsOn />
 
+## Before you start: set up Git
+
+This part needs access; see [how hands-on access works](/access). Do it in a session, with your teacher's go-ahead.
+
+Claude Code uses <Term def="the tool on your computer that saves snapshots of your project and sends them to GitHub.">Git</Term> to commit and push. Git needs three things before your first push. You only do this once on each computer.
+
+### Check Git is installed
+
+Open a <Term def="the text window where you type commands for your computer to run.">terminal</Term>, as in [Module 3](/module-3/install-claude-code), and run:
+
+<CommandBlock>git --version</CommandBlock>
+
+You should now see something like `git version 2.` followed by more numbers. That means Git is installed, so go on to the next part.
+
+If you see an error like "command not found" or "not recognized", Git isn't installed:
+
+- **Windows:** install **Git for Windows** from [git-scm.com/downloads](https://git-scm.com/downloads). Keep the options it picks for you.
+- **Mac or Linux:** follow the steps for your computer on [git-scm.com/downloads](https://git-scm.com/downloads).
+
+Then close the terminal, open a new one and run `git --version` again.
+
+You don't have to use a separate window. The Claude Code desktop app has its own terminal: open it from the **Views** menu, or press **Ctrl+`**. In Claude Code in the terminal, you can type `!` before a command to run it yourself, like `! git --version`. ([Claude Code desktop](https://code.claude.com/docs/en/desktop), [Interactive mode](https://code.claude.com/docs/en/interactive-mode)) The Claude Code desktop app also tells you "Git is required" if it can't find Git, with a link to the download. ([Claude Code desktop](https://code.claude.com/docs/en/desktop))
+
+If your laptop won't let you install apps, do this lesson on a session laptop, or follow **On a Chromebook** near the end.
+
+### Let Git sign in to GitHub
+
+GitHub no longer accepts your password when Git pushes. "Password-based authentication for Git has been removed." ([About remote repositories](https://docs.github.com/en/get-started/git-basics/about-remote-repositories)) Instead, Git signs in through your browser. Which way depends on your computer ([Caching your GitHub credentials](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git)):
+
+**On Windows: nothing to do now.** Git for Windows comes with **Git Credential Manager**. The first time Claude Code pushes, a browser window opens. Sign in to GitHub there with your session's access, and Git remembers it.
+
+**On a Mac or Linux: use GitHub CLI.**
+
+1. Install GitHub CLI by following the steps for your computer at [cli.github.com](https://cli.github.com).
+2. In a terminal, run:
+
+   <CommandBlock>gh auth login</CommandBlock>
+3. Answer its questions with the arrow keys and **Enter**. When it asks for your preferred protocol for Git operations, choose **HTTPS**. When it asks whether to authenticate Git with your GitHub credentials, type **Y**. ([Caching your GitHub credentials](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git))
+4. For anything else, choose GitHub.com and signing in with a web browser, then follow what it shows. It opens GitHub in your browser so you can sign in there with your session's access. ([gh auth login](https://cli.github.com/manual/gh_auth_login))
+5. To check, run `gh auth status`.
+
+   You should now see that you're logged in to github.com.
+
+### Use your private email for commits
+
+Every commit has an email address in it, and anyone who can see the repo can see that address. GitHub gives you a private one to use instead, called a **noreply** address. It looks like `12345678+your-username@users.noreply.github.com`. ([Setting your commit email address](https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address))
+
+1. On GitHub, click your profile picture at the top right, then **Settings**.
+2. In the left sidebar, click **Emails**.
+3. Select **Keep my email addresses private**. Your noreply address is shown on the same page. Copy it.
+4. In a terminal, run these two commands. Paste your own noreply address, and use your GitHub username as your name, not your full name:
+
+   <CommandBlock>{'git config --global user.email "YOUR-NOREPLY-ADDRESS"'}</CommandBlock>
+
+   <CommandBlock>{'git config --global user.name "YOUR-GITHUB-USERNAME"'}</CommandBlock>
+
+This matters for Vercel too. On Vercel's free plan, a push only goes live if Vercel can match your commits to your GitHub account, and your noreply address does that. ([Troubleshooting project collaboration](https://vercel.com/docs/deployments/troubleshoot-project-collaboration))
+
+**Check it worked:** `git --version` shows a version, and `git config --global user.email` shows your noreply address. On a Mac, `gh auth status` says you're logged in.
+
 ## 1. Make a repo
 
-Sign in to [github.com](https://github.com) → click the green **New repository** button. Name it, choose **Private**, click **Create**.
+1. Sign in to [github.com](https://github.com).
+2. Click **+** at the top right of any page, then **New repository**. ([Creating a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository))
+3. Leave **Owner** as your account.
+4. Type a **Repository name**, like `my-website`. Use letters, numbers, `-`, `_` or `.`, with no spaces.
+5. Choose **Private**.
+6. **Leave Add README off.** Don't add a README, a licence or a .gitignore either. You're pushing a project that already exists, and GitHub says that to avoid errors, a new repo for it should start empty. ([Adding locally hosted code to GitHub](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github))
+7. Click **Create repository**.
+
+   You should now see your new, empty repo, with its address and instructions for adding code to it.
+8. **Copy the repo's URL.** It's the address in your browser's address bar, like `https://github.com/your-username/my-website`.
+
+<Screenshot caption="GitHub's new repository form: a name typed in, Private chosen and Add README left off.">GitHub's Create a new repository page with a repository name typed, Private selected, the Add README toggle off, and the Create repository button, from a neutral account with no username, avatar or email showing</Screenshot>
 
 This part needs access; see [how hands-on access works](/access). Sign in to GitHub in a session, with your teacher's go-ahead. GitHub accounts are free.
 
@@ -54,23 +136,123 @@ Do this with your latest project open in Claude Code: "this project" in the prom
 Push this project to GitHub. Initialise a git repo, commit everything with a clear message, and push it to <paste your repo URL>.
 ```
 
-If it asks you to sign in to GitHub, follow its instructions in the terminal.
+Before you press **Enter**, add this sentence to the end:
+
+```prompt title="Add this to the end"
+Use a branch called main.
+```
+
+Why? Git still names a new project's first branch `master` unless you tell it otherwise ([git init](https://git-scm.com/docs/git-init)). Vercel and the rest of this course expect `main`.
+
+### Approve each command
+
+Claude Code asks before it runs each command. Read what each one is, then choose **Yes**. They're GitHub's own steps for pushing a project ([Adding locally hosted code to GitHub](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github)):
+
+- `git init -b main` turns your project folder into a Git repo, with a branch called main.
+- `git add .` gets every file ready for the commit.
+- `git commit -m "…"` is the commit: it saves a snapshot, with a short note.
+- `git remote add origin …` tells Git where your repo on GitHub is.
+- `git push -u origin main` is the push: it sends your commits up to GitHub.
+
+Claude Code may run them in a slightly different way, or join some together. That's fine, as long as it ends with a push.
+
+<Callout kind="headsup">
+**Check what it's adding.** Before the commit, look at the list of files. If you see a file with passwords, keys or personal details in it, choose **No** and tell Claude Code to leave that file out.
+</Callout>
+
+### Sign in if asked
+
+- **On Windows,** a browser window may open at the push. Sign in to GitHub there. The push then carries on.
+- **On a Mac,** you already signed in with `gh auth login`, so it should just work.
+
+You should now see Claude Code say the push worked, with the address of your repo.
+
+If it says the sign-in failed, or asks for a password, go back to **Let Git sign in to GitHub**, above. Then ask Claude Code to try the push again.
 
 ## 3. Check it worked
 
-Refresh your repo page. Your files should be there. That's your first <Term>commit</Term> and <Term>push</Term>.
+1. Go back to your repo on GitHub and refresh the page.
+2. You should now see your project's files, and the note from your commit next to them.
+3. Look at the branch menu above the list of files. It should say **main**.
+
+That's your first <Term>commit</Term> and <Term>push</Term>.
+
+### Next time you change something
+
+You don't need the setup again. After a change, ask Claude Code:
+
+```prompt title="Example: send your latest changes"
+Commit my changes with a descriptive message and push them to GitHub.
+```
+
+Claude Code's own guide shows Git jobs as plain requests like this. ([Claude Code quickstart](https://code.claude.com/docs/en/quickstart))
+
+<HandsOn />
+
+## On a Chromebook
+
+This part needs access; see [how hands-on access works](/access).
+
+You can't install Git on most Chromebooks, so use Claude Code on the web at [claude.ai/code](https://claude.ai/code). It works on your code in the cloud, and saves it to GitHub for you. ([Claude Code on the web](https://code.claude.com/docs/en/web-quickstart))
+
+1. **Make an empty repo** on GitHub, as in step 1 above. Claude Code on the web works with repos that already exist on GitHub, so you make one first.
+2. **Open [claude.ai/code](https://claude.ai/code)** and sign in with your session's access.
+3. **Connect GitHub** when it asks, and sign in to GitHub.
+4. **Give Claude access to your repo.** Your repo is private, so the **Claude GitHub App** has to be installed on it. Follow the steps Claude Code on the web shows you, and choose your new repo.
+
+   If it offers to skip installing the app, don't skip: without it, Claude can't work in a private repo.
+5. **Choose your repo** and give Claude Code a task, like building your project or adding your files.
+6. Claude Code works on its own <Term def="your own parallel copy of the code, inside the same repo. You'll learn about branches in Module 7.">branch</Term>, not main. Each task gets its own branch, which Claude pushes to GitHub for you.
+7. When you're happy with the changes, click **Create PR** at the top of the list of changes. That opens a <Term>pull request</Term> on GitHub.
+
+To get the work onto main, so Vercel can put it live, you merge that pull request on GitHub. [Module 7](/module-7) shows how, step by step.
+
+**Check it worked:** open your repo on GitHub. You should see Claude's branch in the branch menu above the list of files, and your pull request under the **Pull requests** tab.
+
+### Or upload your files on GitHub
+
+If you already have your project's files, you can put them in your repo straight from the browser ([Adding a file to a repository](https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository)):
+
+1. Open your repo on GitHub. If it already has files, check the branch menu above the list of files says **main**.
+2. Click **Add file**, then **Upload files**. In a brand-new, empty repo, use the link for uploading a file on its setup page instead.
+3. Drag your files and folders onto the page. Your `index.html` should be at the top level, not inside another folder.
+4. Type a short **Commit message**, like "Add my website".
+5. GitHub may ask whether to save to main or to a new branch. For this lesson, choose main, so Vercel can put it live. Then click the button at the bottom to save your files.
+
+You should now see your files in the repo. Each file can be up to 25 MiB, and you can add up to 100 files at a time.
 
 <StuckBlock>
   <StuckItem question="GitHub or Claude Code asks me to sign up or log in.">
-    You sign in to GitHub with a GitHub account: do this step in a session, with your teacher's go-ahead. See [how hands-on access works](/access). If Claude Code asks you to sign in to GitHub, follow its instructions in the terminal.
+    You sign in to GitHub with a GitHub account: do this step in a session, with your teacher's go-ahead. See [how hands-on access works](/access). If a browser window opens during a push, that's Git asking you to sign in: use the same GitHub account.
   </StuckItem>
   <StuckItem question="I built my project in Lovable, not Claude Code.">
-    You don't need steps 1 to 3. Open your project → **Settings** → **GitHub** → **Connect**, then go to [Step 2](/module-6/connect-to-vercel).
+    You don't need the Git setup or steps 1 to 3. Open your project → **Project settings** → **Git** → **GitHub** → **Connect**, then go to [Step 2](/module-6/connect-to-vercel). If there's no way to connect, your workspace needs a GitHub connection first, which only a workspace owner or admin can add: ask in your session.
+  </StuckItem>
+  <StuckItem question="It says git isn't found, or the desktop app says Git is required.">
+    Git isn't installed. Install it from [git-scm.com/downloads](https://git-scm.com/downloads) (on Windows, Git for Windows), then open a new terminal and run `git --version`. If you can't install apps, use a session laptop or follow **On a Chromebook** in this lesson.
+  </StuckItem>
+  <StuckItem question="It asks for my GitHub password, or says authentication failed.">
+    GitHub doesn't accept passwords from Git any more. On Windows, Git Credential Manager comes with Git for Windows and opens a browser window to sign in. On a Mac, run `gh auth login` in a terminal, choose **HTTPS** and answer **Y** to authenticate Git. Then ask Claude Code to push again. ([Caching your GitHub credentials](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git))
+  </StuckItem>
+  <StuckItem question="The push was rejected, and it mentions non-fast-forward or fetch first.">
+    Your repo on GitHub has a commit your computer doesn't have, usually a README added when the repo was made. Git needs to pull that in first. Ask Claude Code: "The push was rejected. Pull the changes from GitHub first, then push again." Next time, leave the README off when you make a repo. ([Dealing with non-fast-forward errors](https://docs.github.com/en/get-started/using-git/dealing-with-non-fast-forward-errors))
+  </StuckItem>
+  <StuckItem question="My branch is called master, not main.">
+    Ask Claude Code: "Rename my branch to main and push it to GitHub." Then check the branch menu on your repo page says **main**.
   </StuckItem>
   <StuckItem question="My files aren't on my repo page.">
-    Refresh the page. Then check the prompt you pasted: `<paste your repo URL>` needs to be replaced with your new repo's URL.
+    Refresh the page. Then check the prompt you pasted: `<paste your repo URL>` needs to be replaced with your new repo's URL. Scroll back through Claude Code's replies: if a step failed, the error is there. Copy it into Claude Code and ask it to fix it.
   </StuckItem>
   <StuckItem question="Where do I find my repo's URL?">
     It's the address in your browser when you're on the repo page, like `https://github.com/your-name/your-repo`. Copy it from the address bar.
+  </StuckItem>
+  <StuckItem question="Claude Code on the web can't see my repo.">
+    Your repo is private, so the Claude GitHub App needs to be installed on it. Install it on your repo, then choose the repo again. ([Claude Code on the web](https://code.claude.com/docs/en/web-quickstart))
+  </StuckItem>
+  <StuckItem question="A file won't upload on GitHub.">
+    Each file can be up to 25 MiB, and you can add up to 100 files at a time. Upload big folders in smaller batches. ([Adding a file to a repository](https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository))
+  </StuckItem>
+  <StuckItem question="My changes went to the wrong branch.">
+    Before you edit or upload on GitHub, check the branch menu above the list of files says **main**. If Claude Code is pushing, ask it "Which branch am I on?" before you push.
   </StuckItem>
 </StuckBlock>

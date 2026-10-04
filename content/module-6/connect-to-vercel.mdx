@@ -2,23 +2,26 @@
 title: "Step 2: connect to Vercel"
 slug: connect-to-vercel
 order: 60
-duration: 8
+duration: 20
 summary: Sign up to Vercel with your GitHub account, import your repo and deploy it to a live public link.
 requiresAccount: true
 needs:
-  device: A laptop or Chromebook
+  device: A laptop or Chromebook. Vercel works in the browser, so there's nothing to install.
   access:
     - GitHub
     - Vercel (free for personal projects, signed in with GitHub during a session)
   before:
-    - "The repo you pushed in [Step 1](/module-6/get-your-code-into-github)"
+    - "The repo you pushed in [Step 1](/module-6/get-your-code-into-github), with your files on the main branch"
 recap:
   - Sign up to Vercel using your GitHub account, not email. That's what lets Vercel see your repos.
-  - New Project → Import Git Repository → pick your repo → Deploy.
-  - From now on, every push to GitHub updates your live site automatically.
+  - "Add New… → Project → Import your repo. For plain HTML, choose the Other preset with no build command, then Deploy."
+  - Your live address is on the project's Overview page. Share that one, not a preview link.
+  - From now on, every push to main updates your live site automatically. If it doesn't, check Deployments and the Build Logs.
 ---
 
 Your project is on GitHub. Now connect it to Vercel, which turns it into a live website.
+
+These steps come from Vercel's own guides: [Deploying Git repositories](https://vercel.com/docs/git) and [Configuring a build](https://vercel.com/docs/builds/configure-a-build). Vercel changes its screens from time to time. If a button looks a little different, look for the same words nearby.
 
 <PublishSafely />
 
@@ -30,21 +33,104 @@ Go to [vercel.com](https://vercel.com) and sign up using your **GitHub account**
 
 This part needs access; see [how hands-on access works](/access). Do this step in a session, with your teacher's go-ahead. Vercel's plan for personal projects is free: if it asks for a card, you're on the wrong plan, so stop and ask.
 
+1. On Vercel's sign-up page, click **Continue with GitHub**.
+2. GitHub asks whether to let Vercel use your account. Say yes, so Vercel can see your repos.
+3. If Vercel asks what you're using it for, or which plan you want, choose the free one for personal projects, called **Hobby**.
+
+You should now see your Vercel dashboard. It may be almost empty: you haven't made a project yet.
+
 ## 2. Import your repo
 
-On your dashboard, click **New Project** → **Import Git Repository** → pick the repo you pushed in [Step 1](/module-6/get-your-code-into-github). Authorize Vercel when GitHub asks.
+On your dashboard, click **Add New…** → **Project**. Or go straight to [vercel.com/new](https://vercel.com/new). ([Managing projects](https://vercel.com/docs/projects/managing-projects))
 
-## 3. Deploy
+1. You should now see a list of your GitHub repos. Find the one you pushed in [Step 1](/module-6/get-your-code-into-github).
+2. Click **Import** next to it. Authorize Vercel if GitHub asks.
 
-Vercel auto-detects your setup. Click **Deploy**, wait a few seconds, and you get a **live public link**.
+**Your repo isn't in the list?** Click **Configure GitHub App**. On GitHub, choose your account, add your repo to the list of repos Vercel can see, and save. Then go back to Vercel: your repo should now be there. ([Unable to find GitHub repository](https://vercel.com/kb/guide/unable-to-find-github-repository))
+
+## 3. Check the settings
+
+Before it deploys, Vercel shows a page of settings. Most of them can stay as they are.
+
+- **Project Name:** Vercel fills it in from your repo's name. It becomes part of your site's address, so keep it short. Leave out your full name.
+- **Framework Preset:** Vercel tries to work out how your project is built.
+  - **A plain HTML, CSS and JavaScript site** (like the ones you built with Claude Code): choose **Other**.
+  - **A Lovable project:** leave what Vercel picked.
+- **Root Directory:** leave it, unless your `index.html` is inside a folder in your repo. Then click **Edit** and choose that folder.
+- **Build and Output Settings:** a plain HTML site doesn't need a build step. Open these settings, turn on **Override** next to **Build Command** and leave the box empty.
+
+<Screenshot caption="Vercel's settings before the first deployment: Framework Preset set to Other, and the Build Command overridden and left empty.">Vercel's new project configure page for a plain HTML repo, with Framework Preset set to Other, Build and Output Settings open, the Build Command Override switched on with an empty box, and the Deploy button, from a neutral account with no username, avatar or email showing</Screenshot>
+
+Vercel publishes a folder called `public` if your repo has one, and otherwise the top level of your repo. So for a plain HTML site, your `index.html` should be in one of those two places. ([Configuring a build](https://vercel.com/docs/builds/configure-a-build))
+
+## 4. Deploy
+
+Click **Deploy**, wait a few seconds, and you get a **live public link**.
+
+While you wait, Vercel shows the build happening, line by line. A small site takes seconds.
+
+You should now see the deployment finish. If you see red error lines instead, go to **If something goes wrong**, below.
+
+## 5. Find your live address
+
+Your first deployment is your live site, called **production** ([Environments](https://vercel.com/docs/deployments/environments)).
+
+1. Go to your project's **Overview** page. It shows your latest production deployment, with its address.
+2. Find your site's address. It usually looks like `your-project-name.vercel.app`.
+3. Click it to open your site.
+
+You can always find it again on the **Overview** and **Deployments** pages of your project.
+
+<Callout kind="headsup">
+**Share this address, not a preview link.** Other links Vercel makes, like the ones for each deployment and for previews, are locked by default: anyone who isn't logged in to Vercel with access to your project sees a Vercel login page instead of your site. ([Deployment Protection](https://vercel.com/docs/deployment-protection))
+</Callout>
+
+## 6. Check it worked
+
+1. Open your live address on another device, like a phone, or in a private browser window.
+
+   You should now see your site, with no Vercel login in the way.
+2. **Try a change.** In Claude Code, change something small, like a heading. Then ask:
+
+   ```prompt title="Example: send a change live"
+   Commit my changes with a descriptive message and push them to GitHub.
+   ```
+3. In Vercel, open your project's **Deployments** page. You should see a new deployment appear and build.
+4. When it's finished, refresh your live address. You should now see your change.
 
 <Callout kind="tip">
-**From now on, you never upload anything again.** Every time you <Term>push</Term> to GitHub, Vercel rebuilds and updates your live site automatically. And every <Term>pull request</Term> gets its own preview link, so your team can see changes before merging.
+**From now on, you never upload anything again.** Every time you <Term>push</Term> to GitHub, Vercel rebuilds and updates your live site automatically. And every <Term>pull request</Term> gets its own preview link, so you can see changes before merging. Remember that preview links are locked to your Vercel login: to show someone your site, share your live address.
 </Callout>
 
 That's the task done: your latest project is on GitHub, and it's live on Vercel.
 
 <DeployLoopDiagram />
+
+Only pushes to **main** update your live site. A push to any other <Term def="your own parallel copy of the code, inside the same repo. You'll learn about branches in Module 7.">branch</Term> makes a preview instead. You'll use that in [Module 7](/module-7).
+
+## If something goes wrong
+
+### Read the build logs
+
+When a deployment fails, its build logs say why ([Build logs](https://vercel.com/docs/deployments/logs)).
+
+1. Open your project's **Deployments** page and click the deployment that failed. (For your live site, there's also a **Build Logs** button on the production deployment on the **Overview** page.)
+2. Open its **Build Logs**. Errors are shown in red.
+3. Copy the red lines into Claude Code and ask it to fix the problem:
+
+   ```prompt title="Example: fix a failed deployment"
+   My Vercel deployment failed with this error: [paste the red lines]. Fix it, then commit and push the fix.
+   ```
+
+The push makes a new deployment. Check it on the **Deployments** page.
+
+### Redeploy
+
+To build the same code again, for example after changing a setting:
+
+1. Open your project's **Deployments** page.
+2. Click the **…** menu on the deployment you want.
+3. Click **Redeploy**. Vercel may ask whether to use the existing build cache. Then click **Redeploy** again to confirm.
 
 <StuckBlock>
   <StuckItem question="Vercel or GitHub asks me to sign up or log in.">
@@ -52,6 +138,27 @@ That's the task done: your latest project is on GitHub, and it's live on Vercel.
   </StuckItem>
   <StuckItem question="Vercel can't see my repos.">
     Sign up using your GitHub account, not email: that's what lets Vercel see your repos. Then authorise Vercel when GitHub asks.
+  </StuckItem>
+  <StuckItem question="My repo isn't in Vercel's import list.">
+    Click **Configure GitHub App** under the list, add your repo on GitHub and save. Then go back to Vercel. Also check the repo is on your own GitHub account: only the repo's owner can import it into Vercel. ([Unable to find GitHub repository](https://vercel.com/kb/guide/unable-to-find-github-repository))
+  </StuckItem>
+  <StuckItem question="My site shows a 404 error.">
+    Vercel can't find a page to show. In your project's settings, check **Framework Preset** is **Other** for a plain HTML site, and that the output directory isn't set to a folder that doesn't exist. Your `index.html` must be at the top level of your repo, in a `public` folder, or in the folder you chose as **Root Directory**. Change the setting, then **Redeploy**. ([Why is my deployed project giving 404?](https://vercel.com/kb/guide/why-is-my-deployed-project-giving-404))
+  </StuckItem>
+  <StuckItem question="My index.html is inside a folder, and Vercel can't find it.">
+    Set the **Root Directory**: open your project's **Settings**, then **Build and Deployment**, and change **Root Directory** to that folder. Click **Save**. It takes effect on the next deployment, so **Redeploy** or push again. ([Configuring a build](https://vercel.com/docs/builds/configure-a-build))
+  </StuckItem>
+  <StuckItem question="The deployment failed.">
+    Open the failed deployment's **Build Logs** and look for red lines. Copy them into Claude Code and ask it to fix the problem, then push. For a plain HTML site, check **Build Command** is overridden and empty. ([Build logs](https://vercel.com/docs/deployments/logs))
+  </StuckItem>
+  <StuckItem question="I pushed, but my live site hasn't changed.">
+    Only pushes to **main** update your live site: check which branch you pushed to. Then open **Deployments**: if the new deployment failed, read its **Build Logs**. If there's no new deployment at all, the commit's email may not match your GitHub account. On the free plan, Vercel only deploys commits it can match to you. Check your commit email with `git config user.email`: it should be your GitHub noreply address, from [Step 1](/module-6/get-your-code-into-github). Otherwise, try **Redeploy**. ([Troubleshooting project collaboration](https://vercel.com/docs/deployments/troubleshoot-project-collaboration))
+  </StuckItem>
+  <StuckItem question="A friend sees a Vercel login page when they open my link.">
+    You sent them a preview or deployment link, which is locked by default. Send them your live address from your project's **Overview** page instead. ([Deployment Protection](https://vercel.com/docs/deployment-protection))
+  </StuckItem>
+  <StuckItem question="I can't find my live address.">
+    Open your project in Vercel. The address is on the **Overview** page, and on the **Deployments** page. It usually ends in `.vercel.app`.
   </StuckItem>
   <StuckItem question="I changed my project. Do I upload it again?">
     No. From now on, you never upload anything again. Push to GitHub, and Vercel rebuilds and updates your live site automatically.
@@ -65,6 +172,8 @@ That's the task done: your latest project is on GitHub, and it's live on Vercel.
 1. Find an <Term def="a project whose code is shared publicly for others to use.">open source</Term> project on GitHub that interests you.
 2. <Term>Fork</Term> it and send it to Vercel. Your fork is a repo on your GitHub account, so you import it just like you did in step 2 above.
 3. Also review the new terms from this module: fork, clone, commit, push, pull request and merge. [Key terms](/module-6/key-terms) has them all. VERY IMPORTANT!
+
+To fork a project, open it on GitHub, click **Fork**, then **Create fork**. If your fork isn't in Vercel's import list, use **Configure GitHub App**, as in step 2. Look for a small project made of HTML, CSS and JavaScript: those are the easiest to deploy.
 
 Forking and deploying need GitHub and Vercel; see [how hands-on access works](/access). Do them in a session, with your teacher's go-ahead.
 
