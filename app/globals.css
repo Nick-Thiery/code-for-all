@@ -1079,7 +1079,7 @@
     text-transform: none;
   }
   /* A long address or command in a lesson's text breaks rather than running off a small phone. */
-  .lesson-body :where(p, li, td, th, h2, h3, blockquote) > code {
+  .lesson-body :where(p, li, td, th, h2, h3, blockquote) code {
     overflow-wrap: anywhere;
   }
 
