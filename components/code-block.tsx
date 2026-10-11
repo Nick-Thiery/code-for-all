@@ -49,12 +49,15 @@ export function CodeBlock({ code, language, title }: { code: string; language?: 
   const languageName = lang ? (LANGUAGE_NAMES[lang] ?? lang.toUpperCase()) : undefined;
 
   return (
-    <figure className="blk overflow-hidden rounded-md border-2 border-line bg-surface2 text-fg shadow-h6 desktop:shadow-h8">
-      <figcaption className="flex items-center justify-between gap-3 border-b-2 border-line py-2 pr-3 pl-4 text-[15px] leading-[1.5] text-muted">
-        <span className="font-mono">{title}</span>
-        <span className="flex items-center gap-3.5">
-          {languageName && languageName !== title && <span className="kicker text-[13px] text-muted">{languageName}</span>}
-          <CopyButton text={code} />
+    <figure className="blk overflow-hidden rounded-md border-2 border-line bg-surface2 text-fg">
+      {/* Phones: the file name on its own line, then the language and Copy. */}
+      <figcaption className="flex flex-col gap-1.5 border-b-2 border-line py-2 pr-3 pl-4 text-[15px] leading-[1.5] text-muted tablet:flex-row tablet:items-center tablet:justify-between tablet:gap-3">
+        {title && <span className="pt-1 font-mono [overflow-wrap:anywhere] tablet:pt-0">{title}</span>}
+        <span className="flex items-center justify-between gap-3.5 tablet:ml-auto">
+          {languageName && languageName !== title ? <span className="kicker text-[13px] text-muted">{languageName}</span> : <span />}
+          <span className="flex">
+            <CopyButton text={code} />
+          </span>
         </span>
       </figcaption>
       <ScrollArea className="py-3.5" hintClassName="border-t border-hairline px-4 py-2 text-muted">

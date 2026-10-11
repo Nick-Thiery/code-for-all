@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Icon, type IconName } from "@/components/icons";
 import type { LessonNeeds } from "@/lib/lessons";
 
@@ -33,40 +33,36 @@ export function YouNeed({ lessonId, needs, minutes }: { lessonId: string; needs:
   ];
 
   return (
-    <div className="rail-block flex flex-col gap-3.5">
-      <span className="rail-label">Before you start</span>
-      <section
-        aria-labelledby="you-need"
-        className="on-marigold a-rise flex flex-col gap-5 rounded-md border-2 border-line px-[22px] pt-[22px] pb-6 shadow-h6 desktop:gap-6 desktop:px-8 desktop:pt-7 desktop:pb-8 desktop:shadow-h8"
-        style={{ "--d": ".3s" } as CSSProperties}
-      >
-        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1.5">
-          <h2 id="you-need" className="t-block m-0">
-            You&apos;ll need
-          </h2>
-          <Link href={`/access?from=${encodeURIComponent(lessonId)}`} className="text-[16px] font-bold">
-            Hands-on: needs access
-          </Link>
-        </div>
-        <dl className="m-0 grid gap-x-6 gap-y-4 tablet:grid-cols-2">
-          {rows.map((row) => (
-            // The icon tile sits in the space the row leaves on its left.
-            <div key={row.label} className="relative flex min-h-12 flex-col gap-0.5 pt-0.5 pl-[62px] desktop:min-h-14 desktop:pl-[70px]">
-              <dt className="kicker text-[13px] desktop:text-[13px]">
-                <span className="on-surface absolute top-0 left-0 box-border grid size-12 place-items-center rounded-md border-2 border-line text-accent desktop:size-14">
-                  <Icon name={row.icon} size={28} stroke={1.9} />
-                </span>
-                {row.label}
-              </dt>
-              <dd className="m-0 text-[17px] leading-[1.4] desktop:text-[18px]">{row.value}</dd>
-            </div>
-          ))}
-        </dl>
-        <p className="t-meta m-0">
-          You can read the whole lesson without any of this. <Link href="/access#devices">Which device do you have?</Link>
-        </p>
-      </section>
-    </div>
+    <section
+      aria-labelledby="you-need"
+      className="on-marigold flex flex-col gap-4 rounded-md border-2 border-line px-5 pt-4 pb-5 desktop:gap-5 desktop:px-6 desktop:pt-5 desktop:pb-6"
+    >
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1.5">
+        <h2 id="you-need" className="t-box m-0">
+          You&apos;ll need
+        </h2>
+        <Link href={`/access?from=${encodeURIComponent(lessonId)}`} className="text-[16px] font-bold">
+          Hands-on: needs access
+        </Link>
+      </div>
+      <dl className="m-0 grid gap-x-6 gap-y-4 tablet:grid-cols-2">
+        {rows.map((row) => (
+          // The icon tile sits in the space the row leaves on its left.
+          <div key={row.label} className="relative flex min-h-9 flex-col gap-0.5 pl-12">
+            <dt className="kicker text-[13px] desktop:text-[13px]">
+              <span className="on-surface absolute top-0 left-0 box-border grid size-9 place-items-center rounded border-2 border-line text-accent">
+                <Icon name={row.icon} size={20} stroke={2} />
+              </span>
+              {row.label}
+            </dt>
+            <dd className="m-0 text-[17px] leading-[1.4] desktop:text-[18px]">{row.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="t-meta m-0">
+        You can read the whole lesson without any of this. <Link href="/access#devices">Which device do you have?</Link>
+      </p>
+    </section>
   );
 }
 

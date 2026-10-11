@@ -535,7 +535,7 @@ function Feedback({
         <span aria-live="polite" className="sr-only">
           {copied ? "Copied to clipboard" : ""}
         </span>
-        <div className="index-card shadow-h4 desktop:shadow-h5">
+        <div className="index-card">
           <div className="index-card-body pt-4 text-fg">
           {result.rewrite.map((part, index) =>
             part.added ? (

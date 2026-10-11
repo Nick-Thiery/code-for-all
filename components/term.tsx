@@ -27,7 +27,7 @@ export function Term({ def, href, children }: { def: string; href?: string; chil
           {" "}
           {/* The popover: it opens in the line, so it can never cover the text
               or fall off a phone's screen. */}
-          <span className="on-surface my-1.5 inline-block rounded border-2 border-line px-3 py-1.5 align-middle font-sans text-[16px] leading-[1.45] font-normal tracking-normal normal-case not-italic shadow-h4">
+          <span className="on-surface my-1.5 inline-block rounded border-2 border-line px-3 py-1.5 align-middle font-sans text-[16px] leading-[1.45] font-normal tracking-normal normal-case not-italic">
             {typeof children === "string" && <strong>{capitalise(children)}:</strong>} {def}
             {href && (
               <>

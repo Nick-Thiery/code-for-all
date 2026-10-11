@@ -23,11 +23,10 @@ export function VideoEmbed({ id, title, start }: Props) {
   const embed = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1${start ? `&start=${start}` : ""}`;
   const watch = `https://www.youtube.com/watch?v=${id}${start ? `&t=${start}s` : ""}`;
   return (
-    <figure data-video className="blk rail-block flex flex-col gap-3.5 desktop:gap-4">
-      <span className="rail-label">Watch</span>
+    <figure data-video className="blk flex flex-col gap-3">
       {/* Until it plays, the card is never shorter than its words need on a phone. */}
       <div
-        className={`relative aspect-video overflow-hidden rounded-md border-2 border-line shadow-h6 desktop:shadow-h8 print:hidden ${
+        className={`relative aspect-video overflow-hidden rounded-md border-2 border-line print:hidden ${
           playing ? "" : "min-h-[236px]"
         }`}
       >
@@ -57,7 +56,7 @@ export function VideoEmbed({ id, title, start }: Props) {
                 <path d="M8 5.5v13l11-6.5z" />
               </svg>
             </span>
-            <span className="absolute right-[18px] bottom-4 left-[18px] font-serif text-[22px] leading-[1.12] font-medium desktop:right-[30px] desktop:bottom-[26px] desktop:left-[30px] desktop:text-[36px] desktop:leading-[1.1]">
+            <span className="absolute right-[18px] bottom-4 left-[18px] font-serif text-[22px] leading-[1.12] font-medium desktop:right-[30px] desktop:bottom-[26px] desktop:left-[30px] desktop:text-[28px] desktop:leading-[1.15]">
               {title}
             </span>
           </button>

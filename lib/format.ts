@@ -73,19 +73,27 @@ export function fitStep(text: string, sizes: readonly number[], room: number, ma
 
 /** The narrowest column a headline has to fit: a 360px phone, less its gutters. */
 const NARROWEST = 320;
+/** A lesson title shares that column with its number ("05"), about 50px of it. */
+const NARROWEST_LESSON_TITLE = 270;
 
 // The phone font size of each size step. The classes themselves are in
 // app/globals.css and grow with the viewport from these sizes, so what fits
 // the narrowest phone fits everything wider. Keep the two in step.
 const TITLE_SIZES = [72, 60, 50, 42, 36];
-const HEADING_SIZES = [60, 50, 42, 36];
+const LESSON_TITLE_SIZES = [40, 34];
+const HEADING_SIZES = [28, 24];
 
-/** The size step of a page or lesson title (.title-1 to .title-5): it never runs past three lines. */
+/** The size step of a page title (.title-1 to .title-5): it never runs past three lines. */
 export function titleSize(title: string) {
   return `title-${fitStep(title, TITLE_SIZES, NARROWEST, 3) + 1}`;
 }
 
-/** The size step of a lesson's `##` heading (.heading-1 to .heading-4), so a long word never runs off a phone. */
+/** The size step of a lesson's title (.lesson-title-1 or -2), beside its number: never more than three lines. */
+export function lessonTitleSize(title: string) {
+  return `lesson-title-${fitStep(title, LESSON_TITLE_SIZES, NARROWEST_LESSON_TITLE, 3) + 1}`;
+}
+
+/** The size step of a lesson's `##` heading (.heading-1 or -2), so a long word never runs off a phone. */
 export function headingSize(heading: string) {
   return `heading-${fitStep(heading, HEADING_SIZES, NARROWEST, 4) + 1}`;
 }

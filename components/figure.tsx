@@ -16,9 +16,8 @@ type Props = {
 };
 
 /**
- * An image in a lesson, usually cropped from a slide: framed, numbered
- * ("FIG. 1", in the rail from 1280px, where it also runs across the main and
- * side columns) and captioned. Tapping it opens the full-size image, which
+ * An image in a lesson, usually cropped from a slide: framed and captioned,
+ * in the lesson's one column. Tapping it opens the full-size image, which
  * scrolls in both directions, so small labels are readable on a phone. In MDX:
  *   <Figure src="/lessons/module-6/how-it-works.jpg" alt="…" width={1600} height={770} caption="…" />
  */
@@ -26,22 +25,21 @@ export function Figure({ src, alt, width, height, caption }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
 
   return (
-    <figure className="blk wide rail-block flex flex-col gap-3.5 break-inside-avoid desktop:gap-5">
-      <span aria-hidden="true" className="rail-label fig-label" />
+    <figure className="blk flex flex-col gap-3 break-inside-avoid desktop:gap-3.5">
       <button
         type="button"
         onClick={() => dialog.current?.showModal()}
         aria-label={`Enlarge image: ${alt}`}
-        className="group flex w-fit max-w-full cursor-zoom-in flex-col items-end gap-3.5 rounded-md border-0 bg-transparent p-0 text-left"
+        className="group flex w-fit max-w-full cursor-zoom-in flex-col items-end gap-3 rounded-md border-0 bg-transparent p-0 text-left"
       >
         <Image
           src={src}
           alt={alt}
           width={width}
           height={height}
-          sizes={`(min-width: 1280px) ${Math.min(width, 994)}px, (min-width: 760px) ${Math.min(width, 720)}px, 100vw`}
+          sizes={`(min-width: 760px) ${Math.min(width, 720)}px, 100vw`}
           // Narrower than the reading column? Show it at its own size rather than stretched and soft.
-          className={`box-border h-auto rounded-md border-2 border-line bg-surface shadow-h6 desktop:shadow-h10 ${width >= 720 ? "w-full" : "w-auto max-w-full"}`}
+          className={`box-border h-auto rounded-md border-2 border-line bg-surface ${width >= 720 ? "w-full" : "w-auto max-w-full"}`}
         />
         <span aria-hidden="true" className="chip group-hover:bg-marigold group-hover:text-on-marigold print:hidden">
           <Icon name="zoom" size={14} stroke={2.5} />

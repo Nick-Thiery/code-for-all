@@ -83,8 +83,8 @@ Scale (desktop → phone; use `clamp()` in between):
 |---|---|---|
 | Home hero h1 | 214px, line-height .84 | 100px, 4 lines |
 | Section h2 (home) | 128px, lh .86 | 60px |
-| Lesson h1 | 118px, lh .86 | 72px |
-| Lesson h2 | 96px | 60px |
+| Lesson h1 | 64px, lh .95 (see Lesson page) | 40px |
+| Lesson h2 | 38px, author's case (see Lesson page) | 28px |
 | Card titles (Newsreader) | 36–52px | 26–34px |
 | Lede (Newsreader) | 27–29px | 22px |
 | Body | 20px / 1.6 | 18px / 1.55 |
@@ -96,7 +96,7 @@ Scale (desktop → phone; use `clamp()` in between):
 - Slight rotation for "stuck on" things: cards ±2–9°, the sticker 12°, the prompt card −0.6°.
 - 2px ink rules between rows in lists, TOCs and Stuck questions.
 - Desktop content width 1200px with 120px side padding at 1440; 12-column grid, 40px gutters. Phone: 20px side padding.
-- Lesson body at ≥1280px is three columns: rail 166 · main 684 · side 270 (40px gaps). Rail holds section labels and big step numbers; side holds key terms, pull quotes and short notes. Below 1280 it's one column (max 720px) and side notes sit inline.
+- Pages outside lessons can hang section labels in a rail at ≥1280px (`.with-rail`, `.rail-label`). A lesson is one column (max 720px) at every width: see Lesson page.
 - Buttons and toggles are at least 44px high.
 
 ## Homepage (top to bottom)
@@ -113,32 +113,39 @@ Scale (desktop → phone; use `clamp()` in between):
 
 ## Lesson page
 
-- **Top bar:** back to Course, module name, one segment per lesson (done = navy, current = marigold and blinking, then a Quiz chip), "Lesson N of M", Help, theme toggle. Phone: back, segments and "N/M", menu.
-- **Header block (sky, full width):** "LESSON" and the lesson number as a big rolling odometer on the left; on the right the kicker "MODULE N · TITLE" plus a HANDS-ON TASK chip when `requiresAccount`, the title in Archivo caps, the summary as a Newsreader dek, and a marigold "N MINUTES" sticker from `duration`. Long titles: step the h1 size down so it never passes three lines.
-- **Body** uses the three-column grid above. Component by component:
+The full Cover look is for pages outside lessons. Lessons keep its colours, fonts and overall feel, but they are calm: learners are 13 to 16 and often new to AI, so a lesson must be as clear and structured as possible, and extra UI confuses them. (The lesson mocks in this folder show the earlier, louder lesson design; where they differ, this section wins.)
 
-| Existing | Cover version |
+- **Top bar:** back to Contents, one segment per lesson (done = navy, current = marigold and blinking, then a Quiz chip), "Lesson N of M", Search when there's room, Help, theme toggle. Phone: back, segments and "N/M", Search from 600px, menu. No module name here: the header has it.
+- **Header block (sky, full width, content in the 720px column):** the kicker "MODULE N · TITLE" (links to the module), then the lesson number as a modest Archivo numeral ("05", accent colour) beside the title, the same size as the title. The title is Archivo caps, about 40px on a phone and 64px on a laptop, stepping down for long titles so it never passes three lines (`.lesson-title-N`, `lessonTitleSize` in lib/format.ts). Then the summary in Newsreader (19 to 22px), then a plain line: a clock icon with "N minutes", and a "Hands-on task" chip when `requiresAccount`. No "Lesson" label, no odometer, no sticker, no load animations. The lesson's first words show on a phone's first screen.
+- **Body:** one column at every width (720px). No rail, no side column, no "Fig. N", and no labels that repeat the block they sit on. Body text is Atkinson Hyperlegible Next at 18px / 1.55 on phones and 20px / 1.6 on laptops. Blocks get 32 to 40px around them; text that a heading introduces sits close under it.
+- **Boxes** keep their colours and 2px borders so learners can tell them apart, but sit flat: no hard offset shadows (buttons keep theirs), no tilt. Box titles are Archivo 800 at 19 to 20px in the case they're written (`.t-box`), and icon tiles are small (32 to 36px).
+- **Motion:** none that's decorative. Functional feedback stays: Copy, Mark done and its tick, the top-bar segments, the practice card's feedback.
+
+Component by component:
+
+| Existing | Lesson version |
 |---|---|
-| You'll need box | Marigold card, 2px border, hard shadow, icon tiles; keep its rows and the device question |
-| First paragraph | Newsreader lede with an Archivo navy drop cap (first lesson paragraph only) |
-| `##` headings | Archivo caps in ink, 96px desktop / 60px phone |
-| Ordered lists | Big Archivo numerals in the rail (128px / 80px) with 2px rules between steps |
-| `Callout` tip | Sky block · `headsup` ink block with marigold heading and shield icon, marigold shadow · `tryit` marigold block |
-| `KeyTerm` | Side-column card on desktop, inline card below 1280 |
-| `Term` | Dotted underline; popover with 2px border and hard shadow |
-| Prompt block and the saved-prompt card | White index card: ruled lines, tomato margin line and header rule, Archivo kicker, COPY button with hard shadow |
-| `PromptLadder` / `StrongPrompt` | Part highlights from the `--part-*` tokens; the Scope / Specificity / Context labels highlight their part on hover and focus (the mock's `:has()` rules) |
-| Code and `CommandBlock` | Keep the code colours; 2px border and hard shadow |
-| `Figure` | 2px border, 10px shadow, Newsreader italic caption, "FIG. N" in the rail |
-| `VideoEmbed` | Navy block with halftone dots and a marigold play button; still loads nothing until pressed |
-| `StuckBlock` | "STUCK?" heading, rows with 2px rules, square plus buttons (rotate the icon, not the box) |
-| `CheckYourself` | Newsreader questions on bordered cards |
-| `Challenge` | Marigold block, hard shadow, CHALLENGE kicker |
+| You'll need box | Marigold box, 2px border, small icon tiles; keep its rows and the device question |
+| First paragraph | The same as the rest of the body text |
+| `##` headings | Archivo 800, 75% wide, in the author's case: 28px phone, 38px laptop (a long word steps down to 24 to 32px: `headingSize`), with 48 to 64px above |
+| `###` headings | Newsreader 600, 21 to 24px |
+| Ordered lists (steps) | A navy number badge (36 to 40px, Archivo numeral) level with the step's first line, in the main column; light `--hairline` rules between steps; no minimum height |
+| `Callout` tip | Sky box · `headsup` ink box with a marigold title and shield icon · `tryit` marigold box. Small icon tile beside a small title, then the text |
+| `KeyTerm` | A flat card in the text, where the word is used |
+| `Term` | Dotted underline; opens its meaning in the line, in a bordered box |
+| Prompt block and the saved-prompt card | White index card: ruled lines, tomato margin line and header rule, Archivo kicker, COPY button. Flat and straight in lessons |
+| `PromptLadder` / `StrongPrompt` | Flat cards. Part highlights from the `--part-*` tokens, shown at once (no swipe); the labels highlight their part on hover and focus |
+| Code and `CommandBlock` | Keep the code colours and 2px border. On phones the file name has its own line, then the language and Copy |
+| `Figure` | 2px border, Newsreader italic caption (17 to 18px), tap to enlarge |
+| Diagrams | The sky frame with a 2px border, then the caption; reflow on phones as before |
+| `VideoEmbed` | Navy card with halftone dots and a marigold play button; still loads nothing until pressed |
+| `StuckBlock` | "Stuck?" at 22 to 24px, rows with 2px rules, square plus buttons (rotate the icon, not the box) |
+| `CheckYourself` | "Check yourself" at 22 to 24px; Newsreader questions on flat bordered cards with small numerals |
+| `Challenge` | Marigold box, CHALLENGE kicker, title at 22 to 24px |
 | `PromptPractice` | White card with 2px border; keep the sample-feedback wording |
-| `HandsOn` | Marigold chip with a laptop icon |
-| Recap (What you learned) | Sky block, Archivo numerals, rules between items |
-| Mark done | Big marigold "I'VE FINISHED THIS LESSON" checkbox label; turns navy with a tick when done, and the current top-bar segment fills |
-| Prev / next | Navy NEXT UP card with a marigold arrow circle; previous as a plain link |
+| `HandsOn` | Marigold chip with a laptop icon, above its section heading |
+| Wrap-up | A normal `##`-style "Wrap-up" heading, then the recap (sky box, small Archivo numerals, rules between items), the "I'VE FINISHED THIS LESSON" checkbox (marigold; navy with a tick when done, and the current top-bar segment fills), then Next and Previous |
+| Prev / next | Navy card with the next lesson's title at 26 to 32px and a marigold arrow circle; previous as a plain link |
 | `Placeholder`, `Screenshot` | Dashed 2px boxes on `--paper2` |
 
 ## Other pages
@@ -147,7 +154,7 @@ Module quiz, Check your skills, module complete (celebration), glossary, run-it 
 
 ## Motion
 
-CSS only, no animation libraries. Base styles equal the end state, so nothing is hidden if animation doesn't run. Everything is off under `prefers-reduced-motion: reduce`. Entrance animations run once.
+CSS only, no animation libraries. Base styles equal the end state, so nothing is hidden if animation doesn't run. Everything is off under `prefers-reduced-motion: reduce`. Entrance animations run once. None of the decorative ones run inside a lesson (see Lesson page); there only the segments' fill and blink and feedback after the learner acts move.
 
 | Name | What | Timing |
 |---|---|---|

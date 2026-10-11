@@ -3,11 +3,10 @@
 import { type ReactNode, useRef } from "react";
 import { Icon } from "@/components/icons";
 
-// The frame every lesson diagram sits in (components/diagrams/*): a sky
-// block, numbered like a figure ("FIG. 2", in the rail from 1280px). It stays
-// in the main column (720px at its widest, the width the diagrams are drawn
-// for; from 1280px it borrows most of the gutter to get there). Diagrams are HTML and inline
-// SVG drawn with the site's tokens, so they follow dark mode. To a screen
+// The frame every lesson diagram sits in (components/diagrams/*): a flat sky
+// block in the lesson's one column (720px at its widest, the width the
+// diagrams are drawn for). Diagrams are HTML and inline SVG drawn with the
+// site's tokens, so they follow dark mode. To a screen
 // reader a diagram is one picture with a full text alternative (`alt`); the
 // caption is shown to everyone.
 //
@@ -35,13 +34,8 @@ export function Diagram({ alt, caption, enlargeWidth, children }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
 
   return (
-    <figure data-diagram className="blk rail-block flex flex-col gap-3.5 break-inside-avoid desktop:gap-5 wide:-mr-9">
-      <span aria-hidden="true" className="rail-label fig-label" />
-      <div
-        role="img"
-        aria-label={alt}
-        className="on-sky overflow-hidden rounded-md border-2 border-line p-4 shadow-h6 tablet:p-5 desktop:shadow-h10"
-      >
+    <figure data-diagram className="blk flex flex-col gap-3 break-inside-avoid desktop:gap-3.5">
+      <div role="img" aria-label={alt} className="on-sky overflow-hidden rounded-md border-2 border-line p-4 tablet:p-5">
         {children}
       </div>
       <figcaption className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">

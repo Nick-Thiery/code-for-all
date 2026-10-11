@@ -14,7 +14,7 @@ export function CommandBlock({ children }: { children: ReactNode }) {
   const command = textOf(children).trim();
 
   return (
-    <div className="blk overflow-hidden rounded-md border-2 border-line bg-term-bg text-term-text shadow-h6 desktop:shadow-h8">
+    <div className="blk overflow-hidden rounded-md border-2 border-line bg-term-bg text-term-text">
       <div className="flex items-center justify-between gap-3 border-b-2 border-term-rule py-2 pr-3 pl-[18px]">
         <span className="font-display text-[14px] font-extrabold tracking-[.12em] text-term-muted uppercase [font-stretch:85%]">
           Terminal

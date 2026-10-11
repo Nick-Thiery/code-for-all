@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { CSSProperties } from "react";
 import { AccountNotice } from "@/components/account-notice";
 import { Icon } from "@/components/icons";
 import { LessonBody } from "@/components/lesson-body";
-import { MaskedTitle } from "@/components/masked-title";
-import { Odometer } from "@/components/odometer";
 import { type NavTarget, PrevNext } from "@/components/prev-next";
 import { RecapBox } from "@/components/recap-box";
 import { YouNeed } from "@/components/you-need";
-import { titleSize } from "@/lib/format";
+import { formatCount, lessonTitleSize } from "@/lib/format";
 import { getLessonWithNeighbours, getModules, parseModuleParam } from "@/lib/lessons";
 import { moduleCompleteHref, moduleTrackHref, quizHref } from "@/lib/outline";
 
@@ -61,82 +58,71 @@ export default async function LessonPage({ params }: Props) {
   const previousTarget: NavTarget | null = previous
     ? { label: `Previous · Lesson ${previous.number}`, title: previous.title, href: previous.href, lesson: true }
     : null;
+  // The number and the title share a size, so they sit on one line.
+  const titleClass = lessonTitleSize(lesson.title);
 
   return (
-    <article>
-      {/* The header block: the lesson's number rolling into place, then where it
-          sits in the course, its title, its summary and how long it takes. */}
-      <header className="on-sky overflow-hidden border-b-2 border-line px-(--gut)">
-        <div className="relative mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)_auto] pt-6 pb-10 [grid-template-areas:'kicker_kicker'_'number_sticker'_'title_title'_'dek_dek'] desktop:grid-cols-[minmax(0,373fr)_minmax(0,787fr)] desktop:gap-x-10 desktop:pt-[60px] desktop:pb-[76px] desktop:[grid-template-areas:'number_kicker'_'number_title'_'number_dek']">
-          <p className="a-fade eyebrow m-0 flex flex-col items-start gap-2.5 [grid-area:kicker] desktop:flex-row desktop:flex-wrap desktop:items-center desktop:gap-x-3 desktop:gap-y-2 desktop:pr-40 desktop:tracking-[.14em]">
+    <article className="lesson">
+      {/* The header block: where the lesson sits in the course, its number and
+          title, its summary, and how long it takes. Compact, so the lesson's
+          first words show on a phone's first screen. */}
+      <header className="on-sky border-b-2 border-line px-(--gut)">
+        <div className="mx-auto flex max-w-[720px] flex-col gap-3 pt-6 pb-7 desktop:gap-4 desktop:pt-12 desktop:pb-12">
+          <p className="eyebrow m-0">
             <Link href={moduleTrackHref(mod.number)} className="no-underline hover:underline">
               Module {mod.number} · {mod.title}
             </Link>
+          </p>
+          <p className="sr-only">
+            Lesson {lesson.number} of {mod.lessons.length}
+          </p>
+          <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-3 desktop:gap-x-5">
+            <span aria-hidden="true" className={`numeral ${titleClass} text-accent`}>
+              {String(lesson.number).padStart(2, "0")}
+            </span>
+            <h1 className={`lesson-title ${titleClass} m-0`}>{lesson.title}</h1>
+          </div>
+          <p className="m-0 font-serif text-[19px] leading-[1.45] desktop:text-[22px]">{lesson.summary}</p>
+          <p className="m-0 flex flex-wrap items-center gap-x-4 gap-y-2 text-[16px] leading-[1.4]">
+            <span className="flex items-center gap-1.5">
+              <Icon name="clock" size={18} stroke={2.2} />
+              {formatCount(lesson.duration, "minute")}
+            </span>
             {lesson.requiresAccount && (
-              <span className="flex h-7 items-center gap-[7px] rounded border-2 border-line bg-paper px-2.5 text-[12px] tracking-[.1em] text-ink desktop:text-[15px]">
+              <span className="chip border-line">
                 <Icon name="laptop" size={16} stroke={2.2} />
                 Hands-on task
               </span>
             )}
           </p>
-
-          <div className="mt-3.5 flex flex-col gap-0.5 [container-type:inline-size] [grid-area:number] desktop:mt-0 desktop:gap-1.5">
-            <span className="a-fade eyebrow desktop:tracking-[.14em]">
-              Lesson<span className="desktop:hidden"> {lesson.number} of {mod.lessons.length}</span>
-            </span>
-            <Odometer value={lesson.number} className="numeral a-odo text-[168px] text-accent desktop:text-[min(330px,88cqw)]" />
-          </div>
-
-          {/* How long it takes, on a sticker. */}
-          <p
-            className="sticker a-spin m-0 mr-1.5 mb-[22px] size-[104px] self-end [grid-area:sticker] desktop:absolute desktop:top-[-4px] desktop:right-0 desktop:m-0 desktop:size-[138px] desktop:shadow-h5"
-            style={{ "--d": "1.1s" } as CSSProperties}
-          >
-            <span className="font-serif text-[46px] leading-[.9] font-semibold italic desktop:text-[60px]">{lesson.duration}</span>
-            <span className="font-display text-[11px] leading-[1.3] font-extrabold tracking-[.12em] uppercase [font-stretch:85%] desktop:text-[14px]">
-              {lesson.duration === 1 ? "minute" : "minutes"}
-            </span>
-          </p>
-
-          <h1 className={`${titleSize(lesson.title)} m-0 mt-3.5 [grid-area:title] desktop:mt-[26px]`}>
-            {/* Keeps the title's first line clear of the sticker. */}
-            <span aria-hidden="true" className="float-right hidden h-[84px] w-[156px] desktop:block" />
-            <MaskedTitle text={lesson.title} />
-          </h1>
-          <p
-            className="a-rise t-lead m-0 mt-5 max-w-[700px] [grid-area:dek] desktop:mt-[30px]"
-            style={{ "--d": ".8s" } as CSSProperties}
-          >
-            {lesson.summary}
-          </p>
         </div>
       </header>
 
       <div className="px-(--gut)">
-        <div className="mx-auto max-w-[1200px] pt-10 pb-16 desktop:pt-24 desktop:pb-[120px]">
-          <div className="with-rail flex flex-col gap-11 desktop:gap-[72px]">
-            {lesson.needs ? (
-              <YouNeed lessonId={lesson.id} needs={lesson.needs} minutes={lesson.duration} />
-            ) : (
-              lesson.requiresAccount && <AccountNotice lessonId={lesson.id} />
-            )}
+        <div className="mx-auto flex max-w-[720px] flex-col gap-8 pt-8 pb-14 desktop:gap-12 desktop:pt-12 desktop:pb-20">
+          {lesson.needs ? (
+            <YouNeed lessonId={lesson.id} needs={lesson.needs} minutes={lesson.duration} />
+          ) : (
+            lesson.requiresAccount && <AccountNotice lessonId={lesson.id} />
+          )}
 
-            <LessonBody lesson={lesson} />
+          <LessonBody lesson={lesson} />
 
-            <div className="rail-block flex flex-col gap-6 desktop:gap-[30px]">
-              <span className="rail-label">Wrap-up</span>
-              <RecapBox
-                id={lesson.id}
-                number={lesson.number}
-                points={lesson.recap}
-                fallback={lesson.summary}
-                next={next ? next.title : mod.quiz ? `Module ${mod.number} quiz` : undefined}
-                module={moduleInfo}
-              />
-              {/* Following "Next" marks this lesson done; the tick above can undo it. */}
-              <PrevNext previous={previousTarget} next={nextTarget} markDone={{ lessonId: lesson.id, module: moduleInfo }} />
-            </div>
-          </div>
+          <section aria-labelledby="wrap-up" className="flex flex-col gap-5 desktop:gap-6">
+            <h2 id="wrap-up" className="lesson-h2 m-0">
+              Wrap-up
+            </h2>
+            <RecapBox
+              id={lesson.id}
+              number={lesson.number}
+              points={lesson.recap}
+              fallback={lesson.summary}
+              next={next ? next.title : mod.quiz ? `Module ${mod.number} quiz` : undefined}
+              module={moduleInfo}
+            />
+            {/* Following "Next" marks this lesson done; the tick above can undo it. */}
+            <PrevNext calm previous={previousTarget} next={nextTarget} markDone={{ lessonId: lesson.id, module: moduleInfo }} />
+          </section>
         </div>
       </div>
     </article>
