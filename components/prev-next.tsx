@@ -21,6 +21,8 @@ type Props = {
   next: NavTarget;
   /** At the end of a lesson: following "Next" marks this lesson done. */
   markDone?: { lessonId: string; module: ModuleInfo };
+  /** In a lesson: a flat card with a smaller title. */
+  calm?: boolean;
 };
 
 // The big title's sizes, phone then desktop. It takes the biggest that fits
@@ -37,23 +39,34 @@ function nextSize(title: string) {
 }
 
 // The navy "next up" card with its marigold arrow, then the way back as a plain link.
-export function PrevNext({ label = "Lessons", previous, next, markDone }: Props) {
+export function PrevNext({ label = "Lessons", previous, next, markDone, calm = false }: Props) {
   const nextProps = {
     href: next.href,
     rel: next.lesson ? "next" : undefined,
-    className:
-      "on-navy lift flex items-center gap-4 rounded-md border-2 border-line px-5 pt-[22px] pb-6 text-fg no-underline shadow-h6 hover:text-fg desktop:gap-6 desktop:px-[30px] desktop:pt-7 desktop:pb-[30px] desktop:shadow-h8",
+    className: calm
+      ? "on-navy group flex items-center gap-4 rounded-md border-2 border-line px-5 py-4 text-fg no-underline hover:text-fg desktop:px-6 desktop:py-5"
+      : "on-navy lift flex items-center gap-4 rounded-md border-2 border-line px-5 pt-[22px] pb-6 text-fg no-underline shadow-h6 hover:text-fg desktop:gap-6 desktop:px-[30px] desktop:pt-7 desktop:pb-[30px] desktop:shadow-h8",
     children: (
       <>
-        <span className="flex min-w-0 flex-1 flex-col gap-2 desktop:gap-2.5">
+        <span className={`flex min-w-0 flex-1 flex-col ${calm ? "gap-1.5" : "gap-2 desktop:gap-2.5"}`}>
           <span className="eyebrow desktop:tracking-[.14em]">{next.label}</span>
-          <span className={`head leading-[.9] ${nextSize(next.title)}`}>{next.title}</span>
+          <span
+            className={
+              calm
+                ? "head text-[26px] leading-[.95] decoration-2 underline-offset-4 group-hover:underline desktop:text-[32px]"
+                : `head leading-[.9] ${nextSize(next.title)}`
+            }
+          >
+            {next.title}
+          </span>
         </span>
         <span
           aria-hidden="true"
-          className="lift-arrow box-border grid size-14 flex-none place-items-center rounded-full border-2 border-line bg-marigold text-on-marigold shadow-h3 desktop:size-[76px] desktop:shadow-h4"
+          className={`box-border grid flex-none place-items-center rounded-full border-2 border-line bg-marigold text-on-marigold ${
+            calm ? "size-11 desktop:size-12" : "lift-arrow size-14 shadow-h3 desktop:size-[76px] desktop:shadow-h4"
+          }`}
         >
-          <Icon name="arrow-right" size={28} stroke={2.6} />
+          <Icon name="arrow-right" size={calm ? 22 : 28} stroke={2.6} />
         </span>
       </>
     ),

@@ -234,6 +234,9 @@
 
 /* `dark:` follows data-theme, which the head script always sets. */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+/* `lesson:` applies inside a lesson page only (<article class="lesson">), for a
+   component that also appears outside lessons and keeps its Cover look there. */
+@custom-variant lesson (.lesson &);
 
 @layer base {
   html {
@@ -437,12 +440,12 @@
     text-transform: uppercase;
     font-size: clamp(60px, calc(60px + 36 * (100vw - 390px) / 1050), 96px);
   }
-  /* A figure's caption: Newsreader italic. */
+  /* A figure's caption: Newsreader italic, a little smaller than the text. */
   .fig-caption {
-    max-width: 760px;
+    max-width: 720px;
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: clamp(19px, calc(19px + 3 * (100vw - 390px) / 1050), 22px);
+    font-size: clamp(17px, calc(17px + 1 * (100vw - 390px) / 1050), 18px);
     line-height: 1.45;
     color: var(--ink2);
   }
@@ -454,6 +457,21 @@
     line-height: 0.92;
     text-transform: uppercase;
     font-size: clamp(38px, calc(38px + 8 * (100vw - 390px) / 1050), 46px);
+  }
+  /* A box's own title inside a lesson ("Heads up", "You'll need", "Check
+     yourself"): Archivo, bold and small, in the case it's written. */
+  .t-box {
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 800;
+    font-size: 19px;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+  }
+  @media (min-width: 960px) {
+    .t-box {
+      font-size: 20px;
+    }
   }
   /* Lede and dek. */
   .t-lead {
@@ -529,6 +547,24 @@
   .title-3 { font-size: clamp(50px, calc(50px + 38 * (100vw - 390px) / 1050), 88px); }
   .title-4 { font-size: clamp(42px, calc(42px + 30 * (100vw - 390px) / 1050), 72px); }
   .title-5 { font-size: clamp(36px, calc(36px + 24 * (100vw - 390px) / 1050), 60px); }
+  /* A lesson's title, beside its number: smaller steps than a page title, so
+     the lesson's first words show on a phone's first screen (lib/format.ts,
+     lessonTitleSize: keep the two in step). The number takes the same size step. */
+  .lesson-title {
+    font-family: var(--font-display);
+    font-stretch: 66%;
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+  }
+  .lesson-title-1 { font-size: clamp(40px, calc(40px + 24 * (100vw - 390px) / 1050), 64px); }
+  .lesson-title-2 { font-size: clamp(34px, calc(34px + 22 * (100vw - 390px) / 1050), 56px); }
+  /* The smallest phones (down to 320px): a step smaller, so three lines still hold. */
+  @media (max-width: 374px) {
+    .lesson-title-1 { font-size: 36px; }
+    .lesson-title-2 { font-size: 31px; }
+  }
 
   /* ---- Buttons ---- */
 
@@ -731,13 +767,11 @@
   }
 
   /*
-    The article grid (spec: "Shape and layout"). From 1280px a lesson is three
-    columns, rail 166 · main 684 · side 270 with 40px gaps: .with-rail is the
-    main column, pushed right to leave the rail. Inside it, .rail-label hangs
-    a block's label in the rail and .wide runs a figure across main and side.
-    (A key term on its own floats into the side column: see .key-term below.)
-    Below 1280 it's one column, labels sit above their block and side notes
-    sit inline.
+    The article grid (spec: "Shape and layout") for pages outside lessons:
+    from 1280px .with-rail is the main column, pushed right to leave a rail,
+    and .rail-label hangs a block's label in it. Below 1280 it's one column
+    and labels sit above their block. Lessons don't use it: they're one
+    column at every width (see "Lesson body" below).
   */
   .with-rail {
     max-width: 720px;
@@ -787,20 +821,16 @@
     .rail-label small {
       display: block;
     }
-    .wide,
-    .prose > .wide {
-      clear: both;
-      margin-right: -310px;
-    }
   }
 
   /*
-    Lesson body: everything that comes out of an MDX file. It's a plain block
-    flow, so side notes can float beside it and margins collapse.
+    Lesson body: everything that comes out of an MDX file (.prose; the session
+    kit's snippets are .prose too). A plain block flow, so margins collapse.
+    A lesson's own body is also .lesson-body, which gets the calmer spacing
+    and the step numbers below.
   */
   .prose {
     display: flow-root;
-    counter-reset: fig;
   }
   .prose > * {
     margin: 0;
@@ -827,79 +857,81 @@
     }
   }
 
-  /* The first paragraph of a lesson: a Newsreader lede with an Archivo drop
-     cap. (.lesson-body is a lesson's own .prose; the session kit's snippets
-     are .prose too, and get neither this nor the big step numbers.) */
-  .lesson-body > p:first-child {
-    font-family: var(--font-serif);
-    font-size: clamp(22px, calc(22px + 5 * (100vw - 390px) / 1050), 27px);
-    line-height: 1.52;
+  /* In a lesson, text sits closer together and blocks get a little room. */
+  .lesson-body > * + * {
+    margin-top: 20px;
   }
-  .lesson-body > p:first-child::first-letter {
-    float: left;
-    margin: 6px 8px 0 -2px;
-    font-family: var(--font-display);
-    font-stretch: 62%;
-    font-weight: 900;
-    font-size: clamp(118px, calc(118px + 30 * (100vw - 390px) / 1050), 148px);
-    line-height: 0.74;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  /* Room for the drop cap when the first paragraph is a single line. */
-  .lesson-body > p:first-child {
-    min-height: 96px;
+  .lesson-body > .blk {
+    margin-block: 32px;
   }
   @media (min-width: 960px) {
-    .lesson-body > p:first-child {
-      min-height: 120px;
+    .lesson-body > * + * {
+      margin-top: 22px;
+    }
+    .lesson-body > .blk {
+      margin-block: 40px;
     }
   }
-  .lesson-body > p:first-child + * {
-    clear: left;
-  }
 
-  .prose > h2 {
-    margin-top: 56px;
+  /*
+    Headings, in the case the author wrote them, with clear space above.
+    `##`: Archivo, semi-condensed (.lesson-h2 is the same, for the page's own
+    "Wrap-up"). `###`: Newsreader. A `##` with a long word steps down so it
+    fits a phone (lib/format.ts, headingSize: keep the two in step).
+  */
+  .prose > h2,
+  .lesson-h2 {
+    margin-top: 48px;
     font-family: var(--font-display);
-    font-stretch: 66%;
+    font-stretch: 75%;
     font-weight: 800;
-    font-size: clamp(60px, calc(60px + 36 * (100vw - 390px) / 1050), 96px);
-    line-height: 0.88;
+    font-size: clamp(28px, calc(28px + 10 * (100vw - 390px) / 1050), 38px);
+    line-height: 1.12;
     letter-spacing: -0.005em;
-    text-transform: uppercase;
   }
-  /* A heading with a long word steps down so it fits a phone (lib/format.ts, headingSize). */
-  .prose > h2.heading-2 { font-size: clamp(50px, calc(50px + 34 * (100vw - 390px) / 1050), 84px); }
-  .prose > h2.heading-3 { font-size: clamp(42px, calc(42px + 30 * (100vw - 390px) / 1050), 72px); }
-  .prose > h2.heading-4 { font-size: clamp(36px, calc(36px + 24 * (100vw - 390px) / 1050), 60px); }
+  .prose > h2.heading-2 { font-size: clamp(24px, calc(24px + 8 * (100vw - 390px) / 1050), 32px); }
   .prose > h3 {
-    margin-top: 40px;
+    margin-top: 32px;
     font-family: var(--font-serif);
     font-weight: 600;
-    font-size: clamp(26px, calc(26px + 8 * (100vw - 390px) / 1050), 34px);
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+    font-size: clamp(21px, calc(21px + 3 * (100vw - 390px) / 1050), 24px);
+    line-height: 1.25;
+    letter-spacing: -0.005em;
   }
   @media (min-width: 960px) {
     .prose > h2 {
-      margin-top: 80px;
+      margin-top: 64px;
     }
     .prose > h3 {
-      margin-top: 48px;
+      margin-top: 40px;
+    }
+  }
+  /* What a heading introduces sits close under it. */
+  .lesson-body > :is(h2, h3) + * {
+    margin-top: 12px;
+  }
+  .lesson-body > :is(h2, h3) + .blk {
+    margin-top: 16px;
+  }
+  @media (min-width: 960px) {
+    .lesson-body > :is(h2, h3) + * {
+      margin-top: 14px;
+    }
+    .lesson-body > :is(h2, h3) + .blk {
+      margin-top: 20px;
     }
   }
   /* A hands-on chip sits right above its section heading. */
   .prose > .hands-on {
-    margin-top: 56px;
+    margin-top: 48px;
   }
   @media (min-width: 960px) {
     .prose > .hands-on {
-      margin-top: 80px;
+      margin-top: 64px;
     }
   }
   .prose > .hands-on + h2 {
-    margin-top: 14px;
+    margin-top: 12px;
   }
 
   .prose strong {
@@ -941,66 +973,69 @@
   }
 
   /*
-    Steps: a lesson's own numbered lists. Big Archivo numerals (in the rail
-    from 1280px) and a 2px rule between steps.
+    Steps: a lesson's own numbered lists. Each number is a navy badge in the
+    main column, level with the step's first line, with a light rule between
+    steps.
   */
   .lesson-body > ol {
     list-style: none;
     padding: 0;
-    border-bottom: 2px solid var(--line);
     counter-reset: step;
   }
   .lesson-body > ol > li {
+    --step-top: 14px;
     position: relative;
-    box-sizing: border-box;
-    min-height: 106px;
     margin: 0;
-    padding: 20px 0 22px 66px;
-    border-top: 2px solid var(--line);
+    padding: var(--step-top) 0 14px 52px;
     counter-increment: step;
+  }
+  .lesson-body > ol > li:first-child {
+    --step-top: 4px;
+  }
+  .lesson-body > ol > li + li {
+    border-top: 2px solid var(--hairline);
+  }
+  .lesson-body > ol > li:last-child {
+    padding-bottom: 0;
   }
   .lesson-body > ol > li::before {
     content: counter(step);
     position: absolute;
     left: 0;
-    top: 22px;
-    width: 48px;
-    text-align: right;
+    /* Centred on the first line of text (18px at 1.55). */
+    top: calc(var(--step-top) - 4px);
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 6px;
+    border: 2px solid var(--line);
+    border-radius: 6px;
+    background: var(--navy);
+    color: var(--on-navy);
     font-family: var(--font-display);
-    font-stretch: 62%;
+    font-stretch: 75%;
     font-weight: 900;
-    font-size: 80px;
-    line-height: 0.8;
-    color: var(--accent);
-    animation: cvRise 0.6s ease-out 0.2s both;
-  }
-  .lesson-body > ol > li:nth-child(2)::before { animation-delay: 0.35s; }
-  .lesson-body > ol > li:nth-child(3)::before { animation-delay: 0.5s; }
-  .lesson-body > ol > li:nth-child(n + 4)::before { animation-delay: 0.65s; }
-  /* Two-digit steps are narrower, so they still fit beside the text. */
-  .lesson-body > ol > li:nth-child(n + 10)::before {
-    font-size: 60px;
-    top: 26px;
+    font-size: 22px;
+    line-height: 1;
   }
   .lesson-body > ol > li > :first-child {
     margin-top: 0;
   }
   .lesson-body > ol > li > * + * {
-    margin-top: 14px;
+    margin-top: 12px;
   }
-  @media (min-width: 1280px) {
-    .lesson-body > ol {
-      margin-left: -206px;
-    }
+  @media (min-width: 960px) {
     .lesson-body > ol > li {
-      min-height: 160px;
-      padding: 30px 0 32px 206px;
+      padding-left: 60px;
     }
-    .lesson-body > ol > li::before,
-    .lesson-body > ol > li:nth-child(n + 10)::before {
-      top: 28px;
-      width: 166px;
-      font-size: 128px;
+    .lesson-body > ol > li::before {
+      /* 20px at 1.6. */
+      top: calc(var(--step-top) - 4px);
+      min-width: 40px;
+      height: 40px;
+      font-size: 24px;
     }
   }
   /* A list that carries on from an earlier one: "4." after a figure. */
@@ -1016,29 +1051,19 @@
   .lesson-body > ol[start="11"] { counter-reset: step 10; }
   .lesson-body > ol[start="12"] { counter-reset: step 11; }
 
-  /* A key term on its own goes to the side column from 1280px, beside the
-     text that uses it. Two or more in a row stay in the main column: a
-     column of cards beside nothing would run past the text. */
+  /* A key term sits in the text that uses it. */
   .prose > .key-term {
-    margin-block: 32px;
-  }
-  @media (min-width: 1280px) {
-    .prose > .key-term:not(.key-term + .key-term):not(:has(+ .key-term)) {
-      float: right;
-      clear: right;
-      width: 270px;
-      margin: 6px -310px 28px 0;
-    }
+    margin-block: 28px;
   }
 
   /* A pull quote: a marigold rule and Newsreader italic. */
   .prose blockquote {
-    padding-top: 16px;
-    border-top: 6px solid var(--marigold);
+    padding-top: 14px;
+    border-top: 4px solid var(--marigold);
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: clamp(26px, calc(26px + 6 * (100vw - 390px) / 1050), 32px);
-    line-height: 1.15;
+    font-size: clamp(21px, calc(21px + 3 * (100vw - 390px) / 1050), 24px);
+    line-height: 1.3;
     color: var(--accent);
   }
 
@@ -1052,6 +1077,10 @@
   }
   .prose > h2 > code {
     text-transform: none;
+  }
+  /* A long address or command in a lesson's text breaks rather than running off a small phone. */
+  .lesson-body :where(p, li, td, th, h2, h3, blockquote) code {
+    overflow-wrap: anywhere;
   }
 
   .prose hr {
@@ -1083,14 +1112,6 @@
     font-size: 14px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-  }
-
-  /* Figures number themselves down the lesson: "FIG. 1" in the rail. */
-  .fig-label {
-    counter-increment: fig;
-  }
-  .fig-label::before {
-    content: "Fig. " counter(fig);
   }
 
   /* ---- Odometer: numbers that roll to their digits ---- */
@@ -1320,6 +1341,42 @@
     color: var(--on-marigold);
     box-shadow: 4px 4px 0 var(--shadow);
     transform: rotate(12deg);
+  }
+}
+
+/*
+  Inside a lesson (the page's <article class="lesson">), boxes sit flat: no
+  hard offset shadows, and prompt and saved-work cards aren't tilted. Their
+  colours and 2px borders stay, so each kind of box is easy to tell apart.
+  (Buttons keep theirs: it shows they can be pressed.) Pages outside lessons
+  keep the full Cover look.
+*/
+.lesson :is(.card, .index-card) {
+  box-shadow: none;
+  rotate: none;
+}
+/* A short prompt stays the size of any other prompt. */
+.lesson .index-card-short {
+  --rule: 34px;
+}
+.lesson .index-card-short .index-card-body {
+  font-size: 19px;
+}
+/* The practice card's task and feedback headline. */
+.lesson {
+  --task: 20px;
+  --head: 22px;
+}
+@media (min-width: 960px) {
+  .lesson {
+    --task: 22px;
+    --head: 24px;
+  }
+  .lesson .index-card-short {
+    --rule: 38px;
+  }
+  .lesson .index-card-short .index-card-body {
+    font-size: 21px;
   }
 }
 

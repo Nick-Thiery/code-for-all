@@ -1,6 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
-import { isValidElement, type ReactNode } from "react";
+import { type ComponentProps, isValidElement, type ReactNode } from "react";
 import { Callout } from "@/components/callout";
 import { Challenge } from "@/components/challenge";
 import { CheckYourself, Question } from "@/components/check-yourself";
@@ -59,7 +59,7 @@ function textOf(node: ReactNode): string {
 
 // Everything here can be used in any lesson without an import.
 export const mdxComponents: MDXComponents = {
-  // A `##` heading is set big; one with a long word steps down a size so it fits a phone.
+  // A `##` heading with a long word steps down a size so it fits a phone.
   h2: ({ children, className = "", ...props }) => (
     <h2 {...props} className={`${headingSize(textOf(children))} ${className}`.trim()}>
       {children}
@@ -89,7 +89,8 @@ export const mdxComponents: MDXComponents = {
   RefinePromptDiagram,
   SkillRecipeDiagram,
   SprintTimelineDiagram,
-  Callout,
+  // Lessons get the calm callout; pages outside lessons use the Cover one.
+  Callout: (props: ComponentProps<typeof Callout>) => <Callout {...props} calm />,
   Challenge,
   CheckYourself,
   CommandBlock,

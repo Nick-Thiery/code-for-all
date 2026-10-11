@@ -32,8 +32,7 @@ export function SavedWork({
   const saved = ready && text.trim() !== "";
 
   return (
-    <div className="blk rail-block flex flex-col gap-4">
-      <span className="rail-label">Saved work</span>
+    <div className="blk flex flex-col gap-4">
       <div className="index-card -rotate-[0.6deg] break-inside-avoid print:rotate-0">
         <div className="index-card-head">
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">

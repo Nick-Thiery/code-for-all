@@ -28,7 +28,10 @@ export function SaveHere({
     <div className="blk card flex flex-col gap-3.5 p-(--pad) print:hidden">
       <div className="flex flex-col gap-1.5">
         <span className="eyebrow">Save it here</span>
-        <label htmlFor={fieldId} className="font-serif text-[24px] leading-[1.15] font-semibold desktop:text-[28px]">
+        <label
+          htmlFor={fieldId}
+          className="font-serif text-[24px] leading-[1.15] font-semibold desktop:text-[28px] lesson:text-[20px] lesson:desktop:text-[22px]"
+        >
           {label}
         </label>
       </div>

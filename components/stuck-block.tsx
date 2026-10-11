@@ -24,19 +24,19 @@ export function StuckBlock({ children, open: initiallyOpen = false }: { children
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((o) => !o)}
-        className="group flex w-full cursor-pointer items-end justify-between gap-4 border-0 bg-transparent p-0 pb-[18px] text-left font-[inherit] text-fg desktop:pb-7"
+        className="group flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent p-0 pb-3.5 text-left font-[inherit] text-fg desktop:pb-4"
       >
-        <span className="flex flex-col gap-2">
-          <span className="t-section group-hover:text-accent">Stuck?</span>
+        <span className="flex flex-col gap-1">
+          <span className="t-box text-[22px] group-hover:text-accent desktop:text-[24px]">Stuck?</span>
           <span className="t-meta text-muted">Common fixes for this lesson</span>
         </span>
-        <span className="plus-box mb-1">
+        <span className="plus-box">
           <Icon name="plus" size={18} stroke={2.8} />
         </span>
       </button>
       <div id={id} hidden={!open} className="flex-col border-b-2 border-line [&:not([hidden])]:flex">
         {children}
-        <p className="t-meta m-0 border-t-2 border-line py-5 text-muted">
+        <p className="t-meta m-0 border-t-2 border-line py-4 text-muted">
           Still stuck? The <Link href="/help">Help page</Link> covers devices, access, lost progress and what to do when
           something breaks.
         </p>
@@ -48,9 +48,9 @@ export function StuckBlock({ children, open: initiallyOpen = false }: { children
 
 export function StuckItem({ question, children }: { question: string; children: ReactNode }) {
   return (
-    <div className="border-t-2 border-line pt-5 pb-6 [&_p]:m-0">
-      <p className="font-serif text-[21px] leading-[1.2] font-semibold desktop:text-[27px]">{question}</p>
-      <div className="mt-2.5 text-[16px] leading-[1.6] text-muted desktop:mt-3 desktop:text-[19px] [&_p+p]:mt-3">{children}</div>
+    <div className="border-t-2 border-line pt-4 pb-5 [&_p]:m-0">
+      <p className="font-serif text-[19px] leading-[1.3] font-semibold desktop:text-[21px]">{question}</p>
+      <div className="mt-2 text-[17px] leading-[1.55] text-muted desktop:text-[18px] [&_p+p]:mt-3">{children}</div>
     </div>
   );
 }

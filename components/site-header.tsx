@@ -221,8 +221,8 @@ function NavLink({
 }
 
 /**
- * The lesson top bar: back to the course, the module, one segment per lesson
- * and "Lesson 2 of 6". From 960px it also has Help, the theme switch and,
+ * The lesson top bar: back to the course, one segment per lesson and
+ * "Lesson 2 of 6". From 960px it also has Help, the theme switch and,
  * when there's room, Search; below that they're behind the menu button, and
  * Search is a button of its own from 600px.
  */
@@ -267,14 +267,8 @@ function LessonBar({
       </div>
       {/* Desktop. */}
       <div className="hidden h-[68px] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-5 px-10 desktop:grid">
-        <div className="flex min-w-0 items-center gap-[18px]">
-          {back}
-          <span aria-hidden="true" className="h-[26px] w-0.5 flex-none bg-line" />
-          <span className="eyebrow truncate">
-            Module {module.number}
-            <span className="max-wide:hidden"> · {module.title}</span>
-          </span>
-        </div>
+        {/* The module's name is in the lesson's header, just below. */}
+        <div className="flex min-w-0 items-center">{back}</div>
         <div className="flex items-center gap-3.5">
           <Segments module={module} lesson={lesson} completed={completed} ready={ready} />
           <span className="kicker text-[14px] tracking-[.1em] whitespace-nowrap">
